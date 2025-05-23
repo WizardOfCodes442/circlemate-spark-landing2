@@ -26,12 +26,16 @@ const Header = () => {
             <a href="#how-it-works" className="text-gray-600 hover:text-primary transition-colors">How It Works</a>
             <a href="#testimonials" className="text-gray-600 hover:text-primary transition-colors">Testimonials</a>
             <div className="flex items-center space-x-4">
+              <Link to="/login">
               <Button variant="outline" className="text-primary border-primary hover:bg-primary hover:text-white">
-                <Link to="/login">Log in</Link>
+                Log in
               </Button>
+              </Link>
+              <Link to="/signup">
               <Button className="bg-primary hover:bg-primary-dark text-white">
-                <Link to="/signup">Sign Up</Link>
+                Sign Up
               </Button>
+              </Link>
             </div>
           </nav>
 
@@ -56,12 +60,16 @@ const Header = () => {
               <a href="#how-it-works" className="text-gray-600 hover:text-primary transition-colors">How It Works</a>
               <a href="#testimonials" className="text-gray-600 hover:text-primary transition-colors">Testimonials</a>
               <div className="flex flex-col space-y-2 pt-4">
+                <Link to="/login">
                 <Button variant="outline" className="text-primary border-primary hover:bg-primary hover:text-white">
                   Log In
                 </Button>
+                </Link>
+                <Link to="/login">
                 <Button className="bg-primary hover:bg-primary-dark text-white">
                   Sign Up
                 </Button>
+                </Link>
               </div>
             </nav>
           </div>

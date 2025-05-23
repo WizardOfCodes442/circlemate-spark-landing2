@@ -18,12 +18,16 @@ const Index = () => {
       <Header />
       
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center gap-2 z-10">
+        <Link to="/login">
         <Button variant="outline" asChild>
-          <Link to="/login">Log in</Link>
+          Log in
         </Button>
+        </Link>
+        <Link to="/signup">
         <Button asChild>
-          <Link to="/signup">Sign up</Link>
+          Sign up
         </Button>
+        </Link>
       </div>
       
       <Hero />

@@ -27,9 +27,11 @@ const Hero = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
+              <Link to="/signup">
               <Button size="lg" className="bg-primary hover:bg-primary-dark text-white px-8 py-4 text-lg">
-                <Link to="/signup">Get Started</Link>
+                Get Started
               </Button>
+              </Link>
               <Button size="lg" variant="outline" className="text-primary border-primary hover:bg-primary hover:text-white px-8 py-4 text-lg">
                 Learn More
               </Button>
