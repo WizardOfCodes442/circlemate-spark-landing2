@@ -10,6 +10,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
+import Discover from "./pages/Discover";
+import Communities from "./pages/Communities";
+import Events from "./pages/Events";
 import NotFound from "./pages/NotFound";
 
 // Onboarding routes
@@ -36,6 +39,9 @@ const App = () => (
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/discover" element={<Discover />} />
+          <Route path="/communities" element={<Communities />} />
+          <Route path="/events" element={<Events />} />
           
           {/* Onboarding Routes */}
           <Route path="/onboarding" element={<OnboardingCommunity />} />
