@@ -15,6 +15,13 @@ import Communities from "./pages/Communities";
 import Events from "./pages/Events";
 import NotFound from "./pages/NotFound";
 
+// New pages
+import ManageCommunity from "./pages/ManageCommunity";
+import UserProfile from "./pages/UserProfile";
+import EditProfile from "./pages/EditProfile";
+import Notifications from "./pages/Notifications";
+import Matchmaking from "./pages/Matchmaking";
+
 // Onboarding routes
 import OnboardingCommunity from "./pages/onboarding/OnboardingCommunity";
 import OnboardingProfile from "./pages/onboarding/OnboardingProfile";
@@ -42,6 +49,13 @@ const App = () => (
           <Route path="/discover" element={<Discover />} />
           <Route path="/communities" element={<Communities />} />
           <Route path="/events" element={<Events />} />
+          
+          {/* New pages */}
+          <Route path="/manage-community/:id" element={<ManageCommunity />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/matchmaking" element={<Matchmaking />} />
           
           {/* Onboarding Routes */}
           <Route path="/onboarding" element={<OnboardingCommunity />} />

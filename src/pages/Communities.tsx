@@ -1,5 +1,5 @@
-
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Users, MapPin, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -56,6 +56,7 @@ const mockUserCommunities = [
 ];
 
 const Communities = () => {
+  const navigate = useNavigate();
   const [userCommunities] = useState(mockUserCommunities);
   const [activeTab, setActiveTab] = useState("joined");
 
@@ -253,7 +254,13 @@ const Communities = () => {
                         <Users className="h-4 w-4 mr-1" />
                         <span>{community.memberCount} members</span>
                       </div>
-                      <Button size="sm" variant="outline">Manage</Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => navigate(`/manage-community/${community.id}`)}
+                      >
+                        Manage
+                      </Button>
                     </CardFooter>
                   </Card>
                 ))
