@@ -78,6 +78,13 @@ const Events = () => {
     console.log(`Unregister from event ${eventId}`);
   };
 
+  const handleBrowseUpcoming = () => {
+    const upcomingTab = document.querySelector('[data-state="inactive"][value="upcoming"]') as HTMLElement;
+    if (upcomingTab) {
+      upcomingTab.click();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -218,7 +225,7 @@ const Events = () => {
               {registeredEvents.length === 0 && (
                 <div className="col-span-full text-center py-10">
                   <p className="text-muted-foreground mb-4">You haven't registered for any events yet.</p>
-                  <Button onClick={() => document.querySelector('[data-state="inactive"][value="upcoming"]')?.click()}>
+                  <Button onClick={handleBrowseUpcoming}>
                     Browse Upcoming Events
                   </Button>
                 </div>
