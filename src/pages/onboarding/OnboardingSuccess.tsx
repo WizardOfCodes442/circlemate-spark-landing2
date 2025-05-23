@@ -27,7 +27,7 @@ const OnboardingSuccess = () => {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-6">
           <Check className="h-8 w-8 text-green-500" />
         </div>
-        <h1 className="text-3xl font-bold mb-2">Profile Created!</h1>
+        <h1 className="text-3xl font-bold mb-2">Profile Created Successfully!</h1>
         <p className="text-muted-foreground max-w-md mx-auto">
           You're all set up and ready to start connecting with your community
         </p>

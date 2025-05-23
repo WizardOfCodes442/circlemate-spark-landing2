@@ -1,4 +1,5 @@
-
+import React from 'react'
+import { Link } from "react-router-dom" 
 const Stats = () => {
   const stats = [
     {
@@ -30,7 +31,7 @@ const Stats = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        {/* <div className="grid md:grid-cols-3 gap-8 mb-16">
           {stats.map((stat, index) => (
             <div 
               key={index} 
@@ -44,12 +45,12 @@ const Stats = () => {
               <div className="text-gray-300 text-sm">{stat.description}</div>
             </div>
           ))}
-        </div>
+        </div> */}
 
         <div className="text-center animate-on-scroll">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105">
-              Get Started
+              <Link to="/signup">Get Started</Link>
             </button>
             <button className="border border-white text-white hover:bg-white hover:text-secondary px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300">
               Find Groups

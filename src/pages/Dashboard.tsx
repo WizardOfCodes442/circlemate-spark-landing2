@@ -26,9 +26,9 @@ const Dashboard = () => {
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img
-              src="/lovable-uploads/c497d173-04f8-437a-85b8-41ea147dea87.png"
+              src="/logo.png"
               alt="CircleMate Logo"
-              className="h-8"
+              className="h-12 w-12"
             />
             
             <div className="hidden md:flex items-center space-x-6">
@@ -49,7 +49,7 @@ const Dashboard = () => {
               <Bell className="h-5 w-5" />
             </Button>
             <Avatar className="h-8 w-8">
-              <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80" />
+              <AvatarImage src="/icon.png" />
               <AvatarFallback>JD</AvatarFallback>
             </Avatar>
           </div>

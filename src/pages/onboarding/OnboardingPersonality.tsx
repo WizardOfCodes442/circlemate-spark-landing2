@@ -135,7 +135,7 @@ const OnboardingPersonality = () => {
           <Button
             key={trait.id}
             variant={selectedTraits.includes(trait.id) ? "default" : "outline"}
-            className={`h-auto py-3 px-4 justify-start text-left ${
+            className={`h-auto py-3 px-4 justify-start text-left break-words whitespace-normal w-full ${
               selectedTraits.includes(trait.id)
                 ? ""
                 : selectedTraits.length >= 5
@@ -145,8 +145,8 @@ const OnboardingPersonality = () => {
             onClick={() => toggleTrait(trait.id)}
             disabled={selectedTraits.length >= 5 && !selectedTraits.includes(trait.id)}
           >
-            <div>
-              <div className="font-medium">{trait.label}</div>
+            <div className="w-full">
+              <div className="font-semibold">{trait.label}</div>
               <div className="text-xs mt-1 opacity-80">{trait.description}</div>
             </div>
           </Button>

@@ -89,7 +89,7 @@ const OnboardingCommunity = () => {
                   <Check className="h-4 w-4" />
                 </Button>
               ) : (
-                <Badge variant="outline" className="bg-secondary">Select</Badge>
+                <Badge variant="outline" className="bg-secondary text-white">Select</Badge>
               )}
             </CardContent>
           </Card>

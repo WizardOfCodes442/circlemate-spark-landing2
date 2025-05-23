@@ -1,6 +1,8 @@
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
+
 
 const Hero = () => {
   return (
@@ -26,7 +28,7 @@ const Hero = () => {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="bg-primary hover:bg-primary-dark text-white px-8 py-4 text-lg">
-                Get Started
+                <Link to="/signup">Get Started</Link>
               </Button>
               <Button size="lg" variant="outline" className="text-primary border-primary hover:bg-primary hover:text-white px-8 py-4 text-lg">
                 Learn More
@@ -50,7 +52,8 @@ const Hero = () => {
             <div className="relative">
               {/* Floating animation wrapper */}
               <div className="animate-float">
-                <Card className="p-6 max-w-md w-full bg-white shadow-xl border-0 rounded-2xl">
+                <Card className="w-full sm:w-[110%] md:w-[120%] lg:w-[140%] p-6 sm:p-8 lg:p-12 bg-white shadow-xl border-0 rounded-2xl">
+
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-gray-900">Your Match Request</h3>

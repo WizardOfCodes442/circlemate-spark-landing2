@@ -4,11 +4,11 @@ import { Card } from '@/components/ui/card';
 const Testimonials = () => {
   const testimonials = [
     {
-      name: "Michael K.",
+      name: "Olamide K.",
       role: "Church Community Member",
       organization: "First Baptist Fellowship",
       quote: "Through CircleMate, I've made friends who share my faith and values. What started as coffee meetups has turned into deep, meaningful friendships that enrich my spiritual journey.",
-      avatar: "M"
+      avatar: "O"
     },
     {
       name: "Sarah L.",
@@ -18,11 +18,11 @@ const Testimonials = () => {
       avatar: "S"
     },
     {
-      name: "David R.",
+      name: "Kenneth R.",
       role: "Hiking Club Member",
       organization: "Mountain Explorers",
       quote: "I found my hiking partner and now close friend through CircleMate. We've explored dozens of trails together and our shared love for the outdoors created an instant bond.",
-      avatar: "D"
+      avatar: "K"
     }
   ];
 

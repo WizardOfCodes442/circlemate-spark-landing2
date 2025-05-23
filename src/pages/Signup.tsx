@@ -70,7 +70,7 @@ const Signup = () => {
       <Card className="w-full max-w-md animate-fade-in">
         <CardHeader className="space-y-2 text-center">
           <div className="flex justify-center mb-4">
-            <img src="/lovable-uploads/c497d173-04f8-437a-85b8-41ea147dea87.png" alt="CircleMate Logo" className="h-12" />
+            <img src="/logo.png" alt="CircleMate Logo" className="h-24 w-24" />
           </div>
           <CardTitle className="text-2xl font-bold">Create your account</CardTitle>
           <p className="text-muted-foreground">Enter your information to create an account</p>

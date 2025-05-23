@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,7 +13,7 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <img 
-              src="/lovable-uploads/c497d173-04f8-437a-85b8-41ea147dea87.png" 
+              src="/icon.png" 
               alt="CircleMate Logo" 
               className="w-8 h-8"
             />
@@ -26,10 +27,10 @@ const Header = () => {
             <a href="#testimonials" className="text-gray-600 hover:text-primary transition-colors">Testimonials</a>
             <div className="flex items-center space-x-4">
               <Button variant="outline" className="text-primary border-primary hover:bg-primary hover:text-white">
-                Log In
+                <Link to="/login">Log in</Link>
               </Button>
               <Button className="bg-primary hover:bg-primary-dark text-white">
-                Sign Up
+                <Link to="/signup">Sign Up</Link>
               </Button>
             </div>
           </nav>

@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <img 
-                src="/lovable-uploads/c497d173-04f8-437a-85b8-41ea147dea87.png" 
+                src="/icon.png" 
                 alt="CircleMate Logo" 
                 className="w-8 h-8"
               />

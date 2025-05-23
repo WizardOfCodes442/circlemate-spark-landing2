@@ -32,9 +32,9 @@ const OnboardingLayout = ({
         <div className="flex justify-center mb-6">
           <Link to="/">
             <img
-              src="/lovable-uploads/c497d173-04f8-437a-85b8-41ea147dea87.png"
+              src="/logo.png"
               alt="CircleMate Logo"
-              className="h-10"
+              className="w-24 h-24"
             />
           </Link>
         </div>
