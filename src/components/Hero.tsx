@@ -27,8 +27,8 @@ const Hero = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/signup">
-              <Button size="lg" className="bg-primary hover:bg-primary-dark text-white px-8 py-4 text-lg">
+              <Link to="/signup" >
+              <Button size="lg" className="bg-primary hover:bg-primary-dark text-white px-8 py-4 text-lg w-full">
                 Get Started
               </Button>
               </Link>
