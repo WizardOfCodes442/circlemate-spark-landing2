@@ -134,6 +134,36 @@ const OnboardingProfile = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Occupation</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select occupation" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="male">Contractor</SelectItem>
+                      <SelectItem value="female">Developer</SelectItem>
+                      <SelectItem value="female">Engineer</SelectItem>
+                      <SelectItem value="female">Teacher</SelectItem>
+                      <SelectItem value="female">Pastor</SelectItem>
+                      <SelectItem value="female">Millitary</SelectItem>
+                      <SelectItem value="female">Fashion</SelectItem>
+                      <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
           
           <FormField

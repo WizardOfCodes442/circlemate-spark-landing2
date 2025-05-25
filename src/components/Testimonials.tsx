@@ -52,13 +52,13 @@ const Testimonials = () => {
               </div>
               
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-semibold">
+                <div className="w-12 h-12 bg-[#22CCBE] rounded-full flex items-center justify-center text-white font-semibold">
                   {testimonial.avatar}
                 </div>
                 <div>
                   <p className="font-semibold text-secondary">{testimonial.name}</p>
                   <p className="text-sm text-gray-500">{testimonial.role}</p>
-                  <p className="text-xs text-primary">{testimonial.organization}</p>
+                  <p className="text-xs text-[#22CCBE]">{testimonial.organization}</p>
                 </div>
               </div>
             </Card>

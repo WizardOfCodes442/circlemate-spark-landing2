@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, Check } from "lucide-react";
@@ -21,40 +20,42 @@ const communities = [
 const OnboardingCommunity = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCommunities, setSelectedCommunities] = useState<number[]>([1]);
-  
+  const [selectedCommunityId, setSelectedCommunityId] = useState<number | null>(1);
+  const [inviteCode, setInviteCode] = useState("");
+
   const filteredCommunities = communities.filter((community) =>
     community.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  
-  const handleToggleCommunity = (id: number) => {
-    setSelectedCommunities((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((communityId) => communityId !== id);
-      } else {
-        return [...prev, id];
-      }
-    });
+
+  const handleSelectCommunity = (id: number) => {
+    setSelectedCommunityId(id);
+    setInviteCode(""); // Clear invite code if user selects from list
   };
-  
+
   const handleNext = () => {
+    // You can handle joining with inviteCode if filled
+    if (inviteCode) {
+      console.log("Joining via invite code:", inviteCode);
+    } else {
+      console.log("Joining community ID:", selectedCommunityId);
+    }
     navigate("/onboarding/profile");
   };
-  
+
   return (
     <OnboardingLayout
       currentStep={0}
       totalSteps={7}
       nextAction={handleNext}
-      nextDisabled={selectedCommunities.length === 0}
+      nextDisabled={!selectedCommunityId && inviteCode.trim() === ""}
     >
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold mb-2">Find Your Community</h1>
         <p className="text-muted-foreground">
-          Select the communities you're interested in to find like-minded people
+          Select the community you want to join or enter an invite code
         </p>
       </div>
-      
+
       <div className="relative mb-6">
         <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
         <Input
@@ -64,17 +65,17 @@ const OnboardingCommunity = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredCommunities.map((community) => (
-          <Card 
+          <Card
             key={community.id}
             className={`cursor-pointer border-2 transition-all ${
-              selectedCommunities.includes(community.id) 
-                ? "border-primary bg-primary/5" 
+              selectedCommunityId === community.id
+                ? "border-primary bg-[#22CCBE]/5"
                 : "hover:border-primary/20"
             }`}
-            onClick={() => handleToggleCommunity(community.id)}
+            onClick={() => handleSelectCommunity(community.id)}
           >
             <CardContent className="p-4 flex justify-between items-center">
               <div>
@@ -83,8 +84,8 @@ const OnboardingCommunity = () => {
                   {community.members.toLocaleString()} members
                 </p>
               </div>
-              
-              {selectedCommunities.includes(community.id) ? (
+
+              {selectedCommunityId === community.id ? (
                 <Button variant="default" size="icon" className="rounded-full">
                   <Check className="h-4 w-4" />
                 </Button>
@@ -95,11 +96,19 @@ const OnboardingCommunity = () => {
           </Card>
         ))}
       </div>
-      
+
       <div className="mt-6">
-        <p className="text-sm text-center text-muted-foreground">
-          Don't see your community? You can create or join more later.
+        <p className="text-sm text-center text-muted-foreground mb-2">
+          Or join using an invite code
         </p>
+        <Input
+          placeholder="Enter group invite code"
+          value={inviteCode}
+          onChange={(e) => {
+            setInviteCode(e.target.value);
+            setSelectedCommunityId(null); // Clear selection if entering invite code
+          }}
+        />
       </div>
     </OnboardingLayout>
   );

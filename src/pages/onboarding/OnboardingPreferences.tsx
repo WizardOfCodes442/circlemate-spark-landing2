@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -77,14 +76,18 @@ const interestCategories: InterestCategory[] = [
 
 const OnboardingPreferences = () => {
   const navigate = useNavigate();
-  const [selectedPurpose, setSelectedPurpose] = useState<string | null>(null);
+  const [selectedPurposes, setSelectedPurposes] = useState<string[]>([]);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState("purpose");
-  
-  const handlePurposeSelect = (purposeId: string) => {
-    setSelectedPurpose(purposeId);
+
+  const togglePurpose = (purposeId: string) => {
+    setSelectedPurposes((prev) =>
+      prev.includes(purposeId)
+        ? prev.filter((id) => id !== purposeId)
+        : [...prev, purposeId]
+    );
   };
-  
+
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) => {
       if (prev.includes(interest)) {
@@ -94,15 +97,15 @@ const OnboardingPreferences = () => {
       }
     });
   };
-  
+
   const handleNext = () => {
-    if (selectedPurpose && selectedInterests.length > 0) {
-      console.log("Selected purpose:", selectedPurpose);
+    if (selectedPurposes.length > 0 && selectedInterests.length > 0) {
+      console.log("Selected purposes:", selectedPurposes);
       console.log("Selected interests:", selectedInterests);
       navigate("/onboarding/availability");
     }
   };
-  
+
   const handlePrevious = () => {
     if (activeTab === "interests") {
       setActiveTab("purpose");
@@ -110,14 +113,14 @@ const OnboardingPreferences = () => {
       navigate("/onboarding/personality");
     }
   };
-  
+
   return (
     <OnboardingLayout
       currentStep={4}
       totalSteps={7}
       nextAction={activeTab === "purpose" ? () => setActiveTab("interests") : handleNext}
       previousAction={handlePrevious}
-      nextDisabled={activeTab === "purpose" ? !selectedPurpose : selectedInterests.length === 0}
+      nextDisabled={activeTab === "purpose" ? selectedPurposes.length === 0 : selectedInterests.length === 0}
       nextLabel={activeTab === "purpose" ? "Next" : "Continue"}
     >
       <div className="text-center mb-8">
@@ -126,24 +129,24 @@ const OnboardingPreferences = () => {
           Tell us what you're looking for in your connections
         </p>
       </div>
-      
+
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="purpose">Purpose</TabsTrigger>
-          <TabsTrigger value="interests" disabled={!selectedPurpose}>Interests</TabsTrigger>
+          <TabsTrigger value="interests" disabled={selectedPurposes.length === 0}>Interests</TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="purpose" className="pt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {connectionPurposes.map((purpose) => (
               <Card
                 key={purpose.id}
                 className={`cursor-pointer border-2 transition-all ${
-                  selectedPurpose === purpose.id
-                    ? "border-primary bg-primary/5"
+                  selectedPurposes.includes(purpose.id)
+                    ? "border-primary bg-[#22CCBE]/5"
                     : "hover:border-primary/20"
                 }`}
-                onClick={() => handlePurposeSelect(purpose.id)}
+                onClick={() => togglePurpose(purpose.id)}
               >
                 <CardContent className="p-4">
                   <div className="text-3xl mb-2">{purpose.icon}</div>
@@ -155,8 +158,12 @@ const OnboardingPreferences = () => {
               </Card>
             ))}
           </div>
+
+          <div className="mt-6 text-center text-sm text-muted-foreground">
+            Selected {selectedPurposes.length} {selectedPurposes.length === 1 ? "purpose" : "purposes"}
+          </div>
         </TabsContent>
-        
+
         <TabsContent value="interests" className="pt-6">
           <div className="space-y-8">
             {interestCategories.map((category) => (
@@ -178,7 +185,7 @@ const OnboardingPreferences = () => {
               </div>
             ))}
           </div>
-          
+
           <div className="mt-6 text-center text-sm text-muted-foreground">
             Selected {selectedInterests.length} interests
           </div>

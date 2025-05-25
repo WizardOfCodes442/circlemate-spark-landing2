@@ -25,10 +25,22 @@ const countries = [
   "Australia",
   "Germany",
   "France",
+  "Nigeria",
   "Japan",
   "India",
   "Brazil",
   "Mexico",
+  "South Africa",
+  "Italy",
+  "Spain",
+  "Netherlands",
+  "Sweden",
+  "Norway",
+  "Finland",
+  "Denmark",
+  "Russia",
+  "China",
+  "South Korea",
 ];
 
 const states = [
@@ -42,6 +54,10 @@ const states = [
   "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
   "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
   "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming",
+  "FCT Abuja", "Lagos", "Edo State", "Rivers State", "Oyo State",
+  "Kano State", "Kaduna State", "Enugu State", "Anambra State", "Abia State",
+  "Cross River State", "Akwa Ibom", "Delta State", "Bayelsa State",
+  "Benue State", "Kogi State", "Nasarawa State", "Plateau State", "Taraba State",
 ];
 
 const OnboardingLocation = () => {
@@ -97,7 +113,7 @@ const OnboardingLocation = () => {
         <button
           type="button"
           onClick={useCurrentLocation}
-          className="flex items-center text-primary hover:underline"
+          className="flex items-center text-[#22CCBE] hover:underline"
         >
           <MapPin className="h-4 w-4 mr-2" />
           Use current location
@@ -107,20 +123,34 @@ const OnboardingLocation = () => {
       <Form {...form}>
         <form className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField
+             <FormField
               control={form.control}
-              name="city"
+              name="country"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>City</FormLabel>
-                  <FormControl>
-                    <Input placeholder="San Francisco" {...field} />
-                  </FormControl>
+                  <FormLabel>Country</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select country" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {countries.map((country) => (
+                        <SelectItem key={country} value={country}>
+                          {country}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="state"
@@ -153,27 +183,13 @@ const OnboardingLocation = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField
               control={form.control}
-              name="country"
+              name="city"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Country</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select country" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {countries.map((country) => (
-                        <SelectItem key={country} value={country}>
-                          {country}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Input placeholder="San Francisco" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

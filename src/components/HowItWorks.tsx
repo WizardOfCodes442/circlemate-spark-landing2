@@ -7,7 +7,7 @@ const HowItWorks = () => {
       number: "01",
       title: "Join Your Group",
       description: "Enter your group's code or search to find your community within CircleMate.",
-      bgColor: "bg-primary"
+      bgColor: "bg-[#22CCBE]"
     },
     {
       number: "02", 
@@ -25,7 +25,7 @@ const HowItWorks = () => {
       number: "04",
       title: "Plan & Meet",
       description: "Schedule a meetup at one of our suggested venues and start building a meaningful connection.",
-      bgColor: "bg-primary"
+      bgColor: "bg-[#22CCBE]"
     }
   ];
 

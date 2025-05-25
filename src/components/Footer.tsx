@@ -20,16 +20,16 @@ const Footer = () => {
               Fostering meaningful connections within trusted communities.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-primary transition-colors">
+              <a href="#" className="text-gray-300 hover:text-[#22CCBE] transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-gray-300 hover:text-primary transition-colors">
+              <a href="#" className="text-gray-300 hover:text-[#22CCBE] transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-gray-300 hover:text-primary transition-colors">
+              <a href="#" className="text-gray-300 hover:text-[#22CCBE] transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-gray-300 hover:text-primary transition-colors">
+              <a href="#" className="text-gray-300 hover:text-[#22CCBE] transition-colors">
                 <Linkedin size={20} />
               </a>
             </div>
@@ -39,10 +39,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-primary transition-colors">Home</a></li>
-              <li><a href="#features" className="text-gray-300 hover:text-primary transition-colors">Features</a></li>
-              <li><a href="#how-it-works" className="text-gray-300 hover:text-primary transition-colors">How It Works</a></li>
-              <li><a href="#testimonials" className="text-gray-300 hover:text-primary transition-colors">Testimonials</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-[#22CCBE] transition-colors">Home</a></li>
+              <li><a href="#features" className="text-gray-300 hover:text-[#22CCBE] transition-colors">Features</a></li>
+              <li><a href="#how-it-works" className="text-gray-300 hover:text-[#22CCBE] transition-colors">How It Works</a></li>
+              <li><a href="#testimonials" className="text-gray-300 hover:text-[#22CCBE] transition-colors">Testimonials</a></li>
             </ul>
           </div>
 
@@ -50,10 +50,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Resources</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-primary transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-primary transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-primary transition-colors">FAQ</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-primary transition-colors">Blog</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-[#22CCBE] transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-[#22CCBE] transition-colors">Terms of Service</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-[#22CCBE] transition-colors">FAQ</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-[#22CCBE] transition-colors">Blog</a></li>
             </ul>
           </div>
 

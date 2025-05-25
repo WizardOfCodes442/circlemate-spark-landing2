@@ -24,7 +24,7 @@ const Stats = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-on-scroll">
           <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-            Ready to Find Your <span className="text-primary">Perfect Match</span>?
+            Ready to Find Your <span className="text-[#22CCBE]">Perfect Match</span>?
           </h2>
           <p className="text-lg text-gray-200 max-w-2xl mx-auto">
             Join CircleMate today and start connecting with like-minded individuals in your trusted communities. Whether you're looking for friendship, romance, or professional connections.
@@ -38,7 +38,7 @@ const Stats = () => {
               className="text-center animate-on-scroll"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="text-4xl lg:text-5xl font-bold text-primary mb-2">
+              <div className="text-4xl lg:text-5xl font-bold text-[#22CCBE] mb-2">
                 {stat.number}
               </div>
               <div className="text-xl font-semibold mb-1">{stat.label}</div>
@@ -50,7 +50,7 @@ const Stats = () => {
         <div className="text-center animate-on-scroll">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/signup">
-            <button className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105 w-full">
+            <button className="bg-[#22CCBE] hover:bg-primary text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105 w-full">
               Get Started
             </button>
             </Link>

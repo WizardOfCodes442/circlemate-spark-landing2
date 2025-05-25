@@ -124,7 +124,7 @@ const OnboardingPersonality = () => {
         </span>
         <div className="w-full bg-secondary h-2 rounded-full mt-2">
           <div
-            className="bg-primary h-2 rounded-full transition-all"
+            className="bg-[#22CCBE] h-2 rounded-full transition-all"
             style={{ width: `${(selectedTraits.length / 5) * 100}%` }}
           ></div>
         </div>

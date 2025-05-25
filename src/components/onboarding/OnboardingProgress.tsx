@@ -81,7 +81,7 @@ const OnboardingProgress = ({ currentStep, totalSteps }: OnboardingProgressProps
       <canvas 
         ref={canvasRef} 
         width={800} 
-        height={45} 
+        height={60} 
         className="w-full h-10"
       ></canvas>
       <div className="flex justify-between text-sm text-muted-foreground mt-1">

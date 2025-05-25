@@ -135,15 +135,16 @@ const Signup = () => {
                         />
                         <Button
                           type="button"
-                          variant="ghost"
+                          variant="link"
                           size="icon"
-                          className="absolute right-2 top-2"
+                          className="absolute right-2 top-0"
                           onClick={() => setShowPassword(!showPassword)}
+                          
                         >
                           {showPassword ? (
-                            <EyeOff className="h-4 w-4" />
+                            <EyeOff className="h-4 w-4 text-black" />
                           ) : (
-                            <Eye className="h-4 w-4" />
+                            <Eye className="h-4 w-4 text-black" />
                           )}
                         </Button>
                       </div>
@@ -169,15 +170,15 @@ const Signup = () => {
                         />
                         <Button
                           type="button"
-                          variant="ghost"
+                          variant="link"
                           size="icon"
-                          className="absolute right-2 top-2"
+                          className="absolute right-2 top-0"
                           onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                         >
                           {showConfirmPassword ? (
-                            <EyeOff className="h-4 w-4" />
+                            <EyeOff className="h-4 w-4 text-black" />
                           ) : (
-                            <Eye className="h-4 w-4" />
+                            <Eye className="h-4 w-4 text-black" />
                           )}
                         </Button>
                       </div>
@@ -200,11 +201,11 @@ const Signup = () => {
                     <div className="space-y-1 leading-none">
                       <FormLabel className="text-sm font-normal">
                         I agree to the{" "}
-                        <Link to="/terms" className="text-primary hover:underline">
+                        <Link to="/terms" className="text-[#22CCBE] hover:underline">
                           terms of service
                         </Link>{" "}
                         and{" "}
-                        <Link to="/privacy" className="text-primary hover:underline">
+                        <Link to="/privacy" className="text-[#22CCBE] hover:underline">
                           privacy policy
                         </Link>
                       </FormLabel>
@@ -222,7 +223,7 @@ const Signup = () => {
         <CardFooter className="flex justify-center">
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link to="/login" className="font-medium text-primary hover:underline">
+            <Link to="/login" className="font-medium text-[#22CCBE] hover:underline">
               Sign in
             </Link>
           </p>

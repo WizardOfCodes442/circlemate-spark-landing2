@@ -94,12 +94,12 @@ const OnboardingAvailability = () => {
       <div className="space-y-8">
         <div>
           <h3 className="font-medium text-lg mb-4">Which days are you usually free?</h3>
-          <div className="flex justify-between space-x-2">
+          <div className="flex space-x-2">
             {days.map((day, index) => (
               <Button
                 key={day.day}
                 variant={day.selected ? "default" : "outline"}
-                className="w-12 h-12 rounded-full"
+                className="w-10 h-10 rounded-full"
                 onClick={() => toggleDay(index)}
               >
                 {day.abbr}
@@ -115,7 +115,7 @@ const OnboardingAvailability = () => {
               <Card
                 key={pref.id}
                 className={`cursor-pointer border-2 transition-all ${
-                  pref.selected ? "border-primary bg-primary/5" : "hover:border-primary/20"
+                  pref.selected ? "border-primary bg-[#22CCBE]/5" : "hover:border-primary/20"
                 }`}
                 onClick={() => toggleTimePreference(pref.id)}
               >

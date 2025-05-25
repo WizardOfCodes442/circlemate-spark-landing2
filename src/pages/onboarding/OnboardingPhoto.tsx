@@ -97,7 +97,7 @@ const OnboardingPhoto = () => {
         ) : (
           <Card
             className={`border-dashed border-2 p-12 w-full max-w-xs flex flex-col items-center justify-center cursor-pointer ${
-              isDragging ? "border-primary bg-primary/5" : "hover:border-primary/50"
+              isDragging ? "border-primary bg-[#22CCBE]/5" : "hover:border-primary/50"
             }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}

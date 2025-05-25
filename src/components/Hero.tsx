@@ -17,7 +17,7 @@ const Hero = () => {
             <div className="space-y-6">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-secondary leading-tight">
                 Meaningful{' '}
-                <span className="text-primary">Connections</span>{' '}
+                <span className="text-[#22CCBE]">Connections</span>{' '}
                 Within Your Trusted Circle
               </h1>
               <p className="text-lg text-gray-600 leading-relaxed max-w-xl">
@@ -28,22 +28,22 @@ const Hero = () => {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/signup" >
-              <Button size="lg" className="bg-primary hover:bg-primary-dark text-white px-8 py-4 text-lg w-full">
+              <Button size="lg" className="bg-[#22CCBE] hover:bg-primary text-white px-8 py-4 text-lg w-full">
                 Get Started
               </Button>
               </Link>
-              <Button size="lg" variant="outline" className="text-primary border-primary hover:bg-primary hover:text-white px-8 py-4 text-lg">
+              <Button size="lg" variant="outline" className="text-[#22CCBE] border-primary hover:bg-[#22CCBE] hover:text-white px-8 py-4 text-lg">
                 Learn More
               </Button>
             </div>
 
             <div className="flex items-center space-x-8 text-sm text-gray-500">
               <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-primary rounded-full"></div>
+                <div className="w-2 h-2 bg-[#22CCBE] rounded-full"></div>
                 <span>50+ Active Communities</span>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-primary rounded-full"></div>
+                <div className="w-2 h-2 bg-[#22CCBE] rounded-full"></div>
                 <span>10,000+ Successful Matches</span>
               </div>
             </div>
@@ -59,11 +59,11 @@ const Hero = () => {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-gray-900">Your Match Request</h3>
-                      <span className="text-xs text-primary bg-primary/10 px-2 py-1 rounded-full">New</span>
+                      <span className="text-xs text-[#22CCBE] bg-[#22CCBE]/10 px-2 py-1 rounded-full">New</span>
                     </div>
                     
                     <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                      <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-semibold">
+                      <div className="w-12 h-12 bg-[#22CCBE] rounded-full flex items-center justify-center text-white font-semibold">
                         ST
                       </div>
                       <div>
@@ -73,7 +73,7 @@ const Hero = () => {
                     </div>
 
                     <div className="flex space-x-2">
-                      <Button className="flex-1 bg-primary hover:bg-primary-dark text-white">
+                      <Button className="flex-1 bg-[#22CCBE] hover:bg-primary text-white">
                         Accept
                       </Button>
                       <Button variant="outline" className="flex-1 text-gray-600 border-gray-300">
@@ -82,7 +82,7 @@ const Hero = () => {
                     </div>
 
                     <div className="flex items-center justify-center space-x-4 pt-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
+                      <div className="w-2 h-2 bg-[#22CCBE] rounded-full"></div>
                       <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
                       <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
                     </div>
@@ -91,7 +91,7 @@ const Hero = () => {
               </div>
 
               {/* Background decoration */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full -z-10"></div>
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-[#22CCBE]/10 rounded-full -z-10"></div>
               <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-accent/10 rounded-full -z-10"></div>
             </div>
           </div>

@@ -14,7 +14,7 @@ const Index = () => {
   useScrollAnimation();
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#F1FAF6]">
       <Header />
       
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center gap-2 z-10">

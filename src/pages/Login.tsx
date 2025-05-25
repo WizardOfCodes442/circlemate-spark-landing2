@@ -48,7 +48,7 @@ const Login = () => {
     
     // Simulate successful login
     setTimeout(() => {
-      navigate("/dashboard");
+      navigate("/discover");
     }, 1500);
   };
 
@@ -122,7 +122,7 @@ const Login = () => {
               <div className="text-right">
                 <Link
                   to="/forgot-password"
-                  className="text-sm font-medium text-primary hover:underline"
+                  className="text-sm font-medium text-[#22CCBE] hover:underline"
                 >
                   Forgot your password?
                 </Link>
@@ -136,7 +136,7 @@ const Login = () => {
         <CardFooter className="flex justify-center">
           <p className="text-sm text-muted-foreground">
             Don't have an account?{" "}
-            <Link to="/signup" className="font-medium text-primary hover:underline">
+            <Link to="/signup" className="font-medium text-[#22CCBE] hover:underline">
               Sign up
             </Link>
           </p>

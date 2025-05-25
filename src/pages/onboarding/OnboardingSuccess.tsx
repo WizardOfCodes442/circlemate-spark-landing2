@@ -39,7 +39,7 @@ const OnboardingSuccess = () => {
             <h3 className="text-lg font-medium">Next steps:</h3>
             
             <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 bg-primary/10 p-1 rounded-full">
+              <div className="flex-shrink-0 bg-[#22CCBE]/10 p-1 rounded-full">
                 <span className="text-lg">👋</span>
               </div>
               <div>
@@ -51,7 +51,7 @@ const OnboardingSuccess = () => {
             </div>
             
             <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 bg-primary/10 p-1 rounded-full">
+              <div className="flex-shrink-0 bg-[#22CCBE]/10 p-1 rounded-full">
                 <span className="text-lg">👥</span>
               </div>
               <div>
@@ -63,7 +63,7 @@ const OnboardingSuccess = () => {
             </div>
             
             <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 bg-primary/10 p-1 rounded-full">
+              <div className="flex-shrink-0 bg-[#22CCBE]/10 p-1 rounded-full">
                 <span className="text-lg">📅</span>
               </div>
               <div>

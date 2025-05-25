@@ -1,12 +1,10 @@
 
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
-import { User, Bell, MessageCircle, Search, Settings, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import DashboardHeader from "@/components/DashboardHeader";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -17,44 +15,15 @@ const Dashboard = () => {
       description: "You have been successfully logged out",
     });
     navigate("/");
+
   };
   
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <img
-              src="/logo.png"
-              alt="CircleMate Logo"
-              className="h-12 w-12"
-            />
-            
-            <div className="hidden md:flex items-center space-x-6">
-              <Button variant="ghost" className="text-muted-foreground">Discover</Button>
-              <Button variant="ghost" className="text-muted-foreground">Communities</Button>
-              <Button variant="ghost" className="text-muted-foreground">Events</Button>
-            </div>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <Button variant="ghost" size="icon">
-              <Search className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <MessageCircle className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Bell className="h-5 w-5" />
-            </Button>
-            <Avatar className="h-8 w-8">
-              <AvatarImage src="/icon.png" />
-              <AvatarFallback>JD</AvatarFallback>
-            </Avatar>
-          </div>
-        </div>
-      </header>
+      <DashboardHeader />
+      
+      {/* Sidebar */}
       
       {/* Main content */}
       <main className="container mx-auto px-4 py-8">

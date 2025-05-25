@@ -21,6 +21,17 @@ import OnboardingPreferences from "./pages/onboarding/OnboardingPreferences";
 import OnboardingAvailability from "./pages/onboarding/OnboardingAvailability";
 import OnboardingPhoto from "./pages/onboarding/OnboardingPhoto";
 import OnboardingSuccess from "./pages/onboarding/OnboardingSuccess";
+import Discover from "./pages/Discover";
+import Communities from "./pages/Communities";
+import Events from "./pages/Events";
+import ManageCommunity from "./pages/ManageCommunity";
+import Notifications from "./pages/Notification";
+import UserProfile from "./pages/UserProfile";
+import EditProfile from "./pages/EditProfile";
+import Matchmaking from "./pages/MatchMaking";
+import PaymentReceipt from "./pages/Invoice";
+import CreateCommunity from "./pages/CreateCommunity";
+import CommunityProfile from "./pages/CommunityProfile";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +47,19 @@ const App = () => (
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/discover" element={<Discover />} />
+          <Route path="/community" element={<Communities />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/manage-community" element={<ManageCommunity />} />
+          <Route path="/notification" element={<Notifications />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/match-making" element={<Matchmaking />} />
+          <Route path="/invoice" element={<PaymentReceipt />} />
+          <Route path="/create-community" element={<CreateCommunity />} />
+          <Route path="/community-profile" element={<CommunityProfile />} />
+          
+          {/* Catch-all route for 404 */}
           
           {/* Onboarding Routes */}
           <Route path="/onboarding" element={<OnboardingCommunity />} />

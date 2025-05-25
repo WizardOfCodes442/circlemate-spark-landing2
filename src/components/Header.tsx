@@ -22,17 +22,17 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-gray-600 hover:text-primary transition-colors">Features</a>
-            <a href="#how-it-works" className="text-gray-600 hover:text-primary transition-colors">How It Works</a>
-            <a href="#testimonials" className="text-gray-600 hover:text-primary transition-colors">Testimonials</a>
+            <a href="#features" className="text-gray-600 hover:text-[#22CCBE] transition-colors">Features</a>
+            <a href="#how-it-works" className="text-gray-600 hover:text-[#22CCBE] transition-colors">How It Works</a>
+            <a href="#testimonials" className="text-gray-600 hover:text-[#22CCBE] transition-colors">Testimonials</a>
             <div className="flex items-center space-x-4">
               <Link to="/login">
-              <Button variant="outline" className="text-primary border-primary hover:bg-primary hover:text-white w-full">
+              <Button variant="outline" className="text-[#22CCBE] border-primary hover:bg-[#22CCBE] hover:text-white w-full">
                 Log in
               </Button>
               </Link>
               <Link to="/signup">
-              <Button className="bg-primary hover:bg-primary-dark text-white w-full">
+              <Button className="bg-[#22CCBE] hover:bg-primary text-white w-full">
                 Sign Up
               </Button>
               </Link>
@@ -56,17 +56,17 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-100">
             <nav className="flex flex-col space-y-4">
-              <a href="#features" className="text-gray-600 hover:text-primary transition-colors">Features</a>
-              <a href="#how-it-works" className="text-gray-600 hover:text-primary transition-colors">How It Works</a>
-              <a href="#testimonials" className="text-gray-600 hover:text-primary transition-colors">Testimonials</a>
+              <a href="#features" className="text-gray-600 hover:text-[#22CCBE] transition-colors">Features</a>
+              <a href="#how-it-works" className="text-gray-600 hover:text-[#22CCBE] transition-colors">How It Works</a>
+              <a href="#testimonials" className="text-gray-600 hover:text-[#22CCBE] transition-colors">Testimonials</a>
               <div className="flex flex-col space-y-2 pt-4">
                 <Link to="/login">
-                <Button variant="outline" className="text-primary border-primary hover:bg-primary hover:text-white w-full">
+                <Button variant="outline" className="text-[#22CCBE] border-primary hover:bg-[#22CCBE] hover:text-white w-full">
                   Log In
                 </Button>
                 </Link>
                 <Link to="/login">
-                <Button className="bg-primary hover:bg-primary-dark text-white w-full">
+                <Button className="bg-[#22CCBE] hover:bg-primary text-white w-full">
                   Sign Up
                 </Button>
                 </Link>
