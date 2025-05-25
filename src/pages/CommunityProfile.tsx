@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,7 +10,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Users, MapPin, Calendar, DollarSign } from "lucide-react";
+<<<<<<< HEAD
 import { mockCommunity } from "@/data/MockCommunityData";
+=======
+import { mockCommunity } from "@/data/mockCommunityData";
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 import { PricingModal } from "@/components/community/PricingModal";
 import Header from "@/components/DashboardHeader";
 
@@ -18,7 +26,11 @@ const mockUpdates = [
     content: "We're excited to welcome our newest members to the Tech Enthusiasts community. Let's continue building amazing things together!",
     author: "John Doe",
     date: "2024-01-15",
+<<<<<<< HEAD
     likes: 24,
+=======
+    likes: 24
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
   },
   {
     id: "2",
@@ -77,7 +89,11 @@ const CommunityProfile = () => {
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row gap-6">
               <Avatar className="h-24 w-24 mx-auto md:mx-0">
+<<<<<<< HEAD
                 <AvatarImage src="/user1.png" alt={community.name} />
+=======
+                <AvatarImage src={community.image} alt={community.name} />
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
                 <AvatarFallback>{community.name.substring(0, 2)}</AvatarFallback>
               </Avatar>
               
@@ -113,7 +129,11 @@ const CommunityProfile = () => {
                 </div>
                 
                 {!isMember ? (
+<<<<<<< HEAD
                   <Button onClick={handleJoinRequest} size="lg" className="text-white">
+=======
+                  <Button onClick={handleJoinRequest} size="lg">
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
                     {community.isPaid ? `Join for $${community.subscriptionAmount}/month` : "Request to Join"}
                   </Button>
                 ) : (

@@ -27,6 +27,7 @@ const Header = () => {
             <a href="#testimonials" className="text-gray-600 hover:text-[#22CCBE] transition-colors">Testimonials</a>
             <div className="flex items-center space-x-4">
               <Link to="/login">
+<<<<<<< HEAD
               <Button variant="outline" className="text-[#22CCBE] border-primary hover:bg-[#22CCBE] hover:text-white w-full">
                 Log in
               </Button>
@@ -35,6 +36,16 @@ const Header = () => {
               <Button className="bg-[#22CCBE] hover:bg-primary text-white w-full">
                 Sign Up
               </Button>
+=======
+                <Button variant="outline" className="text-primary border-primary hover:bg-primary hover:text-white">
+                  Log in
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button className="bg-primary hover:bg-primary-dark text-white">
+                  Sign Up
+                </Button>
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
               </Link>
             </div>
           </nav>
@@ -61,6 +72,7 @@ const Header = () => {
               <a href="#testimonials" className="text-gray-600 hover:text-[#22CCBE] transition-colors">Testimonials</a>
               <div className="flex flex-col space-y-2 pt-4">
                 <Link to="/login">
+<<<<<<< HEAD
                 <Button variant="outline" className="text-[#22CCBE] border-primary hover:bg-[#22CCBE] hover:text-white w-full">
                   Log In
                 </Button>
@@ -69,6 +81,16 @@ const Header = () => {
                 <Button className="bg-[#22CCBE] hover:bg-primary text-white w-full">
                   Sign Up
                 </Button>
+=======
+                  <Button variant="outline" className="text-primary border-primary hover:bg-primary hover:text-white w-full">
+                    Log In
+                  </Button>
+                </Link>
+                <Link to="/signup">
+                  <Button className="bg-primary hover:bg-primary-dark text-white w-full">
+                    Sign Up
+                  </Button>
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
                 </Link>
               </div>
             </nav>

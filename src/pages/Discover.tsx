@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 import { useState } from "react";
 import { Search, Users, MapPin, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,8 +13,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "@/hooks/use-toast";
 import Header from "@/components/DashboardHeader";
 import { PricingModal } from "@/components/community/PricingModal";
+<<<<<<< HEAD
 import { Community } from "@/data/MockCommunityData";
 import { Link } from "react-router-dom";
+=======
+import { Community } from "@/data/mockCommunityData";
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 
 // Mock data for communities
 const mockCommunities: Community[] = [
@@ -39,7 +47,11 @@ const mockCommunities: Community[] = [
   {
     id: "2",
     name: "Book Club",
+<<<<<<< HEAD
     description: "Monthly discussions on bestsellers and classic users of CircleMate.",
+=======
+    description: "Monthly discussions on bestsellers and classic literature.",
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
     rules: "1. Be respectful\n2. No spoilers\n3. Participate in discussions",
     category: "Education",
     location: {
@@ -54,13 +66,22 @@ const mockCommunities: Community[] = [
       { id: "m5", name: "Michael Brown", avatar: "/placeholder.svg", role: "member" }
     ],
     joinRequests: [],
+<<<<<<< HEAD
     isPaid: true,
     subscriptionAmount: 500
+=======
+    isPaid: false,
+    subscriptionAmount: 0
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
   },
   {
     id: "3",
     name: "Fitness Fanatics",
+<<<<<<< HEAD
     description: "Share workout routines, nutrition tips, and fitness goals on CircleMate.",
+=======
+    description: "Share workout routines, nutrition tips, and fitness goals.",
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
     rules: "1. Be supportive\n2. Share your progress\n3. No harmful advice",
     category: "Health",
     location: {
@@ -185,11 +206,15 @@ const Discover = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {filteredCommunities.length > 0 ? (
             filteredCommunities.map((community) => (
+<<<<<<< HEAD
               <Link
                 to="/community-profile"
                 key={community.id}
                 className="group">
                   <Card key={community.id} className="overflow-hidden hover:shadow-md transition-shadow">
+=======
+              <Card key={community.id} className="overflow-hidden hover:shadow-md transition-shadow">
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
                 <CardHeader className="bg-gradient-to-r from-primary/20 to-primary-dark/5 pb-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
@@ -266,7 +291,10 @@ const Discover = () => {
                   </Button>
                 </CardFooter>
               </Card>
+<<<<<<< HEAD
                 </Link>
+=======
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
             ))
           ) : (
             <div className="col-span-full text-center py-10">

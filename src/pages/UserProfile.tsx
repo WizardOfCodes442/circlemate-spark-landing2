@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Edit, MapPin, Users, Calendar } from "lucide-react";
@@ -12,7 +16,11 @@ const mockUser = {
   id: "1",
   name: "John Doe",
   email: "john.doe@example.com",
+<<<<<<< HEAD
   avatar: "/user1.png",
+=======
+  avatar: "/placeholder.svg",
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
   bio: "Tech enthusiast and coffee lover. Always learning something new!",
   location: "San Francisco, CA",
   joinedDate: "2024-01-15",
@@ -70,7 +78,11 @@ const UserProfile = () => {
                       </div>
                     </div>
                     
+<<<<<<< HEAD
                     <Button className="text-white" onClick={() => navigate("/edit-profile")}>
+=======
+                    <Button onClick={() => navigate("/profile/edit")}>
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
                       <Edit className="h-4 w-4 mr-2" />
                       Edit Profile
                     </Button>

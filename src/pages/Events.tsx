@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/DashboardHeader";
 import EventsTab from "@/components/events/EventsTab";
 import { Event } from "../../types";
+=======
+
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Header from "@/components/DashboardHeader";
+import EventsTab from "@/components/events/EventsTab";
+import { Event } from "@/types/event";
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 
 // Mock data for events
 const mockEvents: Event[] = [

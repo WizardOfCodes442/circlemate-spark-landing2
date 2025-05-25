@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,7 +9,17 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
+import Discover from "./pages/Discover";
+import Communities from "./pages/Communities";
+import Events from "./pages/Events";
 import NotFound from "./pages/NotFound";
+
+// New pages
+import ManageCommunity from "./pages/ManageCommunity";
+import UserProfile from "./pages/UserProfile";
+import EditProfile from "./pages/EditProfile";
+import Notifications from "./pages/Notifications";
+import Matchmaking from "./pages/Matchmaking";
 
 // Onboarding routes
 import OnboardingCommunity from "./pages/onboarding/OnboardingCommunity";
@@ -33,6 +42,9 @@ import PaymentReceipt from "./pages/Invoice";
 import CreateCommunity from "./pages/CreateCommunity";
 import CommunityProfile from "./pages/CommunityProfile";
 
+import CreateCommunity from "./pages/CreateCommunity";
+import CommunityProfile from "./pages/CommunityProfile";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -48,6 +60,7 @@ const App = () => (
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/discover" element={<Discover />} />
+<<<<<<< HEAD
           <Route path="/community" element={<Communities />} />
           <Route path="/events" element={<Events />} />
           <Route path="/manage-community" element={<ManageCommunity />} />
@@ -60,6 +73,21 @@ const App = () => (
           <Route path="/community-profile" element={<CommunityProfile />} />
           
           {/* Catch-all route for 404 */}
+=======
+          <Route path="/communities" element={<Communities />} />
+          <Route path="/events" element={<Events />} />
+          
+          {/* New pages */}
+          <Route path="/manage-community/:id" element={<ManageCommunity />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/matchmaking" element={<Matchmaking />} />
+          
+          {/* New community routes */}
+          <Route path="/create-community" element={<CreateCommunity />} />
+          <Route path="/community/:id" element={<CommunityProfile />} />
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
           
           {/* Onboarding Routes */}
           <Route path="/onboarding" element={<OnboardingCommunity />} />

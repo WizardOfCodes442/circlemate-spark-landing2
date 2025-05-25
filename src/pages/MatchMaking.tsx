@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Heart, Users, MapPin, Zap, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,7 @@ const mockMatches = [
   {
     id: "1",
     name: "Sarah Wilson",
-    avatar: "/user1.png",
+    avatar: "/placeholder.svg",
     location: "San Francisco, CA",
     interests: ["Technology", "Photography", "Travel", "Music", "Art"],
     communities: ["Tech Enthusiasts", "Photography Club"],
@@ -31,7 +32,7 @@ const mockMatches = [
   {
     id: "2",
     name: "Mike Chen",
-    avatar: "/user2.png",
+    avatar: "/placeholder.svg",
     location: "San Jose, CA",
     interests: ["Coffee", "Reading", "Technology", "Gaming"],
     communities: ["Coffee Lovers", "Book Club", "Gaming Community"],
@@ -42,7 +43,7 @@ const mockMatches = [
   {
     id: "3",
     name: "Emma Rodriguez",
-    avatar: "/user1.png",
+    avatar: "/placeholder.svg",
     location: "Oakland, CA",
     interests: ["Reading", "Travel", "Cooking", "Yoga"],
     communities: ["Book Club", "Travel Enthusiasts"],
@@ -130,10 +131,7 @@ const Matchmaking = () => {
                 <p className="text-muted-foreground">AI-powered compatibility using Jaccard similarity algorithm</p>
               </div>
             </div>
-            
-          </div>
-          <div className="flex items-center justify-end mb-6">
-            <Button className="text-white" onClick={recalculateMatches} disabled={isCalculating}>
+            <Button onClick={recalculateMatches} disabled={isCalculating}>
               {isCalculating ? (
                 <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
               ) : (
@@ -246,7 +244,7 @@ const Matchmaking = () => {
                   </div>
 
                   <Button 
-                    className="w-full text-white"
+                    className="w-full"
                     onClick={() => connectWithUser(match.id, match.name)}
                   >
                     <Heart className="h-4 w-4 mr-2" />

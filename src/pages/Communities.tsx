@@ -1,12 +1,20 @@
 import { useState } from "react";
+<<<<<<< HEAD
+=======
+import { useNavigate } from "react-router-dom";
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 import { Users, MapPin, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+<<<<<<< HEAD
 import DashboardHeader from "@/components/DashboardHeader";
 import { Link, Navigate } from "react-router-dom";
+=======
+import Header from "@/components/DashboardHeader";
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 
 // Mock data for user communities
 const mockUserCommunities = [
@@ -22,6 +30,7 @@ const mockUserCommunities = [
       country: "USA"
     },
     memberCount: 1243,
+<<<<<<< HEAD
     image: "/group1.png",
     isAdmin: true,
     members: [
@@ -31,6 +40,17 @@ const mockUserCommunities = [
     joinRequests: [
       { id: "r1", name: "Alice Cooper", avatar: "/user1.png" },
       { id: "r2", name: "Bob Dylan", avatar: "/user1.png" }
+=======
+    image: "/placeholder.svg",
+    isAdmin: true,
+    members: [
+      { id: "m1", name: "John Doe", avatar: "/placeholder.svg" },
+      { id: "m2", name: "Jane Smith", avatar: "/placeholder.svg" }
+    ],
+    joinRequests: [
+      { id: "r1", name: "Alice Cooper", avatar: "/placeholder.svg" },
+      { id: "r2", name: "Bob Dylan", avatar: "/placeholder.svg" }
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
     ]
   },
   {
@@ -45,17 +65,29 @@ const mockUserCommunities = [
       country: "USA"
     },
     memberCount: 89,
+<<<<<<< HEAD
     image: "/group4.png",
     isAdmin: false,
     members: [
       { id: "m4", name: "Emma Wilson", avatar: "/user1.png" },
       { id: "m5", name: "Michael Brown", avatar: "/user2.png" }
+=======
+    image: "/placeholder.svg",
+    isAdmin: false,
+    members: [
+      { id: "m4", name: "Emma Wilson", avatar: "/placeholder.svg" },
+      { id: "m5", name: "Michael Brown", avatar: "/placeholder.svg" }
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
     ],
     joinRequests: []
   }
 ];
 
 const Communities = () => {
+<<<<<<< HEAD
+=======
+  const navigate = useNavigate();
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
   const [userCommunities] = useState(mockUserCommunities);
   const [activeTab, setActiveTab] = useState("joined");
 
@@ -76,6 +108,7 @@ const Communities = () => {
 
   return (
     <div className="min-h-screen bg-background">
+<<<<<<< HEAD
       <DashboardHeader />
       
       <main className="container mx-auto px-4 py-8">
@@ -87,6 +120,17 @@ const Communities = () => {
             Create Community
           </Button>
           </Link>
+=======
+      <Header />
+      
+      <main className="container mx-auto px-4 py-8">
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-3xl font-bold">Your Communities</h1>
+          <Button>
+            <Plus className="mr-2 h-4 w-4" />
+            Create Community
+          </Button>
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
         </div>
         
         <Tabs defaultValue="joined" value={activeTab} onValueChange={setActiveTab} className="mb-8">
@@ -102,7 +146,11 @@ const Communities = () => {
                   <Card key={community.id} className="overflow-hidden hover:shadow-md transition-shadow">
                     <CardHeader className="bg-gradient-to-r from-primary/20 to-primary-dark/5 pb-2">
                       <div className="flex items-center space-x-3">
+<<<<<<< HEAD
                         <Avatar className="h-12 w-12 ">
+=======
+                        <Avatar className="h-12 w-12 border-2 border-white">
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
                           <AvatarImage src={community.image} alt={community.name} />
                           <AvatarFallback>{community.name.substring(0, 2)}</AvatarFallback>
                         </Avatar>
@@ -173,7 +221,11 @@ const Communities = () => {
                   <Card key={community.id} className="overflow-hidden hover:shadow-md transition-shadow">
                     <CardHeader className="bg-gradient-to-r from-primary/20 to-primary-dark/5 pb-2">
                       <div className="flex items-center space-x-3">
+<<<<<<< HEAD
                         <Avatar className="h-12 w-12">
+=======
+                        <Avatar className="h-12 w-12 border-2 border-white">
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
                           <AvatarImage src={community.image} alt={community.name} />
                           <AvatarFallback>{community.name.substring(0, 2)}</AvatarFallback>
                         </Avatar>
@@ -255,9 +307,19 @@ const Communities = () => {
                         <Users className="h-4 w-4 mr-1" />
                         <span>{community.memberCount} members</span>
                       </div>
+<<<<<<< HEAD
                       <Link to="/manage-community">
                       <Button size="sm" variant="outline">Manage</Button>
                       </Link>
+=======
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => navigate(`/manage-community/${community.id}`)}
+                      >
+                        Manage
+                      </Button>
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
                     </CardFooter>
                   </Card>
                 ))
@@ -275,4 +337,8 @@ const Communities = () => {
   );
 };
 
+<<<<<<< HEAD
 export default Communities;
+=======
+export default Communities;
+>>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
