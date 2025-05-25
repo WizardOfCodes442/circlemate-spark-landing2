@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 import { TabsContent } from "@/components/ui/tabs";
 import EventsList from "./EventsList";
 
@@ -50,8 +46,4 @@ const EventsTab = ({
   );
 };
 
-<<<<<<< HEAD
 export default EventsTab;
-=======
-export default EventsTab;
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4

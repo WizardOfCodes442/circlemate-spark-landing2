@@ -21,7 +21,7 @@ const mockMatches = [
   {
     id: "1",
     name: "Sarah Wilson",
-    avatar: "/placeholder.svg",
+    avatar: "/user1.png",
     location: "San Francisco, CA",
     interests: ["Technology", "Photography", "Travel", "Music", "Art"],
     communities: ["Tech Enthusiasts", "Photography Club"],
@@ -32,7 +32,7 @@ const mockMatches = [
   {
     id: "2",
     name: "Mike Chen",
-    avatar: "/placeholder.svg",
+    avatar: "/user1.png",
     location: "San Jose, CA",
     interests: ["Coffee", "Reading", "Technology", "Gaming"],
     communities: ["Coffee Lovers", "Book Club", "Gaming Community"],
@@ -43,7 +43,7 @@ const mockMatches = [
   {
     id: "3",
     name: "Emma Rodriguez",
-    avatar: "/placeholder.svg",
+    avatar: "/user1.png",
     location: "Oakland, CA",
     interests: ["Reading", "Travel", "Cooking", "Yoga"],
     communities: ["Book Club", "Travel Enthusiasts"],
@@ -131,7 +131,9 @@ const Matchmaking = () => {
                 <p className="text-muted-foreground">AI-powered compatibility using Jaccard similarity algorithm</p>
               </div>
             </div>
-            <Button onClick={recalculateMatches} disabled={isCalculating}>
+          </div>
+          <div className="flex items-center justify-end text-white space-x-4 mb-8">
+             <Button onClick={recalculateMatches} disabled={isCalculating}>
               {isCalculating ? (
                 <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
               ) : (
@@ -211,7 +213,7 @@ const Matchmaking = () => {
                     <div className={`text-3xl font-bold ${getCompatibilityColor(match.compatibility)}`}>
                       {match.compatibility}%
                     </div>
-                    <Badge variant={match.compatibility >= 80 ? "default" : 
+                    <Badge className="text-white" variant={match.compatibility >= 80 ? "default" : 
                                    match.compatibility >= 60 ? "secondary" : "outline"}>
                       {getCompatibilityBadge(match.compatibility)}
                     </Badge>
@@ -244,7 +246,7 @@ const Matchmaking = () => {
                   </div>
 
                   <Button 
-                    className="w-full"
+                    className="w-full text-white"
                     onClick={() => connectWithUser(match.id, match.name)}
                   >
                     <Heart className="h-4 w-4 mr-2" />

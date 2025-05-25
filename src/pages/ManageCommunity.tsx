@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 import { Users, Settings, Edit, Trash2, Plus, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -31,24 +30,10 @@ const mockCommunity = {
   ]
 };
 
-=======
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { mockCommunity } from "@/data/mockCommunityData";
-import { MembersTab } from "@/components/community/MembersTab";
-import { UpdatesTab } from "@/components/community/UpdatesTab";
-import { RulesTab } from "@/components/community/RulesTab";
-import { SettingsTab } from "@/components/community/SettingsTab";
-import { SubscriptionTab } from "@/components/community/SubscriptionTab";
-import { InsightsTab } from "@/components/community/InsightsTab";
-import Header from "@/components/DashboardHeader";
-
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 const ManageCommunity = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [community, setCommunity] = useState(mockCommunity);
-<<<<<<< HEAD
   const [updateMessage, setUpdateMessage] = useState("");
   const [editingRules, setEditingRules] = useState(false);
   const [newRules, setNewRules] = useState(community.rules);
@@ -110,8 +95,6 @@ const ManageCommunity = () => {
       description: "Community rules have been updated successfully.",
     });
   };
-=======
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 
   return (
     <div className="min-h-screen bg-background">
@@ -120,21 +103,14 @@ const ManageCommunity = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
-<<<<<<< HEAD
             {/* <Button variant="outline" onClick={() => navigate("/communities")}>
               ← Back to Communities
             </Button> */}
-=======
-            <Button variant="outline" onClick={() => navigate("/communities")}>
-              ← Back to Communities
-            </Button>
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
             <h1 className="text-3xl font-bold">Manage {community.name}</h1>
           </div>
         </div>
 
         <Tabs defaultValue="members" className="space-y-6">
-<<<<<<< HEAD
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="members">Requests</TabsTrigger>
             <TabsTrigger value="updates">Updates</TabsTrigger>
@@ -288,39 +264,6 @@ const ManageCommunity = () => {
                 <Button>Save Settings</Button>
               </CardContent>
             </Card>
-=======
-          <TabsList className="grid w-full grid-cols-6">
-            <TabsTrigger value="members">Members</TabsTrigger>
-            <TabsTrigger value="updates">Updates</TabsTrigger>
-            <TabsTrigger value="rules">Rules</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
-            <TabsTrigger value="subscription">Subscription</TabsTrigger>
-            <TabsTrigger value="insights">Insights</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="members">
-            <MembersTab community={community} setCommunity={setCommunity} />
-          </TabsContent>
-
-          <TabsContent value="updates">
-            <UpdatesTab />
-          </TabsContent>
-
-          <TabsContent value="rules">
-            <RulesTab community={community} setCommunity={setCommunity} />
-          </TabsContent>
-
-          <TabsContent value="settings">
-            <SettingsTab community={community} />
-          </TabsContent>
-
-          <TabsContent value="subscription">
-            <SubscriptionTab community={community} setCommunity={setCommunity} />
-          </TabsContent>
-
-          <TabsContent value="insights">
-            <InsightsTab community={community} />
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
           </TabsContent>
         </Tabs>
       </main>
@@ -328,8 +271,4 @@ const ManageCommunity = () => {
   );
 };
 
-<<<<<<< HEAD
 export default ManageCommunity;
-=======
-export default ManageCommunity;
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4

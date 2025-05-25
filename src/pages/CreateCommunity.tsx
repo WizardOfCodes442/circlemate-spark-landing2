@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -91,11 +87,7 @@ const CreateCommunity = () => {
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between mb-8">
             <h1 className="text-3xl font-bold">Create New Community</h1>
-<<<<<<< HEAD
             <Button variant="outline" onClick={() => navigate("/community")}>
-=======
-            <Button variant="outline" onClick={() => navigate("/communities")}>
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
               ← Back to Communities
             </Button>
           </div>
@@ -226,11 +218,7 @@ const CreateCommunity = () => {
                   <Button type="button" variant="outline" onClick={() => navigate("/communities")} className="flex-1">
                     Cancel
                   </Button>
-<<<<<<< HEAD
                   <Button type="submit" className="flex-1 text-white">
-=======
-                  <Button type="submit" className="flex-1">
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
                     Create Community
                   </Button>
                 </div>

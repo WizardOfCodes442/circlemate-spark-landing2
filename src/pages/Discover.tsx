@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
 import { useState } from "react";
 import { Search, Users, MapPin, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,12 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "@/hooks/use-toast";
 import Header from "@/components/DashboardHeader";
 import { PricingModal } from "@/components/community/PricingModal";
-<<<<<<< HEAD
-import { Community } from "@/data/MockCommunityData";
-import { Link } from "react-router-dom";
-=======
 import { Community } from "@/data/mockCommunityData";
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
+import { Link } from "react-router-dom";
 
 // Mock data for communities
 const mockCommunities: Community[] = [
@@ -34,11 +26,11 @@ const mockCommunities: Community[] = [
       country: "USA"
     },
     memberCount: 1243,
-    image: "/placeholder.svg",
+    image: "/group1.png",
     members: [
-      { id: "m1", name: "John Doe", avatar: "/placeholder.svg", role: "admin" },
-      { id: "m2", name: "Jane Smith", avatar: "/placeholder.svg", role: "member" },
-      { id: "m3", name: "Alex Johnson", avatar: "/placeholder.svg", role: "member" }
+      { id: "m1", name: "John Doe", avatar: "/user1.png", role: "admin" },
+      { id: "m2", name: "Jane Smith", avatar: "/user2.png", role: "member" },
+      { id: "m3", name: "Alex Johnson", avatar: "/user1.png", role: "member" }
     ],
     joinRequests: [],
     isPaid: true,
@@ -47,11 +39,7 @@ const mockCommunities: Community[] = [
   {
     id: "2",
     name: "Book Club",
-<<<<<<< HEAD
     description: "Monthly discussions on bestsellers and classic users of CircleMate.",
-=======
-    description: "Monthly discussions on bestsellers and classic literature.",
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
     rules: "1. Be respectful\n2. No spoilers\n3. Participate in discussions",
     category: "Education",
     location: {
@@ -60,28 +48,19 @@ const mockCommunities: Community[] = [
       country: "USA"
     },
     memberCount: 89,
-    image: "/placeholder.svg",
+    image: "/group2.png",
     members: [
-      { id: "m4", name: "Emma Wilson", avatar: "/placeholder.svg", role: "admin" },
-      { id: "m5", name: "Michael Brown", avatar: "/placeholder.svg", role: "member" }
+      { id: "m4", name: "Emma Wilson", avatar: "/user1.png", role: "admin" },
+      { id: "m5", name: "Michael Brown", avatar: "/user2.png", role: "member" }
     ],
     joinRequests: [],
-<<<<<<< HEAD
     isPaid: true,
     subscriptionAmount: 500
-=======
-    isPaid: false,
-    subscriptionAmount: 0
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
   },
   {
     id: "3",
     name: "Fitness Fanatics",
-<<<<<<< HEAD
     description: "Share workout routines, nutrition tips, and fitness goals on CircleMate.",
-=======
-    description: "Share workout routines, nutrition tips, and fitness goals.",
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
     rules: "1. Be supportive\n2. Share your progress\n3. No harmful advice",
     category: "Health",
     location: {
@@ -90,11 +69,11 @@ const mockCommunities: Community[] = [
       country: "Canada"
     },
     memberCount: 567,
-    image: "/placeholder.svg",
+    image: "/group3.png",
     members: [
-      { id: "m6", name: "David Clark", avatar: "/placeholder.svg", role: "admin" },
-      { id: "m7", name: "Sarah Miller", avatar: "/placeholder.svg", role: "member" },
-      { id: "m8", name: "Robert Johnson", avatar: "/placeholder.svg", role: "member" }
+      { id: "m6", name: "David Clark", avatar: "/user1.png", role: "admin" },
+      { id: "m7", name: "Sarah Miller", avatar: "/user2.png", role: "member" },
+      { id: "m8", name: "Robert Johnson", avatar: "/user1.png", role: "member" }
     ],
     joinRequests: [],
     isPaid: true,
@@ -206,19 +185,12 @@ const Discover = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {filteredCommunities.length > 0 ? (
             filteredCommunities.map((community) => (
-<<<<<<< HEAD
-              <Link
-                to="/community-profile"
-                key={community.id}
-                className="group">
+              
                   <Card key={community.id} className="overflow-hidden hover:shadow-md transition-shadow">
-=======
-              <Card key={community.id} className="overflow-hidden hover:shadow-md transition-shadow">
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
                 <CardHeader className="bg-gradient-to-r from-primary/20 to-primary-dark/5 pb-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <Avatar className="h-10 w-10 border-2 border-white">
+                      <Avatar className="h-10 w-10">
                         <AvatarImage src={community.image} alt={community.name} />
                         <AvatarFallback>{community.name.substring(0, 2)}</AvatarFallback>
                       </Avatar>
@@ -258,6 +230,7 @@ const Discover = () => {
                     )}
                   </div>
                 </CardHeader>
+                <Link to="/community-profile">
                 <CardContent className="pt-4">
                   <p className="text-sm text-muted-foreground mb-4">{community.description}</p>
                   
@@ -275,6 +248,7 @@ const Discover = () => {
                     </div>
                   )}
                 </CardContent>
+                </Link>
                 
                 <CardFooter className="flex justify-between items-center border-t bg-muted/20 pt-3">
                   <div className="flex items-center text-sm">
@@ -284,6 +258,7 @@ const Discover = () => {
                   <Button 
                     size="sm" 
                     onClick={() => handleJoinRequest(community)}
+                    className="text-white"
                   >
                     {community.isPaid && community.subscriptionAmount && community.subscriptionAmount > 0 
                       ? `Join $${community.subscriptionAmount}` 
@@ -291,10 +266,6 @@ const Discover = () => {
                   </Button>
                 </CardFooter>
               </Card>
-<<<<<<< HEAD
-                </Link>
-=======
->>>>>>> 420ff46e3538fbe1432ac5f4791bc2fa900c5df4
             ))
           ) : (
             <div className="col-span-full text-center py-10">
