@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Search, Users, MapPin, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,15 +10,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "@/hooks/use-toast";
 import Header from "@/components/DashboardHeader";
 import { PricingModal } from "@/components/community/PricingModal";
+import { Community } from "@/data/mockCommunityData";
 
 // Mock data for communities
-const mockCommunities = [
+const mockCommunities: Community[] = [
   {
     id: "1",
     name: "Tech Enthusiasts",
-    code: "TECH01",
-    category: "Technology",
     description: "A community for tech lovers to discuss the latest trends and innovations.",
+    rules: "1. Be respectful\n2. No spam\n3. Stay on topic",
+    category: "Technology",
     location: {
       city: "San Francisco",
       state: "California",
@@ -26,19 +28,20 @@ const mockCommunities = [
     memberCount: 1243,
     image: "/placeholder.svg",
     members: [
-      { id: "m1", name: "John Doe", avatar: "/placeholder.svg" },
-      { id: "m2", name: "Jane Smith", avatar: "/placeholder.svg" },
-      { id: "m3", name: "Alex Johnson", avatar: "/placeholder.svg" }
+      { id: "m1", name: "John Doe", avatar: "/placeholder.svg", role: "admin" },
+      { id: "m2", name: "Jane Smith", avatar: "/placeholder.svg", role: "member" },
+      { id: "m3", name: "Alex Johnson", avatar: "/placeholder.svg", role: "member" }
     ],
+    joinRequests: [],
     isPaid: true,
     subscriptionAmount: 19.99
   },
   {
     id: "2",
     name: "Book Club",
-    code: "BOOK22",
-    category: "Education",
     description: "Monthly discussions on bestsellers and classic literature.",
+    rules: "1. Be respectful\n2. No spoilers\n3. Participate in discussions",
+    category: "Education",
     location: {
       city: "Boston",
       state: "Massachusetts",
@@ -47,17 +50,19 @@ const mockCommunities = [
     memberCount: 89,
     image: "/placeholder.svg",
     members: [
-      { id: "m4", name: "Emma Wilson", avatar: "/placeholder.svg" },
-      { id: "m5", name: "Michael Brown", avatar: "/placeholder.svg" }
+      { id: "m4", name: "Emma Wilson", avatar: "/placeholder.svg", role: "admin" },
+      { id: "m5", name: "Michael Brown", avatar: "/placeholder.svg", role: "member" }
     ],
-    isPaid: false
+    joinRequests: [],
+    isPaid: false,
+    subscriptionAmount: 0
   },
   {
     id: "3",
     name: "Fitness Fanatics",
-    code: "FIT123",
-    category: "Health",
     description: "Share workout routines, nutrition tips, and fitness goals.",
+    rules: "1. Be supportive\n2. Share your progress\n3. No harmful advice",
+    category: "Health",
     location: {
       city: "Toronto",
       state: "Ontario",
@@ -66,37 +71,15 @@ const mockCommunities = [
     memberCount: 567,
     image: "/placeholder.svg",
     members: [
-      { id: "m6", name: "David Clark", avatar: "/placeholder.svg" },
-      { id: "m7", name: "Sarah Miller", avatar: "/placeholder.svg" },
-      { id: "m8", name: "Robert Johnson", avatar: "/placeholder.svg" }
+      { id: "m6", name: "David Clark", avatar: "/placeholder.svg", role: "admin" },
+      { id: "m7", name: "Sarah Miller", avatar: "/placeholder.svg", role: "member" },
+      { id: "m8", name: "Robert Johnson", avatar: "/placeholder.svg", role: "member" }
     ],
+    joinRequests: [],
     isPaid: true,
     subscriptionAmount: 14.99
   }
 ];
-
-// Types
-type Community = {
-  id: string;
-  name: string;
-  code: string;
-  category: string;
-  description: string;
-  location: {
-    city: string;
-    state: string;
-    country: string;
-  };
-  memberCount: number;
-  image: string;
-  members: {
-    id: string;
-    name: string;
-    avatar: string;
-  }[];
-  isPaid: boolean;
-  subscriptionAmount: number;
-};
 
 const Discover = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -119,16 +102,14 @@ const Discover = () => {
       switch (searchBy) {
         case "name":
           return community.name.toLowerCase().includes(lowerCaseSearch);
-        case "code":
-          return community.code.toLowerCase().includes(lowerCaseSearch);
         case "state":
-          return community.location.state.toLowerCase().includes(lowerCaseSearch);
+          return community.location?.state.toLowerCase().includes(lowerCaseSearch) || false;
         case "city":
-          return community.location.city.toLowerCase().includes(lowerCaseSearch);
+          return community.location?.city.toLowerCase().includes(lowerCaseSearch) || false;
         case "country":
-          return community.location.country.toLowerCase().includes(lowerCaseSearch);
+          return community.location?.country.toLowerCase().includes(lowerCaseSearch) || false;
         case "category":
-          return community.category.toLowerCase().includes(lowerCaseSearch);
+          return community.category?.toLowerCase().includes(lowerCaseSearch) || false;
         default:
           return true;
       }
@@ -139,7 +120,7 @@ const Discover = () => {
 
   // Handle join request
   const handleJoinRequest = (community: Community) => {
-    if (community.isPaid) {
+    if (community.isPaid && community.subscriptionAmount && community.subscriptionAmount > 0) {
       setSelectedCommunity(community);
       setShowPricingModal(true);
     } else {
@@ -186,7 +167,6 @@ const Discover = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="name">Name</SelectItem>
-                <SelectItem value="code">Code</SelectItem>
                 <SelectItem value="state">State</SelectItem>
                 <SelectItem value="city">City</SelectItem>
                 <SelectItem value="country">Country</SelectItem>
@@ -240,28 +220,31 @@ const Discover = () => {
                             </div>
                           </DialogContent>
                         </Dialog>
-                        <div className="text-xs text-muted-foreground">Code: {community.code}</div>
                       </div>
                     </div>
-                    <span className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">
-                      {community.category}
-                    </span>
+                    {community.category && (
+                      <span className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">
+                        {community.category}
+                      </span>
+                    )}
                   </div>
                 </CardHeader>
                 <CardContent className="pt-4">
                   <p className="text-sm text-muted-foreground mb-4">{community.description}</p>
                   
-                  {community.isPaid && (
+                  {community.isPaid && community.subscriptionAmount && community.subscriptionAmount > 0 && (
                     <div className="flex items-center text-sm text-green-600 mb-2">
                       <DollarSign className="h-4 w-4 mr-1" />
                       <span>${community.subscriptionAmount}/month</span>
                     </div>
                   )}
                   
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    <span>{`${community.location.city}, ${community.location.state}, ${community.location.country}`}</span>
-                  </div>
+                  {community.location && (
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      <span>{`${community.location.city}, ${community.location.state}, ${community.location.country}`}</span>
+                    </div>
+                  )}
                 </CardContent>
                 
                 <CardFooter className="flex justify-between items-center border-t bg-muted/20 pt-3">
@@ -273,7 +256,9 @@ const Discover = () => {
                     size="sm" 
                     onClick={() => handleJoinRequest(community)}
                   >
-                    {community.isPaid ? `Join $${community.subscriptionAmount}` : "Request to Join"}
+                    {community.isPaid && community.subscriptionAmount && community.subscriptionAmount > 0 
+                      ? `Join $${community.subscriptionAmount}` 
+                      : "Request to Join"}
                   </Button>
                 </CardFooter>
               </Card>
