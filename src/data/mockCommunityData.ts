@@ -1,4 +1,3 @@
-
 export interface Member {
   id: string;
   name: string;
@@ -21,6 +20,15 @@ export interface Community {
   image: string;
   members: Member[];
   joinRequests: JoinRequest[];
+  category?: string;
+  location?: {
+    city: string;
+    state: string;
+    country: string;
+  };
+  isPaid?: boolean;
+  subscriptionAmount?: number;
+  isActive?: boolean;
 }
 
 // Mock data for community

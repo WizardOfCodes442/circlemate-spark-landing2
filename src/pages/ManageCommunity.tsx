@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,8 @@ import { MembersTab } from "@/components/community/MembersTab";
 import { UpdatesTab } from "@/components/community/UpdatesTab";
 import { RulesTab } from "@/components/community/RulesTab";
 import { SettingsTab } from "@/components/community/SettingsTab";
+import { SubscriptionTab } from "@/components/community/SubscriptionTab";
+import { InsightsTab } from "@/components/community/InsightsTab";
 import Header from "@/components/DashboardHeader";
 
 const ManageCommunity = () => {
@@ -30,11 +31,13 @@ const ManageCommunity = () => {
         </div>
 
         <Tabs defaultValue="members" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="members">Members & Requests</TabsTrigger>
-            <TabsTrigger value="updates">Post Updates</TabsTrigger>
-            <TabsTrigger value="rules">Community Rules</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-6">
+            <TabsTrigger value="members">Members</TabsTrigger>
+            <TabsTrigger value="updates">Updates</TabsTrigger>
+            <TabsTrigger value="rules">Rules</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
+            <TabsTrigger value="subscription">Subscription</TabsTrigger>
+            <TabsTrigger value="insights">Insights</TabsTrigger>
           </TabsList>
 
           <TabsContent value="members">
@@ -51,6 +54,14 @@ const ManageCommunity = () => {
 
           <TabsContent value="settings">
             <SettingsTab community={community} />
+          </TabsContent>
+
+          <TabsContent value="subscription">
+            <SubscriptionTab community={community} setCommunity={setCommunity} />
+          </TabsContent>
+
+          <TabsContent value="insights">
+            <InsightsTab community={community} />
           </TabsContent>
         </Tabs>
       </main>

@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -32,6 +31,9 @@ import OnboardingAvailability from "./pages/onboarding/OnboardingAvailability";
 import OnboardingPhoto from "./pages/onboarding/OnboardingPhoto";
 import OnboardingSuccess from "./pages/onboarding/OnboardingSuccess";
 
+import CreateCommunity from "./pages/CreateCommunity";
+import CommunityProfile from "./pages/CommunityProfile";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -56,6 +58,10 @@ const App = () => (
           <Route path="/profile/edit" element={<EditProfile />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/matchmaking" element={<Matchmaking />} />
+          
+          {/* New community routes */}
+          <Route path="/create-community" element={<CreateCommunity />} />
+          <Route path="/community/:id" element={<CommunityProfile />} />
           
           {/* Onboarding Routes */}
           <Route path="/onboarding" element={<OnboardingCommunity />} />

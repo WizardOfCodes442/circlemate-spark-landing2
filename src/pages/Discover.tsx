@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Search, Users, MapPin } from "lucide-react";
+import { Search, Users, MapPin, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,6 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import Header from "@/components/DashboardHeader";
+import { PricingModal } from "@/components/community/PricingModal";
 
 // Mock data for communities
 const mockCommunities = [
@@ -29,7 +29,9 @@ const mockCommunities = [
       { id: "m1", name: "John Doe", avatar: "/placeholder.svg" },
       { id: "m2", name: "Jane Smith", avatar: "/placeholder.svg" },
       { id: "m3", name: "Alex Johnson", avatar: "/placeholder.svg" }
-    ]
+    ],
+    isPaid: true,
+    subscriptionAmount: 19.99
   },
   {
     id: "2",
@@ -47,7 +49,8 @@ const mockCommunities = [
     members: [
       { id: "m4", name: "Emma Wilson", avatar: "/placeholder.svg" },
       { id: "m5", name: "Michael Brown", avatar: "/placeholder.svg" }
-    ]
+    ],
+    isPaid: false
   },
   {
     id: "3",
@@ -66,7 +69,9 @@ const mockCommunities = [
       { id: "m6", name: "David Clark", avatar: "/placeholder.svg" },
       { id: "m7", name: "Sarah Miller", avatar: "/placeholder.svg" },
       { id: "m8", name: "Robert Johnson", avatar: "/placeholder.svg" }
-    ]
+    ],
+    isPaid: true,
+    subscriptionAmount: 14.99
   }
 ];
 
@@ -89,6 +94,8 @@ type Community = {
     name: string;
     avatar: string;
   }[];
+  isPaid: boolean;
+  subscriptionAmount: number;
 };
 
 const Discover = () => {
@@ -96,6 +103,8 @@ const Discover = () => {
   const [searchBy, setSearchBy] = useState("name");
   const [communities, setCommunities] = useState<Community[]>(mockCommunities);
   const [filteredCommunities, setFilteredCommunities] = useState<Community[]>(mockCommunities);
+  const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(null);
+  const [showPricingModal, setShowPricingModal] = useState(false);
 
   // Handle search
   const handleSearch = () => {
@@ -129,12 +138,25 @@ const Discover = () => {
   };
 
   // Handle join request
-  const handleJoinRequest = (communityId: string, communityName: string) => {
-    // In a real app, this would send a request to the backend
-    toast({
-      title: "Join Request Sent",
-      description: `Your request to join ${communityName} has been sent to the community admin.`,
-    });
+  const handleJoinRequest = (community: Community) => {
+    if (community.isPaid) {
+      setSelectedCommunity(community);
+      setShowPricingModal(true);
+    } else {
+      toast({
+        title: "Join Request Sent",
+        description: `Your request to join ${community.name} has been sent to the community admin.`,
+      });
+    }
+  };
+
+  const handlePaymentSuccess = () => {
+    if (selectedCommunity) {
+      toast({
+        title: "Successfully Joined",
+        description: `Welcome to ${selectedCommunity.name}!`,
+      });
+    }
   };
 
   return (
@@ -228,11 +250,20 @@ const Discover = () => {
                 </CardHeader>
                 <CardContent className="pt-4">
                   <p className="text-sm text-muted-foreground mb-4">{community.description}</p>
+                  
+                  {community.isPaid && (
+                    <div className="flex items-center text-sm text-green-600 mb-2">
+                      <DollarSign className="h-4 w-4 mr-1" />
+                      <span>${community.subscriptionAmount}/month</span>
+                    </div>
+                  )}
+                  
                   <div className="flex items-center text-sm text-muted-foreground">
                     <MapPin className="h-4 w-4 mr-1" />
                     <span>{`${community.location.city}, ${community.location.state}, ${community.location.country}`}</span>
                   </div>
                 </CardContent>
+                
                 <CardFooter className="flex justify-between items-center border-t bg-muted/20 pt-3">
                   <div className="flex items-center text-sm">
                     <Users className="h-4 w-4 mr-1" />
@@ -240,9 +271,9 @@ const Discover = () => {
                   </div>
                   <Button 
                     size="sm" 
-                    onClick={() => handleJoinRequest(community.id, community.name)}
+                    onClick={() => handleJoinRequest(community)}
                   >
-                    Request to Join
+                    {community.isPaid ? `Join $${community.subscriptionAmount}` : "Request to Join"}
                   </Button>
                 </CardFooter>
               </Card>
@@ -254,6 +285,16 @@ const Discover = () => {
             </div>
           )}
         </div>
+
+        {selectedCommunity && (
+          <PricingModal
+            isOpen={showPricingModal}
+            onClose={() => setShowPricingModal(false)}
+            communityName={selectedCommunity.name}
+            subscriptionAmount={selectedCommunity.subscriptionAmount || 0}
+            onPaymentSuccess={handlePaymentSuccess}
+          />
+        )}
       </main>
     </div>
   );
