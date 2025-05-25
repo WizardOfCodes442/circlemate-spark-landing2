@@ -2,17 +2,17 @@
 import React from 'react';
 
 interface ReceiptProps {
-  amount: string;
-  transactionType: string;
-  recipient: string;
-  recipientId: string;
-  transactionId: string;
-  referenceId: string;
-  transactionDate: string;
-  payer: string;
-  payerCard: string;
-  paymentMethod: string;
-  paymentStatus: string;
+  amount?: string;
+  transactionType?: string;
+  recipient?: string;
+  recipientId?: string;
+  transactionId?: string;
+  referenceId?: string;
+  transactionDate?: string;
+  payer?: string;
+  payerCard?: string;
+  paymentMethod?: string;
+  paymentStatus?: string;
 }
 
 export const Receipt = ({
