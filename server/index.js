@@ -185,6 +185,10 @@ app.get('/', (req, res) => {
     });
 });
 
+// View engine setup
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 // Detailed health check
 app.get('/health', async (req, res) => {
     const healthcheck = {
@@ -209,6 +213,7 @@ app.get('/health', async (req, res) => {
         res.status(503).json(healthcheck);
     }
 });
+
 
 // Email verification success page
 app.get('/user/verified', authController.verifiedPage);
@@ -242,9 +247,6 @@ app.get('/api/docs', (req, res) => {
     });
 });
 
-// View engine setup
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
 
 // Static files
 app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
