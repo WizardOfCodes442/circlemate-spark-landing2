@@ -30,7 +30,7 @@ const config = {
         secret: process.env.SESSION_SECRET
     },
     baseUrl: process.env.NODE_ENV === 'production'
-        ? process.env.BASE_URL_PRODUCTION
+        ? process.env.BASE_URL_PRODUCTION || 'https://circlemate-spark-landing-jet.vercel.app'
         : process.env.BASE_URL_DEVELOPMENT || 'http://localhost:3000'
 };
 
