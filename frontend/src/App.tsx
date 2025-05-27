@@ -33,6 +33,7 @@ import Matchmaking from "./pages/Matchmaking";
 import CreateCommunity from "./pages/CreateCommunity";
 import CommunityProfile from "./pages/CommunityProfile";
 import ManageCommunity from "./pages/ManageCommunity";
+import VerifyEmail from "./pages/VerifyEmail";
 
 
 const queryClient = new QueryClient();
@@ -59,6 +60,7 @@ const App = () => (
           <Route path="/match-making" element={<Matchmaking />} />
           <Route path="/create-community" element={<CreateCommunity />} />
           <Route path="/community-profile" element={<CommunityProfile />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
           
           {/* Catch-all route for 404 */}
           

@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -36,21 +37,27 @@ const Login = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Here you would typically handle authentication with your backend
-    console.log("Login attempt:", values);
-    
-    // Show success toast and redirect
-    toast({
-      title: "Welcome back!",
-      description: "You have successfully logged in.",
-    });
-    
-    // Simulate successful login
-    setTimeout(() => {
-      navigate("/discover");
-    }, 1500);
-  };
+const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const { login } = useAuthStore.getState();
+try {
+  const response = await login(values.email, values.password);
+  
+  toast({
+    title: "Welcome back!",
+    description: "You have successfully logged in.",
+  });
+
+  navigate("/discover");
+} catch (error) {
+  toast({
+    title: "Login failed",
+    description: error?.message || "Invalid email or password",
+    variant: "destructive",
+  });
+}
+
+};
+
 
   return (
     <div className="container mx-auto px-4 h-screen flex items-center justify-center">
