@@ -60,15 +60,11 @@ const OnboardingLayout = ({
             )}
 
             <div className="flex space-x-4">
-              {showSkip && (
-                <Button variant="ghost" asChild>
-                  <Link to="/dashboard">Skip</Link>
-                </Button>
-              )}
+              
               <Button
                 onClick={nextAction}
                 disabled={nextDisabled}
-                className="px-6"
+                className="px-6 text-white"
               >
                 {nextLabel}
               </Button>

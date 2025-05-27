@@ -87,7 +87,7 @@ const OnboardingCommunity = () => {
 
               {selectedCommunityId === community.id ? (
                 <Button variant="default" size="icon" className="rounded-full">
-                  <Check className="h-4 w-4" />
+                  <Check className="h-4 w-4 text-white" />
                 </Button>
               ) : (
                 <Badge variant="outline" className="bg-secondary text-white">Select</Badge>

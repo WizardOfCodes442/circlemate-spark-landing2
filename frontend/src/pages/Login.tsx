@@ -127,7 +127,7 @@ const Login = () => {
                   Forgot your password?
                 </Link>
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full text-white">
                 Sign In
               </Button>
             </form>

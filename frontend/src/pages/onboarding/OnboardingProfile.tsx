@@ -19,6 +19,7 @@ const formSchema = z.object({
   }, { message: "Age must be between 18 and 120" }),
   gender: z.string().min(1, { message: "Please select your gender" }),
   bio: z.string().max(200, { message: "Bio must be 200 characters or less" }).optional(),
+  occupation: z.string().max(200, { message: "Please let us know what you do for a living." }).optional(),
 });
 
 const OnboardingProfile = () => {
@@ -32,6 +33,7 @@ const OnboardingProfile = () => {
       age: "",
       gender: "",
       bio: "",
+      occupation: "",
     },
   });
   
@@ -136,30 +138,13 @@ const OnboardingProfile = () => {
             />
             <FormField
               control={form.control}
-              name="gender"
+              name="occupation"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Occupation</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select occupation" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="male">Contractor</SelectItem>
-                      <SelectItem value="female">Developer</SelectItem>
-                      <SelectItem value="female">Engineer</SelectItem>
-                      <SelectItem value="female">Teacher</SelectItem>
-                      <SelectItem value="female">Pastor</SelectItem>
-                      <SelectItem value="female">Millitary</SelectItem>
-                      <SelectItem value="female">Fashion</SelectItem>
-                      <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <Input type="text" min={18} placeholder="What do you do?" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -174,7 +159,7 @@ const OnboardingProfile = () => {
                 <FormLabel>Bio</FormLabel>
                 <FormControl>
                   <Textarea 
-                    placeholder="Tell us a little about yourself..." 
+                    placeholder="Am a software engineer with a passion for open source projects. I love hiking and photography, i'm well conversant with Python | React Native | Nodejs | Rust | Solidity | etc...." 
                     className="resize-none" 
                     {...field}
                   />

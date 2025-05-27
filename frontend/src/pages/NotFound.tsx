@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 const NotFound = () => {
   const location = useLocation();
@@ -11,14 +12,22 @@ const NotFound = () => {
     );
   }, [location.pathname]);
 
+  const handleGoBack = () => {
+    window.location.href = "/";
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
+        <img
+          src="/404.png"
+          alt="Page not found"
+          className="mx-auto w-64 mb-6"
+        />
         <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
+        <Button onClick={handleGoBack} className="text-white">
           Return to Home
-        </a>
+        </Button>
       </div>
     </div>
   );

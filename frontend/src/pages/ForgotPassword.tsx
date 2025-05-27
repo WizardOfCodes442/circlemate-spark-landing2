@@ -73,7 +73,7 @@ const ForgotPassword = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full text-white">
                 Send Reset Link
               </Button>
             </form>

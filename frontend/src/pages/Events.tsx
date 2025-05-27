@@ -1,7 +1,7 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/DashboardHeader";
 import EventsTab from "@/components/events/EventsTab";
-import { Event } from "../../types";
+import { Event } from "../../../circlemate-spark-landing/types";
 
 // Mock data for events
 const mockEvents: Event[] = [

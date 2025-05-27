@@ -30,7 +30,6 @@ import Notifications from "./pages/Notification";
 import UserProfile from "./pages/UserProfile";
 import EditProfile from "./pages/EditProfile";
 import Matchmaking from "./pages/Matchmaking";
-import PaymentReceipt from "./pages/Invoice";
 import CreateCommunity from "./pages/CreateCommunity";
 import CommunityProfile from "./pages/CommunityProfile";
 import ManageCommunity from "./pages/ManageCommunity";
@@ -58,7 +57,6 @@ const App = () => (
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/match-making" element={<Matchmaking />} />
-          <Route path="/invoice" element={<PaymentReceipt />} />
           <Route path="/create-community" element={<CreateCommunity />} />
           <Route path="/community-profile" element={<CommunityProfile />} />
           

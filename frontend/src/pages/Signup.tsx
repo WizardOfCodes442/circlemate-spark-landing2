@@ -214,7 +214,7 @@ const Signup = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full mt-6">
+              <Button type="submit" className="w-full mt-6 text-white">
                 Create Account
               </Button>
             </form>

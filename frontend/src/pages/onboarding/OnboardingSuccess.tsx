@@ -76,7 +76,7 @@ const OnboardingSuccess = () => {
             
             <div className="pt-4">
               <Button asChild className="w-full">
-                <Link to="/dashboard">Go to Dashboard</Link>
+                <Link to="/discover">Go to Dashboard</Link>
               </Button>
             </div>
           </div>
