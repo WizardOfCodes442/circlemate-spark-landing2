@@ -50,8 +50,8 @@ transports.push(
     })
 );
 
-// In production, also log to files
-if (process.env.NODE_ENV === 'production') {
+// In development ONLY, log to files (NOT in production/Vercel)
+if (process.env.NODE_ENV !== 'production') {
     // Error logs
     transports.push(
         new winston.transports.File({
