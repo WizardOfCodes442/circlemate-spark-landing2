@@ -1,4 +1,3 @@
-// routes/onboardingRoutes.js
 const express = require('express');
 const onboardingController = require('../controllers/onboardingController');
 const { authenticate } = require('./middleware');

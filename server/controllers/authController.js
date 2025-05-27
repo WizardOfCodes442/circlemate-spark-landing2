@@ -1,4 +1,3 @@
-
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
@@ -30,7 +29,7 @@ const config = {
         secret: process.env.SESSION_SECRET
     },
     baseUrl: process.env.NODE_ENV === 'production'
-        ? process.env.BASE_URL_PRODUCTION
+        ? process.env.BASE_URL_PRODUCTION || 'https://circlemate-spark-landing-jet.vercel.app'
         : process.env.BASE_URL_DEVELOPMENT || 'http://localhost:3000'
 };
 
@@ -295,39 +294,81 @@ exports.verifiedPage = (req, res) => {
 };
 
 // VERIFY EMAIL ROUTE
+// In authController.js
 exports.verifyEmail = async (req, res) => {
     const { userId, uniqueString } = req.params;
 
     try {
         const user = await User.findById(userId);
+        
         if (user && user.verified) {
-            return res.redirect(`/user/verified?success=true&message=User is already verified.`);
+            return res.redirect(`/user/verified?error=false&message=${encodeURIComponent('User is already verified.')}`);
         }
 
         const record = await UserVerification.findOne({ userId });
+        
         if (!record) {
-            return res.redirect(`/user/verified?error=true&message=Invalid or expired link.`);
+            return res.redirect(`/user/verified?error=true&message=${encodeURIComponent('Invalid or expired link.')}`);
         }
 
         if (record.expiresAt < Date.now()) {
             await UserVerification.deleteOne({ userId });
             await User.deleteOne({ _id: userId });
-            return res.redirect(`/user/verified?error=true&message=Link expired. Please sign up again.`);
+            return res.redirect(`/user/verified?error=true&message=${encodeURIComponent('Link expired. Please sign up again.')}`);
         }
 
         const isValid = await bcrypt.compare(uniqueString, record.uniqueString);
+        
         if (!isValid) {
-            return res.redirect(`/user/verified?error=true&message=Invalid verification details.`);
+            return res.redirect(`/user/verified?error=true&message=${encodeURIComponent('Invalid verification details.')}`);
         }
 
         await User.updateOne({ _id: userId }, { verified: true });
         await UserVerification.deleteOne({ userId });
 
         logger.info(`Email verified successfully for user: ${userId}`);
-        res.sendFile(path.join(__dirname, '../views/verified.html'));
+        
+        // Always redirect to the same route
+        res.redirect(`/user/verified?error=false&message=${encodeURIComponent('Email verified successfully!')}`);
+        
     } catch (error) {
         logger.error('Email verification error:', error);
-        res.redirect(`/user/verified?error=true&message=Verification failed. Please try again.`);
+        res.redirect(`/user/verified?error=true&message=${encodeURIComponent('Verification failed. Please try again.')}`);
+    }
+};
+// Add this new function to authController.js
+exports.checkVerificationStatus = async (req, res, next) => {
+    const { email } = req.params;
+    
+    try {
+        // Validate email format
+        if (!email || !email.includes('@')) {
+            return res.status(400).json({
+                status: 'FAILED',
+                message: 'Invalid email format'
+            });
+        }
+        
+        const user = await User.findOne({ email: email.toLowerCase() });
+        
+        if (!user) {
+            return res.status(404).json({
+                status: 'FAILED',
+                message: 'User not found'
+            });
+        }
+        
+        res.status(200).json({
+            status: 'success',
+            data: {
+                email: user.email,
+                verified: user.verified,
+                userId: user._id
+            }
+        });
+    } catch (error) {
+        logger.error('Check verification status error:', error);
+        next(error);
     }
 };
 
