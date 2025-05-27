@@ -323,7 +323,7 @@ const [showOnboardingModal, setShowOnboardingModal] = useState(false);
       You have not set up your onboarding yet. Please complete it to proceed.
     </div>
     <DialogFooter className="flex justify-end">
-      <Button onClick={handleGoToOnboarding}>Go to Onboarding</Button>
+      <Button className="text-white" onClick={handleGoToOnboarding}>Go to Onboarding</Button>
     </DialogFooter>
   </DialogContent>
 </Dialog>

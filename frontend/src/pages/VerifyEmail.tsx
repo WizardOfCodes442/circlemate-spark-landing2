@@ -1,91 +1,42 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { useAuthStore } from "../../store/useAuthStore";
+import { Loader2, MailCheck } from "lucide-react";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState("");
-  const [loadingSession, setLoadingSession] = useState(true);
-
-  const { session, setSession, checkEmailConfirmed } = useAuthStore();
-
-  useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const res = await fetch("/api/auth/session", {
-          credentials: "include", // if your backend uses cookies
-        });
-        if (!res.ok) {
-          throw new Error("Failed to fetch session");
-        }
-        const data = await res.json();
-        setSession(data.session);
-      } catch (err) {
-        setError("Error fetching session. Please log in again.");
-      } finally {
-        setLoadingSession(false);
-      }
-    };
-
-    if (!session) {
-      fetchSession();
-    } else {
-      setLoadingSession(false);
-    }
-  }, [session, setSession]);
 
   const handleCheck = async () => {
     setChecking(true);
-    setError("");
-    try {
-      const isConfirmed = await checkEmailConfirmed();
-      if (isConfirmed) {
-        navigate("/onboarding");
-      } else {
-        setError("Your email is still not verified. Please check your inbox.");
-      }
-    } catch (err) {
-      setError(err.message || "Error checking email status. Please try again.");
-    } finally {
+    // You can add real verification check here if needed
+    setTimeout(() => {
       setChecking(false);
-    }
+      navigate("/login");
+    }, 1500); // simulate loading
   };
 
-  if (loadingSession) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Loader2 className="animate-spin mr-2" />
-        Loading session...
-      </div>
-    );
-  }
-
-  if (!session) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <h1 className="text-2xl font-bold mb-4">Session Not Found</h1>
-        <p className="text-center mb-4">
-          Please log in to continue.
-        </p>
-        <Button onClick={() => navigate("/login")}>Go to Login</Button>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <h1 className="text-2xl font-bold mb-4">Check Your Email</h1>
-      <p className="text-center mb-4">
-        We’ve sent you a verification link. Please check your email and click the link to verify your account.
-      </p>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <Button onClick={handleCheck} disabled={checking}>
-        {checking ? <Loader2 className="animate-spin mr-2" /> : null}
-        Refresh Status
-      </Button>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#e0f7f7] to-[#f7f7f7] p-4">
+      <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 text-center animate-fade-in">
+        <div className="flex justify-center mb-4">
+          <MailCheck className="h-16 w-16 text-[#22CCBE]" />
+        </div>
+        <h1 className="text-3xl font-bold mb-2 text-gray-800">Check Your Email</h1>
+        <p className="text-gray-600 mb-4">
+          We’ve sent you a verification link. Please check your inbox and click the link to verify your account.
+        </p>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <Button
+          onClick={handleCheck}
+          className="w-full flex justify-center items-center gap-2 bg-[#22CCBE] hover:bg-[#1db5a9] text-white font-semibold rounded-lg py-3 transition"
+          disabled={checking}
+        >
+          {checking && <Loader2 className="h-5 w-5 animate-spin" />}
+          Continue to Login
+        </Button>
+      </div>
     </div>
   );
 };
