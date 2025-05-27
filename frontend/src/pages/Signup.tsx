@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { useAuthStore } from "../../store/useAuthStore"; // adjust path as needed
+
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +23,9 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  userName: z.string().min(2, { message: "Username must be at least 2 characters" }),
+  firstName: z.string().min(2, { message: "First name must be at least 2 characters" }),
+  lastName: z.string().min(2, { message: "Last name must be at least 2 characters" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
   password: z.string().min(8, { message: "Password must be at least 8 characters" }),
   confirmPassword: z.string(),
@@ -37,33 +41,53 @@ const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [loading, setLoading] = useState(false); // 👈 loader state
   
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      terms: false,
-    },
-  });
+const form = useForm<z.infer<typeof formSchema>>({
+  resolver: zodResolver(formSchema),
+  defaultValues: {
+    userName: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    terms: false,
+  },
+});
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Here you would typically handle user registration with your backend
-    console.log("Signup attempt:", values);
-    
-    // Show success toast
+const onSubmit = async (values) => {
+  setLoading(true);
+  try {
+    const data = await useAuthStore.getState().signup(
+      values.userName,
+      values.firstName,
+      values.lastName,
+      values.email,
+      values.password
+    );
+
+    // data.sessionToken is already saved in localStorage by the store
     toast({
-      title: "Account created!",
-      description: "Your account has been created successfully.",
+      title: 'Account created!',
+      description: data.message,
     });
-    
-    // Redirect to onboarding
+
     setTimeout(() => {
-      navigate("/onboarding");
+      navigate('/onboarding');
     }, 1500);
-  };
+  } catch (err) {
+    toast({
+      title: 'Signup failed',
+      description: err.message || 'Please try again.',
+      variant: 'destructive',
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   return (
     <div className="container mx-auto px-4 min-h-screen flex items-center justify-center py-10">
@@ -79,25 +103,47 @@ const Signup = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Full Name</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input 
-                          placeholder="John Doe" 
-                          className="pl-10" 
-                          {...field} 
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+  control={form.control}
+  name="userName"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Username</FormLabel>
+      <FormControl>
+        <Input placeholder="johndoe" {...field} />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
+<FormField
+  control={form.control}
+  name="firstName"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>First Name</FormLabel>
+      <FormControl>
+        <Input placeholder="John" {...field} />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
+<FormField
+  control={form.control}
+  name="lastName"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Last Name</FormLabel>
+      <FormControl>
+        <Input placeholder="Doe" {...field} />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
               <FormField
                 control={form.control}
                 name="email"
@@ -214,8 +260,19 @@ const Signup = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full mt-6 text-white">
-                Create Account
+              <Button 
+                type="submit" 
+                className="w-full mt-6 text-white" 
+                disabled={loading} // 👈 disable button when loading
+              >
+                {loading ? ( // 👈 show spinner or text
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Creating...
+                  </>
+                ) : (
+                  "Create Account"
+                )}
               </Button>
             </form>
           </Form>
