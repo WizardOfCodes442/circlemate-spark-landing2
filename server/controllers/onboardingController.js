@@ -1,4 +1,3 @@
-// controllers/onboardingController.js
 const UserProfile = require('../models/userProfileModel');
 const Community = require('../models/communityModel');
 const User = require('../models/userModel');

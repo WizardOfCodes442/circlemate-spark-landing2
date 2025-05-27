@@ -18,6 +18,7 @@ router.post('/signup', authController.signup);
 router.post('/login', loginRateLimit, authController.login);
 router.post('/forgotpassword', authController.forgotPassword);
 router.post('/resend-verification', authController.resendVerificationEmail);
+router.get('/check-verification/:email', authController.checkVerificationStatus);
 
 // Email verification route
 router.get('/verify/:userId/:uniqueString', authController.verifyEmail);

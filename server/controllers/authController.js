@@ -1,4 +1,3 @@
-
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
@@ -328,6 +327,42 @@ exports.verifyEmail = async (req, res) => {
     } catch (error) {
         logger.error('Email verification error:', error);
         res.redirect(`/user/verified?error=true&message=Verification failed. Please try again.`);
+    }
+};
+
+// Add this new function to authController.js
+exports.checkVerificationStatus = async (req, res, next) => {
+    const { email } = req.params;
+    
+    try {
+        // Validate email format
+        if (!email || !email.includes('@')) {
+            return res.status(400).json({
+                status: 'FAILED',
+                message: 'Invalid email format'
+            });
+        }
+        
+        const user = await User.findOne({ email: email.toLowerCase() });
+        
+        if (!user) {
+            return res.status(404).json({
+                status: 'FAILED',
+                message: 'User not found'
+            });
+        }
+        
+        res.status(200).json({
+            status: 'success',
+            data: {
+                email: user.email,
+                verified: user.verified,
+                userId: user._id
+            }
+        });
+    } catch (error) {
+        logger.error('Check verification status error:', error);
+        next(error);
     }
 };
 
