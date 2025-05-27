@@ -297,4 +297,311 @@ Response:
 
 ---
 
-**Happy coding! 🎉**
+
+# Onboarding API Documentation
+
+## Prerequisites
+- User must be authenticated (logged in)
+- Include JWT token in all requests
+
+## Base URL
+```
+Development: http://localhost:3000/api/onboarding
+Production: https://your-domain.com/api/onboarding
+```
+
+## Headers Required
+```javascript
+{
+  'Authorization': 'Bearer YOUR_JWT_TOKEN',
+  'Content-Type': 'application/json'
+}
+```
+
+---
+
+## 🚀 API Endpoints
+
+### Get Onboarding Status
+```http
+GET /status
+```
+**Response:**
+```json
+{
+  "status": "success",
+  "data": {
+    "onboardingStep": 2,
+    "onboardingCompleted": false,
+    "profileCompleteness": 35,
+    "profile": { ... }
+  }
+}
+```
+
+---
+
+### 1️⃣ Community Selection
+
+#### Get Available Communities
+```http
+GET /communities?search=tech
+```
+**Response:**
+```json
+{
+  "status": "success",
+  "data": {
+    "communities": [
+      {
+        "_id": "65a1b2c3d4e5f6g7h8i9j0k1",
+        "name": "Tech Enthusiasts",
+        "description": "Connect with fellow developers...",
+        "memberCount": 5243
+      }
+    ]
+  }
+}
+```
+
+#### Join Community
+```http
+POST /community
+```
+**Option 1 - By ID:**
+```json
+{
+  "communityId": "65a1b2c3d4e5f6g7h8i9j0k1"
+}
+```
+**Option 2 - By Invite Code:**
+```json
+{
+  "inviteCode": "TECH2024"
+}
+```
+
+---
+
+### 2️⃣ Profile Information
+```http
+POST /profile
+```
+**Body:**
+```json
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "age": 25,
+  "gender": "male",
+  "bio": "Software developer passionate about AI",
+  "occupation": "Software Engineer"
+}
+```
+**Gender options:** `male`, `female`, `other`, `prefer-not-to-say`
+
+---
+
+### 3️⃣ Location
+```http
+POST /location
+```
+**Body:**
+```json
+{
+  "city": "San Francisco",
+  "state": "California",
+  "country": "United States",
+  "postalCode": "94105",
+  "latitude": 37.7749,    // Optional
+  "longitude": -122.4194   // Optional
+}
+```
+
+---
+
+### 4️⃣ Personality Traits
+```http
+POST /personality
+```
+**Body:**
+```json
+{
+  "personalityTraits": ["creative", "analytical", "outgoing"]
+}
+```
+**Available traits:** 
+- `adventurous`, `analytical`, `creative`, `empathetic`
+- `organized`, `outgoing`, `relaxed`, `ambitious`
+- `thoughtful`, `practical`, `curious`, `reliable`
+
+**Rules:** Min 1, Max 5 traits
+
+---
+
+### 5️⃣ Preferences
+```http
+POST /preferences
+```
+**Body:**
+```json
+{
+  "connectionPurposes": ["friendship", "networking"],
+  "interests": ["Hiking", "Photography", "Cooking", "AI", "Travel"]
+}
+```
+**Purpose options:** `friendship`, `dating`, `networking`, `activities`
+
+---
+
+### 6️⃣ Availability
+```http
+POST /availability
+```
+**Body:**
+```json
+{
+  "days": ["Saturday", "Sunday"],
+  "timePreferences": ["afternoon", "evening"]
+}
+```
+**Day options:** `Monday` through `Sunday`  
+**Time options:** `morning`, `afternoon`, `evening`, `night`
+
+---
+
+### 7️⃣ Profile Photos
+```http
+POST /photos
+```
+**Headers:**
+```javascript
+{
+  'Authorization': 'Bearer YOUR_JWT_TOKEN',
+  'Content-Type': 'multipart/form-data'
+}
+```
+**Body:** FormData with field name `photos`
+- Max 8 photos
+- Max 5MB each
+- Accepted: JPG, PNG, GIF
+
+**JavaScript Example:**
+```javascript
+const formData = new FormData();
+files.forEach(file => formData.append('photos', file));
+
+await fetch('/api/onboarding/photos', {
+  method: 'POST',
+  headers: { 'Authorization': `Bearer ${token}` },
+  body: formData
+});
+```
+
+#### Delete Photo
+```http
+DELETE /photos/:photoId
+```
+
+---
+
+### ✅ Complete Onboarding
+```http
+POST /complete
+```
+**Note:** Call this after all steps are done (minimum step 6)
+
+---
+
+## 📝 Error Responses
+
+```json
+{
+  "status": "FAILED",
+  "message": "Error description",
+  "errors": [
+    {
+      "field": "age",
+      "message": "Age must be between 18 and 120"
+    }
+  ]
+}
+```
+
+**Common Errors:**
+- `400` - Validation failed
+- `401` - Not authenticated
+- `404` - Resource not found
+
+---
+
+## 💡 Frontend Integration Example
+
+```typescript
+// Step-by-step flow
+try {
+  // 1. Join community
+  await api.post('/onboarding/community', { communityId: selectedId });
+  
+  // 2. Update profile
+  await api.post('/onboarding/profile', {
+    firstName: "John",
+    lastName: "Doe",
+    age: 25,
+    gender: "male",
+    bio: "Developer",
+    occupation: "Software Engineer"
+  });
+  
+  // 3. Set location
+  await api.post('/onboarding/location', {
+    city: "San Francisco",
+    state: "California",
+    country: "United States",
+    postalCode: "94105"
+  });
+  
+  // Continue with remaining steps...
+  
+} catch (error) {
+  console.error(error.response.data.message);
+}
+```
+
+---
+
+## 🔄 Check Progress
+
+Always check onboarding status to resume from the correct step:
+
+```javascript
+const { data } = await api.get('/onboarding/status');
+const currentStep = data.data.onboardingStep;
+
+// Navigate to appropriate step
+switch(currentStep) {
+  case 0: navigate('/onboarding/community'); break;
+  case 1: navigate('/onboarding/profile'); break;
+  case 2: navigate('/onboarding/location'); break;
+  // ... etc
+}
+```
+
+---
+
+## 📌 Quick Reference
+
+| Step | Endpoint | Required Fields |
+|------|----------|----------------|
+| 1 | POST /community | `communityId` OR `inviteCode` |
+| 2 | POST /profile | `firstName`, `lastName`, `age`, `gender` |
+| 3 | POST /location | `city`, `state`, `country`, `postalCode` |
+| 4 | POST /personality | `personalityTraits[]` (1-5 items) |
+| 5 | POST /preferences | `connectionPurposes[]`, `interests[]` |
+| 6 | POST /availability | `days[]`, `timePreferences[]` |
+| 7 | POST /photos | `photos` (FormData, max 8 files) |
+| - | POST /complete | No body required |
+
+---
+
+**Questions?** Check the error message - it usually tells you exactly what's wrong.
