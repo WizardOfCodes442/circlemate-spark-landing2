@@ -85,6 +85,7 @@ const Signup = () => {
         });
       }
     } catch (error: any) {
+      console.log(error);
       console.error("Signup error:", error); // log to console for debugging
       toast({
         title: "Network or Server Error",
