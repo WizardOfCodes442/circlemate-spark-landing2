@@ -6,3 +6,11 @@
 {"level":"info","message":"Database: Connected to test","timestamp":"2025-05-27 19:09:35"}
 {"level":"info","message":"Process ID: 12784","timestamp":"2025-05-27 19:09:35"}
 {"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-05-27 19:09:41"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-05-27 20:45:08"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-05-27 20:45:10"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-05-27 20:45:16"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-05-27 20:45:16"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-27 20:45:16"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-05-27 20:45:16"}
+{"level":"info","message":"Process ID: 10696","timestamp":"2025-05-27 20:45:16"}
+{"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-05-27 20:45:19"}
