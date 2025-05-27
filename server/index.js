@@ -15,6 +15,8 @@ const authRouter = require('./routes/authRoutes');
 const authController = require('./controllers/authController');
 const { securityHeaders, requestLogger } = require('./routes/middleware');
 const logger = require('./utils/logger');
+const onboardingRouter = require('./routes/onboardingRoutes');
+
 const createError = require('./utils/appError');
 
 const app = express();
@@ -215,6 +217,8 @@ app.use('/api/auth', authLimiter);
 
 // Main routes
 app.use('/api/auth', authRouter);
+
+app.use('/api/onboarding', onboardingRouter);
 
 // API documentation route (placeholder)
 app.get('/api/docs', (req, res) => {
