@@ -296,36 +296,42 @@ exports.verifyEmail = async (req, res) => {
     const { userId, uniqueString } = req.params;
 
     try {
-        // First, fetch the user and check if they're already verified
         const user = await User.findById(userId);
+        
         if (user && user.verified) {
-            return res.redirect(`/user/verified?successr=true&message=User is already verified.`);
+            return res.redirect(`/api/auth/verification-result?error=false&message=${encodeURIComponent('Email already verified')}`);
         }
 
-        // Continue with the normal verification process
         const record = await UserVerification.findOne({ userId });
+        
         if (!record) {
-            return res.redirect(`/user/verified?error=true&message=Invalid or expired link.`);
+            return res.redirect(`/api/auth/verification-result?error=true&message=${encodeURIComponent('Invalid or expired verification link')}`);
         }
 
         if (record.expiresAt < Date.now()) {
             await UserVerification.deleteOne({ userId });
             await User.deleteOne({ _id: userId });
-            return res.redirect(`/user/verified?error=true&message=Link expired. Please sign up again.`);
+            return res.redirect(`/api/auth/verification-result?error=true&message=${encodeURIComponent('Verification link has expired. Please sign up again.')}`);
         }
 
         const isValid = await bcrypt.compare(uniqueString, record.uniqueString);
+        
         if (!isValid) {
-            return res.redirect(`/user/verified?error=true&message=Invalid verification details.`);
+            return res.redirect(`/api/auth/verification-result?error=true&message=${encodeURIComponent('Invalid verification details')}`);
         }
 
+        // Update user as verified
         await User.updateOne({ _id: userId }, { verified: true });
         await UserVerification.deleteOne({ userId });
 
-        res.sendFile(path.join(__dirname, '../views/verified.html'));
+        logger.info(`Email verified successfully for user: ${userId}`);
+        
+        // Redirect to success page
+        res.redirect(`/api/auth/verification-result?error=false&message=${encodeURIComponent('Email verified successfully!')}`);
+        
     } catch (error) {
-        console.error(error);
-        res.redirect(`/user/verified?error=true&message=Verification failed. Please try again.`);
+        logger.error('Email verification error:', error);
+        res.redirect(`/api/auth/verification-result?error=true&message=${encodeURIComponent('Verification failed. Please try again.')}`);
     }
 };
 
@@ -885,6 +891,133 @@ exports.getAllUsers = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+};
+
+// In authController.js - Add this new function
+exports.serveVerificationResult = (req, res) => {
+    const { error, message } = req.query;
+    
+    // Serve the verified.html file
+    const html = `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Verified</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        color: #fff;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+        height: 100vh;
+        display: flex;
+      }
+      div {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        width: 50%;
+        align-items: center;
+        padding-bottom: 25px;
+        padding-top: 10px;
+        align-self: center;
+      }
+      .animated {
+        background-repeat: no-repeat;
+        background-position: left top;
+        -webkit-animation-duration: 10s;
+        animation-duration: 10s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+      }
+      h2 {
+        text-align: center;
+        padding: 10px;
+        width: 80%;
+      }
+
+      @keyframes swing {
+        20% {
+          transform: rotate(15deg);
+        }
+        40% {
+          transform: rotate(-10deg);
+        }
+        60% {
+          transform: rotate(5deg);
+        }
+        80% {
+          transform: rotate(-5deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+
+      .swing {
+        -webkit-transform-origin: top center;
+        transform-origin: top center;
+        -webkit-animation-name: swing;
+        animation-name: swing;
+      }
+    </style>
+  </head>
+
+  <body></body>
+  <script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const error = urlParams.get("error");
+    const message = urlParams.get("message");
+
+    const bodyContent = !error || error === 'false'
+      ? \`<div style="background-color: #065f46">
+      <h2>\${message || 'Email has been verified'}</h2>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="85"
+        height="85"
+        fill="currentColor"
+        class="bi bi-check-circle-fill animated swing"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+      <h3>You can now log in</h3>
+
+      <a href="https://circlemate-spark-landing.vercel.app/login" style="color: white; font-weight: 500">Click here to login</a>
+      <p>CircleMate</p>
+    </div>\`
+      : \`<div style="background-color: #991B1B">
+      <h2>\${message}</h2>
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="85" height="85" 
+        fill="currentColor" 
+        class="bi bi-x-circle-fill animated swing" 
+        viewBox="0 0 16 16"
+      >
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+      </svg>
+      <h3>Please try again!</h3>
+
+      
+      <p>CircleMate</p>
+    </div>\`;
+
+    document.body.style.backgroundColor = error && error !== 'false' ? "#7F1D1D" : "#064e3b";
+    document.body.innerHTML = bodyContent;
+  </script>
+</html>`;
+
+    res.setHeader('Content-Type', 'text/html');
+    res.send(html);
 };
 
 // Export session validation helper for middleware
