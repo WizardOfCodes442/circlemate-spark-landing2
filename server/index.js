@@ -101,6 +101,7 @@ const corsOptions = {
             'http://localhost:8080',
             'https://circlemate-spark-landing.vercel.app',
             'http://localhost:3001',
+            'http://localhost:8080',
             process.env.FRONTEND_URL
         ].filter(Boolean);
         
