@@ -66,28 +66,30 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
 
-  login: async (email, password) => {
-    set({ isLoading: true, error: null });
-    try {
-      const res = await fetch(`${get().baseUrl}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+login: async (email, password) => {
+  set({ isLoading: true, error: null });
+  try {
+    const res = await fetch(`${get().baseUrl}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Login failed');
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Login failed');
 
-      const { token, sessionToken, user } = data;
+    const { token, sessionToken, user } = data;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('sessionToken', sessionToken);
+    localStorage.setItem('token', token);
+    localStorage.setItem('sessionToken', sessionToken);
 
-      set({ token, sessionToken, user, isLoading: false });
-    } catch (err: any) {
-      set({ error: err.message, isLoading: false });
-    }
-  },
+    set({ token, sessionToken, user, isLoading: false });
+  } catch (err: any) {
+    set({ error: err.message, isLoading: false });
+    throw err; // <-- **IMPORTANT: rethrow the error so the caller can catch it**
+  }
+},
+
 
   logout: () => {
     localStorage.removeItem('token');
@@ -120,4 +122,26 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ error: err.message, isLoading: false });
     }
   },
+
+  checkEmailConfirmed: async () => {
+  const sessionToken = localStorage.getItem('sessionToken');
+  if (!sessionToken) {
+    throw new Error('No session token found');
+  }
+
+  const res = await fetch(`${get().baseUrl}/auth/check-email-confirmed`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Cookie: `sessionToken=${sessionToken}`,
+    },
+    credentials: 'include',
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || 'Failed to check email confirmation');
+  }
+
+  return data.isConfirmed;
+},
 }));

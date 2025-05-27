@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react"; // using lucide spinner icon
 import { toast } from "@/hooks/use-toast";
 
 import { Button } from "@/components/ui/button";
@@ -18,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -27,7 +27,8 @@ const formSchema = z.object({
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  
+  const [loading, setLoading] = useState(false); // ⬅ add loading state
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,20 +37,28 @@ const Login = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Here you would typically handle authentication with your backend
-    console.log("Login attempt:", values);
-    
-    // Show success toast and redirect
-    toast({
-      title: "Welcome back!",
-      description: "You have successfully logged in.",
-    });
-    
-    // Simulate successful login
-    setTimeout(() => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const { login } = useAuthStore.getState();
+    setLoading(true); // ⬅ start loading
+
+    try {
+      const response = await login(values.email, values.password);
+
+      toast({
+        title: "Welcome back!",
+        description: "You have successfully logged in.",
+      });
+
       navigate("/discover");
-    }, 1500);
+    } catch (error) {
+      toast({
+        title: "Login failed",
+        description: error?.message || "Invalid email or password",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false); // ⬅ stop loading
+    }
   };
 
   return (
@@ -78,6 +87,7 @@ const Login = () => {
                           placeholder="name@example.com" 
                           className="pl-10" 
                           {...field} 
+                          disabled={loading} // ⬅ disable while loading
                         />
                       </div>
                     </FormControl>
@@ -99,6 +109,7 @@ const Login = () => {
                           placeholder="••••••••"
                           className="pl-10"
                           {...field}
+                          disabled={loading} // ⬅ disable while loading
                         />
                         <Button
                           type="button"
@@ -106,6 +117,7 @@ const Login = () => {
                           size="icon"
                           className="absolute right-2 top-2"
                           onClick={() => setShowPassword(!showPassword)}
+                          disabled={loading} // ⬅ disable toggle while loading
                         >
                           {showPassword ? (
                             <EyeOff className="h-4 w-4" />
@@ -127,8 +139,15 @@ const Login = () => {
                   Forgot your password?
                 </Link>
               </div>
-              <Button type="submit" className="w-full text-white">
-                Sign In
+              <Button type="submit" className="w-full text-white" disabled={loading}>
+                {loading ? (
+                  <span className="flex items-center justify-center">
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Signing In...
+                  </span>
+                ) : (
+                  "Sign In"
+                )}
               </Button>
             </form>
           </Form>

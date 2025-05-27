@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search, Users, MapPin, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import Header from "@/components/DashboardHeader";
 import { PricingModal } from "@/components/community/PricingModal";
 import { Community } from "@/data/mockCommunityData";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 
 // Mock data for communities
 const mockCommunities: Community[] = [
@@ -88,6 +89,8 @@ const Discover = () => {
   const [filteredCommunities, setFilteredCommunities] = useState<Community[]>(mockCommunities);
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(null);
   const [showPricingModal, setShowPricingModal] = useState(false);
+  const navigate = useNavigate();
+
 
   // Handle search
   const handleSearch = () => {
@@ -138,6 +141,21 @@ const Discover = () => {
         description: `Welcome to ${selectedCommunity.name}!`,
       });
     }
+  };
+
+
+const [showOnboardingModal, setShowOnboardingModal] = useState(false);
+
+  useEffect(() => {
+    const onboardingCompleted = localStorage.getItem("onboardingCompleted");
+    if (onboardingCompleted !== "true") {
+      setShowOnboardingModal(true);
+    }
+  }, []);
+
+  const handleGoToOnboarding = () => {
+    setShowOnboardingModal(false);
+    navigate("/onboarding");
   };
 
   return (
@@ -285,6 +303,31 @@ const Discover = () => {
           />
         )}
       </main>
+      <Dialog
+  open={showOnboardingModal}
+  onOpenChange={(open) => {
+    // Only allow closing if explicitly called via setShowOnboardingModal(false)
+    // Prevent close if user tries to click outside or press ESC
+    if (!open) {
+      // Do nothing here to block closing
+      // or just keep open true:
+      setShowOnboardingModal(true);
+    }
+  }}
+>
+  <DialogContent className="max-w-md rounded-lg p-6 bg-white shadow-lg">
+    <DialogHeader>
+      <DialogTitle>Complete Your Onboarding</DialogTitle>
+    </DialogHeader>
+    <div className="py-4 text-center text-gray-700">
+      You have not set up your onboarding yet. Please complete it to proceed.
+    </div>
+    <DialogFooter className="flex justify-end">
+      <Button className="text-white" onClick={handleGoToOnboarding}>Go to Onboarding</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+
     </div>
   );
 };
