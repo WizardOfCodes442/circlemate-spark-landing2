@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Info } from "lucide-react";
 import {
   Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,
@@ -60,6 +60,20 @@ const OnboardingProfile = () => {
     navigate("/onboarding");
   };
 
+  // Helper component for label + info popover
+const FormLabelWithInfo = ({ label, info }) => (
+  <div className="flex items-center gap-1">
+    <FormLabel>{label}</FormLabel>
+    <Popover>
+      <PopoverTrigger asChild>
+        <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+      </PopoverTrigger>
+      <PopoverContent className="max-w-xs">
+        <p>{info}</p>
+      </PopoverContent>
+    </Popover>
+  </div>
+);
   return (
     <OnboardingLayout
       currentStep={1}
@@ -172,131 +186,120 @@ const OnboardingProfile = () => {
             {/* Temperament */}
             
             <FormField
-              control={form.control}
-              name="temperament"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex items-center gap-1">
-                    <FormLabel>Temperament</FormLabel>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
-                        </TooltipTrigger>
-                        <TooltipContent className="max-w-xs">
-                          <p>
-                            Temperament describes your core personality type:  <br />
-                            <b> Choleric</b> (driven),  <br />
-                            <b> Sanguine</b> (sociable),  <br />
-                            <b> Phlegmatic</b> (calm),  <br />
-                            <b> Melancholic</b> (analytical).
-                          </p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select temperament" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="choleric">Choleric</SelectItem>
-                      <SelectItem value="sanguine">Sanguine</SelectItem>
-                      <SelectItem value="phlegmatic">Phlegmatic</SelectItem>
-                      <SelectItem value="melancholic">Melancholic</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
+  control={form.control}
+  name="temperament"
+  render={({ field }) => (
+          <FormItem>
+            <FormLabelWithInfo
+              label="Temperament"
+              info={
+                <>
+                  Temperament describes your core personality type: <br />
+                  <b>Choleric</b> (driven), <br />
+                  <b>Sanguine</b> (sociable), <br />
+                  <b>Phlegmatic</b> (calm), <br />
+                  <b>Melancholic</b> (analytical).
+                </>
+              }
             />
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select temperament" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem value="choleric">Choleric</SelectItem>
+                <SelectItem value="sanguine">Sanguine</SelectItem>
+                <SelectItem value="phlegmatic">Phlegmatic</SelectItem>
+                <SelectItem value="melancholic">Melancholic</SelectItem>
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Matching Style */}
-            <FormField
-              control={form.control}
-              name="matchingStyle"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex items-center gap-1">
-                    <FormLabel>Matching Mode</FormLabel>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
-                        </TooltipTrigger>
-                        <TooltipContent className="max-w-xs">
-                          <p>
-                            Select how you want matches:  
-                            <b> Flexible Mode</b> (looser preferences),  
-                            <b> Strict Mode</b> (exact match),  
-                            <b> Auto Mode</b> (let system decide).
-                          </p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select matching mode" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="romantic">Flexible Mode</SelectItem>
-                      <SelectItem value="friendship">Strict Mode</SelectItem>
-                      <SelectItem value="adventurous">Auto Mode</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+  {/* Matching Style */}
+  <FormField
+    control={form.control}
+    name="matchingStyle"
+    render={({ field }) => (
+      <FormItem>
+        <div className="flex items-center gap-1">
+          <FormLabel>Matching Mode</FormLabel>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+            </PopoverTrigger>
+            <PopoverContent className="max-w-xs">
+              <p>
+                Select how you want matches:  
+                <b> Flexible Mode</b> (looser preferences),  
+                <b> Strict Mode</b> (exact match),  
+                <b> Auto Mode</b> (let system decide).
+              </p>
+            </PopoverContent>
+          </Popover>
+        </div>
+        <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <FormControl>
+            <SelectTrigger>
+              <SelectValue placeholder="Select matching mode" />
+            </SelectTrigger>
+          </FormControl>
+          <SelectContent>
+            <SelectItem value="romantic">Flexible Mode</SelectItem>
+            <SelectItem value="friendship">Strict Mode</SelectItem>
+            <SelectItem value="adventurous">Auto Mode</SelectItem>
+          </SelectContent>
+        </Select>
+        <FormMessage />
+      </FormItem>
+    )}
+  />
 
-            {/* Age Range */}
-            <FormField
-              control={form.control}
-              name="ageRange"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex items-center gap-1">
-                    <FormLabel>Preferred Age Range</FormLabel>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
-                        </TooltipTrigger>
-                        <TooltipContent className="max-w-xs">
-                          <p>
-                            Choose the age range you prefer your matches to be in.
-                            This helps tailor your recommendations.
-                          </p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select age range" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="18-25">18–25</SelectItem>
-                      <SelectItem value="26-35">26–35</SelectItem>
-                      <SelectItem value="36-45">36–45</SelectItem>
-                      <SelectItem value="46+">46+</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+  {/* Age Range */}
+  <FormField
+    control={form.control}
+    name="ageRange"
+    render={({ field }) => (
+      <FormItem>
+        <div className="flex items-center gap-1">
+          <FormLabel>Preferred Age Range</FormLabel>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+            </PopoverTrigger>
+            <PopoverContent className="max-w-xs">
+              <p>
+                Choose the age range you prefer your matches to be in.
+                This helps tailor your recommendations.
+              </p>
+            </PopoverContent>
+          </Popover>
+        </div>
+        <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <FormControl>
+            <SelectTrigger>
+              <SelectValue placeholder="Select age range" />
+            </SelectTrigger>
+          </FormControl>
+          <SelectContent>
+            <SelectItem value="18-25">18–25</SelectItem>
+            <SelectItem value="26-35">26–35</SelectItem>
+            <SelectItem value="36-45">36–45</SelectItem>
+            <SelectItem value="46+">46+</SelectItem>
+          </SelectContent>
+        </Select>
+        <FormMessage />
+      </FormItem>
+    )}
+  />
+</div>
 
 
           {/* Educational Level */}
