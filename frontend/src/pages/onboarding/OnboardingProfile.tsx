@@ -1,10 +1,11 @@
-
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,11 +21,16 @@ const formSchema = z.object({
   gender: z.string().min(1, { message: "Please select your gender" }),
   bio: z.string().max(200, { message: "Bio must be 200 characters or less" }).optional(),
   occupation: z.string().max(200, { message: "Please let us know what you do for a living." }).optional(),
+
+  temperament: z.string().min(1, { message: "Please select your temperament" }),
+  matchingStyle: z.string().min(1, { message: "Please select your matching style" }),
+  ageRange: z.string().min(1, { message: "Please select your preferred age range" }),
+  educationLevel: z.string().min(1, { message: "Please select your education level" }),
 });
 
 const OnboardingProfile = () => {
   const navigate = useNavigate();
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,21 +40,25 @@ const OnboardingProfile = () => {
       gender: "",
       bio: "",
       occupation: "",
+      temperament: "",
+      matchingStyle: "",
+      ageRange: "",
+      educationLevel: "",
     },
   });
-  
-  const handleNext = () => {
-    const isValid = form.trigger();
+
+  const handleNext = async () => {
+    const isValid = await form.trigger();
     if (isValid) {
       console.log("Form data:", form.getValues());
       navigate("/onboarding/location");
     }
   };
-  
+
   const handlePrevious = () => {
     navigate("/onboarding");
   };
-  
+
   return (
     <OnboardingLayout
       currentStep={1}
@@ -63,10 +73,11 @@ const OnboardingProfile = () => {
           Let others know who you are and what you're interested in
         </p>
       </div>
-      
+
       <Form {...form}>
         <form className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* First Name */}
             <FormField
               control={form.control}
               name="firstName"
@@ -80,7 +91,8 @@ const OnboardingProfile = () => {
                 </FormItem>
               )}
             />
-            
+
+            {/* Last Name */}
             <FormField
               control={form.control}
               name="lastName"
@@ -95,8 +107,9 @@ const OnboardingProfile = () => {
               )}
             />
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Age */}
             <FormField
               control={form.control}
               name="age"
@@ -110,7 +123,8 @@ const OnboardingProfile = () => {
                 </FormItem>
               )}
             />
-            
+
+            {/* Gender */}
             <FormField
               control={form.control}
               name="gender"
@@ -129,13 +143,17 @@ const OnboardingProfile = () => {
                     <SelectContent>
                       <SelectItem value="male">Male</SelectItem>
                       <SelectItem value="female">Female</SelectItem>
-                      <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Occupation */}
             <FormField
               control={form.control}
               name="occupation"
@@ -143,14 +161,130 @@ const OnboardingProfile = () => {
                 <FormItem>
                   <FormLabel>Occupation</FormLabel>
                   <FormControl>
-                    <Input type="text" min={18} placeholder="What do you do?" {...field} />
+                    <Input placeholder="What do you do?" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {/* Temperament */}
+            <FormField
+              control={form.control}
+              name="temperament"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Temperament</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select temperament" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="choleric">Choleric</SelectItem>
+                      <SelectItem value="sanguine">Sanguine</SelectItem>
+                      <SelectItem value="phlegmatic">Phlegmatic</SelectItem>
+                      <SelectItem value="melancholic">Melancholic</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
-          
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Matching Style */}
+            <FormField
+              control={form.control}
+              name="matchingStyle"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Matching Style</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select matching style" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="romantic">Romantic</SelectItem>
+                      <SelectItem value="friendship">Friendship</SelectItem>
+                      <SelectItem value="adventurous">Adventurous</SelectItem>
+                      <SelectItem value="casual">Casual</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Age Range */}
+            <FormField
+              control={form.control}
+              name="ageRange"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Preferred Age Range</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select age range" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="18-25">18–25</SelectItem>
+                      <SelectItem value="26-35">26–35</SelectItem>
+                      <SelectItem value="36-45">36–45</SelectItem>
+                      <SelectItem value="46+">46+</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {/* Educational Level */}
+          <FormField
+            control={form.control}
+            name="educationLevel"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Educational Level</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select education level" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="high-school">High School</SelectItem>
+                    <SelectItem value="bachelors">Bachelor's Degree</SelectItem>
+                    <SelectItem value="masters">Master's Degree</SelectItem>
+                    <SelectItem value="phd">PhD</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Bio */}
           <FormField
             control={form.control}
             name="bio"
@@ -158,9 +292,9 @@ const OnboardingProfile = () => {
               <FormItem>
                 <FormLabel>Bio</FormLabel>
                 <FormControl>
-                  <Textarea 
-                    placeholder="Am a software engineer with a passion for open source projects. I love hiking and photography, i'm well conversant with Python | React Native | Nodejs | Rust | Solidity | etc...." 
-                    className="resize-none" 
+                  <Textarea
+                    placeholder="A short description about yourself"
+                    className="resize-none"
                     {...field}
                   />
                 </FormControl>
