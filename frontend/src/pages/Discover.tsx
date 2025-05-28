@@ -11,6 +11,7 @@ import Header from "@/components/DashboardHeader";
 import { PricingModal } from "@/components/community/PricingModal";
 import { Community } from "@/data/mockCommunityData";
 import { Link, useNavigate } from "react-router-dom";
+import { useOnboardingStore } from '../../store/useOnboardingStore';
 
 
 // Mock data for communities
@@ -142,6 +143,35 @@ const Discover = () => {
       });
     }
   };
+
+    const setCompleted = useOnboardingStore((state) => state.setCompleted);
+
+  useEffect(() => {
+    const fetchOnboardingStatus = async () => {
+      try {
+        const response = await fetch('/api/onboarding/status', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            // Include auth headers if needed
+          },
+        });
+
+        const data = await response.json();
+        console.log('Onboarding status:', data);
+
+        if (data.onboardingcomplete === true) {
+          setCompleted(true);
+        } else {
+          setCompleted(false);
+        }
+      } catch (error) {
+        console.error('Failed to fetch onboarding status:', error);
+      }
+    };
+
+    fetchOnboardingStatus();
+  }, [setCompleted]);
 
 
 const [showOnboardingModal, setShowOnboardingModal] = useState(false);

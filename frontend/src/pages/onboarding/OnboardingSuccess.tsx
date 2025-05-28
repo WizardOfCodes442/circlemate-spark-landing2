@@ -1,14 +1,16 @@
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Confetti from "@/components/effects/Confetti";
+import { useOnboardingStore } from "../../../store/useOnboardingStore";
 
 const OnboardingSuccess = () => {
   const [showConfetti, setShowConfetti] = useState(false);
+  const navigate = useNavigate();
   
   useEffect(() => {
     // Slight delay to ensure component is mounted before animation
@@ -18,6 +20,31 @@ const OnboardingSuccess = () => {
     
     return () => clearTimeout(timer);
   }, []);
+
+    const setCompleted = useOnboardingStore((state) => state.setCompleted);
+
+  const markOnboardingCompleted = async () => {
+    try {
+      const response = await fetch('/api/onboarding/complete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Include auth headers if needed
+        },
+        body: JSON.stringify({ completed: true }),
+      });
+
+      const data = await response.json();
+      console.log('Backend response:', data);
+
+      if (data.success) {
+        setCompleted(true);
+        navigate('/discover');
+      }
+    } catch (error) {
+      console.error('Failed to mark onboarding completed:', error);
+    }
+  };
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95 flex flex-col items-center justify-center px-4 py-12">
@@ -75,7 +102,7 @@ const OnboardingSuccess = () => {
             </div>
             
             <div className="pt-4">
-              <Button asChild className="w-full">
+              <Button onClick={markOnboardingCompleted} asChild className="w-full">
                 <Link to="/discover">Go to Dashboard</Link>
               </Button>
             </div>

@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Info } from "lucide-react";
 import {
   Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,
 } from "@/components/ui/form";
@@ -169,16 +170,32 @@ const OnboardingProfile = () => {
             />
 
             {/* Temperament */}
+            
             <FormField
               control={form.control}
               name="temperament"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Temperament</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <div className="flex items-center gap-1">
+                    <FormLabel>Temperament</FormLabel>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p>
+                            Temperament describes your core personality type:  <br />
+                            <b> Choleric</b> (driven),  <br />
+                            <b> Sanguine</b> (sociable),  <br />
+                            <b> Phlegmatic</b> (calm),  <br />
+                            <b> Melancholic</b> (analytical).
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select temperament" />
@@ -195,6 +212,7 @@ const OnboardingProfile = () => {
                 </FormItem>
               )}
             />
+
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -204,21 +222,34 @@ const OnboardingProfile = () => {
               name="matchingStyle"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Matching Style</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <div className="flex items-center gap-1">
+                    <FormLabel>Matching Mode</FormLabel>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p>
+                            Select how you want matches:  
+                            <b> Flexible Mode</b> (looser preferences),  
+                            <b> Strict Mode</b> (exact match),  
+                            <b> Auto Mode</b> (let system decide).
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select matching style" />
+                        <SelectValue placeholder="Select matching mode" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="romantic">Romantic</SelectItem>
-                      <SelectItem value="friendship">Friendship</SelectItem>
-                      <SelectItem value="adventurous">Adventurous</SelectItem>
-                      <SelectItem value="casual">Casual</SelectItem>
+                      <SelectItem value="romantic">Flexible Mode</SelectItem>
+                      <SelectItem value="friendship">Strict Mode</SelectItem>
+                      <SelectItem value="adventurous">Auto Mode</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -232,11 +263,23 @@ const OnboardingProfile = () => {
               name="ageRange"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Preferred Age Range</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <div className="flex items-center gap-1">
+                    <FormLabel>Preferred Age Range</FormLabel>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p>
+                            Choose the age range you prefer your matches to be in.
+                            This helps tailor your recommendations.
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select age range" />
@@ -254,6 +297,7 @@ const OnboardingProfile = () => {
               )}
             />
           </div>
+
 
           {/* Educational Level */}
           <FormField
