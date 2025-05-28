@@ -5,12 +5,12 @@ import * as z from "zod";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Info } from "lucide-react";
 import {
-  Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,
+  Form, FormControl, FormField, FormItem, FormLabel, FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import OnboardingLayout from "@/components/onboarding/OnboardingLayout";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   firstName: z.string().min(2, { message: "First name must be at least 2 characters" }),
@@ -20,13 +20,12 @@ const formSchema = z.object({
     return !isNaN(age) && age >= 18 && age <= 120;
   }, { message: "Age must be between 18 and 120" }),
   gender: z.string().min(1, { message: "Please select your gender" }),
-  bio: z.string().max(200, { message: "Bio must be 200 characters or less" }).optional(),
-  occupation: z.string().max(200, { message: "Please let us know what you do for a living." }).optional(),
-
+  occupation: z.string().max(200, { message: "Occupation must be 200 characters or less" }).optional(),
   temperament: z.string().min(1, { message: "Please select your temperament" }),
   matchingStyle: z.string().min(1, { message: "Please select your matching style" }),
   ageRange: z.string().min(1, { message: "Please select your preferred age range" }),
   educationLevel: z.string().min(1, { message: "Please select your education level" }),
+  bio: z.string().max(500, { message: "Bio must be 500 characters or less" }).optional(),
 });
 
 const OnboardingProfile = () => {
@@ -39,12 +38,12 @@ const OnboardingProfile = () => {
       lastName: "",
       age: "",
       gender: "",
-      bio: "",
       occupation: "",
       temperament: "",
       matchingStyle: "",
       ageRange: "",
       educationLevel: "",
+      bio: "",
     },
   });
 
@@ -60,20 +59,6 @@ const OnboardingProfile = () => {
     navigate("/onboarding");
   };
 
-  // Helper component for label + info popover
-const FormLabelWithInfo = ({ label, info }) => (
-  <div className="flex items-center gap-1">
-    <FormLabel>{label}</FormLabel>
-    <Popover>
-      <PopoverTrigger asChild>
-        <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
-      </PopoverTrigger>
-      <PopoverContent className="max-w-xs">
-        <p>{info}</p>
-      </PopoverContent>
-    </Popover>
-  </div>
-);
   return (
     <OnboardingLayout
       currentStep={1}
@@ -85,14 +70,14 @@ const FormLabelWithInfo = ({ label, info }) => (
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold mb-2">Tell Us About Yourself</h1>
         <p className="text-muted-foreground">
-          Let others know who you are and what you're interested in
+          Let others know who you are and what you're interested in.
         </p>
       </div>
 
       <Form {...form}>
         <form className="space-y-6">
+          {/* Name Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* First Name */}
             <FormField
               control={form.control}
               name="firstName"
@@ -106,8 +91,6 @@ const FormLabelWithInfo = ({ label, info }) => (
                 </FormItem>
               )}
             />
-
-            {/* Last Name */}
             <FormField
               control={form.control}
               name="lastName"
@@ -123,8 +106,8 @@ const FormLabelWithInfo = ({ label, info }) => (
             />
           </div>
 
+          {/* Age & Gender */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Age */}
             <FormField
               control={form.control}
               name="age"
@@ -132,24 +115,19 @@ const FormLabelWithInfo = ({ label, info }) => (
                 <FormItem>
                   <FormLabel>Age</FormLabel>
                   <FormControl>
-                    <Input type="number" min={18} placeholder="25" {...field} />
+                    <Input type="number" min={18} max={120} placeholder="25" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
-            {/* Gender */}
             <FormField
               control={form.control}
               name="gender"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Gender</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select gender" />
@@ -158,7 +136,6 @@ const FormLabelWithInfo = ({ label, info }) => (
                     <SelectContent>
                       <SelectItem value="male">Male</SelectItem>
                       <SelectItem value="female">Female</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -167,14 +144,19 @@ const FormLabelWithInfo = ({ label, info }) => (
             />
           </div>
 
+          {/* Occupation & Temperament */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Occupation */}
             <FormField
               control={form.control}
               name="occupation"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Occupation</FormLabel>
+                  <FormLabel>
+                    Occupation
+                    <span className="block text-xs text-muted-foreground">
+                      Briefly describe your job or main activity. This helps others understand your background or career.
+                    </span>
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="What do you do?" {...field} />
                   </FormControl>
@@ -182,156 +164,128 @@ const FormLabelWithInfo = ({ label, info }) => (
                 </FormItem>
               )}
             />
-
-            {/* Temperament */}
-            
             <FormField
-  control={form.control}
-  name="temperament"
-  render={({ field }) => (
-          <FormItem>
-            <FormLabelWithInfo
-              label="Temperament"
-              info={
-                <>
-                  Temperament describes your core personality type: <br />
-                  <b>Choleric</b> (driven), <br />
-                  <b>Sanguine</b> (sociable), <br />
-                  <b>Phlegmatic</b> (calm), <br />
-                  <b>Melancholic</b> (analytical).
-                </>
-              }
+              control={form.control}
+              name="temperament"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Temperament
+                    <span className="block text-xs text-muted-foreground">
+                      Core personality: <b>Choleric</b> (driven), <b>Sanguine</b> (sociable), <b>Phlegmatic</b> (calm), <b>Melancholic</b> (analytical).
+                    </span>
+                  </FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select temperament" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="choleric">Choleric</SelectItem>
+                      <SelectItem value="sanguine">Sanguine</SelectItem>
+                      <SelectItem value="phlegmatic">Phlegmatic</SelectItem>
+                      <SelectItem value="melancholic">Melancholic</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select temperament" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                <SelectItem value="choleric">Choleric</SelectItem>
-                <SelectItem value="sanguine">Sanguine</SelectItem>
-                <SelectItem value="phlegmatic">Phlegmatic</SelectItem>
-                <SelectItem value="melancholic">Melancholic</SelectItem>
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
           </div>
 
+          {/* Matching Style & Age Range */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-  {/* Matching Style */}
-  <FormField
-    control={form.control}
-    name="matchingStyle"
-    render={({ field }) => (
-      <FormItem>
-        <div className="flex items-center gap-1">
-          <FormLabel>Matching Mode</FormLabel>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
-            </PopoverTrigger>
-            <PopoverContent className="max-w-xs">
-              <p>
-                Select how you want matches:  
-                <b> Flexible Mode</b> (looser preferences),  
-                <b> Strict Mode</b> (exact match),  
-                <b> Auto Mode</b> (let system decide).
-              </p>
-            </PopoverContent>
-          </Popover>
-        </div>
-        <Select onValueChange={field.onChange} defaultValue={field.value}>
-          <FormControl>
-            <SelectTrigger>
-              <SelectValue placeholder="Select matching mode" />
-            </SelectTrigger>
-          </FormControl>
-          <SelectContent>
-            <SelectItem value="romantic">Flexible Mode</SelectItem>
-            <SelectItem value="friendship">Strict Mode</SelectItem>
-            <SelectItem value="adventurous">Auto Mode</SelectItem>
-          </SelectContent>
-        </Select>
-        <FormMessage />
-      </FormItem>
-    )}
-  />
+            <FormField
+              control={form.control}
+              name="matchingStyle"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Matching Mode
+                    <span className="block text-xs text-muted-foreground">
+                      <b>Flexible</b> (looser preferences), <b>Strict</b> (exact matches), <b>Auto</b> (system decides).
+                    </span>
+                  </FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select matching mode" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="flexible">Flexible Mode</SelectItem>
+                      <SelectItem value="strict">Strict Mode</SelectItem>
+                      <SelectItem value="auto">Auto Mode</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="ageRange"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Preferred Age Range
+                    <span className="block text-xs text-muted-foreground">
+                      Select the age range you want your matches to fall into.
+                    </span>
+                  </FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select age range" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="18-25">18–25</SelectItem>
+                      <SelectItem value="26-35">26–35</SelectItem>
+                      <SelectItem value="36-45">36–45</SelectItem>
+                      <SelectItem value="46+">46+</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
-  {/* Age Range */}
-  <FormField
-    control={form.control}
-    name="ageRange"
-    render={({ field }) => (
-      <FormItem>
-        <div className="flex items-center gap-1">
-          <FormLabel>Preferred Age Range</FormLabel>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
-            </PopoverTrigger>
-            <PopoverContent className="max-w-xs">
-              <p>
-                Choose the age range you prefer your matches to be in.
-                This helps tailor your recommendations.
-              </p>
-            </PopoverContent>
-          </Popover>
-        </div>
-        <Select onValueChange={field.onChange} defaultValue={field.value}>
-          <FormControl>
-            <SelectTrigger>
-              <SelectValue placeholder="Select age range" />
-            </SelectTrigger>
-          </FormControl>
-          <SelectContent>
-            <SelectItem value="18-25">18–25</SelectItem>
-            <SelectItem value="26-35">26–35</SelectItem>
-            <SelectItem value="36-45">36–45</SelectItem>
-            <SelectItem value="46+">46+</SelectItem>
-          </SelectContent>
-        </Select>
-        <FormMessage />
-      </FormItem>
-    )}
-  />
-</div>
-
-
-          {/* Educational Level */}
+          {/* Education Level */}
           <FormField
             control={form.control}
             name="educationLevel"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Educational Level</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select education level" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="high-school">High School</SelectItem>
-                    <SelectItem value="bachelors">Bachelor's Degree</SelectItem>
-                    <SelectItem value="masters">Master's Degree</SelectItem>
-                    <SelectItem value="phd">PhD</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
+                    <SelectItem value="no_formal">No Formal Education</SelectItem>
+                    <SelectItem value="primary">Primary School (Elementary)</SelectItem>
+                    <SelectItem value="lower_secondary">Lower Secondary (Middle School/Junior High)</SelectItem>
+                    <SelectItem value="upper_secondary">Upper Secondary (High School or equivalent)</SelectItem>
+                    <SelectItem value="vocational">Vocational/Technical Certification</SelectItem>
+                    <SelectItem value="some_college">Some College/No Degree</SelectItem>
+                    <SelectItem value="associate">Associate Degree</SelectItem>
+                    <SelectItem value="bachelor">Bachelor's Degree</SelectItem>
+                    <SelectItem value="postgrad_diploma">Postgraduate Diploma or Certificate</SelectItem>
+                    <SelectItem value="master">Master's Degree</SelectItem>
+                    <SelectItem value="doctorate">Doctorate (PhD, EdD, etc.)</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
               </FormItem>
             )}
           />
-
           {/* Bio */}
+
           <FormField
             control={form.control}
             name="bio"
@@ -340,18 +294,18 @@ const FormLabelWithInfo = ({ label, info }) => (
                 <FormLabel>Bio</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="A short description about yourself"
-                    className="resize-none"
+                    placeholder="Tell us a bit about yourself..."
                     {...field}
+                    rows={4}
+                    maxLength={500}
+                    className="resize-y"
                   />
                 </FormControl>
-                <FormDescription className="text-right">
-                  {field.value?.length || 0}/200
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
+
         </form>
       </Form>
     </OnboardingLayout>

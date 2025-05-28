@@ -76,19 +76,16 @@ const OnboardingPhoto = () => {
       </div>
 
       <div className="flex flex-col items-center justify-center w-full">
-        <div
-          className={`grid grid-cols-2 sm:grid-cols-3 gap-4 w-full max-w-lg mb-6`}
-        >
+        <div className="grid grid-cols-3 gap-4 w-full max-w-4xl mb-6">
           {photos.map((url, index) => (
-            <div key={index} className="relative group">
-              <Avatar className="w-32 h-32 border-4 border-background shadow-lg">
-                <AvatarImage src={url} />
-                <AvatarFallback>
-                  <User className="w-12 h-12 text-muted-foreground" />
-                </AvatarFallback>
-              </Avatar>
+            <div key={index} className="relative group w-full">
+              <img
+                src={url}
+                alt={`Photo ${index}`}
+                className="w-full h-auto aspect-square object-cover border-4 border-background shadow-lg"
+              />
               <button
-                className="absolute -top-2 -right-2 bg-destructive hover:bg-destructive/90 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1 right-1 bg-destructive hover:bg-destructive/90 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                 onClick={() => removePhoto(index)}
               >
                 <X className="w-4 h-4" />
@@ -96,6 +93,9 @@ const OnboardingPhoto = () => {
             </div>
           ))}
         </div>
+
+
+
 
         {photos.length < MAX_PHOTOS && (
           <Card
