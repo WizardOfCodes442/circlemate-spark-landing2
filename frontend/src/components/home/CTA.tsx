@@ -1,10 +1,15 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import WaitlistModal from './WaitlistModal';
+
 
 const CTA: React.FC = () => {
+    const [isWaitlistModalOpen, setIsWaitlistModalOpen] = useState(false);
+  
   return (
+    <> 
     <section className="py-16 bg-navy text-white">
       <div className="container-custom">
         <div className="max-w-4xl mx-auto text-center">
@@ -15,9 +20,12 @@ const CTA: React.FC = () => {
             Join CircleMate today and start connecting with like-minded individuals in your trusted communities. Whether you're looking for friendship, romance, or professional connections.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/" className="bg-teal hover:bg-teal/90 text-white px-8 py-3 rounded-full font-medium transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+            <button 
+              onClick={() => setIsWaitlistModalOpen(true)}
+              className="btn-primary flex items-center justify-center gap-2"
+            >
               Join Waitlist <ArrowRight size={18} />
-            </Link>
+            </button>
             <Link to="/" className="bg-transparent hover:bg-white/10 border-2 border-white text-white px-8 py-3 rounded-full font-medium transition-all flex items-center justify-center">
               Find Groups
             </Link>
@@ -40,6 +48,11 @@ const CTA: React.FC = () => {
         </div>
       </div>
     </section>
+    <WaitlistModal 
+        isOpen={isWaitlistModalOpen} 
+        onClose={() => setIsWaitlistModalOpen(false)} 
+      />
+    </>
   );
 };
 

@@ -1,9 +1,11 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import WaitlistModal from './WaitlistModal';
 
 const Hero: React.FC = () => {
+  const [isWaitlistModalOpen, setIsWaitlistModalOpen] = useState(false);
   return (
     <section className="pt-24 pb-16 md:pt-32 md:pb-24">
       <div className="container-custom">
@@ -16,9 +18,12 @@ const Hero: React.FC = () => {
               Connect with like-minded individuals in your community for friendship, romance, or professional networking - all within trusted groups you already belong to.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/" className="btn-primary flex items-center justify-center gap-2">
-                Join Waitlist <ArrowRight size={18} />
-              </Link>
+              <button 
+                  onClick={() => setIsWaitlistModalOpen(true)}
+                  className="btn-primary flex items-center justify-center gap-2"
+                >
+                  Join Waitlist <ArrowRight size={18} />
+                </button>
               <Link to="/#how-it-works" className="btn-outline flex items-center justify-center">
                 Learn More
               </Link>
@@ -96,6 +101,10 @@ const Hero: React.FC = () => {
           </div>
         </div>
       </div>
+      <WaitlistModal 
+        isOpen={isWaitlistModalOpen} 
+        onClose={() => setIsWaitlistModalOpen(false)} 
+      />
     </section>
   );
 };

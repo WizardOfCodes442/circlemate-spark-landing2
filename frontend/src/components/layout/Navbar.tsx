@@ -1,14 +1,15 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, User, Bell } from 'lucide-react';
+import { Menu, X, User, Bell, ArrowRight } from 'lucide-react';
 import Logo from '../Logo';
 import { Button } from '@/components/ui/button';
+import WaitlistModal from '@/components/home/WaitlistModal';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // Simulating authenticated state - will be replaced with actual auth state later
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isWaitlistModalOpen, setIsWaitlistModalOpen] = useState(false);
 
   const handleScrollToSection = (sectionId: string) => {
     setIsMenuOpen(false);
@@ -19,6 +20,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
+    <>
     <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-sm z-40 shadow-sm">
       <nav className="container-custom py-4">
         <div className="flex items-center justify-between">
@@ -65,7 +67,12 @@ const Navbar: React.FC = () => {
                   Testimonials
                 </button>
                 <div className="space-x-2">
-                  <Link to="/" className="btn-primary">Join Waitlist</Link>
+                  <button 
+                    onClick={() => setIsWaitlistModalOpen(true)}
+                    className="btn-primary flex items-center justify-center gap-2"
+                  >
+                    Join Waitlist <ArrowRight size={18} />
+                  </button>
                 </div>
               </>
             )}
@@ -144,13 +151,15 @@ const Navbar: React.FC = () => {
                     Testimonials
                   </button>
                   <div className="pt-2 grid grid-cols-2 gap-2">
-                    <Link 
-                      to="/" 
+                    <button 
+                      onClick={() => {
+                        setIsWaitlistModalOpen(true);
+                        setIsMenuOpen(false);
+                      }}
                       className="btn-primary text-center"
-                      onClick={() => setIsMenuOpen(false)}
                     >
                       Join Waitlist
-                    </Link>
+                    </button>
                   </div>
                 </>
               )}
@@ -159,6 +168,11 @@ const Navbar: React.FC = () => {
         )}
       </nav>
     </header>
+    <WaitlistModal 
+        isOpen={isWaitlistModalOpen} 
+        onClose={() => setIsWaitlistModalOpen(false)} 
+      />
+    </>
   );
 };
 
