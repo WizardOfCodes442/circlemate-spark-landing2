@@ -1,77 +1,61 @@
 
-import { ReactNode } from "react";
-import { Link } from "react-router-dom";
-
-import { Button } from "@/components/ui/button";
-import OnboardingProgress from "./OnboardingProgress";
+import React from 'react';
+import Logo from '../Logo';
+import { ArrowLeft } from 'lucide-react';
 
 interface OnboardingLayoutProps {
-  children: ReactNode;
+  children: React.ReactNode;
   currentStep: number;
   totalSteps: number;
-  nextAction?: () => void;
-  previousAction?: () => void;
-  nextDisabled?: boolean;
-  nextLabel?: string;
-  showSkip?: boolean;
+  onBack?: () => void;
+  showBackButton?: boolean;
 }
 
-const OnboardingLayout = ({
+const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({
   children,
   currentStep,
   totalSteps,
-  nextAction,
-  previousAction,
-  nextDisabled = false,
-  nextLabel = "Next",
-  showSkip = false,
-}: OnboardingLayoutProps) => {
+  onBack,
+  showBackButton = true,
+}) => {
+  const progress = Math.round((currentStep / totalSteps) * 100);
+  
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
-      <div className="container max-w-2xl mx-auto px-4 py-8">
-        <div className="flex justify-center mb-6">
-          <Link to="/">
-            <img
-              src="/logo.png"
-              alt="CircleMate Logo"
-              className="w-24 h-24"
-            />
-          </Link>
+    <div className="min-h-screen flex flex-col">
+      <header className="py-4 px-6 flex justify-between items-center border-b">
+        <div className="flex items-center gap-4">
+          {showBackButton && currentStep > 1 && (
+            <button 
+              onClick={onBack}
+              className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors"
+              aria-label="Go back"
+            >
+              <ArrowLeft size={20} className="text-gray-600" />
+            </button>
+          )}
+          <Logo size="small" />
         </div>
-
-        <div className="mb-8">
-          <OnboardingProgress currentStep={currentStep} totalSteps={totalSteps} />
+        <div className="text-sm text-gray-500">
+          Step {currentStep} of {totalSteps}
         </div>
-
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 animate-fade-in">
-          <div className="mb-8">{children}</div>
-
-          <div className="flex justify-between mt-8">
-            {previousAction ? (
-              <Button
-                variant="outline"
-                onClick={previousAction}
-                className="px-6"
-              >
-                Back
-              </Button>
-            ) : (
-              <div></div>
-            )}
-
-            <div className="flex space-x-4">
-              
-              <Button
-                onClick={nextAction}
-                disabled={nextDisabled}
-                className="px-6 text-white"
-              >
-                {nextLabel}
-              </Button>
-            </div>
-          </div>
-        </div>
+      </header>
+      
+      <div className="h-2 w-full bg-gray-100">
+        <div 
+          className="h-full bg-teal transition-all duration-500 ease-in-out"
+          style={{ width: `${progress}%` }}
+        ></div>
       </div>
+      
+      <main className="flex-1 flex flex-col items-center justify-center p-4 md:p-8">
+        <div className="w-full max-w-md">
+          {children}
+        </div>
+      </main>
+      
+      <footer className="py-4 px-6 text-center text-sm text-gray-500 border-t">
+        <p>© {new Date().getFullYear()} CircleMate. All rights reserved.</p>
+      </footer>
     </div>
   );
 };
