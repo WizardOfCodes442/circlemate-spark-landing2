@@ -284,55 +284,65 @@ const resetFailedLoginAttempts = async (userId) => {
         logger.error('Error resetting failed login attempts:', error);
     }
 };
+
 exports.verifiedPage = (req, res) => {
-    const { error, message } = req.query;
+    const { error, success, message } = req.query;
+    
+    logger.info('Verified page accessed with params:', { error, success, message });
+    
+    // Use EJS render since it's already configured
     res.render('verified', { 
-        error: error || 'false',
+        error: error === 'true',
+        success: success === 'true',
         message: message || 'Verification completed successfully'
     });
 };
+
 // VERIFY EMAIL ROUTE
-// In authController.js - Update verifyEmail function
 exports.verifyEmail = async (req, res) => {
     const { userId, uniqueString } = req.params;
 
     try {
-        const user = await User.findById(userId);
+        logger.info(`Email verification attempt for user: ${userId}`); // Add this log
         
+        const user = await User.findById(userId);
         if (user && user.verified) {
-            return res.redirect(`${config.baseUrl}/user/verified?error=false&message=${encodeURIComponent('Email already verified')}`);
+            logger.info(`User ${userId} is already verified`); // Add this log
+            return res.redirect(`/api/verified?success=true&message=User is already verified.`);
         }
 
         const record = await UserVerification.findOne({ userId });
-        
         if (!record) {
-            return res.redirect(`${config.baseUrl}/user/verified?error=true&message=${encodeURIComponent('Invalid or expired verification link')}`);
+            logger.warn(`No verification record found for user: ${userId}`); // Add this log
+            return res.redirect(`/api/verified?error=true&message=Invalid or expired link.`);
         }
 
         if (record.expiresAt < Date.now()) {
             await UserVerification.deleteOne({ userId });
             await User.deleteOne({ _id: userId });
-            return res.redirect(`${config.baseUrl}/user/verified?error=true&message=${encodeURIComponent('Verification link has expired. Please sign up again.')}`);
+            logger.warn(`Verification link expired for user: ${userId}`); // Add this log
+            return res.redirect(`/api/verified?error=true&message=Link expired. Please sign up again.`);
         }
 
         const isValid = await bcrypt.compare(uniqueString, record.uniqueString);
-        
         if (!isValid) {
-            return res.redirect(`${config.baseUrl}/user/verified?error=true&message=${encodeURIComponent('Invalid verification details')}`);
+            logger.warn(`Invalid verification string for user: ${userId}`); // Add this log
+            return res.redirect(`/api/verified?error=true&message=Invalid verification details.`);
         }
 
         await User.updateOne({ _id: userId }, { verified: true });
         await UserVerification.deleteOne({ userId });
-
-        logger.info(`Email verified successfully for user: ${userId}`);
         
-        res.redirect(`${config.baseUrl}/user/verified?error=false&message=${encodeURIComponent('Email verified successfully!')}`);
+        logger.info(`User ${userId} successfully verified`); // Add this log
         
+        return res.redirect(`/api/verified?success=true&message=Email verified successfully!`);
     } catch (error) {
-        logger.error('Email verification error:', error);
-        res.redirect(`${config.baseUrl}/user/verified?error=true&message=${encodeURIComponent('Verification failed. Please try again.')}`);
+        logger.error('Email verification error:', error); // Update this log
+        res.redirect(`/api/verified?error=true&message=Verification failed. Please try again.`);
     }
 };
+
+
 // Add this new function to authController.js
 exports.checkVerificationStatus = async (req, res, next) => {
     const { email } = req.params;

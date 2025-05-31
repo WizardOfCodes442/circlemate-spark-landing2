@@ -6,13 +6,12 @@ const mongoSanitize = require('express-mongo-sanitize');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
 const compression = require('compression');
 const morgan = require('morgan');
 
 const authRouter = require('./routes/authRoutes');
 const authController = require('./controllers/authController');
+const { verifiedPage } = require('./controllers/authController');
 const { securityHeaders, requestLogger } = require('./routes/middleware');
 const logger = require('./utils/logger');
 const onboardingRouter = require('./routes/onboardingRoutes');
@@ -135,27 +134,28 @@ app.use(express.json({ limit: '10mb' }));
 // Cookie parsing middleware
 app.use(cookieParser());
 
-// Session configuration
-app.use(session({
-    secret: SESSION_SECRET,
-    name: 'sessionId',
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: dbAltHost,
-        touchAfter: 24 * 3600, // lazy session update
-        autoRemove: 'native', // use MongoDB's TTL feature
-        crypto: {
-            secret: SESSION_SECRET
-        }
-    }),
-    cookie: {
-        secure: process.env.NODE_ENV === 'production',
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000, // 24 hours
-        sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax'
-    }
-}));
+// // Session configuration
+// app.use(session({
+//     secret: SESSION_SECRET,
+//     name: 'sessionId',
+//     resave: false,
+//     saveUninitialized: false,
+//     store: MongoStore.create({
+//         mongoUrl: dbAltHost,
+//         touchAfter: 24 * 3600,
+//         autoRemove: 'native',
+//         crypto: {
+//             secret: SESSION_SECRET
+//         },
+//         collectionName: 'express_sessions' // ADD THIS LINE - use different collection
+//     }),
+//     cookie: {
+//         secure: process.env.NODE_ENV === 'production',
+//         httpOnly: true,
+//         maxAge: 24 * 60 * 60 * 1000,
+//         sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax'
+//     }
+// }));
 
 // MongoDB sanitization
 app.use(
@@ -166,13 +166,13 @@ app.use(
     })
 );
 
-// CSRF token generation for forms
-app.use((req, res, next) => {
-    if (req.session) {
-        req.session.csrfToken = req.session.csrfToken || require('crypto').randomBytes(32).toString('hex');
-    }
-    next();
-});
+// // CSRF token generation for forms
+// app.use((req, res, next) => {
+//     if (req.session) {
+//         req.session.csrfToken = req.session.csrfToken || require('crypto').randomBytes(32).toString('hex');
+//     }
+//     next();
+// });
 
 // Health check route
 app.get('/', (req, res) => {
@@ -216,7 +216,7 @@ app.get('/health', async (req, res) => {
 
 
 // Email verification success page
-app.get('/user/verified', authController.verifiedPage);
+app.get('/api/verified', verifiedPage);
 
 // Apply auth rate limiting to auth routes
 app.use('/api/auth', authLimiter);
@@ -262,6 +262,11 @@ app.use('*', (req, res) => {
 
 // Global error handler
 app.use((err, req, res, next) => {
+
+    // Check if headers have already been sent
+    if (res.headersSent) {
+        return next(err);
+    }
     // Set CORS headers for error responses
     const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:3001'];
     const origin = req.headers.origin;
