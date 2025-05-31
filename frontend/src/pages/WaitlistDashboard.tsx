@@ -34,13 +34,19 @@ const fetchWaitlist = async (): Promise<WaitlistEntry[]> => {
   return data;
 };
 
+const ADMIN_PASSCODE = "382046"; // You can change this or store in env
 
 const WaitlistDashboard: React.FC = () => {
   const [entries, setEntries] = useState<WaitlistEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
+  const [authorized, setAuthorized] = useState(false);
+  const [passcode, setPasscode] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!authorized) return;
+
     const load = async () => {
       try {
         const data = await fetchWaitlist();
@@ -51,8 +57,18 @@ const WaitlistDashboard: React.FC = () => {
         setLoading(false);
       }
     };
+
     load();
-  }, []);
+  }, [authorized]);
+
+  const handlePasscodeSubmit = () => {
+    if (passcode === ADMIN_PASSCODE) {
+      setAuthorized(true);
+      setError("");
+    } else {
+      setError("Incorrect passcode.");
+    }
+  };
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase();
@@ -65,13 +81,7 @@ const WaitlistDashboard: React.FC = () => {
   }, [entries, query]);
 
   const downloadCSV = () => {
-    const header = [
-      "First Name",
-      "Last Name",
-      "Email",
-      "Interest",
-      "Date",
-    ].join(",");
+    const header = ["First Name", "Last Name", "Email", "Interest", "Date"].join(",");
     const rows = entries
       .map((e) =>
         [
@@ -92,6 +102,27 @@ const WaitlistDashboard: React.FC = () => {
     a.click();
     URL.revokeObjectURL(url);
   };
+
+  if (!authorized) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+          <h2 className="text-lg font-semibold mb-4">Enter Admin Passcode</h2>
+          <Input
+            type="password"
+            value={passcode}
+            onChange={(e) => setPasscode(e.target.value)}
+            placeholder="Passcode"
+            className="mb-3"
+          />
+          {error && <p className="text-sm text-red-600 mb-2">{error}</p>}
+          <Button onClick={handlePasscodeSubmit} className="w-full">
+            Access Dashboard
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
