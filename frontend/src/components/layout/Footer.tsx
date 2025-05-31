@@ -42,8 +42,8 @@ const Footer: React.FC = () => {
             <ul className="space-y-2">
               <li><Link to="/" className="text-gray-300 hover:text-teal transition-colors">Home</Link></li>
               <li><Link to="/about" className="text-gray-300 hover:text-teal transition-colors">About Us</Link></li>
-              <li><Link to="/groups" className="text-gray-300 hover:text-teal transition-colors">Find Groups</Link></li>
-              <li><Link to="/onboarding" className="text-gray-300 hover:text-teal transition-colors">Sign Up</Link></li>
+              <li><Link to="/" className="text-gray-300 hover:text-teal transition-colors">Find Groups</Link></li>
+              <li><Link to="/" className="text-gray-300 hover:text-teal transition-colors">Sign Up</Link></li>
             </ul>
           </div>
           <div>
@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
               <li><Link to="/privacy" className="text-gray-300 hover:text-teal transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms" className="text-gray-300 hover:text-teal transition-colors">Terms of Service</Link></li>
               <li><Link to="/faq" className="text-gray-300 hover:text-teal transition-colors">FAQ</Link></li>
-              <li><Link to="/blog" className="text-gray-300 hover:text-teal transition-colors">Blog</Link></li>
+              <li><Link to="/" className="text-gray-300 hover:text-teal transition-colors">Blog</Link></li>
             </ul>
           </div>
           <div>
