@@ -53,25 +53,37 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) return;
-    
-    setIsSubmitting(true);
-    
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      console.log('Waitlist submission:', formData);
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!validateForm()) return;
+
+  setIsSubmitting(true);
+
+  try {
+    const response = await fetch("http://circlemate.loma.com.ng/waitlist/submit-waitlist.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await response.json(); // Expecting a JSON response from PHP
+
+    if (response.ok) {
+      console.log("Waitlist submission success:", result);
       setIsSuccess(true);
-    } catch (error) {
-      console.error('Submission error:', error);
-    } finally {
-      setIsSubmitting(false);
+    } else {
+      console.error("Server responded with error:", result);
     }
-  };
+  } catch (error) {
+    console.error("Submission error:", error);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));

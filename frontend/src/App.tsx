@@ -25,6 +25,7 @@ import Blog from "./pages/Blog";
 import CommunityProfile from "./pages/CommunityProfile";
 import AdminDashboard from "./pages/AdminDashboard";
 import CommandCentre from "./pages/CommandCentre";
+import WaitlistDashboard from "./pages/WaitlistDashboard";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,7 @@ const App = () => (
           <Route path="/community/:id" element={<CommunityProfile />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/command-centre" element={<CommandCentre />} />
+          <Route path="/waitlist" element={<WaitlistDashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
