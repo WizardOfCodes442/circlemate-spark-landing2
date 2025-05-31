@@ -61,7 +61,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   setIsSubmitting(true);
 
   try {
-    const response = await fetch("http://circlemate.loma.com.ng/waitlist/submit-waitlist.php", {
+    const response = await fetch("https://circlemate.loma.com.ng/waitlist/submit-waitlist.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
