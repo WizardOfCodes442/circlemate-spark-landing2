@@ -103,7 +103,7 @@ const OnboardingSuccess = () => {
             
             <div className="pt-4">
               <Button onClick={markOnboardingCompleted} asChild className="w-full">
-                <Link to="/discover">Go to Dashboard</Link>
+                <Link to="/discover" className="text-white">Go to Dashboard</Link>
               </Button>
             </div>
           </div>

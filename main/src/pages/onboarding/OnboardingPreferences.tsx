@@ -180,37 +180,49 @@ const OnboardingPreferences = () => {
           </div>
 
           {selectedPurposes.length > 0 && (
-            <div className="mt-6 space-y-4">
-              <h2 className="text-lg font-semibold">Preferred Age Range</h2>
-              {selectedPurposes.map((purposeId) => (
-                <div key={purposeId} className="space-y-2">
-                  <label className="block font-medium capitalize">{purposeId}</label>
-                  <div className="flex items-center gap-4">
-                    <input
-                      type="number"
-                      placeholder="Min Age"
-                      value={preferredAges[purposeId]?.min ?? ""}
-                      onChange={(e) => handleAgeChange(purposeId, "min", e.target.value)}
-                      className="w-24 border rounded px-2 py-1"
-                      min={18}
-                      max={100}
-                    />
-                    <span>to</span>
-                    <input
-                      type="number"
-                      placeholder="Max Age"
-                      value={preferredAges[purposeId]?.max ?? ""}
-                      onChange={(e) => handleAgeChange(purposeId, "max", e.target.value)}
-                      className="w-24 border rounded px-2 py-1"
-                      min={18}
-                      max={100}
-                    />
-                    <span>years</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+  <div className="mt-6 space-y-6">
+    <h2 className="text-xl font-bold text-gray-800">Preferred Age Range</h2>
+    {selectedPurposes.map((purposeId) => (
+      <div
+        key={purposeId}
+        className="bg-gray-100 p-4 rounded-2xl shadow-sm border border-gray-200 space-y-3"
+      >
+        <label className="block text-md font-medium capitalize text-gray-700">
+          For {purposeId}
+        </label>
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex flex-col">
+            <span className="text-sm text-gray-500 mb-1">Min Age</span>
+            <input
+              type="number"
+              placeholder="18"
+              value={preferredAges[purposeId]?.min ?? ""}
+              onChange={(e) => handleAgeChange(purposeId, "min", e.target.value)}
+              className="w-24 sm:w-32 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              min={18}
+              max={100}
+            />
+          </div>
+          <span className="text-gray-500 mt-5">to</span>
+          <div className="flex flex-col">
+            <span className="text-sm text-gray-500 mb-1">Max Age</span>
+            <input
+              type="number"
+              placeholder="100"
+              value={preferredAges[purposeId]?.max ?? ""}
+              onChange={(e) => handleAgeChange(purposeId, "max", e.target.value)}
+              className="w-24 sm:w-32 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              min={18}
+              max={100}
+            />
+          </div>
+          <span className="text-gray-500 mt-5">years</span>
+        </div>
+      </div>
+    ))}
+  </div>
+)}
+
 
           <div className="mt-6 text-center text-sm text-muted-foreground">
             Selected {selectedPurposes.length} {selectedPurposes.length === 1 ? "purpose" : "purposes"}
