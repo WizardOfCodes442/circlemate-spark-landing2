@@ -1,166 +1,146 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react"; // using lucide spinner icon
-import { toast } from "@/hooks/use-toast";
 
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuthStore } from "../../store/useAuthStore";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight, LogIn, Mail, Lock } from 'lucide-react';
+import Logo from '../components/Logo';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useToast } from '@/components/ui/use-toast';
 
-const formSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  password: z.string().min(8, { message: "Password must be at least 8 characters" }),
-});
-
-const Login = () => {
+const Login: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false); // ⬅ add loading state
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const { login } = useAuthStore.getState();
-    setLoading(true); // ⬅ start loading
-
+  const { toast } = useToast();
+  
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    // In a real implementation, this would call an authentication API
     try {
-      const response = await login(values.email, values.password);
-
-      toast({
-        title: "Welcome back!",
-        description: "You have successfully logged in.",
-      });
-
-      navigate("/discover");
+      // Simulating API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // For now, just simulate a successful login for demo purposes
+      if (email && password) {
+        toast({
+          title: "Login successful!",
+          description: "Welcome back to CircleMate.",
+        });
+        navigate('/dashboard');
+      } else {
+        throw new Error('Please enter both email and password.');
+      }
     } catch (error) {
       toast({
-        title: "Login failed",
-        description: error?.message || "Invalid email or password",
         variant: "destructive",
+        title: "Login failed",
+        description: error instanceof Error ? error.message : "Please check your credentials and try again.",
       });
     } finally {
-      setLoading(false); // ⬅ stop loading
+      setIsLoading(false);
     }
   };
-
+  
   return (
-    <div className="container mx-auto px-4 h-screen flex items-center justify-center">
-      <Card className="w-full max-w-md animate-fade-in">
-        <CardHeader className="space-y-2 text-center">
-          <div className="flex justify-center mb-4">
-            <img src="/logo.png" alt="CircleMate Logo" className="h-24 w-24" />
+    <div className="min-h-screen bg-cream flex flex-col">
+      <div className="pt-6 px-6 flex justify-center">
+        <Link to="/" className="inline-block">
+          <Logo size="small" />
+        </Link>
+      </div>
+      
+      <div className="flex-1 flex flex-col items-center justify-center p-6">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-bold text-navy mb-2">Welcome Back</h1>
+            <p className="text-gray-600">Log in to continue your journey of meaningful connections</p>
           </div>
-          <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
-          <p className="text-muted-foreground">Enter your credentials to sign in to your account</p>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input 
-                          placeholder="name@example.com" 
-                          className="pl-10" 
-                          {...field} 
-                          disabled={loading} // ⬅ disable while loading
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          type={showPassword ? "text" : "password"}
-                          placeholder="••••••••"
-                          className="pl-10"
-                          {...field}
-                          disabled={loading} // ⬅ disable while loading
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="absolute right-2 top-2"
-                          onClick={() => setShowPassword(!showPassword)}
-                          disabled={loading} // ⬅ disable toggle while loading
-                        >
-                          {showPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="text-right">
-                <Link
-                  to="/forgot-password"
-                  className="text-sm font-medium text-[#22CCBE] hover:underline"
-                >
-                  Forgot your password?
+          
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  className="pl-10"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <Label htmlFor="password">Password</Label>
+                <Link to="/forgot-password" className="text-sm text-teal hover:underline">
+                  Forgot Password?
                 </Link>
               </div>
-              <Button type="submit" className="w-full text-white" disabled={loading}>
-                {loading ? (
-                  <span className="flex items-center justify-center">
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Signing In...
-                  </span>
-                ) : (
-                  "Sign In"
-                )}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-        <CardFooter className="flex justify-center">
-          <p className="text-sm text-muted-foreground">
-            Don't have an account?{" "}
-            <Link to="/signup" className="font-medium text-[#22CCBE] hover:underline">
-              Sign up
-            </Link>
-          </p>
-        </CardFooter>
-      </Card>
+              <div className="relative">
+                <Lock className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  className="pl-10"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="remember" 
+                checked={rememberMe}
+                onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+              />
+              <Label htmlFor="remember" className="text-sm text-gray-600">
+                Remember me for 30 days
+              </Label>
+            </div>
+            
+            <Button 
+              type="submit" 
+              className="w-full btn-primary flex justify-center items-center gap-2"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>Loading...</>
+              ) : (
+                <>
+                  Log In <LogIn size={18} />
+                </>
+              )}
+            </Button>
+          </form>
+          
+          <div className="mt-6 text-center">
+            <p className="text-gray-600">
+              Don't have an account?{" "}
+              <Link to="/onboarding" className="text-teal hover:underline font-medium">
+                Sign up
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div className="py-4 text-center text-sm text-gray-500">
+        <p>© {new Date().getFullYear()} CircleMate. All rights reserved.</p>
+      </div>
     </div>
   );
 };

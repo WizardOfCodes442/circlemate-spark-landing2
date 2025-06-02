@@ -1,48 +1,58 @@
 
-import { useNavigate } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
-import { LogOut } from "lucide-react";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Layout from '../components/layout/Layout';
+import DashboardHeader from '../components/dashboard/DashboardHeader';
+import StatCards from '../components/dashboard/StatCards';
+import MatchGrid from '../components/dashboard/MatchGrid';
+import ActivityFeed from '../components/dashboard/ActivityFeed';
+import { Button } from '@/components/ui/button';
+import { UserCheck } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
-import DashboardHeader from "@/components/DashboardHeader";
-
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   
-  const handleLogout = () => {
-    toast({
-      title: "Logged out",
-      description: "You have been successfully logged out",
-    });
-    navigate("/");
-
+  const handleGroupUpdates = () => {
+    navigate('/group-updates');
+  };
+  
+  const handleRequestMatch = () => {
+    navigate('/matches');
   };
   
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <DashboardHeader />
-      
-      {/* Sidebar */}
-      
-      {/* Main content */}
-      <main className="container mx-auto px-4 py-8">
-        <div className="text-center my-12">
-          <h1 className="text-3xl font-bold mb-4">Welcome to CircleMate!</h1>
-          <p className="text-muted-foreground max-w-lg mx-auto">
-            Your profile is set up and ready to go. Start exploring communities and connecting with others.
-          </p>
-          
-          <div className="mt-8">
-            <Button onClick={() => navigate("/")}>Back to Home</Button>
-            <Button variant="outline" className="ml-4" onClick={handleLogout}>
-              <LogOut className="h-4 w-4 mr-2" />
-              Log Out
-            </Button>
+    <Layout>
+      <div className="container-custom py-8">
+        <DashboardHeader 
+          groupName="Lagos Tech Circle"
+          memberCount={534}
+          matchesCount={156}
+          onGroupUpdatesClick={handleGroupUpdates}
+          onRequestMatchClick={handleRequestMatch}
+        />
+        
+        <div className="flex justify-end mb-4">
+          <Button
+            className="bg-teal hover:bg-teal/90 text-white flex items-center gap-2"
+            onClick={() => navigate('/accepted-connections')}
+          >
+            <UserCheck className="h-4 w-4" />
+            View Accepted Connections
+          </Button>
+        </div>
+        
+        <StatCards />
+        
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <MatchGrid />
+          </div>
+          <div>
+            <ActivityFeed />
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 };
 
