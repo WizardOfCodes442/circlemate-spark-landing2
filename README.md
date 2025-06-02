@@ -297,7 +297,6 @@ Response:
 
 ---
 
-
 # Onboarding API Documentation
 
 ## Prerequisites
@@ -383,7 +382,7 @@ POST /community
 
 ---
 
-### 2️⃣ Profile Information
+### 2️⃣ Profile Information (UPDATED)
 ```http
 POST /profile
 ```
@@ -395,10 +394,31 @@ POST /profile
   "age": 25,
   "gender": "male",
   "bio": "Software developer passionate about AI",
-  "occupation": "Software Engineer"
+  "occupation": "Software Engineer",
+  "temperament": "sanguine",
+  "matchingStyle": "flexible",
+  "ageRange": "26-35",
+  "educationLevel": "bachelor"
 }
 ```
-**Gender options:** `male`, `female`, `other`, `prefer-not-to-say`
+
+**Field Options:**
+- **Gender:** `male`, `female`
+- **Temperament:** `choleric`, `sanguine`, `phlegmatic`, `melancholic`
+- **Matching Style:** `flexible`, `strict`, `auto`
+- **Age Range:** `18-25`, `26-35`, `36-45`, `46+`
+- **Education Level:** 
+  - `no_formal` - No Formal Education
+  - `primary` - Primary School (Elementary)
+  - `lower_secondary` - Lower Secondary (Middle School/Junior High)
+  - `upper_secondary` - Upper Secondary (High School or equivalent)
+  - `vocational` - Vocational/Technical Certification
+  - `some_college` - Some College/No Degree
+  - `associate` - Associate Degree
+  - `bachelor` - Bachelor's Degree
+  - `postgrad_diploma` - Postgraduate Diploma or Certificate
+  - `master` - Master's Degree
+  - `doctorate` - Doctorate (PhD, EdD, etc.)
 
 ---
 
@@ -439,18 +459,25 @@ POST /personality
 
 ---
 
-### 5️⃣ Preferences
+### 5️⃣ Preferences (UPDATED)
 ```http
 POST /preferences
 ```
 **Body:**
 ```json
 {
-  "connectionPurposes": ["friendship", "networking"],
-  "interests": ["Hiking", "Photography", "Cooking", "AI", "Travel"]
+  "connectionPurposes": ["friendship", "dating"],
+  "interests": ["Hiking", "Photography", "Cooking", "AI", "Travel"],
+  "preferredAges": {
+    "friendship": { "min": 18, "max": 100 },
+    "dating": { "min": 25, "max": 35 }
+  }
 }
 ```
+
 **Purpose options:** `friendship`, `dating`, `networking`, `activities`
+
+**Note:** The `preferredAges` object should contain age ranges for each selected connection purpose. Each range must have `min` and `max` values between 18 and 100.
 
 ---
 
@@ -538,19 +565,23 @@ POST /complete
 ## 💡 Frontend Integration Example
 
 ```typescript
-// Step-by-step flow
+// Step-by-step flow with updated fields
 try {
   // 1. Join community
   await api.post('/onboarding/community', { communityId: selectedId });
   
-  // 2. Update profile
+  // 2. Update profile (with new fields)
   await api.post('/onboarding/profile', {
     firstName: "John",
     lastName: "Doe",
     age: 25,
     gender: "male",
     bio: "Developer",
-    occupation: "Software Engineer"
+    occupation: "Software Engineer",
+    temperament: "sanguine",
+    matchingStyle: "flexible",
+    ageRange: "26-35",
+    educationLevel: "bachelor"
   });
   
   // 3. Set location
@@ -559,6 +590,21 @@ try {
     state: "California",
     country: "United States",
     postalCode: "94105"
+  });
+  
+  // 4. Select personality traits
+  await api.post('/onboarding/personality', {
+    personalityTraits: ["creative", "analytical", "outgoing"]
+  });
+  
+  // 5. Set preferences with age ranges
+  await api.post('/onboarding/preferences', {
+    connectionPurposes: ["friendship", "dating"],
+    interests: ["Hiking", "Photography", "Cooking"],
+    preferredAges: {
+      "friendship": { "min": 18, "max": 100 },
+      "dating": { "min": 25, "max": 35 }
+    }
   });
   
   // Continue with remaining steps...
@@ -589,18 +635,33 @@ switch(currentStep) {
 
 ---
 
-## 📌 Quick Reference
+## 📌 Quick Reference (UPDATED)
 
 | Step | Endpoint | Required Fields |
 |------|----------|----------------|
 | 1 | POST /community | `communityId` OR `inviteCode` |
-| 2 | POST /profile | `firstName`, `lastName`, `age`, `gender` |
+| 2 | POST /profile | `firstName`, `lastName`, `age`, `gender`, `temperament`, `matchingStyle`, `ageRange`, `educationLevel` |
 | 3 | POST /location | `city`, `state`, `country`, `postalCode` |
 | 4 | POST /personality | `personalityTraits[]` (1-5 items) |
-| 5 | POST /preferences | `connectionPurposes[]`, `interests[]` |
+| 5 | POST /preferences | `connectionPurposes[]`, `interests[]`, `preferredAges` (optional) |
 | 6 | POST /availability | `days[]`, `timePreferences[]` |
 | 7 | POST /photos | `photos` (FormData, max 8 files) |
 | - | POST /complete | No body required |
+
+---
+
+## 🆕 What's Changed
+
+1. **Profile Step** now includes:
+   - `temperament` - Your core personality type
+   - `matchingStyle` - How strict/flexible your matching preferences are
+   - `ageRange` - Your preferred age group for connections
+   - `educationLevel` - Your educational background
+
+2. **Preferences Step** now includes:
+   - `preferredAges` - Specific age ranges for each connection purpose
+
+3. **Gender Options** - Now limited to `male` and `female` only
 
 ---
 
