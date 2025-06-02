@@ -19,6 +19,11 @@ type InterestCategory = {
   interests: string[];
 };
 
+type PreferredAge = {
+  min: number | "";
+  max: number | "";
+};
+
 const connectionPurposes: ConnectionPurpose[] = [
   {
     id: "friendship",
@@ -80,12 +85,20 @@ const OnboardingPreferences = () => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState("purpose");
 
+  const [preferredAges, setPreferredAges] = useState<Record<string, PreferredAge>>({});
+
   const togglePurpose = (purposeId: string) => {
-    setSelectedPurposes((prev) =>
-      prev.includes(purposeId)
-        ? prev.filter((id) => id !== purposeId)
-        : [...prev, purposeId]
-    );
+    setSelectedPurposes((prev) => {
+      if (prev.includes(purposeId)) {
+        const updated = prev.filter((id) => id !== purposeId);
+        const updatedAges = { ...preferredAges };
+        delete updatedAges[purposeId];
+        setPreferredAges(updatedAges);
+        return updated;
+      } else {
+        return [...prev, purposeId];
+      }
+    });
   };
 
   const toggleInterest = (interest: string) => {
@@ -101,6 +114,7 @@ const OnboardingPreferences = () => {
   const handleNext = () => {
     if (selectedPurposes.length > 0 && selectedInterests.length > 0) {
       console.log("Selected purposes:", selectedPurposes);
+      console.log("Preferred ages:", preferredAges);
       console.log("Selected interests:", selectedInterests);
       navigate("/onboarding/availability");
     }
@@ -114,6 +128,16 @@ const OnboardingPreferences = () => {
     }
   };
 
+  const handleAgeChange = (purposeId: string, field: "min" | "max", value: string) => {
+    setPreferredAges((prev) => ({
+      ...prev,
+      [purposeId]: {
+        ...prev[purposeId],
+        [field]: value === "" ? "" : Math.max(18, Math.min(100, Number(value))),
+      },
+    }));
+  };
+
   return (
     <OnboardingLayout
       currentStep={4}
@@ -125,9 +149,7 @@ const OnboardingPreferences = () => {
     >
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold mb-2">Connection Preferences</h1>
-        <p className="text-muted-foreground">
-          Tell us what you're looking for in your connections
-        </p>
+        <p className="text-muted-foreground">Tell us what you're looking for in your connections</p>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -151,13 +173,44 @@ const OnboardingPreferences = () => {
                 <CardContent className="p-4">
                   <div className="text-3xl mb-2">{purpose.icon}</div>
                   <h3 className="font-medium text-lg">{purpose.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {purpose.description}
-                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">{purpose.description}</p>
                 </CardContent>
               </Card>
             ))}
           </div>
+
+          {selectedPurposes.length > 0 && (
+            <div className="mt-6 space-y-4">
+              <h2 className="text-lg font-semibold">Preferred Age Range</h2>
+              {selectedPurposes.map((purposeId) => (
+                <div key={purposeId} className="space-y-2">
+                  <label className="block font-medium capitalize">{purposeId}</label>
+                  <div className="flex items-center gap-4">
+                    <input
+                      type="number"
+                      placeholder="Min Age"
+                      value={preferredAges[purposeId]?.min ?? ""}
+                      onChange={(e) => handleAgeChange(purposeId, "min", e.target.value)}
+                      className="w-24 border rounded px-2 py-1"
+                      min={18}
+                      max={100}
+                    />
+                    <span>to</span>
+                    <input
+                      type="number"
+                      placeholder="Max Age"
+                      value={preferredAges[purposeId]?.max ?? ""}
+                      onChange={(e) => handleAgeChange(purposeId, "max", e.target.value)}
+                      className="w-24 border rounded px-2 py-1"
+                      min={18}
+                      max={100}
+                    />
+                    <span>years</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="mt-6 text-center text-sm text-muted-foreground">
             Selected {selectedPurposes.length} {selectedPurposes.length === 1 ? "purpose" : "purposes"}

@@ -56,11 +56,11 @@ const OnboardingCommunity = () => {
         </p>
       </div>
 
-      <div className="relative mb-6">
-        <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+      <div className="relative mb-6 ">
+        <Search className="absolute left-3 top-3 h-6 w-6 text-muted-foreground" />
         <Input
           placeholder="Search communities..."
-          className="pl-10"
+          className="pl-10 py-6"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -102,6 +102,7 @@ const OnboardingCommunity = () => {
           Or join using an invite code
         </p>
         <Input
+        className="py-6"
           placeholder="Enter group invite code"
           value={inviteCode}
           onChange={(e) => {
