@@ -167,7 +167,6 @@ const userProfileSchema = new mongoose.Schema({
 });
 
 // Indexes for better query performance
-userProfileSchema.index({ userId: 1 });
 userProfileSchema.index({ 'location.coordinates': '2dsphere' });
 userProfileSchema.index({ 'communities.communityId': 1 });
 userProfileSchema.index({ onboardingCompleted: 1 });

@@ -134,29 +134,6 @@ app.use(express.json({ limit: '10mb' }));
 // Cookie parsing middleware
 app.use(cookieParser());
 
-// // Session configuration
-// app.use(session({
-//     secret: SESSION_SECRET,
-//     name: 'sessionId',
-//     resave: false,
-//     saveUninitialized: false,
-//     store: MongoStore.create({
-//         mongoUrl: dbAltHost,
-//         touchAfter: 24 * 3600,
-//         autoRemove: 'native',
-//         crypto: {
-//             secret: SESSION_SECRET
-//         },
-//         collectionName: 'express_sessions' // ADD THIS LINE - use different collection
-//     }),
-//     cookie: {
-//         secure: process.env.NODE_ENV === 'production',
-//         httpOnly: true,
-//         maxAge: 24 * 60 * 60 * 1000,
-//         sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax'
-//     }
-// }));
-
 // MongoDB sanitization
 app.use(
     mongoSanitize({
@@ -165,14 +142,6 @@ app.use(
         },
     })
 );
-
-// // CSRF token generation for forms
-// app.use((req, res, next) => {
-//     if (req.session) {
-//         req.session.csrfToken = req.session.csrfToken || require('crypto').randomBytes(32).toString('hex');
-//     }
-//     next();
-// });
 
 // Health check route
 app.get('/', (req, res) => {
@@ -250,6 +219,20 @@ app.get('/api/docs', (req, res) => {
 
 // Static files
 app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
+
+// Support both favicon.ico and favicon.png requests
+app.get('/favicon.ico', (req, res) => {
+    res.redirect('/favicon.png');
+});
+
+app.get('/favicon.png', (req, res) => {
+    res.sendFile(path.join(__dirname, 'assets', 'icon.png'), {
+        headers: {
+            'Content-Type': 'image/png',
+            'Cache-Control': 'public, max-age=604800'
+        }
+    });
+});
 
 // 404 handler
 app.use('*', (req, res) => {
@@ -375,8 +358,6 @@ const startServer = async () => {
         
         // MongoDB connection options
         const mongoOptions = {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
             autoIndex: true,
             serverSelectionTimeoutMS: 5000,
             socketTimeoutMS: 45000,
