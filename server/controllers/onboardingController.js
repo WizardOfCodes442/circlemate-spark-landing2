@@ -122,14 +122,26 @@ exports.selectCommunity = async (req, res, next) => {
     }
 };
 
-// 2. Profile Information
+// 2. Profile Information (UPDATED)
 exports.updateProfile = async (req, res, next) => {
     try {
         const userId = req.user._id;
-        const { firstName, lastName, age, gender, bio, occupation } = req.body;
+        const { 
+            firstName, 
+            lastName, 
+            age, 
+            gender, 
+            bio, 
+            occupation,
+            temperament,
+            matchingStyle,
+            ageRange,
+            educationLevel
+        } = req.body;
 
         // Validation
-        if (!firstName || !lastName || !age || !gender) {
+        if (!firstName || !lastName || !age || !gender || !temperament || 
+            !matchingStyle || !ageRange || !educationLevel) {
             return next(new createError('All required fields must be provided', 400));
         }
 
@@ -142,6 +154,10 @@ exports.updateProfile = async (req, res, next) => {
         profile.gender = gender;
         profile.bio = bio || '';
         profile.occupation = occupation || '';
+        profile.temperament = temperament;
+        profile.matchingStyle = matchingStyle;
+        profile.ageRange = ageRange;
+        profile.educationLevel = educationLevel;
 
         // Update onboarding step
         profile.onboardingStep = Math.max(profile.onboardingStep, 2);
@@ -163,7 +179,11 @@ exports.updateProfile = async (req, res, next) => {
                     age: profile.age,
                     gender: profile.gender,
                     bio: profile.bio,
-                    occupation: profile.occupation
+                    occupation: profile.occupation,
+                    temperament: profile.temperament,
+                    matchingStyle: profile.matchingStyle,
+                    ageRange: profile.ageRange,
+                    educationLevel: profile.educationLevel
                 },
                 onboardingStep: profile.onboardingStep
             }
@@ -255,11 +275,11 @@ exports.updatePersonality = async (req, res, next) => {
     }
 };
 
-// 5. Connection Preferences
+// 5. Connection Preferences (UPDATED)
 exports.updatePreferences = async (req, res, next) => {
     try {
         const userId = req.user._id;
-        const { connectionPurposes, interests } = req.body;
+        const { connectionPurposes, interests, preferredAges } = req.body;
 
         // Validation
         if (!connectionPurposes || !Array.isArray(connectionPurposes) || connectionPurposes.length === 0) {
@@ -275,6 +295,20 @@ exports.updatePreferences = async (req, res, next) => {
         // Update preferences
         profile.connectionPurposes = connectionPurposes;
         profile.interests = interests;
+        
+        // Update age preferences for each connection purpose
+        if (preferredAges && typeof preferredAges === 'object') {
+            profile.connectionAgePreferences = new Map();
+            
+            for (const [purpose, ageRange] of Object.entries(preferredAges)) {
+                if (connectionPurposes.includes(purpose) && ageRange.min && ageRange.max) {
+                    profile.connectionAgePreferences.set(purpose, {
+                        min: parseInt(ageRange.min),
+                        max: parseInt(ageRange.max)
+                    });
+                }
+            }
+        }
 
         // Update onboarding step
         profile.onboardingStep = Math.max(profile.onboardingStep, 5);
@@ -286,6 +320,7 @@ exports.updatePreferences = async (req, res, next) => {
             data: {
                 connectionPurposes: profile.connectionPurposes,
                 interests: profile.interests,
+                connectionAgePreferences: Object.fromEntries(profile.connectionAgePreferences || new Map()),
                 onboardingStep: profile.onboardingStep
             }
         });

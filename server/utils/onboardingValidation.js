@@ -11,9 +11,26 @@ const schemas = {
         firstName: Joi.string().min(2).max(50).required(),
         lastName: Joi.string().min(2).max(50).required(),
         age: Joi.number().integer().min(18).max(120).required(),
-        gender: Joi.string().valid('male', 'female', 'other', 'prefer-not-to-say').required(),
-        bio: Joi.string().max(200).allow(''),
-        occupation: Joi.string().max(200).allow('')
+        gender: Joi.string().valid('male', 'female').required(),
+        bio: Joi.string().max(500).allow(''),
+        occupation: Joi.string().max(200).allow(''),
+        // NEW FIELDS
+        temperament: Joi.string().valid('choleric', 'sanguine', 'phlegmatic', 'melancholic').required(),
+        matchingStyle: Joi.string().valid('flexible', 'strict', 'auto').required(),
+        ageRange: Joi.string().valid('18-25', '26-35', '36-45', '46+').required(),
+        educationLevel: Joi.string().valid(
+            'no_formal',
+            'primary',
+            'lower_secondary',
+            'upper_secondary',
+            'vocational',
+            'some_college',
+            'associate',
+            'bachelor',
+            'postgrad_diploma',
+            'master',
+            'doctorate'
+        ).required()
     }),
 
     location: Joi.object({
@@ -45,7 +62,22 @@ const schemas = {
         interests: Joi.array()
             .items(Joi.string().trim())
             .min(1)
-            .required()
+            .required(),
+        // NEW: Age preferences for each connection purpose
+        preferredAges: Joi.object().pattern(
+            Joi.string().valid('friendship', 'dating', 'networking', 'activities'),
+            Joi.object({
+                min: Joi.number().integer().min(18).max(100).required(),
+                max: Joi.number().integer().min(18).max(100).required()
+            }).custom((value, helpers) => {
+                if (value.min > value.max) {
+                    return helpers.error('any.invalid', {
+                        message: 'Minimum age must be less than or equal to maximum age'
+                    });
+                }
+                return value;
+            })
+        ).optional()
     }),
 
     availability: Joi.object({

@@ -33,13 +33,46 @@ const userProfileSchema = new mongoose.Schema({
     },
     bio: {
         type: String,
-        maxlength: [200, 'Bio must be 200 characters or less'],
+        maxlength: [500, 'Bio must be 500 characters or less'],
         trim: true
     },
     occupation: {
         type: String,
         maxlength: [200, 'Occupation must be 200 characters or less'],
         trim: true
+    },
+    // NEW FIELDS FROM FRONTEND
+    temperament: {
+        type: String,
+        required: true,
+        enum: ['choleric', 'sanguine', 'phlegmatic', 'melancholic']
+    },
+    matchingStyle: {
+        type: String,
+        required: true,
+        enum: ['flexible', 'strict', 'auto']
+    },
+    ageRange: {
+        type: String,
+        required: true,
+        enum: ['18-25', '26-35', '36-45', '46+']
+    },
+    educationLevel: {
+        type: String,
+        required: true,
+        enum: [
+            'no_formal',
+            'primary',
+            'lower_secondary',
+            'upper_secondary',
+            'vocational',
+            'some_college',
+            'associate',
+            'bachelor',
+            'postgrad_diploma',
+            'master',
+            'doctorate'
+        ]
     },
     // Location (from location step)
     location: {
@@ -82,6 +115,22 @@ const userProfileSchema = new mongoose.Schema({
         type: String,
         enum: ['friendship', 'dating', 'networking', 'activities']
     }],
+    // NEW: Age preferences for each connection purpose
+    connectionAgePreferences: {
+        type: Map,
+        of: {
+            min: {
+                type: Number,
+                min: 18,
+                max: 100
+            },
+            max: {
+                type: Number,
+                min: 18,
+                max: 100
+            }
+        }
+    },
     interests: [{
         type: String,
         trim: true
@@ -170,6 +219,9 @@ const userProfileSchema = new mongoose.Schema({
 userProfileSchema.index({ 'location.coordinates': '2dsphere' });
 userProfileSchema.index({ 'communities.communityId': 1 });
 userProfileSchema.index({ onboardingCompleted: 1 });
+userProfileSchema.index({ temperament: 1 });
+userProfileSchema.index({ matchingStyle: 1 });
+userProfileSchema.index({ ageRange: 1 });
 
 // Calculate profile completeness
 userProfileSchema.methods.calculateCompleteness = function() {
@@ -185,7 +237,8 @@ userProfileSchema.methods.calculateCompleteness = function() {
     };
 
     // Basic info
-    if (this.firstName && this.lastName && this.age && this.gender) {
+    if (this.firstName && this.lastName && this.age && this.gender && 
+        this.temperament && this.matchingStyle && this.ageRange && this.educationLevel) {
         completeness += weights.basicInfo;
     }
 
