@@ -28,7 +28,7 @@ interface WaitlistEntry {
 }
 
 const fetchWaitlist = async (): Promise<WaitlistEntry[]> => {
-  const res = await fetch("https://circlemate.loma.com.ng/waitlist/get-waitlist.php");
+  const res = await fetch("https://example.com/waitlist/get-waitlist.php");
   const data = await res.json();
   if (!res.ok) throw new Error("Failed to fetch waitlist");
   return data;
