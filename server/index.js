@@ -101,7 +101,7 @@ const corsOptions = {
     origin: function (origin, callback) {
         const allowedOrigins = [
             'http://localhost:8080',
-            'https://circlemate-spark-landing-4uyh.vercel.app',
+            'https://circlemate-spark-landing-mbh1.vercel.app/',
             'https://www.mycirclemate.com',
             'http://localhost:3000',
             process.env.FRONTEND_URL
@@ -258,7 +258,7 @@ app.use((err, req, res, next) => {
         return next(err);
     }
     // Set CORS headers for error responses
-    const allowedOrigins = ['https://circlemate-spark-landing-4uyh.vercel.app', 'http://localhost:8080', 'http://localhost:3000', 'https://www.mycirclemate.com'];
+    const allowedOrigins = ['https://circlemate-spark-landing-mbh1.vercel.app/', 'http://localhost:8080', 'http://localhost:3000', 'https://www.mycirclemate.com'];
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
