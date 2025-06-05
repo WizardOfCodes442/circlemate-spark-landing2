@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
     userName: {
@@ -190,7 +189,6 @@ userSchema.methods.resetFailedLogins = async function() {
 
 // Static method to find users with active sessions
 userSchema.statics.findUsersWithActiveSessions = function() {
-    const Session = mongoose.model('Session');
     return this.aggregate([
         {
             $match: {

@@ -14,3 +14,265 @@
 {"level":"info","message":"Database: Connected to test","timestamp":"2025-05-27 20:45:16"}
 {"level":"info","message":"Process ID: 10696","timestamp":"2025-05-27 20:45:16"}
 {"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-05-27 20:45:19"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-05-28 17:02:20"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-05-28 17:02:25"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-05-28 17:02:29"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-05-28 17:02:29"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-28 17:02:29"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-05-28 17:02:29"}
+{"level":"info","message":"Process ID: 12744","timestamp":"2025-05-28 17:02:29"}
+{"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-05-28 17:02:44"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-05-31 11:28:24"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-05-31 11:28:25"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-05-31 11:28:29"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-05-31 11:28:29"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31 11:28:29"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-05-31 11:28:29"}
+{"level":"info","message":"Process ID: 13084","timestamp":"2025-05-31 11:28:29"}
+{"level":"warn","message":"MongoDB disconnected","timestamp":"2025-05-31 11:29:43"}
+{"level":"info","message":"MongoDB reconnected","timestamp":"2025-05-31 11:29:54"}
+{"level":"info","message":"New user created: rhymeanabel@gmail.com","timestamp":"2025-05-31 11:43:03"}
+{"level":"info","message":"Sending verification email to: rhymeanabel@gmail.com","timestamp":"2025-05-31 11:43:03"}
+{"level":"info","message":"Verification email sent successfully to: rhymeanabel@gmail.com","timestamp":"2025-05-31 11:43:06"}
+{"duration":"7542ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-05-31 11:43:08","url":"/api/auth/signup","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"level":"info","message":"Email verified successfully for user: 683add370dce887def2167b1","timestamp":"2025-05-31 11:43:25"}
+{"duration":"1096ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 11:43:25","url":"/api/auth/verify/683add370dce887def2167b1/be7c0042-c7c0-41fa-a2f9-bcd87a1e70e5683add370dce887def2167b1","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"warn","message":"404 - Route not found: /user/verified?error=false&message=Email%20verified%20successfully!","timestamp":"2025-05-31 11:43:26"}
+{"duration":"1277ms","ip":"::1","level":"error","message":"Request failed:","method":"GET","status":404,"timestamp":"2025-05-31 11:43:26","url":"/user/verified?error=false&message=Email%20verified%20successfully!","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"warn","message":"404 - Route not found: /favicon.ico","timestamp":"2025-05-31 11:43:26"}
+{"duration":"401ms","ip":"::1","level":"error","message":"Request failed:","method":"GET","status":404,"timestamp":"2025-05-31 11:43:27","url":"/favicon.ico","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"warn","message":"404 - Route not found: /user/verified?error=false&message=Email%20verified%20successfully!","timestamp":"2025-05-31 11:44:33"}
+{"duration":"552ms","ip":"::1","level":"error","message":"Request failed:","method":"GET","status":404,"timestamp":"2025-05-31 11:44:33","url":"/user/verified?error=false&message=Email%20verified%20successfully!","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"warn","message":"404 - Route not found: /user/verified?error=false&message=Email%20already%20verified","timestamp":"2025-05-31 11:44:40"}
+{"duration":"639ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 11:44:41","url":"/api/auth/verify/683add370dce887def2167b1/be7c0042-c7c0-41fa-a2f9-bcd87a1e70e5683add370dce887def2167b1","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"duration":"429ms","ip":"::1","level":"error","message":"Request failed:","method":"GET","status":404,"timestamp":"2025-05-31 11:44:41","url":"/user/verified?error=false&message=Email%20already%20verified","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"duration":"652ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 11:46:12","url":"/api/auth/verify/683add370dce887def2167b1/be7c0042-c7c0-41fa-a2f9-bcd87a1e70e5683add370dce887def2167b1","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"warn","message":"404 - Route not found: /user/verified?error=false&message=Email%20already%20verified","timestamp":"2025-05-31 11:46:12"}
+{"duration":"491ms","ip":"::1","level":"error","message":"Request failed:","method":"GET","status":404,"timestamp":"2025-05-31 11:46:13","url":"/user/verified?error=false&message=Email%20already%20verified","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-05-31 11:46:24"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-05-31 11:49:46"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-05-31 11:49:47"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-05-31 11:49:51"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-05-31 11:49:51"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31 11:49:51"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-05-31 11:49:51"}
+{"level":"info","message":"Process ID: 1452","timestamp":"2025-05-31 11:49:51"}
+{"level":"info","message":"New user created: rhymeanabel@gmail.com","timestamp":"2025-05-31 11:50:24"}
+{"level":"info","message":"Sending verification email to: rhymeanabel@gmail.com","timestamp":"2025-05-31 11:50:24"}
+{"level":"info","message":"Verification email sent successfully to: rhymeanabel@gmail.com","timestamp":"2025-05-31 11:50:27"}
+{"duration":"4370ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-05-31 11:50:27","url":"/api/auth/signup","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"duration":"914ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 11:50:40","url":"/api/auth/verify/683adef0b3dcf08753527021/12c1c900-82d8-4a3a-99c1-37ad5b719570683adef0b3dcf08753527021","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"warn","message":"404 - Route not found: /api/verified?successr=true&message=User%20is%20already%20verified.","timestamp":"2025-05-31 11:50:41"}
+{"duration":"1607ms","ip":"::1","level":"error","message":"Request failed:","method":"GET","status":404,"timestamp":"2025-05-31 11:50:42","url":"/api/verified?successr=true&message=User%20is%20already%20verified.","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"warn","message":"404 - Route not found: /api/verified?successr=true&message=User%20is%20already%20verified.","timestamp":"2025-05-31 11:56:58"}
+{"duration":"468ms","ip":"::1","level":"error","message":"Request failed:","method":"GET","status":404,"timestamp":"2025-05-31 11:56:58","url":"/api/verified?successr=true&message=User%20is%20already%20verified.","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"warn","message":"404 - Route not found: /api/verified?successr=true&message=User%20is%20already%20verified.","timestamp":"2025-05-31 11:57:02"}
+{"duration":"472ms","ip":"::1","level":"error","message":"Request failed:","method":"GET","status":404,"timestamp":"2025-05-31 11:57:03","url":"/api/verified?successr=true&message=User%20is%20already%20verified.","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"warn","message":"404 - Route not found: /api/verified?successr=true&message=User%20is%20already%20verified.","timestamp":"2025-05-31 11:57:04"}
+{"duration":"557ms","ip":"::1","level":"error","message":"Request failed:","method":"GET","status":404,"timestamp":"2025-05-31 11:57:04","url":"/api/verified?successr=true&message=User%20is%20already%20verified.","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"duration":"589ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 11:57:08","url":"/api/auth/verify/683adef0b3dcf08753527021/12c1c900-82d8-4a3a-99c1-37ad5b719570683adef0b3dcf08753527021","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"warn","message":"404 - Route not found: /api/verified?successr=true&message=User%20is%20already%20verified.","timestamp":"2025-05-31 11:57:08"}
+{"duration":"444ms","ip":"::1","level":"error","message":"Request failed:","method":"GET","status":404,"timestamp":"2025-05-31 11:57:08","url":"/api/verified?successr=true&message=User%20is%20already%20verified.","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-05-31 11:57:16"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-05-31 12:00:04"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-05-31 12:00:05"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-05-31 12:00:10"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-05-31 12:00:10"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31 12:00:10"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-05-31 12:00:10"}
+{"level":"info","message":"Process ID: 1952","timestamp":"2025-05-31 12:00:10"}
+{"level":"info","message":"New user created: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:00:44"}
+{"level":"info","message":"Sending verification email to: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:00:45"}
+{"level":"info","message":"Verification email sent successfully to: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:00:47"}
+{"duration":"4426ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-05-31 12:00:47","url":"/api/auth/signup","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"duration":"1569ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":200,"timestamp":"2025-05-31 12:00:57","url":"/api/auth/verify/683ae15c872aca801df43b0f/d88c4066-ee14-4033-9cbf-fdd187cf2f07683ae15c872aca801df43b0f","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-05-31 12:12:36"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-05-31 12:12:47"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-05-31 12:12:49"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-05-31 12:12:53"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-05-31 12:12:53"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31 12:12:53"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-05-31 12:12:53"}
+{"level":"info","message":"Process ID: 8724","timestamp":"2025-05-31 12:12:53"}
+{"duration":"299ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 12:13:01","url":"/api/auth/verify/683ae15c872aca801df43b0f/d88c4066-ee14-4033-9cbf-fdd187cf2f07683ae15c872aca801df43b0f","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"duration":"31ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":200,"timestamp":"2025-05-31 12:13:01","url":"/api/verified?success=true&message=User%20is%20already%20verified.","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"New user created: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:14:22"}
+{"level":"info","message":"Sending verification email to: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:14:22"}
+{"level":"info","message":"Verification email sent successfully to: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:14:24"}
+{"duration":"3967ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-05-31 12:14:24","url":"/api/auth/signup","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"duration":"967ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":200,"timestamp":"2025-05-31 12:14:33","url":"/api/auth/verify/683ae48dc71231b640ea4d6f/2f37f933-3705-4101-a89d-83913417e909683ae48dc71231b640ea4d6f","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"warn","message":"MongoDB disconnected","timestamp":"2025-05-31 12:16:25"}
+{"level":"info","message":"MongoDB reconnected","timestamp":"2025-05-31 12:16:27"}
+{"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-05-31 12:19:36"}
+{"level":"info","message":"HTTP server closed","timestamp":"2025-05-31 12:19:36"}
+{"level":"warn","message":"MongoDB disconnected","timestamp":"2025-05-31 12:19:39"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-05-31 12:20:57"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-05-31 12:20:59"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-05-31 12:21:01"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-05-31 12:21:01"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31 12:21:01"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-05-31 12:21:01"}
+{"level":"info","message":"Process ID: 10256","timestamp":"2025-05-31 12:21:01"}
+{"level":"info","message":"New user created: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:21:18"}
+{"level":"info","message":"Sending verification email to: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:21:18"}
+{"level":"info","message":"Verification email sent successfully to: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:21:21"}
+{"duration":"4430ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-05-31 12:21:21","url":"/api/auth/signup","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"level":"info","message":"Email verification attempt for user: 683ae62e2546933e109afa76","timestamp":"2025-05-31 12:21:32"}
+{"level":"info","message":"User 683ae62e2546933e109afa76 successfully verified","timestamp":"2025-05-31 12:21:33"}
+{"duration":"1045ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":200,"timestamp":"2025-05-31 12:21:33","url":"/api/auth/verify/683ae62e2546933e109afa76/635716e4-b151-4983-9c23-7c0802fef780683ae62e2546933e109afa76","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Email verification attempt for user: 683ae62e2546933e109afa76","timestamp":"2025-05-31 12:24:11"}
+{"level":"info","message":"User 683ae62e2546933e109afa76 is already verified","timestamp":"2025-05-31 12:24:12"}
+{"duration":"265ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 12:24:12","url":"/api/auth/verify/683ae62e2546933e109afa76/635716e4-b151-4983-9c23-7c0802fef780683ae62e2546933e109afa76","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"User is already verified.","success":"true","timestamp":"2025-05-31 12:24:12"}
+{"0":"C","1":":","10":"e","11":"m","12":"i","13":"t","14":"a","15":"y","16":"o","17":"\\","18":"D","19":"e","2":"\\","20":"s","21":"k","22":"t","23":"o","24":"p","25":"\\","26":"C","27":"i","28":"r","29":"c","3":"U","30":"l","31":"e","32":"M","33":"a","34":"t","35":"e","36":"_","37":"W","38":"e","39":"b","4":"s","40":"_","41":"P","42":"r","43":"o","44":"j","45":"e","46":"c","47":"t","48":"\\","49":"s","5":"e","50":"e","51":"r","52":"v","53":"e","54":"r","55":"\\","56":"v","57":"i","58":"e","59":"w","6":"r","60":"s","61":"\\","62":"v","63":"e","64":"r","65":"i","66":"f","67":"i","68":"e","69":"d","7":"s","70":".","71":"h","72":"t","73":"m","74":"l","8":"\\","9":"T","level":"info","message":"Sending verified.html from:","timestamp":"2025-05-31 12:24:12"}
+{"duration":"18ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":304,"timestamp":"2025-05-31 12:24:12","url":"/api/verified?success=true&message=User%20is%20already%20verified.","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-05-31 12:24:33"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-05-31 12:24:48"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-05-31 12:24:49"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-05-31 12:24:55"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-05-31 12:24:56"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31 12:24:56"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-05-31 12:24:56"}
+{"level":"info","message":"Process ID: 4888","timestamp":"2025-05-31 12:24:56"}
+{"level":"info","message":"New user created: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:25:18"}
+{"level":"info","message":"Sending verification email to: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:25:18"}
+{"level":"info","message":"Verification email sent successfully to: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:25:21"}
+{"duration":"4213ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-05-31 12:25:21","url":"/api/auth/signup","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"level":"info","message":"Email verification attempt for user: 683ae71e12dd96cf9ebc03ff","timestamp":"2025-05-31 12:25:27"}
+{"level":"info","message":"User 683ae71e12dd96cf9ebc03ff successfully verified","timestamp":"2025-05-31 12:25:28"}
+{"duration":"1065ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 12:25:28","url":"/api/auth/verify/683ae71e12dd96cf9ebc03ff/dd7ccc76-40c0-4938-841d-88c98e92dc62683ae71e12dd96cf9ebc03ff","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Email verified successfully!","success":"true","timestamp":"2025-05-31 12:25:28"}
+{"0":"C","1":":","10":"e","11":"m","12":"i","13":"t","14":"a","15":"y","16":"o","17":"\\","18":"D","19":"e","2":"\\","20":"s","21":"k","22":"t","23":"o","24":"p","25":"\\","26":"C","27":"i","28":"r","29":"c","3":"U","30":"l","31":"e","32":"M","33":"a","34":"t","35":"e","36":"_","37":"W","38":"e","39":"b","4":"s","40":"_","41":"P","42":"r","43":"o","44":"j","45":"e","46":"c","47":"t","48":"\\","49":"s","5":"e","50":"e","51":"r","52":"v","53":"e","54":"r","55":"\\","56":"v","57":"i","58":"e","59":"w","6":"r","60":"s","61":"\\","62":"v","63":"e","64":"r","65":"i","66":"f","67":"i","68":"e","69":"d","7":"s","70":".","71":"h","72":"t","73":"m","74":"l","8":"\\","9":"T","level":"info","message":"Sending verified.html from:","timestamp":"2025-05-31 12:25:28"}
+{"duration":"46ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":200,"timestamp":"2025-05-31 12:25:28","url":"/api/verified?success=true&message=Email%20verified%20successfully!","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Email verified successfully!","success":"true","timestamp":"2025-05-31 12:30:44"}
+{"0":"C","1":":","10":"e","11":"m","12":"i","13":"t","14":"a","15":"y","16":"o","17":"\\","18":"D","19":"e","2":"\\","20":"s","21":"k","22":"t","23":"o","24":"p","25":"\\","26":"C","27":"i","28":"r","29":"c","3":"U","30":"l","31":"e","32":"M","33":"a","34":"t","35":"e","36":"_","37":"W","38":"e","39":"b","4":"s","40":"_","41":"P","42":"r","43":"o","44":"j","45":"e","46":"c","47":"t","48":"\\","49":"s","5":"e","50":"e","51":"r","52":"v","53":"e","54":"r","55":"\\","56":"v","57":"i","58":"e","59":"w","6":"r","60":"s","61":"\\","62":"v","63":"e","64":"r","65":"i","66":"f","67":"i","68":"e","69":"d","7":"s","70":".","71":"h","72":"t","73":"m","74":"l","8":"\\","9":"T","level":"info","message":"Sending verified.html from:","timestamp":"2025-05-31 12:30:44"}
+{"duration":"27ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":304,"timestamp":"2025-05-31 12:30:44","url":"/api/verified?success=true&message=Email%20verified%20successfully!","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Email verified successfully!","success":"true","timestamp":"2025-05-31 12:30:46"}
+{"0":"C","1":":","10":"e","11":"m","12":"i","13":"t","14":"a","15":"y","16":"o","17":"\\","18":"D","19":"e","2":"\\","20":"s","21":"k","22":"t","23":"o","24":"p","25":"\\","26":"C","27":"i","28":"r","29":"c","3":"U","30":"l","31":"e","32":"M","33":"a","34":"t","35":"e","36":"_","37":"W","38":"e","39":"b","4":"s","40":"_","41":"P","42":"r","43":"o","44":"j","45":"e","46":"c","47":"t","48":"\\","49":"s","5":"e","50":"e","51":"r","52":"v","53":"e","54":"r","55":"\\","56":"v","57":"i","58":"e","59":"w","6":"r","60":"s","61":"\\","62":"v","63":"e","64":"r","65":"i","66":"f","67":"i","68":"e","69":"d","7":"s","70":".","71":"h","72":"t","73":"m","74":"l","8":"\\","9":"T","level":"info","message":"Sending verified.html from:","timestamp":"2025-05-31 12:30:46"}
+{"duration":"11ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":304,"timestamp":"2025-05-31 12:30:46","url":"/api/verified?success=true&message=Email%20verified%20successfully!","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Email verification attempt for user: 683ae71e12dd96cf9ebc03ff","timestamp":"2025-05-31 12:30:49"}
+{"level":"info","message":"User 683ae71e12dd96cf9ebc03ff is already verified","timestamp":"2025-05-31 12:30:49"}
+{"duration":"198ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 12:30:49","url":"/api/auth/verify/683ae71e12dd96cf9ebc03ff/dd7ccc76-40c0-4938-841d-88c98e92dc62683ae71e12dd96cf9ebc03ff","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"User is already verified.","success":"true","timestamp":"2025-05-31 12:30:49"}
+{"0":"C","1":":","10":"e","11":"m","12":"i","13":"t","14":"a","15":"y","16":"o","17":"\\","18":"D","19":"e","2":"\\","20":"s","21":"k","22":"t","23":"o","24":"p","25":"\\","26":"C","27":"i","28":"r","29":"c","3":"U","30":"l","31":"e","32":"M","33":"a","34":"t","35":"e","36":"_","37":"W","38":"e","39":"b","4":"s","40":"_","41":"P","42":"r","43":"o","44":"j","45":"e","46":"c","47":"t","48":"\\","49":"s","5":"e","50":"e","51":"r","52":"v","53":"e","54":"r","55":"\\","56":"v","57":"i","58":"e","59":"w","6":"r","60":"s","61":"\\","62":"v","63":"e","64":"r","65":"i","66":"f","67":"i","68":"e","69":"d","7":"s","70":".","71":"h","72":"t","73":"m","74":"l","8":"\\","9":"T","level":"info","message":"Sending verified.html from:","timestamp":"2025-05-31 12:30:49"}
+{"duration":"13ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":304,"timestamp":"2025-05-31 12:30:49","url":"/api/verified?success=true&message=User%20is%20already%20verified.","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-05-31 12:30:55"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-05-31 12:31:08"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-05-31 12:31:10"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-05-31 12:31:14"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-05-31 12:31:14"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31 12:31:14"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-05-31 12:31:14"}
+{"level":"info","message":"Process ID: 10944","timestamp":"2025-05-31 12:31:14"}
+{"level":"info","message":"New user created: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:31:42"}
+{"level":"info","message":"Sending verification email to: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:31:43"}
+{"level":"info","message":"Verification email sent successfully to: rhymeanabel@gmail.com","timestamp":"2025-05-31 12:31:46"}
+{"duration":"4976ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-05-31 12:31:46","url":"/api/auth/signup","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"level":"info","message":"Email verification attempt for user: 683ae89e807bee211c5b9881","timestamp":"2025-05-31 12:31:52"}
+{"level":"info","message":"User 683ae89e807bee211c5b9881 successfully verified","timestamp":"2025-05-31 12:31:53"}
+{"duration":"1105ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 12:31:53","url":"/api/auth/verify/683ae89e807bee211c5b9881/b999c4e7-9dbb-480c-8de6-465dd96792b3683ae89e807bee211c5b9881","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Email verified successfully!","success":"true","timestamp":"2025-05-31 12:31:53"}
+{"duration":"46ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":200,"timestamp":"2025-05-31 12:31:53","url":"/api/verified?success=true&message=Email%20verified%20successfully!","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Email verified successfully!","success":"true","timestamp":"2025-05-31 12:32:06"}
+{"duration":"13ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":304,"timestamp":"2025-05-31 12:32:06","url":"/api/verified?success=true&message=Email%20verified%20successfully!","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Email verified successfully!","success":"true","timestamp":"2025-05-31 12:32:07"}
+{"duration":"12ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":304,"timestamp":"2025-05-31 12:32:07","url":"/api/verified?success=true&message=Email%20verified%20successfully!","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Email verification attempt for user: 683ae89e807bee211c5b9881","timestamp":"2025-05-31 12:32:10"}
+{"level":"info","message":"User 683ae89e807bee211c5b9881 is already verified","timestamp":"2025-05-31 12:32:10"}
+{"duration":"175ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 12:32:10","url":"/api/auth/verify/683ae89e807bee211c5b9881/b999c4e7-9dbb-480c-8de6-465dd96792b3683ae89e807bee211c5b9881","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"User is already verified.","success":"true","timestamp":"2025-05-31 12:32:10"}
+{"duration":"6ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":200,"timestamp":"2025-05-31 12:32:10","url":"/api/verified?success=true&message=User%20is%20already%20verified.","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Cleaned up 0 expired sessions","timestamp":"2025-05-31 12:33:49"}
+{"level":"info","message":"Session created for user 683ae89e807bee211c5b9881 from IP ::1","timestamp":"2025-05-31 12:33:49"}
+{"level":"info","message":"User logged in successfully: rhymeanabel@gmail.com from IP: ::1","timestamp":"2025-05-31 12:33:50"}
+{"duration":"2106ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":200,"timestamp":"2025-05-31 12:33:50","url":"/api/auth/login","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"address":"ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net:27017","beforeHandshake":false,"cause":{"beforeHandshake":false,"errorLabelSet":{}},"errorLabelSet":{},"level":"error","message":"Session cleanup error: Connection to ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net:27017 interrupted due to server monitor timeout","stack":"PoolClearedOnNetworkError: Connection to ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net:27017 interrupted due to server monitor timeout\n    at ConnectionPool.interruptInUseConnections (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\cmap\\connection_pool.js:253:36)\n    at C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\cmap\\connection_pool.js:241:41\n    at processTicksAndRejections (node:internal/process/task_queues:85:11)\n    at runNextTicks (node:internal/process/task_queues:69:3)\n    at listOnTimeout (node:internal/timers:572:9)\n    at process.processTimers (node:internal/timers:546:7)","timestamp":"2025-05-31 19:55:09"}
+{"level":"warn","message":"MongoDB disconnected","timestamp":"2025-05-31 20:03:21"}
+{"level":"info","message":"MongoDB reconnected","timestamp":"2025-05-31 20:03:22"}
+{"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-05-31 20:05:30"}
+{"level":"info","message":"HTTP server closed","timestamp":"2025-05-31 20:05:30"}
+{"level":"warn","message":"MongoDB disconnected","timestamp":"2025-05-31 20:05:35"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-05-31 20:05:51"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-05-31 20:05:53"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-05-31 20:05:56"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-05-31 20:05:56"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31 20:05:56"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-05-31 20:05:56"}
+{"level":"info","message":"Process ID: 6908","timestamp":"2025-05-31 20:05:56"}
+{"duration":"96ms","ip":"::1","level":"error","message":"Request failed:","method":"POST","status":400,"timestamp":"2025-05-31 20:50:02","url":"/api/auth/login","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"duration":"8ms","ip":"::1","level":"error","message":"Request failed:","method":"POST","status":400,"timestamp":"2025-05-31 20:50:12","url":"/api/auth/login","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"level":"info","message":"New user created: rhymeanabel@gmail.com","timestamp":"2025-05-31 20:50:43"}
+{"level":"info","message":"Sending verification email to: rhymeanabel@gmail.com","timestamp":"2025-05-31 20:50:43"}
+{"level":"info","message":"Verification email sent successfully to: rhymeanabel@gmail.com","timestamp":"2025-05-31 20:50:46"}
+{"duration":"4280ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-05-31 20:50:46","url":"/api/auth/signup","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"level":"info","message":"Email verification attempt for user: 683b5d93eb8c35bfe89f8054","timestamp":"2025-05-31 20:51:32"}
+{"level":"info","message":"User 683b5d93eb8c35bfe89f8054 successfully verified","timestamp":"2025-05-31 20:51:33"}
+{"duration":"1209ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 20:51:33","url":"/api/auth/verify/683b5d93eb8c35bfe89f8054/033f90ad-7a1d-4177-8ac3-ced35136c92f683b5d93eb8c35bfe89f8054","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Email verified successfully!","success":"true","timestamp":"2025-05-31 20:51:33"}
+{"duration":"29ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":304,"timestamp":"2025-05-31 20:51:33","url":"/api/verified?success=true&message=Email%20verified%20successfully!","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Cleaned up 0 expired sessions","timestamp":"2025-05-31 20:53:14"}
+{"level":"info","message":"Session created for user 683b5d93eb8c35bfe89f8054 from IP ::1","timestamp":"2025-05-31 20:53:15"}
+{"level":"info","message":"User logged in successfully: rhymeanabel@gmail.com from IP: ::1","timestamp":"2025-05-31 20:53:15"}
+{"duration":"1839ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":200,"timestamp":"2025-05-31 20:53:15","url":"/api/auth/login","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"level":"info","message":"Expired sessions cleaned up","timestamp":"2025-05-31 21:05:56"}
+{"level":"info","message":"Email verification attempt for user: 683b5d93eb8c35bfe89f8054","timestamp":"2025-05-31 21:07:51"}
+{"level":"info","message":"User 683b5d93eb8c35bfe89f8054 is already verified","timestamp":"2025-05-31 21:07:51"}
+{"duration":"167ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-05-31 21:07:51","url":"/api/auth/verify/683b5d93eb8c35bfe89f8054/033f90ad-7a1d-4177-8ac3-ced35136c92f683b5d93eb8c35bfe89f8054","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"User is already verified.","success":"true","timestamp":"2025-05-31 21:07:51"}
+{"duration":"11ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":304,"timestamp":"2025-05-31 21:07:51","url":"/api/verified?success=true&message=User%20is%20already%20verified.","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"address":"ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net:27017","beforeHandshake":false,"cause":{"beforeHandshake":false,"errorLabelSet":{}},"errorLabelSet":{},"level":"error","message":"Session cleanup error: Connection to ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net:27017 interrupted due to server monitor timeout","stack":"PoolClearedOnNetworkError: Connection to ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net:27017 interrupted due to server monitor timeout\n    at ConnectionPool.interruptInUseConnections (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\cmap\\connection_pool.js:253:36)\n    at C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\cmap\\connection_pool.js:241:41\n    at processTicksAndRejections (node:internal/process/task_queues:85:11)\n    at runNextTicks (node:internal/process/task_queues:69:3)\n    at listOnTimeout (node:internal/timers:572:9)\n    at process.processTimers (node:internal/timers:546:7)","timestamp":"2025-06-01 00:10:27"}
+{"cause":{"beforeHandshake":false,"errorLabelSet":{}},"errorLabelSet":{},"level":"error","message":"Session cleanup error: getaddrinfo ENOTFOUND ac-z91yi7e-shard-00-00.zoyjna7.mongodb.net","reason":{"commonWireVersion":0,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"logicalSessionTimeoutMinutes":null,"maxElectionId":{"$oid":"7fffffff0000000000000019"},"maxSetVersion":1,"servers":{"ac-z91yi7e-shard-00-00.zoyjna7.mongodb.net:27017":{"$clusterTime":null,"address":"ac-z91yi7e-shard-00-00.zoyjna7.mongodb.net:27017","arbiters":[],"electionId":null,"error":{"beforeHandshake":false,"errorLabelSet":{}},"hosts":[],"iscryptd":false,"lastUpdateTime":147685185,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"},"ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net:27017":{"$clusterTime":null,"address":"ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net:27017","arbiters":[],"electionId":null,"error":{"beforeHandshake":false,"errorLabelSet":{}},"hosts":[],"iscryptd":false,"lastUpdateTime":147685184,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"},"ac-z91yi7e-shard-00-02.zoyjna7.mongodb.net:27017":{"$clusterTime":null,"address":"ac-z91yi7e-shard-00-02.zoyjna7.mongodb.net:27017","arbiters":[],"electionId":null,"error":{"beforeHandshake":false,"errorLabelSet":{}},"hosts":[],"iscryptd":false,"lastUpdateTime":147685185,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"}},"setName":"atlas-11lqhw-shard-0","stale":false,"type":"ReplicaSetNoPrimary"},"stack":"MongoServerSelectionError: getaddrinfo ENOTFOUND ac-z91yi7e-shard-00-00.zoyjna7.mongodb.net\n    at Topology.selectServer (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\sdam\\topology.js:321:38)\n    at async tryOperation (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:145:18)\n    at async executeOperation (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:75:16)\n    at async Collection.deleteMany (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\collection.js:249:16)\n    at async model.Query.exec (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongoose\\lib\\query.js:4604:63)\n    at async Timeout._onTimeout (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\index.js:409:32)","timestamp":"2025-06-01 10:15:58"}
+{"level":"warn","message":"MongoDB disconnected","timestamp":"2025-06-01 10:17:15"}
+{"level":"info","message":"MongoDB reconnected","timestamp":"2025-06-01 10:17:15"}
+{"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-06-01 10:23:20"}
+{"level":"info","message":"HTTP server closed","timestamp":"2025-06-01 10:23:20"}
+{"level":"warn","message":"MongoDB disconnected","timestamp":"2025-06-01 10:23:25"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-06-01 10:23:38"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-06-01 10:23:40"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-06-01 10:23:43"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-06-01 10:23:43"}
+{"level":"info","message":"Environment: development","timestamp":"2025-06-01 10:23:43"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-06-01 10:23:43"}
+{"level":"info","message":"Process ID: 128","timestamp":"2025-06-01 10:23:43"}
+{"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-06-01 10:34:05"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-06-01 10:34:16"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-06-01 10:34:18"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-06-01 10:34:23"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-06-01 10:34:23"}
+{"level":"info","message":"Environment: development","timestamp":"2025-06-01 10:34:23"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-06-01 10:34:23"}
+{"level":"info","message":"Process ID: 15428","timestamp":"2025-06-01 10:34:23"}
+{"level":"info","message":"New user created: rhymeanabel@gmail.com","timestamp":"2025-06-01 10:43:30"}
+{"level":"info","message":"Sending verification email to: rhymeanabel@gmail.com","timestamp":"2025-06-01 10:43:30"}
+{"level":"info","message":"Verification email sent successfully to: rhymeanabel@gmail.com","timestamp":"2025-06-01 10:43:32"}
+{"duration":"3527ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-06-01 10:43:32","url":"/api/auth/signup","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"level":"info","message":"Email verification attempt for user: 683c20c25039bb2d9b812170","timestamp":"2025-06-01 10:43:57"}
+{"level":"info","message":"User 683c20c25039bb2d9b812170 successfully verified","timestamp":"2025-06-01 10:43:58"}
+{"duration":"996ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-06-01 10:43:58","url":"/api/auth/verify/683c20c25039bb2d9b812170/807f6f1c-a9b2-4267-8806-c3487f9d9222683c20c25039bb2d9b812170","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Email verified successfully!","success":"true","timestamp":"2025-06-01 10:43:58"}
+{"duration":"31ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":304,"timestamp":"2025-06-01 10:43:58","url":"/api/verified?success=true&message=Email%20verified%20successfully!","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-06-01 10:44:19"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-06-01 10:44:27"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-06-01 10:44:28"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-06-01 10:44:35"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-06-01 10:44:35"}
+{"level":"info","message":"Environment: development","timestamp":"2025-06-01 10:44:35"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-06-01 10:44:35"}
+{"level":"info","message":"Process ID: 1388","timestamp":"2025-06-01 10:44:35"}
+{"level":"info","message":"New user created: rhymeanabel@gmail.com","timestamp":"2025-06-01 10:45:18"}
+{"level":"info","message":"Sending verification email to: rhymeanabel@gmail.com","timestamp":"2025-06-01 10:45:18"}
+{"level":"info","message":"Verification email sent successfully to: rhymeanabel@gmail.com","timestamp":"2025-06-01 10:45:20"}
+{"duration":"4099ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-06-01 10:45:20","url":"/api/auth/signup","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"level":"info","message":"Email verification attempt for user: 683c212da5e567196ab245e3","timestamp":"2025-06-01 10:45:29"}
+{"level":"info","message":"User 683c212da5e567196ab245e3 successfully verified","timestamp":"2025-06-01 10:45:30"}
+{"duration":"1048ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":302,"timestamp":"2025-06-01 10:45:30","url":"/api/auth/verify/683c212da5e567196ab245e3/ca7a6652-412c-459b-9581-84115bc6dccf683c212da5e567196ab245e3","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Email verified successfully!","success":"true","timestamp":"2025-06-01 10:45:30"}
+{"duration":"45ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":304,"timestamp":"2025-06-01 10:45:30","url":"/api/verified?success=true&message=Email%20verified%20successfully!","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"}
+{"level":"info","message":"Signup attempt with existing email: rhymeanabel@gmail.com","timestamp":"2025-06-01 10:47:07"}
+{"ip":"::1","level":"error","message":"User already exists!","method":"POST","stack":"Error: User already exists!\n    at exports.signup (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\controllers\\authController.js:436:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-06-01T09:47:07.422Z","url":"/api/auth/signup"}
+{"duration":"249ms","ip":"::1","level":"error","message":"Request failed:","method":"POST","status":400,"timestamp":"2025-06-01 10:47:07","url":"/api/auth/signup","user":"anonymous","userAgent":"PostmanRuntime/7.44.0"}
+{"cause":{"beforeHandshake":false,"errorLabelSet":{}},"errorLabelSet":{},"level":"error","message":"Session cleanup error: getaddrinfo ENOTFOUND ac-z91yi7e-shard-00-00.zoyjna7.mongodb.net","reason":{"commonWireVersion":0,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"logicalSessionTimeoutMinutes":null,"maxElectionId":{"$oid":"7fffffff0000000000000019"},"maxSetVersion":1,"servers":{"ac-z91yi7e-shard-00-00.zoyjna7.mongodb.net:27017":{"$clusterTime":null,"address":"ac-z91yi7e-shard-00-00.zoyjna7.mongodb.net:27017","arbiters":[],"electionId":null,"error":{"beforeHandshake":false,"errorLabelSet":{}},"hosts":[],"iscryptd":false,"lastUpdateTime":160446011,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"},"ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net:27017":{"$clusterTime":null,"address":"ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net:27017","arbiters":[],"electionId":null,"error":{"beforeHandshake":false,"errorLabelSet":{}},"hosts":[],"iscryptd":false,"lastUpdateTime":160446012,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"},"ac-z91yi7e-shard-00-02.zoyjna7.mongodb.net:27017":{"$clusterTime":null,"address":"ac-z91yi7e-shard-00-02.zoyjna7.mongodb.net:27017","arbiters":[],"electionId":null,"error":{"beforeHandshake":false,"errorLabelSet":{}},"hosts":[],"iscryptd":false,"lastUpdateTime":160446051,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"}},"setName":"atlas-11lqhw-shard-0","stale":false,"type":"ReplicaSetNoPrimary"},"stack":"MongoServerSelectionError: getaddrinfo ENOTFOUND ac-z91yi7e-shard-00-00.zoyjna7.mongodb.net\n    at Topology.selectServer (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\sdam\\topology.js:321:38)\n    at async tryOperation (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:145:18)\n    at async executeOperation (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:75:16)\n    at async Collection.deleteMany (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\collection.js:249:16)\n    at async model.Query.exec (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongoose\\lib\\query.js:4604:63)\n    at async Timeout._onTimeout (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\index.js:390:32)","timestamp":"2025-06-01 13:48:38"}
+{"level":"info","message":"MongoDB reconnected","timestamp":"2025-06-01 14:00:22"}
+{"level":"warn","message":"MongoDB disconnected","timestamp":"2025-06-01 14:00:43"}
+{"level":"info","message":"MongoDB reconnected","timestamp":"2025-06-01 14:00:47"}
+{"beforeHandshake":false,"cause":{"code":"ENOTFOUND","errno":-3008,"hostname":"ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net","syscall":"getaddrinfo"},"connectionGeneration":23,"errorLabelSet":{},"level":"error","message":"Session cleanup error: getaddrinfo ENOTFOUND ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net","stack":"MongoNetworkError: getaddrinfo ENOTFOUND ac-z91yi7e-shard-00-01.zoyjna7.mongodb.net\n    at TLSSocket.<anonymous> (C:\\Users\\Temitayo\\Desktop\\CircleMate_Web_Project\\server\\node_modules\\mongodb\\lib\\cmap\\connect.js:285:44)\n    at Object.onceWrapper (node:events:622:26)\n    at TLSSocket.emit (node:events:507:28)\n    at emitErrorNT (node:internal/streams/destroy:170:8)\n    at emitErrorCloseNT (node:internal/streams/destroy:129:3)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)","timestamp":"2025-06-02 07:32:23"}
