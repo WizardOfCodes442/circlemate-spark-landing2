@@ -15,6 +15,8 @@ const { verifiedPage } = require('./controllers/authController');
 const { securityHeaders, requestLogger } = require('./routes/middleware');
 const logger = require('./utils/logger');
 const onboardingRouter = require('./routes/onboardingRoutes');
+const waitlistRouter = require('./routes/waitListRoutes');
+
 
 const createError = require('./utils/appError');
 
@@ -191,6 +193,8 @@ app.use('/api/auth', authLimiter);
 
 // Main routes
 app.use('/api/auth', authRouter);
+
+app.use('/api/waitlist', waitlistRouter);
 
 app.use('/api/onboarding', onboardingRouter);
 
