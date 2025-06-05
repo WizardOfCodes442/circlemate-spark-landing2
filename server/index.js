@@ -16,6 +16,7 @@ const { securityHeaders, requestLogger } = require('./routes/middleware');
 const logger = require('./utils/logger');
 const onboardingRouter = require('./routes/onboardingRoutes');
 const waitlistRouter = require('./routes/waitListRoutes');
+const importCsvRouter = require("./models/importCsv");
 
 
 const createError = require('./utils/appError');
@@ -191,6 +192,8 @@ app.get('/api/verified', verifiedPage);
 
 // Apply auth rate limiting to auth routes
 app.use('/api/auth', authLimiter);
+
+app.use("/api", importCsvRouter); 
 
 // Main routes
 app.use('/api/auth', authRouter);
