@@ -346,3 +346,21 @@
 {"level":"warn","message":"404 - Route not found: /api/waitlist","timestamp":"2025-06-05 12:27:41"}
 {"duration":"66ms","ip":"::1","level":"error","message":"Request failed:","method":"GET","status":404,"timestamp":"2025-06-05 12:27:41","url":"/api/waitlist","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
 {"level":"info","message":"SIGINT received. Starting graceful shutdown...","timestamp":"2025-06-05 12:28:28"}
+{"level":"info","message":"Connecting to MongoDB...","timestamp":"2025-06-05 12:28:34"}
+{"level":"info","message":"Email server is ready","timestamp":"2025-06-05 12:28:36"}
+{"level":"info","message":"Connected to MongoDB successfully","timestamp":"2025-06-05 12:28:37"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-06-05 12:28:37"}
+{"level":"info","message":"Environment: development","timestamp":"2025-06-05 12:28:37"}
+{"level":"info","message":"Database: Connected to test","timestamp":"2025-06-05 12:28:37"}
+{"level":"info","message":"Process ID: 14364","timestamp":"2025-06-05 12:28:37"}
+{"duration":"757ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":200,"timestamp":"2025-06-05 12:28:45","url":"/api/waitlist","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+{"duration":"580ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":304,"timestamp":"2025-06-05 12:35:27","url":"/api/waitlist","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+{"level":"info","message":"New waitlist entry: taskzenreset@gmail.com","timestamp":"2025-06-05 12:36:50"}
+{"duration":"1040ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-06-05 12:36:50","url":"/api/waitlist/submit","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+{"duration":"813ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":200,"timestamp":"2025-06-05 12:37:06","url":"/api/waitlist","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+{"duration":"828ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":304,"timestamp":"2025-06-05 12:40:49","url":"/api/waitlist","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+{"level":"info","message":"New waitlist entry: claudetemitayo@gmail.com","timestamp":"2025-06-05 12:41:19"}
+{"duration":"823ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-06-05 12:41:19","url":"/api/waitlist/submit","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+{"level":"info","message":"New waitlist entry: chena4661@gmail.com","timestamp":"2025-06-05 12:46:43"}
+{"duration":"1444ms","ip":"::1","level":"info","message":"Request completed:","method":"POST","status":201,"timestamp":"2025-06-05 12:46:43","url":"/api/waitlist/submit","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+{"duration":"2982ms","ip":"::1","level":"info","message":"Request completed:","method":"GET","status":200,"timestamp":"2025-06-05 12:47:07","url":"/api/waitlist","user":"anonymous","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
