@@ -1,3 +1,5 @@
+// WaitlistDashboard.tsx
+
 import React, { useEffect, useMemo, useState } from "react";
 import {
   Card,
@@ -27,14 +29,21 @@ interface WaitlistEntry {
   createdAt: string;
 }
 
-const fetchWaitlist = async (): Promise<WaitlistEntry[]> => {
-  const res = await fetch("https://example.com/waitlist/get-waitlist.php");
-  const data = await res.json();
-  if (!res.ok) throw new Error("Failed to fetch waitlist");
-  return data;
-};
+// ─── PICK API BASED ON ENVIRONMENT ─────────────────────────────────────────────
+const API_BASE =
+  process.env.NODE_ENV === "production"
+    ? "https://circlemate-spark-landing-jet.vercel.app"
+    : "http://localhost:3000";
 
-const ADMIN_PASSCODE = "382046"; // You can change this or store in env
+const fetchWaitlist = async (): Promise<WaitlistEntry[]> => {
+  const res = await fetch(`${API_BASE}/api/waitlist`);
+  const wrapper = await res.json(); // { status, data: WaitlistEntry[], pagination, stats }
+  if (!res.ok) throw new Error("Failed to fetch waitlist");
+  return wrapper.data;              // return only the array
+};
+// ────────────────────────────────────────────────────────────────────────────────
+
+const ADMIN_PASSCODE = "3820"; // You can change this or store in env
 
 const WaitlistDashboard: React.FC = () => {
   const [entries, setEntries] = useState<WaitlistEntry[]>([]);

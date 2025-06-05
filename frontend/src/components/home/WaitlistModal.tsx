@@ -27,6 +27,13 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [apiError, setApiError] = useState('');
+  
+
+const NEXT_PUBLIC_API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://circlemate-spark-landing-jet.vercel.app"
+    : "http://localhost:3000";
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
@@ -53,42 +60,46 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  if (!validateForm()) return;
+    if (!validateForm()) return;
 
-  setIsSubmitting(true);
+    setIsSubmitting(true);
+    setApiError('');
 
-  try {
-    const response = await fetch("https://example.com/waitlist/submit-waitlist.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const response = await fetch(`${NEXT_PUBLIC_API_URL}/api/waitlist/submit`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    const result = await response.json(); // Expecting a JSON response from PHP
+      const result = await response.json();
 
-    if (response.ok) {
-      console.log("Waitlist submission success:", result);
-      setIsSuccess(true);
-    } else {
-      console.error("Server responded with error:", result);
+      if (response.ok && result.status === 'success') {
+        console.log("Waitlist submission success:", result);
+        setIsSuccess(true);
+      } else {
+        setApiError(result.message || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      setApiError('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
     }
-  } catch (error) {
-    console.error("Submission error:", error);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
-
+  };
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+    if (apiError) {
+      setApiError('');
     }
   };
 
@@ -97,6 +108,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     setErrors({});
     setIsSuccess(false);
     setIsSubmitting(false);
+    setApiError('');
     onClose();
   };
 
@@ -130,6 +142,13 @@ const handleSubmit = async (e: React.FormEvent) => {
         <div className="p-6">
           {!isSuccess ? (
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* API Error */}
+              {apiError && (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                  {apiError}
+                </div>
+              )}
+
               {/* Name Fields */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
