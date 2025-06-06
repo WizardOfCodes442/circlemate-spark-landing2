@@ -59,12 +59,37 @@ const OnboardingLocation = () => {
     }
   };
 
-  const handleNext = async () => {
+const handleNext = async () => {
     const isValid = await form.trigger();
-    if (isValid) {
-      console.log("Location data:", form.getValues());
+    if (!isValid) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/onboarding/location", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form.getValues()),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit location data");
+      }
+
+      const data = await response.json();
+      console.log("Location submission response:", data);
       navigate("/onboarding/personality");
+    } catch (err) {
+      setError("Failed to submit location data. Please try again.");
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handlePrevious = () => {
+    navigate("/onboarding/profile");
   };
 
   const handlePrevious = () => {
