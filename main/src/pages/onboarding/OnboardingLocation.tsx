@@ -92,9 +92,7 @@ const handleNext = async () => {
     navigate("/onboarding/profile");
   };
 
-  const handlePrevious = () => {
-    navigate("/onboarding/profile");
-  };
+
 
 const [loadingLocation, setLoadingLocation] = useState(false);
 
