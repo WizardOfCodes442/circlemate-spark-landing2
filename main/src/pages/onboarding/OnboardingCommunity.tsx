@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, Check } from "lucide-react";
-
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Input, Button, Card, CardContent, Badge, Alert, AlertDescription } from "@/components/ui";
 import OnboardingLayout from "@/components/onboarding/OnboardingLayout";
 
 const communities = [
@@ -22,6 +18,8 @@ const OnboardingCommunity = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCommunityId, setSelectedCommunityId] = useState<number | null>(1);
   const [inviteCode, setInviteCode] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const filteredCommunities = communities.filter((community) =>
     community.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -29,17 +27,37 @@ const OnboardingCommunity = () => {
 
   const handleSelectCommunity = (id: number) => {
     setSelectedCommunityId(id);
-    setInviteCode(""); // Clear invite code if user selects from list
+    setInviteCode("");
+    setError(null);
   };
 
-  const handleNext = () => {
-    // You can handle joining with inviteCode if filled
-    if (inviteCode) {
-      console.log("Joining via invite code:", inviteCode);
-    } else {
-      console.log("Joining community ID:", selectedCommunityId);
+  const handleNext = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const payload = inviteCode
+        ? { inviteCode }
+        : { communityId: selectedCommunityId };
+      const response = await fetch("/api/onboarding/community", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit community selection");
+      }
+
+      const data = await response.json();
+      console.log("Community submission response:", data);
+      navigate("/onboarding/profile");
+    } catch (err) {
+      setError("Failed to submit community selection. Please try again.");
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
-    navigate("/onboarding/profile");
   };
 
   return (
@@ -47,7 +65,8 @@ const OnboardingCommunity = () => {
       currentStep={0}
       totalSteps={7}
       nextAction={handleNext}
-      nextDisabled={!selectedCommunityId && inviteCode.trim() === ""}
+      nextDisabled={(!selectedCommunityId && !inviteCode.trim()) || loading}
+      nextLabel={loading ? "Submitting..." : "Next"}
     >
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold mb-2">Find Your Community</h1>
@@ -56,7 +75,13 @@ const OnboardingCommunity = () => {
         </p>
       </div>
 
-      <div className="relative mb-6 ">
+      {error && (
+        <Alert variant="destructive" className="mb-6">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
+      <div className="relative mb-6">
         <Search className="absolute left-3 top-3 h-6 w-6 text-muted-foreground" />
         <Input
           placeholder="Search communities..."
@@ -84,7 +109,6 @@ const OnboardingCommunity = () => {
                   {community.members.toLocaleString()} members
                 </p>
               </div>
-
               {selectedCommunityId === community.id ? (
                 <Button variant="default" size="icon" className="rounded-full">
                   <Check className="h-4 w-4 text-white" />
@@ -102,12 +126,13 @@ const OnboardingCommunity = () => {
           Or join using an invite code
         </p>
         <Input
-        className="py-6"
+          className="py-6"
           placeholder="Enter group invite code"
           value={inviteCode}
           onChange={(e) => {
             setInviteCode(e.target.value);
-            setSelectedCommunityId(null); // Clear selection if entering invite code
+            setSelectedCommunityId(null);
+            setError(null);
           }}
         />
       </div>
