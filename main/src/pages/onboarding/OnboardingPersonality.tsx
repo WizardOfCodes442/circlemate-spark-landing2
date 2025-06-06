@@ -92,10 +92,29 @@ const OnboardingPersonality = () => {
     });
   };
   
-  const handleNext = () => {
-    if (selectedTraits.length > 0) {
-      console.log("Selected personality traits:", selectedTraits);
+const handleNext = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/personality", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ traits: selectedTraits }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit personality traits");
+      }
+
+      const data = await response.json();
+      console.log("Personality submission response:", data);
       navigate("/onboarding/preferences");
+    } catch (err) {
+      setError("Failed to submit personality traits. Please try again.");
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
   
