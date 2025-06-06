@@ -111,12 +111,38 @@ const OnboardingPreferences = () => {
     });
   };
 
-  const handleNext = () => {
-    if (selectedPurposes.length > 0 && selectedInterests.length > 0) {
-      console.log("Selected purposes:", selectedPurposes);
-      console.log("Preferred ages:", preferredAges);
-      console.log("Selected interests:", selectedInterests);
+const handleNext = async () => {
+    if (activeTab === "purpose") {
+      setActiveTab("interests");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/onboarding/preferences", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          purposes: selectedPurposes,
+          preferredAges,
+          interests: selectedInterests,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit preferences");
+      }
+
+      const data = await response.json();
+      console.log("Preferences submission response:", data);
       navigate("/onboarding/availability");
+    } catch (err) {
+      setError("Failed to submit preferences. Please try again.");
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
