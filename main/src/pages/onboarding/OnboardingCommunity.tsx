@@ -40,12 +40,15 @@ const OnboardingCommunity = () => {
     setError(null);
 
     try {
+      const token = localStorage.getItem("token"); // Adjust the key if your token is stored under a different name
+
       const payload = inviteCode
         ? { inviteCode }
         : { communityId: selectedCommunityId };
       const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/community", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" , 
+                  Authorization: `Bearer ${token}`,},
         body: JSON.stringify(payload),
       });
 
