@@ -5,7 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Popover, PopoverContent, PopoverTrigger, Info } from "@/components/ui";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea, Button, Alert, AlertDescription } from "@/components/ui";
+import { Input}  from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea, Button, Alert, AlertDescription } from "@/components/ui/select";
 import OnboardingLayout from "@/components/onboarding/OnboardingLayout";
 
 const formSchema = z.object({
