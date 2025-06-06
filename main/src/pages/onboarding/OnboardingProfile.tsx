@@ -64,7 +64,7 @@ const OnboardingProfile = () => {
     setError(null);
 
     try {
-      const response = await fetch("/api/onboarding/profile", {
+      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form.getValues()),
