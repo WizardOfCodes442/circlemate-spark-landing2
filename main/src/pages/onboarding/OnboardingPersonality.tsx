@@ -93,7 +93,7 @@ const OnboardingPersonality = () => {
   };
   
 const handleNext = async () => {
-    const token = localStorage.getitem("token");
+    const token = localStorage.getItem("token");
     setLoading(true);
     setError(null);
 
