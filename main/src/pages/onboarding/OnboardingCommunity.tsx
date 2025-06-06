@@ -39,7 +39,7 @@ const OnboardingCommunity = () => {
       const payload = inviteCode
         ? { inviteCode }
         : { communityId: selectedCommunityId };
-      const response = await fetch("/api/onboarding/community", {
+      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/community", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
