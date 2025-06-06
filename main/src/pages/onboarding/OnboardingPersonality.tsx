@@ -93,13 +93,14 @@ const OnboardingPersonality = () => {
   };
   
 const handleNext = async () => {
+    const token = localStorage.getitem("token");
     setLoading(true);
     setError(null);
 
     try {
       const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/personality", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ traits: selectedTraits }),
       });
 
