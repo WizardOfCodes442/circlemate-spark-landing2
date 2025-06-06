@@ -160,9 +160,10 @@ const OnboardingPhoto = () => {
     setError(null);
 
     try {
+      const token = localStorage.getItem("token");
       const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/photos", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({
           photoIds: photos.map((photo) => photo.photoId).filter(Boolean),
         }),
