@@ -60,7 +60,7 @@ const OnboardingLocation = () => {
   };
 
 const handleNext = async () => {
-    const token = localStorage.getitem("token"); 
+    const token = localStorage.getItem("token"); 
     const isValid = await form.trigger();
     if (!isValid) return;
 
