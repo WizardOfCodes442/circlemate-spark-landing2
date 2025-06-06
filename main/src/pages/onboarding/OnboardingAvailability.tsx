@@ -61,7 +61,7 @@ const OnboardingAvailability = () => {
   };
   
  const handleNext = async () => {
-    const token = localStorage.getitem("token");
+    const token = localStorage.getItem("token");
     const selectedDays = days.filter((day) => day.selected).map((day) => day.day);
     const selectedTimes = timePreferences
       .filter((pref) => pref.selected)
