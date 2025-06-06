@@ -61,6 +61,7 @@ const OnboardingAvailability = () => {
   };
   
  const handleNext = async () => {
+    const token = localStorage.getitem("token");
     const selectedDays = days.filter((day) => day.selected).map((day) => day.day);
     const selectedTimes = timePreferences
       .filter((pref) => pref.selected)
@@ -72,7 +73,7 @@ const OnboardingAvailability = () => {
     try {
       const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/availability", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" , Authorization: `Bearer ${token}`},
         body: JSON.stringify({ days: selectedDays, times: selectedTimes }),
       });
 
