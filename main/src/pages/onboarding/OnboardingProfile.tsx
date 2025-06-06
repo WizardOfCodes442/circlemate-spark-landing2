@@ -13,7 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import OnboardingLayout from "@/components/onboarding/OnboardingLayout";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react"; // Added for state management
-import { Alert, AlertDescription, Button } from "@/components/ui"; // Added for error display
+import { Alert, AlertDescription } from "@/components/ui/alert"; // Added for error display
+import { Button} from "@/components/ui/button";
 
 const formSchema = z.object({
   firstName: z.string().min(2, { message: "First name must be at least 2 characters" }),
