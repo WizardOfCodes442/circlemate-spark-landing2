@@ -25,11 +25,12 @@ const OnboardingSuccess = () => {
 
   const markOnboardingCompleted = async () => {
     try {
+      const token = localStorage.getItem("token");
       const response = await fetch('/api/onboarding/complete', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // Include auth headers if needed
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ completed: true }),
       });
