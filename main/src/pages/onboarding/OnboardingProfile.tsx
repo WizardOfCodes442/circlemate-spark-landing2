@@ -1,16 +1,19 @@
-import { useState } from "react";
+
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Popover, PopoverContent, PopoverTrigger, Info } from "@/components/ui";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input }  from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
-import { Textarea} from "@/components/ui/textarea"
-import {  Button} from "@/components/ui/button" 
-import {Alert, AlertDescription} from "@/components/ui/alert"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Info } from "lucide-react";
+import {
+  Form, FormControl, FormField, FormItem, FormLabel, FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import OnboardingLayout from "@/components/onboarding/OnboardingLayout";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react"; // Added for state management
+import { Alert, AlertDescription, Button } from "@/components/ui"; // Added for error display
 
 const formSchema = z.object({
   firstName: z.string().min(2, { message: "First name must be at least 2 characters" }),
@@ -30,8 +33,8 @@ const formSchema = z.object({
 
 const OnboardingProfile = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false); // Added for loading state
+  const [error, setError] = useState<string | null>(null); // Added for error state
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,27 +54,31 @@ const OnboardingProfile = () => {
 
   const handleNext = async () => {
     const isValid = await form.trigger();
-    if (!isValid) return;
+    if (!isValid) {
+      setError("Please fill out all required fields correctly.");
+      return;
+    }
 
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/profile", {
+      const response = await fetch("/api/onboarding/profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form.getValues()),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to submit profile data");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to submit profile data");
       }
 
       const data = await response.json();
       console.log("Profile submission response:", data);
       navigate("/onboarding/location");
-    } catch (err) {
-      setError("Failed to submit profile data. Please try again.");
+    } catch (err: any) {
+      setError(err.message || "Failed to submit profile data. Please try again.");
       console.error(err);
     } finally {
       setLoading(false);
@@ -83,14 +90,13 @@ const OnboardingProfile = () => {
   };
 
   return (
-    
     <OnboardingLayout
       currentStep={1}
       totalSteps={7}
       nextAction={handleNext}
       previousAction={handlePrevious}
-      nextDisabled={!form.formState.isValid || loading} 
-      nextLabel={loading ? "Submitting..." : "Next"}
+      nextDisabled={!form.formState.isValid || loading} // Updated to include loading state
+      nextLabel={loading ? "Submitting..." : "Next"} // Added loading label
     >
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold mb-2">Tell Us About Yourself</h1>
@@ -98,6 +104,12 @@ const OnboardingProfile = () => {
           Let others know who you are and what you're interested in.
         </p>
       </div>
+
+      {error && ( // Added error display
+        <Alert variant="destructive" className="mb-6">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
 
       <Form {...form}>
         <form className="space-y-6">
@@ -334,7 +346,6 @@ const OnboardingProfile = () => {
         </form>
       </Form>
     </OnboardingLayout>
-  
   );
 };
 
