@@ -60,14 +60,35 @@ const OnboardingAvailability = () => {
     );
   };
   
-  const handleNext = () => {
+ const handleNext = async () => {
     const selectedDays = days.filter((day) => day.selected).map((day) => day.day);
     const selectedTimes = timePreferences
       .filter((pref) => pref.selected)
       .map((pref) => pref.label);
-      
-    console.log("Availability:", { days: selectedDays, times: selectedTimes });
-    navigate("/onboarding/photo");
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/availability", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ days: selectedDays, times: selectedTimes }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit availability");
+      }
+
+      const data = await response.json();
+      console.log("Availability submission response:", data);
+      navigate("/onboarding/photo");
+    } catch (err) {
+      setError("Failed to submit availability. Please try again.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
   
   const handlePrevious = () => {
