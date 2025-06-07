@@ -10,14 +10,50 @@ import Stats from "@/components/Stats";
 import Footer from "@/components/Footer";
 import { mockCommunity } from "@/data/mockCommunityData";
 
+// Enhanced mock data for recent matches with placeholder images
+const mockMatches = [
+  {
+    id: "m1",
+    name: "Jessica Williams",
+    role: "Professional",
+    interests: ["Art", "Design", "Reading"],
+    image: "https://via.placeholder.com/150?text=Jessica+Williams",
+    status: "Pending",
+  },
+  {
+    id: "m2",
+    name: "David Brown",
+    role: "Romance",
+    interests: ["Music", "Travel", "Photography"],
+    image: "https://via.placeholder.com/150?text=David+Brown",
+    status: "Pending",
+  },
+  {
+    id: "m3",
+    name: "Sarah Thompson",
+    role: "Professional",
+    interests: ["Technology", "Entrepreneurship", "Design"],
+    image: "https://via.placeholder.com/150?text=Sarah+Thompson",
+    status: "Confirmed",
+  },
+  {
+    id: "m4",
+    name: "Michael Johnson",
+    role: "Friendship",
+    interests: ["Gaming", "Technology", "Movies"],
+    image: "https://via.placeholder.com/150?text=Michael+Johnson",
+    status: "Meetup Planned",
+  },
+];
+
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [recentMatches, setRecentMatches] = useState(mockCommunity.members); // Use members array from mockCommunity
+  const [recentMatches, setRecentMatches] = useState(mockMatches);
   const [recentActivity, setRecentActivity] = useState([
     { id: 1, user: "David Brown", action: "requested to connect with you", time: "2 hours ago", status: "pending" },
-    { id: 2, user: "Jessica Williams", action: "scheduled a meetup with you", time: "1 day ago", date: "Tomorrow, 10:00 AM", status: "scheduled" },
+    { id: 2, user: "Jessica Williams", action: "scheduled a meetup with you", time: "1 day ago", date: "Tomorrow, 10:00 AM", location: "Coffee at The Brew House" },
     { id: 3, user: "Michael Johnson", action: "left feedback on your meetup", time: "2 days ago", feedback: "Great conversation, would meet again!", rating: 4 },
-    { id: 4, user: "Sarah Thompson", action: "confirmed your connection request", time: "3 days ago", status: "confirmed" },
+    { id: 4, user: "Sarah Thompson", action: "confirmed your connection request", time: "3 days ago" },
   ]);
 
   const statsData = {
@@ -28,54 +64,117 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <DashboardHeader />
       
-      <main className="container mx-auto px-4 py-8 flex-grow">
-        <h1 className="text-3xl font-bold mb-8">Lagos Tech Circle <span className="text-green-500 text-sm font-normal">Active</span></h1>
-        <div className="text-sm mb-4 text-muted-foreground flex items-center">
-          <Users className="h-4 w-4 mr-1" /> 534 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 156 matches
-          <Button variant="ghost" size="sm" className="ml-auto">
-            <Bell className="h-4 w-4 mr-2" /> Group Updates
-          </Button>
-          <Button className="ml-2 text-white">Request Match</Button>
+      <main className="container mx-auto px-4 py-6 flex-grow">
+        <h1 className="text-2xl font-bold mb-4">Lagos Tech Circle <span className="text-teal-500 text-sm font-normal">Active</span></h1>
+        <div className="text-sm mb-4 text-gray-600 flex items-center justify-between">
+          <div className="flex items-center">
+            <Users className="h-4 w-4 mr-1" /> 534 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 156 matches
+          </div>
+          <div className="flex space-x-2">
+            <Button variant="ghost" size="sm" className="text-gray-600">
+              <Bell className="h-4 w-4 mr-1" /> Group Updates
+            </Button>
+            <Button className="bg-teal-500 text-white px-4 py-2 rounded-full">Request Match</Button>
+          </div>
         </div>
-        <Button variant="outline" className="mb-6 text-green-500 border-green-500 hover:bg-green-50">
+        <Button variant="outline" className="w-full mb-6 bg-teal-50 text-teal-500 border-teal-500 hover:bg-teal-100 rounded-full">
           <Users className="h-4 w-4 mr-2" /> View Accepted Connections
         </Button>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Stats title="New Matches" value={statsData.newMatches.value} change={statsData.newMatches.change} />
-          <Stats title="Meetups Planned" value={statsData.meetupsPlanned.value} change={statsData.meetupsPlanned.change} />
-          <Stats title="Profile Views" value={statsData.profileViews.value} change={statsData.profileViews.change} />
-          <Stats title="Satisfaction Rate" value={statsData.satisfactionRate.value} change={statsData.satisfactionRate.change} />
+        <div className="grid grid-cols-1 gap-4 mb-6">
+          <Card className="bg-white rounded-lg shadow-sm p-4">
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-500 text-sm">New Matches</p>
+                  <p className="text-lg font-semibold">2 <span className="text-teal-500">+2 this week</span></p>
+                </div>
+                <div className="w-6 h-6 bg-teal-100 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-white rounded-lg shadow-sm p-4">
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-500 text-sm">Meetups Planned</p>
+                  <p className="text-lg font-semibold">1 <span className="text-teal-500">1 upcoming</span></p>
+                </div>
+                <div className="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3" />
+                  </svg>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-white rounded-lg shadow-sm p-4">
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-500 text-sm">Profile Views</p>
+                  <p className="text-lg font-semibold">15 <span className="text-teal-500">+6% from last week</span></p>
+                </div>
+                <div className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-white rounded-lg shadow-sm p-4">
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-500 text-sm">Satisfaction Rate</p>
+                  <p className="text-lg font-semibold">95% <span className="text-teal-500">Based on feedback</span></p>
+                </div>
+                <div className="w-6 h-6 bg-teal-100 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Recent Matches Section */}
-        <div className="mb-8">
+        <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold">Recent Matches</h2>
-            <Button variant="link" className="text-green-500">View All</Button>
+            <h2 className="text-xl font-bold">Recent Matches</h2>
+            <Button variant="link" className="text-teal-500">View All</Button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="space-y-4">
             {recentMatches.map((match) => (
-              <Card key={match.id} className="overflow-hidden hover:shadow-md transition-shadow">
-                <CardHeader className="p-4">
-                  <Avatar className="h-16 w-16 mx-auto">
-                    <AvatarImage src={match.avatar} alt={match.name} />
-                    <AvatarFallback>{match.name.substring(0, 2)}</AvatarFallback>
-                  </Avatar>
+              <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
+                <CardHeader className="p-0">
+                  <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
+                  <div className="absolute top-2 right-2">
+                    <span className="bg-orange-400 text-white text-xs px-2 py-1 rounded-full">{match.status}</span>
+                  </div>
                 </CardHeader>
-                <CardContent className="p-4 text-center">
+                <CardContent className="p-4 pt-2">
                   <h3 className="font-semibold">{match.name}</h3>
-                  <p className="text-sm text-muted-foreground">Role: {match.role}</p>
-                  <Button variant="outline" size="sm" className="mt-2 w-full">
-                    View Profile
-                  </Button>
-                  <Button size="sm" className="mt-2 w-full text-white">
-                    Connect
-                  </Button>
+                  <p className="text-sm text-gray-500">{match.role} | Lagos Tech Circle</p>
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {match.interests.map((interest, index) => (
+                      <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
+                    ))}
+                  </div>
+                  <div className="flex justify-between mt-4">
+                    <Button variant="outline" className="bg-gray-100 text-gray-700">View Profile</Button>
+                    <Button className="bg-teal-500 text-white">Connect</Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -85,32 +184,46 @@ const Dashboard = () => {
         {/* Recent Activity Section */}
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold">Recent Activity</h2>
-            <Button variant="link" className="text-green-500">View All</Button>
+            <h2 className="text-xl font-bold">Recent Activity</h2>
+            <Button variant="link" className="text-teal-500">View All</Button>
           </div>
           <div className="space-y-4">
             {recentActivity.map((activity) => (
-              <Card key={activity.id} className="p-4 flex items-center hover:shadow-md transition-shadow">
-                <Avatar className="h-10 w-10 mr-4">
-                  <AvatarFallback>{activity.user.substring(0, 2)}</AvatarFallback>
-                </Avatar>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">{activity.user} {activity.action}</p>
-                  {activity.date && <p className="text-xs text-muted-foreground">{activity.date}</p>}
-                  {activity.feedback && (
-                    <div className="text-xs text-muted-foreground">
-                      {activity.feedback} <span className="text-yellow-400">{"★".repeat(activity.rating)}</span>
+              <Card key={activity.id} className="bg-white rounded-lg shadow-sm p-4">
+                <div className="flex items-center">
+                  <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center mr-3">
+                    {activity.status === "pending" && <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                    </svg>}
+                    {activity.date && <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>}
+                    {activity.feedback && <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                    </svg>}
+                    {activity.action.includes("confirmed") && <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">{activity.user} {activity.action}</p>
+                    {activity.date && <p className="text-xs text-gray-500">{activity.date}</p>}
+                    {activity.location && <p className="text-xs text-gray-500">{activity.location}</p>}
+                    {activity.feedback && (
+                      <div className="text-xs text-gray-500">
+                        {activity.feedback} <span className="text-yellow-400">{"★".repeat(activity.rating)}</span>
+                      </div>
+                    )}
+                    <p className="text-xs text-gray-500">{activity.time}</p>
+                  </div>
+                  {activity.status === "pending" && (
+                    <div className="flex space-x-2">
+                      <Button size="sm" className="bg-teal-500 text-white px-3 py-1 rounded-full">Accept</Button>
+                      <Button variant="outline" size="sm" className="text-gray-700 px-3 py-1 rounded-full">Decline</Button>
                     </div>
                   )}
-                  <p className="text-xs text-muted-foreground">{activity.time}</p>
+                  {activity.date && <Button variant="outline" size="sm" className="text-gray-700 px-3 py-1 rounded-full">View Details</Button>}
                 </div>
-                {activity.status === "pending" && (
-                  <div className="flex space-x-2">
-                    <Button size="sm" className="text-white">Accept</Button>
-                    <Button variant="outline" size="sm">Decline</Button>
-                  </div>
-                )}
-                {activity.status === "scheduled" && <Button variant="link" size="sm" className="text-green-500">View Details</Button>}
               </Card>
             ))}
           </div>
