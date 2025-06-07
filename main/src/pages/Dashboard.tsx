@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
-import { Users, Bell, Heart } from "lucide-react";
+import { Users, Bell, Heart, ChevronUp } from "lucide-react";
 import DashboardHeader from "@/components/DashboardHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Stats from "@/components/Stats";
 import Footer from "@/components/Footer";
-import { mockCommunity } from "@/data/mockCommunityData";
 
-// Enhanced mock data for recent matches with placeholder images
+// Mock data for recent matches with placeholder images
 const mockMatches = [
   {
     id: "m1",
@@ -44,11 +43,35 @@ const mockMatches = [
     image: "https://via.placeholder.com/150?text=Michael+Johnson",
     status: "Meetup Planned",
   },
+  {
+    id: "m5",
+    name: "Emily Davis",
+    role: "Professional",
+    interests: ["Tech", "Innovation", "Coding"],
+    image: "https://via.placeholder.com/150?text=Emily+Davis",
+    status: "Pending",
+  },
+  {
+    id: "m6",
+    name: "John Smith",
+    role: "Friendship",
+    interests: ["Sports", "Travel", "Music"],
+    image: "https://via.placeholder.com/150?text=John+Smith",
+    status: "Confirmed",
+  },
 ];
+
+// Mock API fetch function (to be integrated later)
+const fetchMatchesFromAPI = async () => {
+  // Simulate API call delay
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return mockMatches; // Return mock data for now
+};
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [recentMatches, setRecentMatches] = useState(mockMatches);
+  const [recentMatches, setRecentMatches] = useState(mockMatches.slice(0, 4)); // Show only 4 initially
+  const [showAllMatches, setShowAllMatches] = useState(false);
   const [recentActivity, setRecentActivity] = useState([
     { id: 1, user: "David Brown", action: "requested to connect with you", time: "2 hours ago", status: "pending" },
     { id: 2, user: "Jessica Williams", action: "scheduled a meetup with you", time: "1 day ago", date: "Tomorrow, 10:00 AM", location: "Coffee at The Brew House" },
@@ -63,123 +86,151 @@ const Dashboard = () => {
     satisfactionRate: { value: "95%", change: "Based on feedback" },
   };
 
+  useEffect(() => {
+    if (showAllMatches) {
+      const loadAllMatches = async () => {
+        const matches = await fetchMatchesFromAPI();
+        setRecentMatches(matches);
+      };
+      loadAllMatches();
+    }
+  }, [showAllMatches]);
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <DashboardHeader />
       
       <main className="container mx-auto px-4 py-6 flex-grow">
-        <h1 className="text-2xl font-bold mb-4">Lagos Tech Circle <span className="text-teal-500 text-sm font-normal">Active</span></h1>
-        <div className="text-sm mb-4 text-gray-600 flex items-center justify-between">
-          <div className="flex items-center">
-            <Users className="h-4 w-4 mr-1" /> 534 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 156 matches
-          </div>
-          <div className="flex space-x-2">
-            <Button variant="ghost" size="sm" className="text-gray-600">
-              <Bell className="h-4 w-4 mr-1" /> Group Updates
-            </Button>
-            <Button className="bg-teal-500 text-white px-4 py-2 rounded-full">Request Match</Button>
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
+          <h1 className="text-2xl font-bold mb-2">Lagos Tech Circle <span className="text-teal-200 bg-teal-100 text-sm font-normal px-2 py-1 rounded-full ml-2">Active</span></h1>
+          <div className="text-sm text-gray-600 flex items-center justify-between">
+            <div className="flex items-center">
+              <Users className="h-4 w-4 mr-1" /> 534 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 156 matches
+            </div>
+            <div className="flex space-x-2">
+              <Button variant="ghost" size="sm" className="text-gray-600 border border-gray-200 rounded-full px-4 py-2">
+                <Bell className="h-4 w-4 mr-2" /> Group Updates
+              </Button>
+              <Button className="bg-teal-500 text-white rounded-full px-4 py-2">Request Match</Button>
+            </div>
           </div>
         </div>
-        <Button variant="outline" className="w-full mb-6 bg-teal-50 text-teal-500 border-teal-500 hover:bg-teal-100 rounded-full">
+        <Button variant="outline" className="w-full bg-teal-50 text-teal-500 border-teal-500 hover:bg-teal-100 rounded-full mb-6 flex items-center justify-center">
           <Users className="h-4 w-4 mr-2" /> View Accepted Connections
         </Button>
 
         {/* Stats Section */}
         <div className="grid grid-cols-1 gap-4 mb-6">
-          <Card className="bg-white rounded-lg shadow-sm p-4">
-            <CardContent className="p-0">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm">New Matches</p>
-                  <p className="text-lg font-semibold">2 <span className="text-teal-500">+2 this week</span></p>
-                </div>
-                <div className="w-6 h-6 bg-teal-100 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-              </div>
-            </CardContent>
+          <Card className="bg-white rounded-lg shadow-sm p-4 flex items-center">
+            <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center mr-3">
+              <ChevronUp className="h-4 w-4 text-teal-500" />
+            </div>
+            <div>
+              <p className="text-gray-500 text-sm">New Matches</p>
+              <p className="text-lg font-semibold">2 <span className="text-teal-500">+2 this week</span></p>
+            </div>
           </Card>
-          <Card className="bg-white rounded-lg shadow-sm p-4">
-            <CardContent className="p-0">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm">Meetups Planned</p>
-                  <p className="text-lg font-semibold">1 <span className="text-teal-500">1 upcoming</span></p>
-                </div>
-                <div className="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3" />
-                  </svg>
-                </div>
-              </div>
-            </CardContent>
+          <Card className="bg-white rounded-lg shadow-sm p-4 flex items-center">
+            <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+              <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-gray-500 text-sm">Meetups Planned</p>
+              <p className="text-lg font-semibold">1 <span className="text-teal-500">1 upcoming</span></p>
+            </div>
           </Card>
-          <Card className="bg-white rounded-lg shadow-sm p-4">
-            <CardContent className="p-0">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm">Profile Views</p>
-                  <p className="text-lg font-semibold">15 <span className="text-teal-500">+6% from last week</span></p>
-                </div>
-                <div className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-              </div>
-            </CardContent>
+          <Card className="bg-white rounded-lg shadow-sm p-4 flex items-center">
+            <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-3">
+              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-gray-500 text-sm">Profile Views</p>
+              <p className="text-lg font-semibold">15 <span className="text-teal-500">+6% from last week</span></p>
+            </div>
           </Card>
-          <Card className="bg-white rounded-lg shadow-sm p-4">
-            <CardContent className="p-0">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm">Satisfaction Rate</p>
-                  <p className="text-lg font-semibold">95% <span className="text-teal-500">Based on feedback</span></p>
-                </div>
-                <div className="w-6 h-6 bg-teal-100 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-              </div>
-            </CardContent>
+          <Card className="bg-white rounded-lg shadow-sm p-4 flex items-center">
+            <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center mr-3">
+              <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-gray-500 text-sm">Satisfaction Rate</p>
+              <p className="text-lg font-semibold">95% <span className="text-teal-500">Based on feedback</span></p>
+            </div>
           </Card>
         </div>
 
         {/* Recent Matches Section */}
-        <div className="mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Recent Matches</h2>
-            <Button variant="link" className="text-teal-500">View All</Button>
+        {!showAllMatches ? (
+          <div className="mb-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Recent Matches</h2>
+              <Button variant="link" className="text-teal-500" onClick={() => setShowAllMatches(true)}>View All</Button>
+            </div>
+            <div className="space-y-4">
+              {recentMatches.map((match) => (
+                <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
+                  <CardHeader className="p-0">
+                    <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
+                    <div className="absolute top-2 right-2">
+                      <span className="bg-orange-400 text-white text-xs px-2 py-1 rounded-full">{match.status}</span>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-4 pt-2">
+                    <h3 className="font-semibold">{match.name}</h3>
+                    <p className="text-sm text-gray-500">{match.role} | Lagos Tech Circle</p>
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {match.interests.map((interest, index) => (
+                        <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
+                      ))}
+                    </div>
+                    <div className="flex justify-between mt-4">
+                      <Button variant="outline" className="bg-gray-100 text-gray-700">View Profile</Button>
+                      <Button className="bg-teal-500 text-white">Connect</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-          <div className="space-y-4">
-            {recentMatches.map((match) => (
-              <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
-                <CardHeader className="p-0">
-                  <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
-                  <div className="absolute top-2 right-2">
-                    <span className="bg-orange-400 text-white text-xs px-2 py-1 rounded-full">{match.status}</span>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-4 pt-2">
-                  <h3 className="font-semibold">{match.name}</h3>
-                  <p className="text-sm text-gray-500">{match.role} | Lagos Tech Circle</p>
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {match.interests.map((interest, index) => (
-                      <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
-                    ))}
-                  </div>
-                  <div className="flex justify-between mt-4">
-                    <Button variant="outline" className="bg-gray-100 text-gray-700">View Profile</Button>
-                    <Button className="bg-teal-500 text-white">Connect</Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+        ) : (
+          <div className="mb-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">All Matches</h2>
+              <Button variant="link" className="text-teal-500" onClick={() => setShowAllMatches(false)}>Back</Button>
+            </div>
+            <div className="space-y-4">
+              {recentMatches.map((match) => (
+                <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
+                  <CardHeader className="p-0">
+                    <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
+                    <div className="absolute top-2 right-2">
+                      <span className="bg-orange-400 text-white text-xs px-2 py-1 rounded-full">{match.status}</span>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-4 pt-2">
+                    <h3 className="font-semibold">{match.name}</h3>
+                    <p className="text-sm text-gray-500">{match.role} | Lagos Tech Circle</p>
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {match.interests.map((interest, index) => (
+                        <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
+                      ))}
+                    </div>
+                    <div className="flex justify-between mt-4">
+                      <Button variant="outline" className="bg-gray-100 text-gray-700">View Profile</Button>
+                      <Button className="bg-teal-500 text-white">Connect</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Recent Activity Section */}
         <div>
