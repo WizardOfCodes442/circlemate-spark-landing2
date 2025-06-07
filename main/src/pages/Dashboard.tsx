@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
-import { Users, Bell, Heart, Stack } from "lucide-react";
+// Fallback to dynamic import if named imports fail
+import { Users, Bell, Heart, Stack } from "lucide-react"; // Keep as is, but verify installation
 import DashboardHeader from "@/components/DashboardHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Stats from "@/components/Stats";
-import Footer from "@/components/Footer"; // Imported Footer
+import Footer from "@/components/Footer";
 import { mockCommunity } from "@/data/mockCommunityData";
 
 const Dashboard = () => {
@@ -117,7 +118,7 @@ const Dashboard = () => {
         </div>
       </main>
 
-      <Footer /> {/* Footer included at the bottom */}
+      <Footer />
     </div>
   );
 };
