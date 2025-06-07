@@ -13,7 +13,6 @@ import { Community } from "@/data/mockCommunityData";
 import { Link, useNavigate } from "react-router-dom";
 import { useOnboardingStore } from '../../store/useOnboardingStore';
 
-
 // Mock data for communities
 const mockCommunities: Community[] = [
   {
@@ -92,7 +91,6 @@ const Discover = () => {
   const [showPricingModal, setShowPricingModal] = useState(false);
   const navigate = useNavigate();
 
-
   // Handle search
   const handleSearch = () => {
     if (!searchTerm) {
@@ -144,7 +142,7 @@ const Discover = () => {
     }
   };
 
-    const setCompleted = useOnboardingStore((state) => state.setCompleted);
+  const setCompleted = useOnboardingStore((state) => state.setCompleted);
 
   useEffect(() => {
     const fetchOnboardingStatus = async () => {
@@ -173,8 +171,7 @@ const Discover = () => {
     fetchOnboardingStatus();
   }, [setCompleted]);
 
-
-const [showOnboardingModal, setShowOnboardingModal] = useState(false);
+  const [showOnboardingModal, setShowOnboardingModal] = useState(false);
 
   useEffect(() => {
     const onboardingCompleted = localStorage.getItem("onboardingCompleted");
@@ -233,8 +230,7 @@ const [showOnboardingModal, setShowOnboardingModal] = useState(false);
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {filteredCommunities.length > 0 ? (
             filteredCommunities.map((community) => (
-              
-                  <Card key={community.id} className="overflow-hidden hover:shadow-md transition-shadow">
+              <Card key={community.id} className="overflow-hidden hover:shadow-md transition-shadow">
                 <CardHeader className="bg-gradient-to-r from-primary/20 to-primary-dark/5 pb-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
@@ -279,23 +275,23 @@ const [showOnboardingModal, setShowOnboardingModal] = useState(false);
                   </div>
                 </CardHeader>
                 <Link to="/community-profile">
-                <CardContent className="pt-4">
-                  <p className="text-sm text-muted-foreground mb-4">{community.description}</p>
-                  
-                  {community.isPaid && community.subscriptionAmount && community.subscriptionAmount > 0 && (
-                    <div className="flex items-center text-sm text-green-600 mb-2">
-                      <DollarSign className="h-4 w-4 mr-1" />
-                      <span>${community.subscriptionAmount}/month</span>
-                    </div>
-                  )}
-                  
-                  {community.location && (
-                    <div className="flex items-center text-sm text-muted-foreground">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      <span>{`${community.location.city}, ${community.location.state}, ${community.location.country}`}</span>
-                    </div>
-                  )}
-                </CardContent>
+                  <CardContent className="pt-4">
+                    <p className="text-sm text-muted-foreground mb-4">{community.description}</p>
+                    
+                    {community.isPaid && community.subscriptionAmount && community.subscriptionAmount > 0 && (
+                      <div className="flex items-center text-sm text-green-600 mb-2">
+                        <DollarSign className="h-4 w-4 mr-1" />
+                        <span>${community.subscriptionAmount}/month</span>
+                      </div>
+                    )}
+                    
+                    {community.location && (
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <MapPin className="h-4 w-4 mr-1" />
+                        <span>{`${community.location.city}, ${community.location.state}, ${community.location.country}`}</span>
+                      </div>
+                    )}
+                  </CardContent>
                 </Link>
                 
                 <CardFooter className="flex justify-between items-center border-t bg-muted/20 pt-3">
@@ -334,30 +330,37 @@ const [showOnboardingModal, setShowOnboardingModal] = useState(false);
         )}
       </main>
       <Dialog
-  open={showOnboardingModal}
-  onOpenChange={(open) => {
-    // Only allow closing if explicitly called via setShowOnboardingModal(false)
-    // Prevent close if user tries to click outside or press ESC
-    if (!open) {
-      // Do nothing here to block closing
-      // or just keep open true:
-      setShowOnboardingModal(true);
-    }
-  }}
->
-  <DialogContent className="max-w-md rounded-lg p-6 bg-white shadow-lg">
-    <DialogHeader>
-      <DialogTitle>Complete Your Onboarding</DialogTitle>
-    </DialogHeader>
-    <div className="py-4 text-center text-gray-700">
-      You have not set up your onboarding yet. Please complete it to proceed.
-    </div>
-    <DialogFooter className="flex justify-end">
-      <Button className="text-white" onClick={handleGoToOnboarding}>Go to Onboarding</Button>
-    </DialogFooter>
-  </DialogContent>
-</Dialog>
-
+        open={showOnboardingModal}
+        onOpenChange={(open) => {
+          // Prevent close if user tries to click outside or press ESC
+          if (!open) {
+            setShowOnboardingModal(true);
+          }
+        }}
+      >
+        <DialogContent
+          className="max-w-md rounded-lg p-6 bg-white shadow-lg"
+          onClose={() => setShowOnboardingModal(false)}
+        >
+          <DialogHeader>
+            <DialogTitle>Complete Your Onboarding</DialogTitle>
+          </DialogHeader>
+          <div className="py-4 text-center text-gray-700">
+            You have not set up your onboarding yet. Please complete it to proceed.
+          </div>
+          <DialogFooter className="flex justify-end">
+            <Button
+              className="text-white"
+              onClick={() => {
+                handleGoToOnboarding();
+                setShowOnboardingModal(false);
+              }}
+            >
+              Go to Onboarding
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
