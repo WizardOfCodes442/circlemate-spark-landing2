@@ -90,6 +90,8 @@ const Discover = () => {
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(null);
   const [showPricingModal, setShowPricingModal] = useState(false);
   const navigate = useNavigate();
+  const [showOnboardingModal, setShowOnboardingModal] = useState(false);
+  const [isCloseIntended, setIsCloseIntended] = useState(false); // Added for close control
 
   // Handle search
   const handleSearch = () => {
@@ -171,8 +173,6 @@ const Discover = () => {
     fetchOnboardingStatus();
   }, [setCompleted]);
 
-  const [showOnboardingModal, setShowOnboardingModal] = useState(false);
-
   useEffect(() => {
     const onboardingCompleted = localStorage.getItem("onboardingCompleted");
     if (onboardingCompleted !== "true") {
@@ -181,6 +181,7 @@ const Discover = () => {
   }, []);
 
   const handleGoToOnboarding = () => {
+    setIsCloseIntended(true); // Allow closing
     setShowOnboardingModal(false);
     navigate("/onboarding");
   };
@@ -332,15 +333,18 @@ const Discover = () => {
       <Dialog
         open={showOnboardingModal}
         onOpenChange={(open) => {
-          // Prevent close if user tries to click outside or press ESC
-          if (!open) {
+          // Allow closing only if intended (e.g., X button or Go to Onboarding)
+          if (!open && !isCloseIntended) {
             setShowOnboardingModal(true);
           }
         }}
       >
         <DialogContent
           className="max-w-md rounded-lg p-6 bg-white shadow-lg"
-          onClose={() => setShowOnboardingModal(false)}
+          onClose={() => {
+            setIsCloseIntended(true); // Mark close as intended
+            setShowOnboardingModal(false);
+          }}
         >
           <DialogHeader>
             <DialogTitle>Complete Your Onboarding</DialogTitle>
@@ -352,8 +356,8 @@ const Discover = () => {
             <Button
               className="text-white"
               onClick={() => {
+                setIsCloseIntended(true); // Allow closing
                 handleGoToOnboarding();
-                setShowOnboardingModal(false);
               }}
             >
               Go to Onboarding

@@ -24,7 +24,13 @@ const formSchema = z.object({
 
 const OnboardingLocation = () => {
   const navigate = useNavigate();
-  const form = useForm<z.infer<typeof formSchema>>({
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [loadingLocation, setLoadingLocation] = useState(false);
+  const [countriesData, setCountriesData] = useState([]);
+  const [states, setStates] = useState([]);
+
+  const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       city: "",
@@ -33,9 +39,6 @@ const OnboardingLocation = () => {
       postalCode: "",
     },
   });
-
-  const [countriesData, setCountriesData] = useState<any[]>([]);
-  const [states, setStates] = useState<string[]>([]);
 
   useEffect(() => {
     fetch("https://countriesnow.space/api/v0.1/countries/states")
@@ -48,19 +51,19 @@ const OnboardingLocation = () => {
       .catch(err => console.error("Error fetching countries:", err));
   }, []);
 
-  const handleCountryChange = (countryName: string) => {
+  const handleCountryChange = (countryName) => {
     form.setValue("country", countryName);
-    form.setValue("state", ""); // reset state selection
+    form.setValue("state", "");
     const country = countriesData.find(c => c.name === countryName);
     if (country && country.states) {
-      setStates(country.states.map((s: any) => s.name));
+      setStates(country.states.map((s) => s.name));
     } else {
       setStates([]);
     }
   };
 
-const handleNext = async () => {
-    const token = localStorage.getItem("token"); 
+  const handleNext = async () => {
+    const token = localStorage.getItem("token");
     const isValid = await form.trigger();
     if (!isValid) return;
 
@@ -93,70 +96,65 @@ const handleNext = async () => {
     navigate("/onboarding/profile");
   };
 
+  const handleUseCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
 
+    setLoadingLocation(true);
 
-const [loadingLocation, setLoadingLocation] = useState(false);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
 
-const handleUseCurrentLocation = () => {
-  if (!navigator.geolocation) {
-    alert("Geolocation is not supported by your browser.");
-    return;
-  }
+        try {
+          const response = await fetch(
+            `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=d49f71ddb825496f8c650f547ee83ba6`
+          );
+          const data = await response.json();
 
-  setLoadingLocation(true);
+          const address = data.results[0]?.components || {};
 
-  navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      const { latitude, longitude } = position.coords;
+          const countryName = address.country || "";
+          const stateName =
+            address.state || address.region || address.province || "";
+          const cityName =
+            address.city || address.town || address.village || address.hamlet || "";
+          const postal = address.postcode || "";
 
-      try {
-        const response = await fetch(
-          `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=d49f71ddb825496f8c650f547ee83ba6`
-        );
-        const data = await response.json();
+          console.log("Fetched location:", {
+            countryName,
+            stateName,
+            cityName,
+            postal,
+          });
 
-        const address = data.results[0]?.components || {};
+          form.setValue("country", countryName);
+          form.setValue("city", cityName);
+          form.setValue("postalCode", postal);
 
-        const countryName = address.country || "";
-        const stateName =
-          address.state || address.region || address.province || "";
-        const cityName =
-          address.city || address.town || address.village || address.hamlet || "";
-        const postal = address.postcode || "";
+          if (countryName) {
+            handleCountryChange(countryName);
+            setTimeout(() => {
+              form.setValue("state", stateName);
+            }, 300);
+          }
 
-        console.log("Fetched location:", {
-          countryName,
-          stateName,
-          cityName,
-          postal,
-        });
-
-        form.setValue("country", countryName);
-        form.setValue("city", cityName);
-        form.setValue("postalCode", postal);
-
-        if (countryName) {
-          handleCountryChange(countryName);
-          setTimeout(() => {
-            form.setValue("state", stateName);
-          }, 300);
+        } catch (error) {
+          console.error("Error fetching location details:", error);
+          alert("Could not retrieve location details. Please try again.");
+        } finally {
+          setLoadingLocation(false);
         }
-
-      } catch (error) {
-        console.error("Error fetching location details:", error);
-        alert("Could not retrieve location details. Please try again.");
-      } finally {
+      },
+      (error) => {
+        console.error("Geolocation error:", error);
+        alert("Unable to get your current location.");
         setLoadingLocation(false);
       }
-    },
-    (error) => {
-      console.error("Geolocation error:", error);
-      alert("Unable to get your current location.");
-      setLoadingLocation(false);
-    }
-  );
-};
-
+    );
+  };
 
   return (
     <OnboardingLayout
@@ -174,43 +172,47 @@ const handleUseCurrentLocation = () => {
       </div>
 
       <div className="mb-6 flex justify-center">
-<button
-  type="button"
-  onClick={handleUseCurrentLocation}
-  disabled={loadingLocation}
-  className={`flex items-center text-[#22CCBE] hover:underline ${
-    loadingLocation ? "opacity-50 cursor-not-allowed" : ""
-  }`}
->
-  {loadingLocation ? (
-    <>
-      <svg className="animate-spin h-4 w-4 mr-2" viewBox="0 0 24 24">
-        <circle
-          className="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          strokeWidth="4"
-        ></circle>
-        <path
-          className="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8v8H4z"
-        ></path>
-      </svg>
-      Locating...
-    </>
-  ) : (
-    <>
-      <MapPin className="h-4 w-4 mr-2" />
-      Use current location
-    </>
-  )}
-</button>
+        <button
+          type="button"
+          onClick={handleUseCurrentLocation}
+          disabled={loadingLocation}
+          className={`flex items-center text-[#22CCBE] hover:underline ${
+            loadingLocation ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          {loadingLocation ? (
+            <>
+              <svg className="animate-spin h-4 w-4 mr-2" viewBox="0 0 24 24">
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+              Locating...
+            </>
+          ) : (
+            <>
+              <MapPin className="h-4 w-4 mr-2" />
+              Use current location
+            </>
+          )}
+        </button>
+      </div>
 
-</div>
-
+      {error && (
+        <Alert className="mb-6" variant="destructive">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
 
       <Form {...form}>
         <form className="space-y-6">
