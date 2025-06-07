@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
-// Fallback to dynamic import if named imports fail
-import { Users, Bell, Heart, Stack } from "lucide-react"; // Keep as is, but verify installation
+import { Users, Bell, Heart } from "lucide-react"; // Removed Stack to avoid errors
 import DashboardHeader from "@/components/DashboardHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -59,9 +58,9 @@ const Dashboard = () => {
             <h2 className="text-2xl font-semibold">Recent Matches</h2>
             <Button variant="link" className="text-green-500">View All</Button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {recentMatches.map((match) => (
-              <Card key={match.id} className="overflow-hidden">
+              <Card key={match.id} className="overflow-hidden hover:shadow-md transition-shadow">
                 <CardHeader className="p-4">
                   <Avatar className="h-16 w-16 mx-auto">
                     <AvatarImage src={match.image} alt={match.name} />
@@ -72,10 +71,10 @@ const Dashboard = () => {
                   <h3 className="font-semibold">{match.name}</h3>
                   <p className="text-sm text-muted-foreground">{match.category}</p>
                   <Button variant="outline" size="sm" className="mt-2 w-full">
-                    <Stack className="h-4 w-4 mr-2" /> View Profile
+                    View Profile
                   </Button>
                   <Button size="sm" className="mt-2 w-full text-white">
-                    <Stack className="h-4 w-4 mr-2" /> Connect
+                    Connect
                   </Button>
                 </CardContent>
               </Card>
@@ -91,7 +90,7 @@ const Dashboard = () => {
           </div>
           <div className="space-y-4">
             {recentActivity.map((activity) => (
-              <Card key={activity.id} className="p-4 flex items-center">
+              <Card key={activity.id} className="p-4 flex items-center hover:shadow-md transition-shadow">
                 <Avatar className="h-10 w-10 mr-4">
                   <AvatarFallback>{activity.user.substring(0, 2)}</AvatarFallback>
                 </Avatar>
