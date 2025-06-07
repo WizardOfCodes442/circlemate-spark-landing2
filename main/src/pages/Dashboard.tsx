@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
-import { Users, Bell, Heart } from "lucide-react"; // Removed Stack to avoid errors
+import { Users, Bell, Heart } from "lucide-react";
 import DashboardHeader from "@/components/DashboardHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,7 +12,7 @@ import { mockCommunity } from "@/data/mockCommunityData";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [recentMatches, setRecentMatches] = useState([mockCommunity]); // Using single mockCommunity as an array
+  const [recentMatches, setRecentMatches] = useState(mockCommunity.members); // Use members array from mockCommunity
   const [recentActivity, setRecentActivity] = useState([
     { id: 1, user: "David Brown", action: "requested to connect with you", time: "2 hours ago", status: "pending" },
     { id: 2, user: "Jessica Williams", action: "scheduled a meetup with you", time: "1 day ago", date: "Tomorrow, 10:00 AM", status: "scheduled" },
@@ -63,13 +63,13 @@ const Dashboard = () => {
               <Card key={match.id} className="overflow-hidden hover:shadow-md transition-shadow">
                 <CardHeader className="p-4">
                   <Avatar className="h-16 w-16 mx-auto">
-                    <AvatarImage src={match.image} alt={match.name} />
+                    <AvatarImage src={match.avatar} alt={match.name} />
                     <AvatarFallback>{match.name.substring(0, 2)}</AvatarFallback>
                   </Avatar>
                 </CardHeader>
                 <CardContent className="p-4 text-center">
                   <h3 className="font-semibold">{match.name}</h3>
-                  <p className="text-sm text-muted-foreground">{match.category}</p>
+                  <p className="text-sm text-muted-foreground">Role: {match.role}</p>
                   <Button variant="outline" size="sm" className="mt-2 w-full">
                     View Profile
                   </Button>
