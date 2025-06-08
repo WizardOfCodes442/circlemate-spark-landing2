@@ -116,20 +116,37 @@ const Dashboard = () => {
           <>
             <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
               <div className="flex flex-col space-y-2 md:space-y-0">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-                  <div className="flex items-center mb-2 md:mb-0">
-                    <h1 className="text-2xl font-bold">Lagos Tech Circle</h1>
-                    <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full ml-2 md:ml-2">Active</span>
-                  </div>
-                  <div className="flex space-x-2">
-                    <Button variant="ghost" size="sm" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2">
-                      <Bell className="h-4 w-4 mr-2" /> Group Updates
-                    </Button>
-                    <Button className="bg-teal-500 text-white rounded-full px-6 py-2">Request Match</Button>
-                  </div>
+                {/* Mobile View */}
+                <div className="flex justify-between items-center md:hidden">
+                  <h1 className="text-2xl font-bold">Lagos Tech Circle</h1>
+                  <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full">Active</span>
                 </div>
-                <div className="text-sm text-gray-600 flex items-center">
+                <div className="text-sm text-gray-600 flex items-center md:hidden">
                   <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
+                </div>
+                <div className="flex space-x-2 md:hidden">
+                  <Button variant="ghost" size="sm" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 flex-1">
+                    <Bell className="h-4 w-4 mr-2" /> Group Updates
+                  </Button>
+                  <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Request Match</Button>
+                </div>
+                {/* Desktop View */}
+                <div className="hidden md:block">
+                  <div className="flex justify-between items-center mb-2">
+                    <div className="flex items-center">
+                      <h1 className="text-2xl font-bold">Lagos Tech Circle</h1>
+                      <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full ml-2">Active</span>
+                    </div>
+                    <div className="flex space-x-2">
+                      <Button variant="ghost" size="sm" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2">
+                        <Bell className="h-4 w-4 mr-2" /> Group Updates
+                      </Button>
+                      <Button className="bg-teal-500 text-white rounded-full px-6 py-2">Request Match</Button>
+                    </div>
+                  </div>
+                  <div className="text-sm text-gray-600 flex items-center">
+                    <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
+                  </div>
                 </div>
               </div>
             </div>
@@ -139,46 +156,46 @@ const Dashboard = () => {
 
             {/* Stats Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-              <Card className="bg-white rounded-lg shadow-sm p-6 flex items-center w-full">
-                <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center mr-4">
+              <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center w-full">
+                <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center mb-2">
                   <ChevronUp className="h-5 w-5 text-teal-500" />
                 </div>
                 <div>
-                  <p className="text-gray-500 text-sm">New Matches</p>
-                  <p className="text-lg font-semibold">2 <span className="text-teal-500">+2 this week</span></p>
+                  <p className="text-gray-500 text-sm text-center">New Matches</p>
+                  <p className="text-lg font-semibold text-center">2 <span className="text-teal-500">+2 this week</span></p>
                 </div>
               </Card>
-              <Card className="bg-white rounded-lg shadow-sm p-6 flex items-center w-full">
-                <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+              <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center w-full">
+                <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mb-2">
                   <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-gray-500 text-sm">Meetups Planned</p>
-                  <p className="text-lg font-semibold">1 <span className="text-teal-500">1 upcoming</span></p>
+                  <p className="text-gray-500 text-sm text-center">Meetups Planned</p>
+                  <p className="text-lg font-semibold text-center">1 <span className="text-teal-500">1 upcoming</span></p>
                 </div>
               </Card>
-              <Card className="bg-white rounded-lg shadow-sm p-6 flex items-center w-full">
-                <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-4">
+              <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center w-full">
+                <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mb-2">
                   <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-gray-500 text-sm">Profile Views</p>
-                  <p className="text-lg font-semibold">15 <span className="text-teal-500">+6% from last week</span></p>
+                  <p className="text-gray-500 text-sm text-center">Profile Views</p>
+                  <p className="text-lg font-semibold text-center">15 <span className="text-teal-500">+6% from last week</span></p>
                 </div>
               </Card>
-              <Card className="bg-white rounded-lg shadow-sm p-6 flex items-center w-full">
-                <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center mr-4">
+              <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center w-full">
+                <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center mb-2">
                   <svg className="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-gray-500 text-sm">Satisfaction Rate</p>
-                  <p className="text-lg font-semibold">95% <span className="text-teal-500">Based on feedback</span></p>
+                  <p className="text-gray-500 text-sm text-center">Satisfaction Rate</p>
+                  <p className="text-lg font-semibold text-center">95% <span className="text-teal-500">Based on feedback</span></p>
                 </div>
               </Card>
             </div>
@@ -206,11 +223,11 @@ const Dashboard = () => {
                           <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
                         ))}
                       </div>
-                      <div className="flex justify-between mt-4 space-x-2">
-                        <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-4 py-2">
+                      <div className="flex justify-between mt-4 space-x-1">
+                        <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 flex-1">
                           View Profile
                         </Button>
-                        <Button className="bg-teal-500 text-white rounded-full px-4 py-2">Connect</Button>
+                        <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Connect</Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -248,14 +265,14 @@ const Dashboard = () => {
                           <p className="text-xs text-gray-500">{activity.time}</p>
                         </div>
                       </div>
-                      <div className="flex justify-end space-x-2">
+                      <div className="flex justify-center space-x-2">
                         {activity.status === "pending" && (
                           <>
-                            <Button size="sm" className="bg-teal-500 text-white px-3 py-1 rounded-full">Accept</Button>
-                            <Button variant="outline" size="sm" className="text-gray-700 px-3 py-1 rounded-full">Decline</Button>
+                            <Button size="sm" className="bg-teal-500 text-white px-6 py-1 rounded-full">Accept</Button>
+                            <Button variant="outline" size="sm" className="text-gray-700 px-6 py-1 rounded-full">Decline</Button>
                           </>
                         )}
-                        {activity.date && <Button variant="outline" size="sm" className="text-gray-700 px-3 py-1 rounded-full">View Details</Button>}
+                        {activity.date && <Button variant="outline" size="sm" className="text-gray-700 px-6 py-1 rounded-full">View Details</Button>}
                       </div>
                     </div>
                   ))}
@@ -288,11 +305,11 @@ const Dashboard = () => {
                         <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
                       ))}
                     </div>
-                    <div className="flex justify-between mt-4 space-x-2">
-                      <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-4 py-2">
+                    <div className="flex justify-between mt-4 space-x-1">
+                      <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 flex-1">
                         View Profile
                       </Button>
-                      <Button className="bg-teal-500 text-white rounded-full px-4 py-2">Connect</Button>
+                      <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Connect</Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -331,14 +348,14 @@ const Dashboard = () => {
                         <p className="text-xs text-gray-500">{activity.time}</p>
                       </div>
                     </div>
-                    <div className="flex justify-end space-x-2">
+                    <div className="flex justify-center space-x-2">
                       {activity.status === "pending" && (
                         <>
-                          <Button size="sm" className="bg-teal-500 text-white px-3 py-1 rounded-full">Accept</Button>
-                          <Button variant="outline" size="sm" className="text-gray-700 px-3 py-1 rounded-full">Decline</Button>
+                          <Button size="sm" className="bg-teal-500 text-white px-6 py-1 rounded-full">Accept</Button>
+                          <Button variant="outline" size="sm" className="text-gray-700 px-6 py-1 rounded-full">Decline</Button>
                         </>
                       )}
-                      {activity.date && <Button variant="outline" size="sm" className="text-gray-700 px-3 py-1 rounded-full">View Details</Button>}
+                      {activity.date && <Button variant="outline" size="sm" className="text-gray-700 px-6 py-1 rounded-full">View Details</Button>}
                     </div>
                   </div>
                 ))}
