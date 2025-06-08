@@ -2,27 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { Users, Bell, Heart, ChevronUp } from "lucide-react";
-
-// Placeholder for DashboardHeader (replace with your actual component)
-const DashboardHeader = () => {
-  return (
-    <header className="bg-white shadow-sm p-4">
-      <h1 className="text-xl font-bold">Dashboard Header</h1>
-    </header>
-  );
-};
-
-// Placeholder for Footer (replace with your actual component)
-const Footer = () => {
-  return (
-    <footer className="bg-white p-4 text-center text-gray-500">
-      &copy; 2025 Lagos Tech Circle
-    </footer>
-  );
-};
-
+import DashboardHeader from "@/components/DashboardHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Footer from "@/components/Footer";
 
 // Mock data for recent matches with real images
 const mockMatches = [
@@ -237,34 +220,10 @@ const fetchActivitiesFromAPI = async () => {
 
 const ProfileView = ({ match, onBack }) => {
   return (
-    <div className="min-h-screen bg-yellow-50 flex flex-col">
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       <DashboardHeader />
       <main className="container mx-auto px-4 py-6 flex-grow">
-        <div className="flex justify-between items-center mb-4 flex-col md:flex-row">
-          <Button className="bg-teal-500 text-white rounded-full px-6 py-2 mb-2 md:mb-0 w-full md:w-auto" onClick={onBack}>Back</Button>
-          <div className="flex space-x-2">
-            <button className="bg-red-500 text-white rounded-full p-2 w-10 h-10 flex items-center justify-center">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
-            </button>
-            <button className="bg-blue-500 text-white rounded-full p-2 w-10 h-10 flex items-center justify-center">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-              </svg>
-            </button>
-            <button className="bg-green-500 text-white rounded-full p-2 w-10 h-10 flex items-center justify-center">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-              </svg>
-            </button>
-            <button className="bg-purple-500 text-white rounded-full p-2 w-10 h-10 flex items-center justify-center">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
+        <Button className="bg-teal-500 text-white rounded-full px-6 py-2 mb-4 w-full md:w-auto md:mx-auto" onClick={onBack}>Back to Dashboard</Button>
         <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
           <img src={match.image} alt={match.name} className="w-full md:w-1/2 mx-auto h-64 object-cover rounded-t-lg mb-4" />
           <h1 className="text-2xl font-bold text-center">{match.name}, {match.lifestyle.drinking === "On special occasions" ? 37 : 35} <span className="text-teal-500">✔</span></h1>
@@ -284,7 +243,7 @@ const ProfileView = ({ match, onBack }) => {
           <p><strong>Education:</strong> {match.education}</p>
           <p><strong>Family plans:</strong> {match.familyPlans}</p>
           <p><strong>Personality type:</strong> {match.personalityType}</p>
-          <Button variant="ghost" className="text-teal-500 bg-yellow-50 mt-2">View all 6 ↓</Button>
+          <Button variant="ghost" className="text-teal-500 bg-gray-200 mt-2">View all 6 ↓</Button>
         </div>
         <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
           <h2 className="text-xl font-semibold mb-2">Lifestyle</h2>
@@ -295,7 +254,7 @@ const ProfileView = ({ match, onBack }) => {
           <p><strong>Dietary preference:</strong> {match.lifestyle.dietaryPreference}</p>
           <p><strong>Social media:</strong> {match.lifestyle.socialMedia}</p>
           <p><strong>Sleeping habits:</strong> {match.lifestyle.sleepingHabits}</p>
-          <Button variant="ghost" className="text-teal-500 bg-yellow-50 mt-2">View all 7 ↓</Button>
+          <Button variant="ghost" className="text-teal-500 bg-gray-200 mt-2">View all 7 ↓</Button>
         </div>
         <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
           <h2 className="text-xl font-semibold mb-2">Interests</h2>
@@ -313,6 +272,23 @@ const ProfileView = ({ match, onBack }) => {
           <p><strong>Location:</strong> {match.essentials.location}</p>
           <p><strong>Languages:</strong> {match.essentials.languages}</p>
         </div>
+        <div className="flex justify-around mt-4 md:flex-row md:space-x-4">
+          <button className="bg-red-500 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center md:w-10 md:h-10">
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </button>
+          <button className="bg-blue-500 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center md:w-10 md:h-10">
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+            </svg>
+          </button>
+          <button className="bg-green-500 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center md:w-10 md:h-10">
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+          </button>
+        </div>
       </main>
       <Footer />
     </div>
@@ -325,7 +301,7 @@ const Dashboard = () => {
   const [showAllMatches, setShowAllMatches] = useState(false);
   const [recentActivity, setRecentActivity] = useState(mockActivities.slice(0, 4));
   const [showAllActivities, setShowAllActivities] = useState(false);
-  const [selectedMatch, setSelectedMatch] = useState(null); // Fixed: Added full useState declaration
+  const [selectedMatch, setSelectedMatch] = useState(null);
 
   useEffect(() => {
     if (showAllMatches) {
@@ -348,7 +324,7 @@ const Dashboard = () => {
   }, [showAllActivities]);
 
   const viewProfile = (matchId) => {
-    const match = mockMatches.find((m) => m.id === matchId);
+    const match = mockMatches.find(m => m.id === matchId);
     setSelectedMatch(match);
   };
 
@@ -361,7 +337,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-yellow-50 flex flex-col">
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       <DashboardHeader />
       
       <main className="container mx-auto px-4 py-6 flex-grow">
@@ -378,7 +354,7 @@ const Dashboard = () => {
                   <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
                 </div>
                 <div className="flex space-x-2 md:hidden">
-                  <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-yellow-50 rounded-full px-6 py-2 w-1/2">
+                  <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 w-1/2">
                     <Bell className="h-4 w-4 mr-2" /> Group Updates
                   </Button>
                   <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-1/2">Request Match</Button>
@@ -391,7 +367,7 @@ const Dashboard = () => {
                       <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full ml-2">Active</span>
                     </div>
                     <div className="flex space-x-2">
-                      <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-yellow-50 rounded-full px-6 py-2 w-1/2">
+                      <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 w-1/2">
                         <Bell className="h-4 w-4 mr-2" /> Group Updates
                       </Button>
                       <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-1/2">Request Match</Button>
@@ -403,7 +379,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <Button variant="ghost" className="w-auto bg-yellow-50 text-teal-500 border-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 mx-auto mb-6 flex items-center justify-center">
+            <Button variant="ghost" className="w-auto bg-gray-200 text-teal-500 border-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 mx-auto mb-6 flex items-center justify-center">
               <Users className="h-4 w-4 mr-2" /> View Accepted Connections
             </Button>
 
@@ -477,7 +453,7 @@ const Dashboard = () => {
                         ))}
                       </div>
                       <div className="flex justify-between mt-4 space-x-1">
-                        <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-yellow-50 rounded-full px-6 py-2 flex-1" onClick={() => viewProfile(match.id)}>
+                        <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 flex-1" onClick={() => viewProfile(match.id)}>
                           View Profile
                         </Button>
                         <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Connect</Button>
@@ -522,10 +498,10 @@ const Dashboard = () => {
                         {activity.status === "pending" && (
                           <>
                             <Button size="sm" className="bg-teal-500 text-white px-6 py-1 rounded-full">Accept</Button>
-                            <Button variant="ghost" size="sm" className="text-gray-700 bg-yellow-50 px-6 py-1 rounded-full">Decline</Button>
+                            <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">Decline</Button>
                           </>
                         )}
-                        {activity.date && <Button variant="ghost" size="sm" className="text-gray-700 bg-yellow-50 px-6 py-1 rounded-full">View Details</Button>}
+                        {activity.date && <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">View Details</Button>}
                       </div>
                     </div>
                   ))}
@@ -559,7 +535,7 @@ const Dashboard = () => {
                       ))}
                     </div>
                     <div className="flex justify-between mt-4 space-x-1">
-                      <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-yellow-50 rounded-full px-6 py-2 flex-1" onClick={() => viewProfile(match.id)}>
+                      <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 flex-1" onClick={() => viewProfile(match.id)}>
                         View Profile
                       </Button>
                       <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Connect</Button>
@@ -605,10 +581,10 @@ const Dashboard = () => {
                       {activity.status === "pending" && (
                         <>
                           <Button size="sm" className="bg-teal-500 text-white px-6 py-1 rounded-full">Accept</Button>
-                          <Button variant="ghost" size="sm" className="text-gray-700 bg-yellow-50 px-6 py-1 rounded-full">Decline</Button>
+                          <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">Decline</Button>
                         </>
                       )}
-                      {activity.date && <Button variant="ghost" size="sm" className="text-gray-700 bg-yellow-50 px-6 py-1 rounded-full">View Details</Button>}
+                      {activity.date && <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">View Details</Button>}
                     </div>
                   </div>
                 ))}
