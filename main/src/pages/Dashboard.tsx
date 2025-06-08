@@ -2,10 +2,27 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { Users, Bell, Heart, ChevronUp } from "lucide-react";
-import DashboardHeader from "@/components/DashboardHeader";
+
+// Placeholder for DashboardHeader (replace with your actual component)
+const DashboardHeader = () => {
+  return (
+    <header className="bg-white shadow-sm p-4">
+      <h1 className="text-xl font-bold">Dashboard Header</h1>
+    </header>
+  );
+};
+
+// Placeholder for Footer (replace with your actual component)
+const Footer = () => {
+  return (
+    <footer className="bg-white p-4 text-center text-gray-500">
+      &copy; 2025 Lagos Tech Circle
+    </footer>
+  );
+};
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Footer from "@/components/Footer";
 
 // Mock data for recent matches with real images
 const mockMatches = [
@@ -308,7 +325,7 @@ const Dashboard = () => {
   const [showAllMatches, setShowAllMatches] = useState(false);
   const [recentActivity, setRecentActivity] = useState(mockActivities.slice(0, 4));
   const [showAllActivities, setShowAllActivities] = useState(false);
-  [selectedMatch, setSelectedMatch] = useState(null);
+  const [selectedMatch, setSelectedMatch] = useState(null); // Fixed: Added full useState declaration
 
   useEffect(() => {
     if (showAllMatches) {
@@ -331,7 +348,7 @@ const Dashboard = () => {
   }, [showAllActivities]);
 
   const viewProfile = (matchId) => {
-    const match = mockMatches.find(m => m.id === matchId);
+    const match = mockMatches.find((m) => m.id === matchId);
     setSelectedMatch(match);
   };
 
