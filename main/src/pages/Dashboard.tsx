@@ -221,28 +221,30 @@ const fetchActivitiesFromAPI = async () => {
 const ProfileView = ({ match, onBack }) => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      <DashboardHeader />
+      <div className="max-w-7xl mx-auto w-full">
+        <DashboardHeader />
+      </div>
       <main className="container mx-auto px-4 py-6 flex-grow max-w-7xl">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 mb-6">
+        <div className="flex items-center justify-between gap-4 mb-6">
           <Button 
-            className="bg-teal-500 text-white rounded-full px-6 py-2 w-full md:w-auto" 
+            className="bg-teal-500 text-white rounded-full px-6 py-2 w-auto" 
             onClick={onBack}
           >
             Back
           </Button>
-          <div className="flex justify-center gap-4">
-            <button className="bg-red-500 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <div className="flex justify-end gap-2">
+            <button className="bg-red-500 text-white rounded-full p-2 w-10 h-10 flex items-center justify-center">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
               </svg>
             </button>
-            <button className="bg-blue-500 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <button className="bg-blue-500 text-white rounded-full p-2 w-10 h-10 flex items-center justify-center">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
               </svg>
             </button>
-            <button className="bg-green-500 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <button className="bg-green-500 text-white rounded-full p-2 w-10 h-10 flex items-center justify-center">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
               </svg>
             </button>
@@ -357,7 +359,9 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      <DashboardHeader />
+      <div className="max-w-7xl mx-auto w-full">
+        <DashboardHeader />
+      </div>
       <main className="container mx-auto px-4 py-6 flex-grow max-w-7xl">
         {!showAllMatches && !showAllActivities && (
           <>
