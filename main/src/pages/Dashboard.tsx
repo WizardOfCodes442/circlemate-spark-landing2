@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
-import { Users, Bell, Heart, ChevronUp } from "lucide-react";
+import { Users, Bell, Heart, ChevronUp, ArrowRight, ArrowLeft } from "lucide-react";
 import DashboardHeader from "@/components/DashboardHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,7 +40,6 @@ const mockMatches = [
       languages: "Hausa, Pidgin",
     },
   },
-  // Additional mock data can be added as needed
 ];
 
 // Mock data for recent activities
@@ -70,69 +69,69 @@ const ProfileView = ({ match, onBack }) => {
       <div className="max-w-7xl mx-auto w-full">
         <DashboardHeader />
       </div>
-      <main className="container mx-auto px-4 py-6 flex-grow max-w-7xl">
-        <div className="flex items-center justify-between gap-4 mb-6">
-          <Button 
-            className="bg-transparent text-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 w-auto" 
-            onClick={onBack}
-          >
-            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-            </svg>
-            Back
-          </Button>
-        </div>
-        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-          <img 
-            src={match.image} 
-            alt={match.name} 
-            className="w-full h-64 object-cover rounded-t-lg mb-4"
-          />
-          <h1 className="text-2xl font-bold mb-2">{match.name}</h1>
-          <div className="flex justify-start space-x-2 mb-4">
-            <span className="text-teal-500 bg-teal-100 px-2 py-1 rounded-full text-sm">{match.role}</span>
-            <span className="text-gray-600">Lagos Tech Circle</span>
+      <main className="container mx-auto px-4 py-6 flex-grow max-w-7xl flex justify-center">
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-4 md:w-3/4 lg:w-1/2">
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <Button 
+              className="bg-transparent text-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 w-auto" 
+              onClick={onBack}
+            >
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Back
+            </Button>
           </div>
-          <div className="flex justify-start space-x-2 mb-4">
-            <Button className="bg-teal-500 text-white rounded-full px-6 py-2">Connect</Button>
-            <Button className="bg-red-500 text-white rounded-full px-6 py-2">Report</Button>
-            <Button className="bg-gray-500 text-white rounded-full px-6 py-2">Block</Button>
-          </div>
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold mb-2">About</h2>
-            <p className="text-gray-600">{match.about}</p>
-          </div>
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold mb-2">Location</h2>
-            <p className="text-gray-600">{match.essentials.location}</p>
-          </div>
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold mb-2">Temperament</h2>
-            <p className="text-gray-600">{match.personalityType} (ENTJ)</p>
-          </div>
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold mb-2">Interests</h2>
-            <div className="flex flex-wrap gap-2">
-              {match.interests.map((interest, index) => (
-                <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">
-                  {interest}
-                </span>
-              ))}
+          <div className="py-4">
+            <img 
+              src={match.image} 
+              alt={match.name} 
+              className="w-full h-64 object-cover rounded-t-lg mb-4"
+            />
+            <h1 className="text-2xl font-bold mb-2">{match.name}</h1>
+            <div className="flex justify-start space-x-2 mb-4">
+              <span className="text-teal-500 bg-teal-100 px-2 py-1 rounded-full text-sm">{match.role}</span>
+              <span className="text-gray-600">Lagos Tech Circle</span>
             </div>
-          </div>
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold mb-2">Values</h2>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Growth</span>
-              <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Innovation</span>
-              <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Authenticity</span>
+            <div className="flex justify-start space-x-2 mb-4">
+              <Button className="bg-teal-500 text-white rounded-full px-6 py-2">Connect</Button>
+              <Button className="bg-red-500 text-white rounded-full px-6 py-2">Report</Button>
+              <Button className="bg-gray-500 text-white rounded-full px-6 py-2">Block</Button>
             </div>
-          </div>
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold mb-2">Availability</h2>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs bg-orange-200 text-orange-700 px-2 py-1 rounded-full">Weekends</span>
-              <span className="text-xs bg-orange-200 text-orange-700 px-2 py-1 rounded-full">Evenings</span>
+            <div className="mt-6">
+              <h2 className="text-xl font-semibold mb-2">About</h2>
+              <p className="text-gray-600">{match.about}</p>
+            </div>
+            <div className="mt-6">
+              <h2 className="text-xl font-semibold mb-2">Location</h2>
+              <p className="text-gray-600">{match.essentials.location}</p>
+            </div>
+            <div className="mt-6">
+              <h2 className="text-xl font-semibold mb-2">Temperament</h2>
+              <p className="text-gray-600">{match.personalityType} (ENTJ)</p>
+            </div>
+            <div className="mt-6">
+              <h2 className="text-xl font-semibold mb-2">Interests</h2>
+              <div className="flex flex-wrap gap-2">
+                {match.interests.map((interest, index) => (
+                  <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">
+                    {interest}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="mt-6">
+              <h2 className="text-xl font-semibold mb-2">Values</h2>
+              <div className="flex flex-wrap gap-2">
+                <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Growth</span>
+                <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Innovation</span>
+                <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Authenticity</span>
+              </div>
+            </div>
+            <div className="mt-6">
+              <h2 className="text-xl font-semibold mb-2">Availability</h2>
+              <div className="flex flex-wrap gap-2">
+                <span className="text-xs bg-orange-200 text-orange-700 px-2 py-1 rounded-full">Weekends</span>
+                <span className="text-xs bg-orange-200 text-orange-700 px-2 py-1 rounded-full">Evenings</span>
+              </div>
             </div>
           </div>
         </div>
@@ -148,19 +147,17 @@ const ConnectView = ({ match, onCancel }) => {
       <div className="max-w-7xl mx-auto w-full">
         <DashboardHeader />
       </div>
-      <main className="container mx-auto px-4 py-6 flex-grow max-w-7xl">
-        <div className="flex items-center justify-between gap-4 mb-6">
-          <Button 
-            className="bg-transparent text-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 w-auto"
-            onClick={onCancel}
-          >
-            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-            </svg>
-            Back
-          </Button>
-        </div>
-        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+      <main className="container mx-auto px-4 py-6 flex-grow max-w-7xl flex justify-center">
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-4 md:w-3/4 lg:w-1/2">
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <Button 
+              className="bg-transparent text-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 w-auto"
+              onClick={onCancel}
+            >
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Back
+            </Button>
+          </div>
           <h1 className="text-2xl font-bold mb-4">Connect with {match.name}</h1>
           <div className="flex items-center mb-4">
             <img 
@@ -258,7 +255,7 @@ const Dashboard = () => {
   const connectWithMatch = (matchId) => {
     const match = mockMatches.find(m => m.id === matchId);
     setConnectMatch(match);
-    setSelectedMatch(null); // Ensure profile view is cleared when connecting
+    setSelectedMatch(null);
   };
 
   const goBack = () => {
@@ -320,7 +317,7 @@ const Dashboard = () => {
             </div>
             <Button 
               variant="ghost" 
-              className="w-auto bg-gray-200 text-teal-500 border-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 mx-auto mb-6 flex items-center justify-center"
+              className="bg-teal-500 text-white rounded-full px-4 py-1 text-sm float-right mb-6"
             >
               <Users className="h-4 w-4 mr-2" /> View Accepted Connections
             </Button>
@@ -332,8 +329,8 @@ const Dashboard = () => {
                   <ChevronUp className="h-5 w-5 text-teal-500" />
                 </div>
                 <div>
-                  <p className="text-gray-500 text-sm">New Matches</p>
-                  <p className="text-lg font-semibold">2 <span className="text-teal-500">+2 this week</span></p>
+                  <p className="text-gray-500 text-sm font-bold">New Matches</p>
+                  <p className="text-2xl font-bold">2 <span className="text-teal-500">+2 this week</span></p>
                 </div>
               </Card>
               <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-start w-full">
@@ -343,8 +340,8 @@ const Dashboard = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-gray-500 text-sm">Meetups Planned</p>
-                  <p className="text-lg font-semibold">1 <span className="text-teal-500">1 upcoming</span></p>
+                  <p className="text-gray-500 text-sm font-bold">Meetups Planned</p>
+                  <p className="text-2xl font-bold">1 <span className="text-teal-500">1 upcoming</span></p>
                 </div>
               </Card>
               <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-start w-full">
@@ -354,8 +351,8 @@ const Dashboard = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-gray-500 text-sm">Profile Views</p>
-                  <p className="text-lg font-semibold">15 <span className="text-teal-500">+6% from last week</span></p>
+                  <p className="text-gray-500 text-sm font-bold">Profile Views</p>
+                  <p className="text-2xl font-bold">15 <span className="text-teal-500">+6% from last week</span></p>
                 </div>
               </Card>
               <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-start w-full">
@@ -365,94 +362,103 @@ const Dashboard = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-gray-500 text-sm">Satisfaction Rate</p>
-                  <p className="text-lg font-semibold">95% <span className="text-teal-500">Based on feedback</span></p>
+                  <p className="text-gray-500 text-sm font-bold">Satisfaction Rate</p>
+                  <p className="text-2xl font-bold">95% <span className="text-teal-500">Based on feedback</span></p>
                 </div>
               </Card>
             </div>
 
-            {/* Recent Matches Section */}
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold">Recent Matches</h2>
-                <Button variant="link" className="text-teal-500" onClick={() => setShowAllMatches(true)}>View All</Button>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {recentMatches.map((match) => (
-                  <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
-                    <CardHeader className="p-0">
-                      <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
-                      <div className="absolute top-2 right-2">
-                        <span className="bg-orange-400 text-white text-xs px-2 py-1 rounded-full">{match.status}</span>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="p-4 pt-2">
-                      <h3 className="font-semibold">{match.name}</h3>
-                      <p className="text-sm text-gray-500">{match.role} | Lagos Tech Circle</p>
-                      <div className="flex flex-wrap gap-1 mt-2">
-                        {match.interests.map((interest, index) => (
-                          <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
-                        ))}
-                      </div>
-                      <div className="flex justify-between mt-4 space-x-1">
-                        <Button 
-                          variant="ghost" 
-                          className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 flex-1" 
-                          onClick={() => viewProfile(match.id)}
-                        >
-                          View Profile
-                        </Button>
-                        <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1" onClick={() => connectWithMatch(match.id)}>Connect</Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-
-            {/* Recent Activity Section */}
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold">Recent Activity</h2>
-                <Button variant="link" className="text-teal-500" onClick={() => setShowAllActivities(true)}>View All</Button>
-              </div>
-              <Card className="bg-white rounded-lg shadow-sm p-6">
-                <div className="space-y-4">
-                  {recentActivity.map((activity) => (
-                    <div key={activity.id} className="flex flex-col">
-                      <div className="flex items-center mb-2">
-                        <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center mr-3">
-                          {activity.status === "pending" && <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                          </svg>}
-                          {activity.date && <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                          </svg>}
-                          {activity.feedback && <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                          </svg>}
-                          {activity.action.includes("confirmed") && <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                          </svg>}
+            {/* Recent Matches and Activity Section */}
+            <div className="flex flex-col lg:flex-row gap-6 mb-6">
+              <div className="lg:w-2/3">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">Recent Matches</h2>
+                  <Button variant="link" className="text-teal-500" onClick={() => setShowAllMatches(true)}>
+                    View All <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {recentMatches.slice(0, 4).map((match) => (
+                    <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
+                      <CardHeader className="p-0">
+                        <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
+                        <div className="absolute top-2 right-2">
+                          <span className="bg-orange-400 text-white text-xs px-2 py-1 rounded-full">{match.status}</span>
                         </div>
-                        <div className="flex-1 flex justify-start">
-                          <p className="text-sm font-medium">{activity.user} {activity.action}</p>
-                          <p className="text-xs text-gray-500 ml-4">{activity.time}</p>
+                      </CardHeader>
+                      <CardContent className="p-4 pt-2">
+                        <h3 className="font-semibold">{match.name}</h3>
+                        <p className="text-sm text-gray-500">{match.role} | Lagos Tech Circle</p>
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {match.interests.map((interest, index) => (
+                            <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
+                          ))}
                         </div>
-                      </div>
-                      <div className="flex justify-start space-x-2">
-                        {activity.status === "pending" && (
-                          <>
-                            <Button size="sm" className="bg-teal-500 text-white px-6 py-1 rounded-full">Accept</Button>
-                            <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">Decline</Button>
-                          </>
-                        )}
-                        {activity.date && <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">View Details</Button>}
-                      </div>
-                    </div>
+                        <div className="flex justify-between mt-4 space-x-1 overflow-hidden">
+                          <Button 
+                            variant="ghost" 
+                            className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-3 py-1 flex-1 text-sm" 
+                            onClick={() => viewProfile(match.id)}
+                          >
+                            View Profile
+                          </Button>
+                          <Button 
+                            className="bg-teal-500 text-white rounded-full px-3 py-1 flex-1 text-sm" 
+                            onClick={() => connectWithMatch(match.id)}
+                          >
+                            Connect
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
                   ))}
                 </div>
-              </Card>
+              </div>
+              <div className="lg:w-1/3">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">Recent Activity</h2>
+                  <Button variant="link" className="text-teal-500" onClick={() => setShowAllActivities(true)}>
+                    View All <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </div>
+                <Card className="bg-white rounded-lg shadow-sm p-8">
+                  <div className="space-y-6">
+                    {recentActivity.map((activity) => (
+                      <div key={activity.id} className="flex flex-col">
+                        <div className="flex items-center mb-2">
+                          <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center mr-3">
+                            {activity.status === "pending" && <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                            </svg>}
+                            {activity.date && <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>}
+                            {activity.feedback && <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                            </svg>}
+                            {activity.action.includes("confirmed") && <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                            </svg>}
+                          </div>
+                          <div className="flex-1 flex justify-start">
+                            <p className="text-sm font-medium">{activity.user} {activity.action}</p>
+                            <p className="text-xs text-gray-500 ml-4">{activity.time}</p>
+                          </div>
+                        </div>
+                        <div className="flex justify-start space-x-2">
+                          {activity.status === "pending" && (
+                            <>
+                              <Button size="sm" className="bg-teal-500 text-white px-6 py-1 rounded-full">Accept</Button>
+                              <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">Decline</Button>
+                            </>
+                          )}
+                          {activity.date && <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">View Details</Button>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              </div>
             </div>
           </>
         )}
@@ -461,7 +467,9 @@ const Dashboard = () => {
           <div className="mb-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">All Matches</h2>
-              <Button variant="link" className="text-teal-500" onClick={() => setShowAllMatches(false)}>Back</Button>
+              <Button variant="link" className="text-teal-500" onClick={() => setShowAllMatches(false)}>
+                <ArrowLeft className="h-4 w-4 mr-2" /> Back
+              </Button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {recentMatches.map((match) => (
@@ -480,15 +488,20 @@ const Dashboard = () => {
                         <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
                       ))}
                     </div>
-                    <div className="flex justify-between mt-4 space-x-1">
+                    <div className="flex justify-between mt-4 space-x-1 overflow-hidden">
                       <Button 
                         variant="ghost" 
-                        className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 flex-1" 
+                        className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-3 py-1 flex-1 text-sm" 
                         onClick={() => viewProfile(match.id)}
                       >
                         View Profile
                       </Button>
-                      <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1" onClick={() => connectWithMatch(match.id)}>Connect</Button>
+                      <Button 
+                        className="bg-teal-500 text-white rounded-full px-3 py-1 flex-1 text-sm" 
+                        onClick={() => connectWithMatch(match.id)}
+                      >
+                        Connect
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -501,10 +514,12 @@ const Dashboard = () => {
           <div className="mb-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">All Activities</h2>
-              <Button variant="link" className="text-teal-500" onClick={() => setShowAllActivities(false)}>Back</Button>
+              <Button variant="link" className="text-teal-500" onClick={() => setShowAllActivities(false)}>
+                <ArrowLeft className="h-4 w-4 mr-2" /> Back
+              </Button>
             </div>
-            <Card className="bg-white rounded-lg shadow-sm p-6">
-              <div className="space-y-4">
+            <Card className="bg-white rounded-lg shadow-sm p-8">
+              <div className="space-y-6">
                 {recentActivity.map((activity) => (
                   <div key={activity.id} className="flex flex-col">
                     <div className="flex items-center mb-2">
