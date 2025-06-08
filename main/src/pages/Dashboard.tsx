@@ -330,7 +330,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <p className="text-gray-500 text-sm font-bold">New Matches</p>
-                  <p className="text-2xl font-bold">2 <span className="text-teal-500">+2 this week</span></p>
+                  <p className="text-2xl font-bold text-navy-700">2 <span className="text-sm text-navy-700">+2 this week</span></p>
                 </div>
               </Card>
               <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-start w-full">
@@ -341,7 +341,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <p className="text-gray-500 text-sm font-bold">Meetups Planned</p>
-                  <p className="text-2xl font-bold">1 <span className="text-teal-500">1 upcoming</span></p>
+                  <p className="text-2xl font-bold text-navy-700">1 <span className="text-sm text-navy-700">1 upcoming</span></p>
                 </div>
               </Card>
               <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-start w-full">
@@ -352,7 +352,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <p className="text-gray-500 text-sm font-bold">Profile Views</p>
-                  <p className="text-2xl font-bold">15 <span className="text-teal-500">+6% from last week</span></p>
+                  <p className="text-2xl font-bold text-navy-700">15 <span className="text-sm text-navy-700">+6% from last week</span></p>
                 </div>
               </Card>
               <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-start w-full">
@@ -363,7 +363,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <p className="text-gray-500 text-sm font-bold">Satisfaction Rate</p>
-                  <p className="text-2xl font-bold">95% <span className="text-teal-500">Based on feedback</span></p>
+                  <p className="text-2xl font-bold text-navy-700">95% <span className="text-sm text-navy-700">Based on feedback</span></p>
                 </div>
               </Card>
             </div>
@@ -371,57 +371,59 @@ const Dashboard = () => {
             {/* Recent Matches and Activity Section */}
             <div className="flex flex-col lg:flex-row gap-6 mb-6">
               <div className="lg:w-2/3">
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold">Recent Matches</h2>
-                  <Button variant="link" className="text-teal-500" onClick={() => setShowAllMatches(true)}>
-                    View All <ArrowRight className="h-4 w-4 ml-2" />
-                  </Button>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {recentMatches.slice(0, 4).map((match) => (
-                    <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
-                      <CardHeader className="p-0">
-                        <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
-                        <div className="absolute top-2 right-2">
-                          <span className="bg-orange-400 text-white text-xs px-2 py-1 rounded-full">{match.status}</span>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="p-4 pt-2">
-                        <h3 className="font-semibold">{match.name}</h3>
-                        <p className="text-sm text-gray-500">{match.role} | Lagos Tech Circle</p>
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {match.interests.map((interest, index) => (
-                            <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
-                          ))}
-                        </div>
-                        <div className="flex justify-between mt-4 space-x-1 overflow-hidden">
-                          <Button 
-                            variant="ghost" 
-                            className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-3 py-1 flex-1 text-sm" 
-                            onClick={() => viewProfile(match.id)}
-                          >
-                            View Profile
-                          </Button>
-                          <Button 
-                            className="bg-teal-500 text-white rounded-full px-3 py-1 flex-1 text-sm" 
-                            onClick={() => connectWithMatch(match.id)}
-                          >
-                            Connect
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+                <Card className="bg-white rounded-lg shadow-sm p-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-xl font-bold">Recent Matches</h2>
+                    <Button variant="link" className="text-teal-500" onClick={() => setShowAllMatches(true)}>
+                      View All <ArrowRight className="h-4 w-4 ml-2" />
+                    </Button>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {recentMatches.slice(0, 4).map((match) => (
+                      <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
+                        <CardHeader className="p-0">
+                          <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
+                          <div className="absolute top-2 right-2">
+                            <span className="bg-orange-400 text-white text-xs px-2 py-1 rounded-full">{match.status}</span>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="p-4 pt-2">
+                          <h3 className="font-semibold">{match.name}</h3>
+                          <p className="text-sm text-gray-500">{match.role} | Lagos Tech Circle</p>
+                          <div className="flex flex-wrap gap-1 mt-2">
+                            {match.interests.map((interest, index) => (
+                              <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
+                            ))}
+                          </div>
+                          <div className="flex justify-between mt-4 space-x-2">
+                            <Button 
+                              variant="ghost" 
+                              className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-4 py-1 flex-1 text-sm min-w-0" 
+                              onClick={() => viewProfile(match.id)}
+                            >
+                              View Profile
+                            </Button>
+                            <Button 
+                              className="bg-teal-500 text-white rounded-full px-4 py-1 flex-1 text-sm min-w-0" 
+                              onClick={() => connectWithMatch(match.id)}
+                            >
+                              Connect
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </Card>
               </div>
               <div className="lg:w-1/3">
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold">Recent Activity</h2>
-                  <Button variant="link" className="text-teal-500" onClick={() => setShowAllActivities(true)}>
-                    View All <ArrowRight className="h-4 w-4 ml-2" />
-                  </Button>
-                </div>
                 <Card className="bg-white rounded-lg shadow-sm p-8">
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-xl font-bold">Recent Activity</h2>
+                    <Button variant="link" className="text-teal-500" onClick={() => setShowAllActivities(true)}>
+                      View All <ArrowRight className="h-4 w-4 ml-2" />
+                    </Button>
+                  </div>
                   <div className="space-y-6">
                     {recentActivity.map((activity) => (
                       <div key={activity.id} className="flex flex-col">
@@ -465,60 +467,62 @@ const Dashboard = () => {
 
         {showAllMatches && (
           <div className="mb-6">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">All Matches</h2>
-              <Button variant="link" className="text-teal-500" onClick={() => setShowAllMatches(false)}>
-                <ArrowLeft className="h-4 w-4 mr-2" /> Back
-              </Button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {recentMatches.map((match) => (
-                <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
-                  <CardHeader className="p-0">
-                    <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
-                    <div className="absolute top-2 right-2">
-                      <span className="bg-orange-400 text-white text-xs px-2 py-1 rounded-full">{match.status}</span>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="p-4 pt-2">
-                    <h3 className="font-semibold">{match.name}</h3>
-                    <p className="text-sm text-gray-500">{match.role} | Lagos Tech Circle</p>
-                    <div className="flex flex-wrap gap-1 mt-2">
-                      {match.interests.map((interest, index) => (
-                        <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
-                      ))}
-                    </div>
-                    <div className="flex justify-between mt-4 space-x-1 overflow-hidden">
-                      <Button 
-                        variant="ghost" 
-                        className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-3 py-1 flex-1 text-sm" 
-                        onClick={() => viewProfile(match.id)}
-                      >
-                        View Profile
-                      </Button>
-                      <Button 
-                        className="bg-teal-500 text-white rounded-full px-3 py-1 flex-1 text-sm" 
-                        onClick={() => connectWithMatch(match.id)}
-                      >
-                        Connect
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <Card className="bg-white rounded-lg shadow-sm p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">All Matches</h2>
+                <Button variant="link" className="text-teal-500" onClick={() => setShowAllMatches(false)}>
+                  <ArrowLeft className="h-4 w-4 mr-2" /> Back
+                </Button>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {recentMatches.map((match) => (
+                  <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
+                    <CardHeader className="p-0">
+                      <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
+                      <div className="absolute top-2 right-2">
+                        <span className="bg-orange-400 text-white text-xs px-2 py-1 rounded-full">{match.status}</span>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="p-4 pt-2">
+                      <h3 className="font-semibold">{match.name}</h3>
+                      <p className="text-sm text-gray-500">{match.role} | Lagos Tech Circle</p>
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {match.interests.map((interest, index) => (
+                          <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
+                        ))}
+                      </div>
+                      <div className="flex justify-between mt-4 space-x-2">
+                        <Button 
+                          variant="ghost" 
+                          className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-4 py-1 flex-1 text-sm min-w-0" 
+                          onClick={() => viewProfile(match.id)}
+                        >
+                          View Profile
+                        </Button>
+                        <Button 
+                          className="bg-teal-500 text-white rounded-full px-4 py-1 flex-1 text-sm min-w-0" 
+                          onClick={() => connectWithMatch(match.id)}
+                        >
+                          Connect
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </Card>
           </div>
         )}
 
         {showAllActivities && (
           <div className="mb-6">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">All Activities</h2>
-              <Button variant="link" className="text-teal-500" onClick={() => setShowAllActivities(false)}>
-                <ArrowLeft className="h-4 w-4 mr-2" /> Back
-              </Button>
-            </div>
             <Card className="bg-white rounded-lg shadow-sm p-8">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">All Activities</h2>
+                <Button variant="link" className="text-teal-500" onClick={() => setShowAllActivities(false)}>
+                  <ArrowLeft className="h-4 w-4 mr-2" /> Back
+                </Button>
+              </div>
               <div className="space-y-6">
                 {recentActivity.map((activity) => (
                   <div key={activity.id} className="flex flex-col">
