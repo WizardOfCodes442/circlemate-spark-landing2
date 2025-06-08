@@ -3,7 +3,6 @@ export const mockMatches = [
     id: "m1",
     name: "David Brown",
     role: "Romance",
-    interests: ["Music", "Travel", "Photography"],
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
     about: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in odio at magna tincidunt congue eu vel nisi. Sed euismod, nisl vel aliquam luctus, nunc nisl aliquam mauris.",
     zodiac: "Sagittarius",

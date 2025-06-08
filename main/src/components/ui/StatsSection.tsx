@@ -1,4 +1,5 @@
-import { Button, Card } from "@/components/ui/card";
+import {  Card } from "@/components/ui/card";
+import {Button } from "@/components/ui/button";
 import { Users, ChevronUp } from "lucide-react";
 
 const StatsSection = () => {
