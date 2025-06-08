@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Footer from "@/components/Footer";
 
-// Mock data for recent matches with real images from the internet
+// Mock data for recent matches with real images
 const mockMatches = [
   {
     id: "m1",
@@ -69,7 +69,7 @@ const mockActivities = [
   { id: 6, user: "John Smith", action: "scheduled a meetup with you", time: "1 day ago", date: "Monday, 2:00 PM", location: "Tech Hub" },
 ];
 
-// Mock API fetch function
+// Mock API fetch functions
 const fetchMatchesFromAPI = async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return mockMatches;
@@ -115,20 +115,20 @@ const Dashboard = () => {
         {!showAllMatches && !showAllActivities && (
           <>
             <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
-              <div className="flex flex-col space-y-2">
-                <div className="flex items-center justify-between">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-2 md:space-y-0 mb-2">
+                <div className="flex items-center">
                   <h1 className="text-2xl font-bold">Lagos Tech Circle</h1>
-                  <span className="text-teal-200 bg-teal-100 text-sm font-normal px-2 py-1 rounded-full">Active</span>
-                </div>
-                <div className="text-sm text-gray-600 flex items-center">
-                  <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
+                  <span className="text-teal-200 bg-teal-100 text-sm font-normal px-2 py-1 rounded-full ml-2">Active</span>
                 </div>
                 <div className="flex space-x-2">
-                  <Button variant="ghost" size="sm" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 flex-1">
+                  <Button variant="ghost" size="sm" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 flex-1 md:flex-none">
                     <Bell className="h-4 w-4 mr-2" /> Group Updates
                   </Button>
-                  <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Request Match</Button>
+                  <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1 md:flex-none">Request Match</Button>
                 </div>
+              </div>
+              <div className="text-sm text-gray-600 flex items-center">
+                <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
               </div>
             </div>
             <Button variant="outline" className="w-full bg-teal-50 text-teal-500 border-teal-500 hover:bg-teal-100 rounded-full mb-6 flex items-center justify-center">
@@ -136,7 +136,7 @@ const Dashboard = () => {
             </Button>
 
             {/* Stats Section */}
-            <div className="grid grid-cols-1 gap-4 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <Card className="bg-white rounded-lg shadow-sm p-4 flex items-center">
                 <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center mr-3">
                   <ChevronUp className="h-4 w-4 text-teal-500" />
@@ -187,7 +187,7 @@ const Dashboard = () => {
                 <h2 className="text-xl font-bold">Recent Matches</h2>
                 <Button variant="link" className="text-teal-500" onClick={() => setShowAllMatches(true)}>View All</Button>
               </div>
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {recentMatches.map((match) => (
                   <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
                     <CardHeader className="p-0">
@@ -215,15 +215,15 @@ const Dashboard = () => {
             </div>
 
             {/* Recent Activity Section */}
-            <div>
+            <div className="mb-6">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold">Recent Activity</h2>
                 <Button variant="link" className="text-teal-500" onClick={() => setShowAllActivities(true)}>View All</Button>
               </div>
-              <div className="space-y-4">
-                {recentActivity.map((activity) => (
-                  <Card key={activity.id} className="bg-white rounded-lg shadow-sm p-4">
-                    <div className="flex items-center">
+              <Card className="bg-white rounded-lg shadow-sm p-6">
+                <div className="space-y-4">
+                  {recentActivity.map((activity) => (
+                    <div key={activity.id} className="flex items-center">
                       <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center mr-3">
                         {activity.status === "pending" && <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
@@ -257,9 +257,9 @@ const Dashboard = () => {
                       )}
                       {activity.date && <Button variant="outline" size="sm" className="text-gray-700 px-3 py-1 rounded-full">View Details</Button>}
                     </div>
-                  </Card>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </Card>
             </div>
           </>
         )}
@@ -270,7 +270,7 @@ const Dashboard = () => {
               <h2 className="text-xl font-bold">All Matches</h2>
               <Button variant="link" className="text-teal-500" onClick={() => setShowAllMatches(false)}>Back</Button>
             </div>
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {recentMatches.map((match) => (
                 <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
                   <CardHeader className="p-0">
@@ -304,10 +304,10 @@ const Dashboard = () => {
               <h2 className="text-xl font-bold">All Activities</h2>
               <Button variant="link" className="text-teal-500" onClick={() => setShowAllActivities(false)}>Back</Button>
             </div>
-            <div className="space-y-4">
-              {recentActivity.map((activity) => (
-                <Card key={activity.id} className="bg-white rounded-lg shadow-sm p-4">
-                  <div className="flex items-center">
+            <Card className="bg-white rounded-lg shadow-sm p-6">
+              <div className="space-y-4">
+                {recentActivity.map((activity) => (
+                  <div key={activity.id} className="flex items-center">
                     <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center mr-3">
                       {activity.status === "pending" && <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
@@ -341,9 +341,9 @@ const Dashboard = () => {
                     )}
                     {activity.date && <Button variant="outline" size="sm" className="text-gray-700 px-3 py-1 rounded-full">View Details</Button>}
                   </div>
-                </Card>
-              ))}
-            </div>
+                ))}
+              </div>
+            </Card>
           </div>
         )}
       </main>
