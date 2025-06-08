@@ -81,19 +81,19 @@ const ProfileView = ({ match, onBack }) => {
             </svg>
             Back
           </Button>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
           <img 
             src={match.image} 
             alt={match.name} 
-            className="w-full md:w-1/3 h-64 object-cover rounded-t-lg mb-4 md:mb-0" 
+            className="w-full h-64 object-cover rounded-t-lg mb-4"
           />
-        </div>
-        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
           <h1 className="text-2xl font-bold mb-2">{match.name}</h1>
           <div className="flex justify-start space-x-2 mb-4">
             <span className="text-teal-500 bg-teal-100 px-2 py-1 rounded-full text-sm">{match.role}</span>
             <span className="text-gray-600">Lagos Tech Circle</span>
           </div>
-          <div className="flex justify-start space-x-2">
+          <div className="flex justify-start space-x-2 mb-4">
             <Button className="bg-teal-500 text-white rounded-full px-6 py-2">Connect</Button>
             <Button className="bg-red-500 text-white rounded-full px-6 py-2">Report</Button>
             <Button className="bg-gray-500 text-white rounded-full px-6 py-2">Block</Button>
