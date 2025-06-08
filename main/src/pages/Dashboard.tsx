@@ -11,35 +11,36 @@ import Footer from "@/components/Footer";
 const mockMatches = [
   {
     id: "m1",
-    name: "Sarah Thompson",
-    role: "Professional",
-    interests: ["Technology", "Entrepreneurship", "Design"],
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+    name: "David Brown",
+    role: "Romance",
+    interests: ["Music", "Travel", "Photography"],
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
     status: "Pending",
     about: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in odio at magna tincidunt congue eu vel nisi. Sed euismod, nisl vel aliquam luctus, nunc nisl aliquam mauris.",
-    zodiac: "Virgo",
-    education: "Master's Degree",
-    familyPlans: "Want children",
+    zodiac: "Sagittarius",
+    education: "High School",
+    familyPlans: "Not sure",
     personalityType: "ENTJ",
     lifestyle: {
-      pets: "Have a dog",
-      drinking: "Rarely",
+      pets: "Don't have, but love",
+      drinking: "On special occasions",
       smoking: "Non-smoker",
-      workout: "Daily",
-      dietaryPreference: "Vegan",
-      socialMedia: "Very active",
-      sleepingHabits: "Early bird",
+      workout: "Sometimes",
+      dietaryPreference: "Other",
+      socialMedia: "Socially active",
+      sleepingHabits: "Night owl",
     },
-    interests: ["Coding", "Innovation", "Networking"],
-    lookingFor: "Professional networking",
+    interests: ["Music", "Travel", "Photography"],
+    lookingFor: "Short-term fun",
     essentials: {
-      distance: "3 miles away",
-      employment: "Self-employed",
-      education: "MIT",
+      distance: "8 miles away",
+      employment: "Employed",
+      education: "Polytechnic Ibadan",
       location: "Lagos, Nigeria",
-      languages: "Igbo, English",
+      languages: "Hausa, Pidgin",
     },
   },
+  // Additional mock data can be added as needed
 ];
 
 // Mock data for recent activities
@@ -70,9 +71,9 @@ const ProfileView = ({ match, onBack }) => {
         <DashboardHeader />
       </div>
       <main className="container mx-auto px-4 py-6 flex-grow max-w-7xl">
-        <div className="flex items-center justify-between gap-4 mb-6 md:mb-8">
+        <div className="flex items-center justify-between gap-4 mb-6">
           <Button 
-            className="bg-transparent text-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 w-auto flex items-center"
+            className="bg-transparent text-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 w-auto" 
             onClick={onBack}
           >
             <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -85,17 +86,17 @@ const ProfileView = ({ match, onBack }) => {
           <img 
             src={match.image} 
             alt={match.name} 
-            className="w-full h-64 object-cover mb-4 md:h-80 md:max-w-md md:mx-auto"
+            className="w-full h-64 object-cover rounded-t-lg mb-4"
           />
-          <h1 className="text-2xl font-bold mb-2 text-center md:text-left">{match.name}</h1>
-          <div className="flex flex-col md:flex-row md:justify-start space-y-2 md:space-y-0 md:space-x-2 mb-4">
+          <h1 className="text-2xl font-bold mb-2">{match.name}</h1>
+          <div className="flex justify-start space-x-2 mb-4">
             <span className="text-teal-500 bg-teal-100 px-2 py-1 rounded-full text-sm">{match.role}</span>
             <span className="text-gray-600">Lagos Tech Circle</span>
           </div>
-          <div className="flex flex-col md:flex-row justify-center md:justify-start space-y-2 md:space-y-0 md:space-x-2 mb-4">
-            <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-full md:w-auto">Connect</Button>
-            <Button className="bg-red-500 text-white rounded-full px-6 py-2 w-full md:w-auto">Report</Button>
-            <Button className="bg-gray-500 text-white rounded-full px-6 py-2 w-full md:w-auto">Block</Button>
+          <div className="flex justify-start space-x-2 mb-4">
+            <Button className="bg-teal-500 text-white rounded-full px-6 py-2">Connect</Button>
+            <Button className="bg-red-500 text-white rounded-full px-6 py-2">Report</Button>
+            <Button className="bg-gray-500 text-white rounded-full px-6 py-2">Block</Button>
           </div>
           <div className="mt-4">
             <h2 className="text-xl font-semibold mb-2">About</h2>
@@ -107,7 +108,7 @@ const ProfileView = ({ match, onBack }) => {
           </div>
           <div className="mt-4">
             <h2 className="text-xl font-semibold mb-2">Temperament</h2>
-            <p className="text-gray-600">Extroverted, Intuitive, Thinking, Judging (ENTJ)</p>
+            <p className="text-gray-600">{match.personalityType} (ENTJ)</p>
           </div>
           <div className="mt-4">
             <h2 className="text-xl font-semibold mb-2">Interests</h2>
@@ -160,16 +161,16 @@ const ConnectView = ({ match, onCancel }) => {
           </Button>
         </div>
         <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-          <h1 className="text-2xl font-bold mb-4">Connect with Sarah Thompson</h1>
-          <div className="flex flex-col md:flex-row items-center mb-4">
+          <h1 className="text-2xl font-bold mb-4">Connect with {match.name}</h1>
+          <div className="flex items-center mb-4">
             <img 
               src={match.image} 
               alt={match.name} 
-              className="w-24 h-24 object-cover rounded-md mr-4 mb-4 md:mb-0"
+              className="w-24 h-24 object-cover rounded-full mr-4 float-left"
             />
-            <div>
+            <div className="float-left">
               <h2 className="text-xl font-semibold">{match.name}</h2>
-              <span className="text-teal-500 bg-teal-100 px-2 py-1 rounded-full text-sm">{match.role}</span>
+              <span className="text-teal-500 bg-teal-100 px-2 py-1 rounded-full text-sm block">{match.role}</span>
             </div>
           </div>
           <div className="mb-6">
@@ -206,7 +207,7 @@ const ConnectView = ({ match, onCancel }) => {
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-2">Next Steps</h3>
             <p className="text-gray-600">
-              Sending a connection request will notify Sarah Thompson. If they accept, you'll be able to schedule a meetup at one of the suggested locations or propose your own.
+              Sending a connection request will notify {match.name}. If they accept, you'll be able to schedule a meetup at one of the suggested locations or propose your own.
             </p>
           </div>
           <div className="flex justify-between">
@@ -227,7 +228,6 @@ const Dashboard = () => {
   const [recentActivity, setRecentActivity] = useState(mockActivities.slice(0, 4));
   const [showAllActivities, setShowAllActivities] = useState(false);
   const [selectedMatch, setSelectedMatch] = useState(null);
-  const [connectMatch, setConnectMatch] = useState(null);
 
   useEffect(() => {
     if (showAllMatches) {
@@ -250,24 +250,13 @@ const Dashboard = () => {
   }, [showAllActivities]);
 
   const viewProfile = (matchId) => {
-    const match = mockMatches.find((m) => m.id === matchId);
+    const match = mockMatches.find(m => m.id === matchId);
     setSelectedMatch(match);
-  };
-
-  const connectWithMatch = (matchId) => {
-    const match = mockMatches.find((m) => m.id === matchId);
-    setConnectMatch(match);
-    setSelectedMatch(null);
   };
 
   const goBack = () => {
     setSelectedMatch(null);
-    setConnectMatch(null);
   };
-
-  if (connectMatch) {
-    return <ConnectView match={connectMatch} onCancel={goBack} />;
-  }
 
   if (selectedMatch) {
     return <ProfileView match={selectedMatch} onBack={goBack} />;
@@ -285,8 +274,8 @@ const Dashboard = () => {
               <div className="flex flex-col space-y-2 md:space-y-0">
                 {/* Mobile View */}
                 <div className="flex items-center md:hidden">
-                  <h1 className="text-2xl font-bold mr-2">Lagos Tech Circle</h1>
-                  <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full">Active</span>
+                  <h1 className="text-2xl font-bold mr-4">Lagos Tech Circle</h1>
+                  <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full ml-2">Active</span>
                 </div>
                 <div className="text-sm text-gray-600 flex items-center md:hidden">
                   <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
@@ -330,7 +319,7 @@ const Dashboard = () => {
                 <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center mb-2">
                   <ChevronUp className="h-5 w-5 text-teal-500" />
                 </div>
-                <div className="text-left">
+                <div>
                   <p className="text-gray-500 text-sm">New Matches</p>
                   <p className="text-lg font-semibold">2 <span className="text-teal-500">+2 this week</span></p>
                 </div>
@@ -341,7 +330,7 @@ const Dashboard = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3" />
                   </svg>
                 </div>
-                <div className="text-left">
+                <div>
                   <p className="text-gray-500 text-sm">Meetups Planned</p>
                   <p className="text-lg font-semibold">1 <span className="text-teal-500">1 upcoming</span></p>
                 </div>
@@ -352,7 +341,7 @@ const Dashboard = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <div className="text-left">
+                <div>
                   <p className="text-gray-500 text-sm">Profile Views</p>
                   <p className="text-lg font-semibold">15 <span className="text-teal-500">+6% from last week</span></p>
                 </div>
@@ -363,7 +352,7 @@ const Dashboard = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <div className="text-left">
+                <div>
                   <p className="text-gray-500 text-sm">Satisfaction Rate</p>
                   <p className="text-lg font-semibold">95% <span className="text-teal-500">Based on feedback</span></p>
                 </div>
@@ -401,7 +390,7 @@ const Dashboard = () => {
                         >
                           View Profile
                         </Button>
-                        <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1" onClick={() => connectWithMatch(match.id)}>Connect</Button>
+                        <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Connect</Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -487,7 +476,7 @@ const Dashboard = () => {
                       >
                         View Profile
                       </Button>
-                      <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1" onClick={() => connectWithMatch(match.id)}>Connect</Button>
+                      <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Connect</Button>
                     </div>
                   </CardContent>
                 </Card>
