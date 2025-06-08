@@ -295,29 +295,31 @@ const Dashboard = () => {
                   <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-1/2">Request Match</Button>
                 </div>
                 {/* Desktop View */}
-                <div className="hidden md:flex md:justify-between md:items-center md:mb-2">
-                  <div className="flex items-center">
-                    <h1 className="text-2xl font-bold">Lagos Tech Circle</h1>
-                    <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full ml-2">Active</span>
+                <div className="hidden md:block">
+                  <div className="flex justify-between items-center mb-2">
+                    <div className="flex items-center">
+                      <h1 className="text-2xl font-bold">Lagos Tech Circle</h1>
+                      <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full ml-2">Active</span>
+                    </div>
+                    <div className="flex space-x-2">
+                      <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 w-1/2">
+                        <Bell className="h-4 w-4 mr-2" /> Group Updates
+                      </Button>
+                      <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-1/2">Request Match</Button>
+                    </div>
                   </div>
-                  <div className="flex space-x-2">
-                    <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2">
-                      <Bell className="h-4 w-4 mr-2" /> Group Updates
-                    </Button>
-                    <Button className="bg-teal-500 text-white rounded-full px-6 py-2">Request Match</Button>
-                    <Button 
-                      variant="ghost" 
-                      className="bg-teal-500 text-white rounded-full px-4 py-1 text-sm"
-                    >
-                      <Users className="h-4 w-4 mr-2" /> View Accepted Connections
-                    </Button>
+                  <div className="text-sm text-gray-600 flex items-center">
+                    <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
                   </div>
-                </div>
-                <div className="hidden md:block text-sm text-gray-600 flex items-center">
-                  <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
                 </div>
               </div>
             </div>
+            <Button 
+              variant="ghost" 
+              className="bg-teal-500 text-white rounded-full px-4 py-1 text-sm float-right mb-6"
+            >
+              <Users className="h-4 w-4 mr-2" /> View Accepted Connections
+            </Button>
 
             {/* Stats Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
@@ -377,7 +379,7 @@ const Dashboard = () => {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {recentMatches.slice(0, 4).map((match) => (
-                      <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4 w-full">
+                      <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4 w-full min-w-[200px]">
                         <CardHeader className="p-0">
                           <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
                         </CardHeader>
@@ -389,7 +391,7 @@ const Dashboard = () => {
                               <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
                             ))}
                           </div>
-                          <div className="flex justify-between mt-4 space-x-2">
+                          <div className="flex justify-between mt-4 gap-2">
                             <Button 
                               variant="ghost" 
                               className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-3 py-1 flex-1 text-sm min-w-0 truncate" 
@@ -470,7 +472,7 @@ const Dashboard = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {recentMatches.map((match) => (
-                  <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4 w-full">
+                  <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4 w-full min-w-[200px]">
                     <CardHeader className="p-0">
                       <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
                     </CardHeader>
@@ -482,7 +484,7 @@ const Dashboard = () => {
                           <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
                         ))}
                       </div>
-                      <div className="flex justify-between mt-4 space-x-2">
+                      <div className="flex justify-between mt-4 gap-2">
                         <Button 
                           variant="ghost" 
                           className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-3 py-1 flex-1 text-sm min-w-0 truncate" 
