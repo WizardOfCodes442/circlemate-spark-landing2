@@ -220,12 +220,12 @@ const fetchActivitiesFromAPI = async () => {
 
 const ProfileView = ({ match, onBack }) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       <DashboardHeader />
       <main className="container mx-auto px-4 py-6 flex-grow">
         <Button className="bg-teal-500 text-white rounded-full px-6 py-2 mb-4 w-full md:w-auto md:mx-auto" onClick={onBack}>Back to Dashboard</Button>
         <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-          <img src={match.image} alt={match.name} className="w-full md:w-3/4 mx-auto h-64 object-cover rounded-t-lg mb-4" />
+          <img src={match.image} alt={match.name} className="w-full md:w-1/2 mx-auto h-64 object-cover rounded-t-lg mb-4" />
           <h1 className="text-2xl font-bold text-center">{match.name}, {match.lifestyle.drinking === "On special occasions" ? 37 : 35} <span className="text-teal-500">✔</span></h1>
           <p className="text-gray-600 text-center mb-2">"{match.about}"</p>
         </div>
@@ -243,7 +243,7 @@ const ProfileView = ({ match, onBack }) => {
           <p><strong>Education:</strong> {match.education}</p>
           <p><strong>Family plans:</strong> {match.familyPlans}</p>
           <p><strong>Personality type:</strong> {match.personalityType}</p>
-          <Button variant="link" className="text-teal-500 mt-2">View all 6 ↓</Button>
+          <Button variant="ghost" className="text-teal-500 bg-gray-200 mt-2">View all 6 ↓</Button>
         </div>
         <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
           <h2 className="text-xl font-semibold mb-2">Lifestyle</h2>
@@ -254,7 +254,7 @@ const ProfileView = ({ match, onBack }) => {
           <p><strong>Dietary preference:</strong> {match.lifestyle.dietaryPreference}</p>
           <p><strong>Social media:</strong> {match.lifestyle.socialMedia}</p>
           <p><strong>Sleeping habits:</strong> {match.lifestyle.sleepingHabits}</p>
-          <Button variant="link" className="text-teal-500 mt-2">View all 7 ↓</Button>
+          <Button variant="ghost" className="text-teal-500 bg-gray-200 mt-2">View all 7 ↓</Button>
         </div>
         <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
           <h2 className="text-xl font-semibold mb-2">Interests</h2>
@@ -337,7 +337,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       <DashboardHeader />
       
       <main className="container mx-auto px-4 py-6 flex-grow">
@@ -354,7 +354,7 @@ const Dashboard = () => {
                   <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
                 </div>
                 <div className="flex space-x-2 md:hidden">
-                  <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 w-1/2">
+                  <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 w-1/2">
                     <Bell className="h-4 w-4 mr-2" /> Group Updates
                   </Button>
                   <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-1/2">Request Match</Button>
@@ -367,7 +367,7 @@ const Dashboard = () => {
                       <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full ml-2">Active</span>
                     </div>
                     <div className="flex space-x-2">
-                      <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 w-1/2">
+                      <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 w-1/2">
                         <Bell className="h-4 w-4 mr-2" /> Group Updates
                       </Button>
                       <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-1/2">Request Match</Button>
@@ -379,7 +379,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <Button variant="outline" className="w-auto bg-teal-50 text-teal-500 border-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 mx-auto mb-6 flex items-center justify-center">
+            <Button variant="ghost" className="w-auto bg-gray-200 text-teal-500 border-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 mx-auto mb-6 flex items-center justify-center">
               <Users className="h-4 w-4 mr-2" /> View Accepted Connections
             </Button>
 
@@ -453,7 +453,7 @@ const Dashboard = () => {
                         ))}
                       </div>
                       <div className="flex justify-between mt-4 space-x-1">
-                        <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 flex-1" onClick={() => viewProfile(match.id)}>
+                        <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 flex-1" onClick={() => viewProfile(match.id)}>
                           View Profile
                         </Button>
                         <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Connect</Button>
@@ -498,10 +498,10 @@ const Dashboard = () => {
                         {activity.status === "pending" && (
                           <>
                             <Button size="sm" className="bg-teal-500 text-white px-6 py-1 rounded-full">Accept</Button>
-                            <Button variant="outline" size="sm" className="text-gray-700 px-6 py-1 rounded-full">Decline</Button>
+                            <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">Decline</Button>
                           </>
                         )}
-                        {activity.date && <Button variant="outline" size="sm" className="text-gray-700 px-6 py-1 rounded-full">View Details</Button>}
+                        {activity.date && <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">View Details</Button>}
                       </div>
                     </div>
                   ))}
@@ -535,7 +535,7 @@ const Dashboard = () => {
                       ))}
                     </div>
                     <div className="flex justify-between mt-4 space-x-1">
-                      <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 flex-1" onClick={() => viewProfile(match.id)}>
+                      <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 flex-1" onClick={() => viewProfile(match.id)}>
                         View Profile
                       </Button>
                       <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Connect</Button>
@@ -581,10 +581,10 @@ const Dashboard = () => {
                       {activity.status === "pending" && (
                         <>
                           <Button size="sm" className="bg-teal-500 text-white px-6 py-1 rounded-full">Accept</Button>
-                          <Button variant="outline" size="sm" className="text-gray-700 px-6 py-1 rounded-full">Decline</Button>
+                          <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">Decline</Button>
                         </>
                       )}
-                      {activity.date && <Button variant="outline" size="sm" className="text-gray-700 px-6 py-1 rounded-full">View Details</Button>}
+                      {activity.date && <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">View Details</Button>}
                     </div>
                   </div>
                 ))}
