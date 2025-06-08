@@ -15,7 +15,6 @@ const mockMatches = [
     role: "Romance",
     interests: ["Music", "Travel", "Photography"],
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
-    status: "Pending",
     about: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in odio at magna tincidunt congue eu vel nisi. Sed euismod, nisl vel aliquam luctus, nunc nisl aliquam mauris.",
     zodiac: "Sagittarius",
     education: "High School",
@@ -296,31 +295,29 @@ const Dashboard = () => {
                   <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-1/2">Request Match</Button>
                 </div>
                 {/* Desktop View */}
-                <div className="hidden md:block">
-                  <div className="flex justify-between items-center mb-2">
-                    <div className="flex items-center">
-                      <h1 className="text-2xl font-bold">Lagos Tech Circle</h1>
-                      <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full ml-2">Active</span>
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 w-1/2">
-                        <Bell className="h-4 w-4 mr-2" /> Group Updates
-                      </Button>
-                      <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-1/2">Request Match</Button>
-                    </div>
+                <div className="hidden md:flex md:justify-between md:items-center md:mb-2">
+                  <div className="flex items-center">
+                    <h1 className="text-2xl font-bold">Lagos Tech Circle</h1>
+                    <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full ml-2">Active</span>
                   </div>
-                  <div className="text-sm text-gray-600 flex items-center">
-                    <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
+                  <div className="flex space-x-2">
+                    <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2">
+                      <Bell className="h-4 w-4 mr-2" /> Group Updates
+                    </Button>
+                    <Button className="bg-teal-500 text-white rounded-full px-6 py-2">Request Match</Button>
+                    <Button 
+                      variant="ghost" 
+                      className="bg-teal-500 text-white rounded-full px-4 py-1 text-sm"
+                    >
+                      <Users className="h-4 w-4 mr-2" /> View Accepted Connections
+                    </Button>
                   </div>
+                </div>
+                <div className="hidden md:block text-sm text-gray-600 flex items-center">
+                  <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
                 </div>
               </div>
             </div>
-            <Button 
-              variant="ghost" 
-              className="bg-teal-500 text-white rounded-full px-4 py-1 text-sm float-right mb-6"
-            >
-              <Users className="h-4 w-4 mr-2" /> View Accepted Connections
-            </Button>
 
             {/* Stats Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
@@ -380,12 +377,9 @@ const Dashboard = () => {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {recentMatches.slice(0, 4).map((match) => (
-                      <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
+                      <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4 w-full">
                         <CardHeader className="p-0">
                           <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
-                          <div className="absolute top-2 right-2">
-                            <span className="bg-orange-400 text-white text-xs px-2 py-1 rounded-full">{match.status}</span>
-                          </div>
                         </CardHeader>
                         <CardContent className="p-4 pt-2">
                           <h3 className="font-semibold">{match.name}</h3>
@@ -398,13 +392,13 @@ const Dashboard = () => {
                           <div className="flex justify-between mt-4 space-x-2">
                             <Button 
                               variant="ghost" 
-                              className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-4 py-1 flex-1 text-sm min-w-0" 
+                              className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-3 py-1 flex-1 text-sm min-w-0 truncate" 
                               onClick={() => viewProfile(match.id)}
                             >
                               View Profile
                             </Button>
                             <Button 
-                              className="bg-teal-500 text-white rounded-full px-4 py-1 flex-1 text-sm min-w-0" 
+                              className="bg-teal-500 text-white rounded-full px-3 py-1 flex-1 text-sm min-w-0 truncate" 
                               onClick={() => connectWithMatch(match.id)}
                             >
                               Connect
@@ -476,12 +470,9 @@ const Dashboard = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {recentMatches.map((match) => (
-                  <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4">
+                  <Card key={match.id} className="bg-white rounded-lg shadow-sm p-4 w-full">
                     <CardHeader className="p-0">
                       <img src={match.image} alt={match.name} className="w-full h-48 object-cover rounded-t-lg" />
-                      <div className="absolute top-2 right-2">
-                        <span className="bg-orange-400 text-white text-xs px-2 py-1 rounded-full">{match.status}</span>
-                      </div>
                     </CardHeader>
                     <CardContent className="p-4 pt-2">
                       <h3 className="font-semibold">{match.name}</h3>
@@ -494,13 +485,13 @@ const Dashboard = () => {
                       <div className="flex justify-between mt-4 space-x-2">
                         <Button 
                           variant="ghost" 
-                          className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-4 py-1 flex-1 text-sm min-w-0" 
+                          className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-3 py-1 flex-1 text-sm min-w-0 truncate" 
                           onClick={() => viewProfile(match.id)}
                         >
                           View Profile
                         </Button>
                         <Button 
-                          className="bg-teal-500 text-white rounded-full px-4 py-1 flex-1 text-sm min-w-0" 
+                          className="bg-teal-500 text-white rounded-full px-3 py-1 flex-1 text-sm min-w-0 truncate" 
                           onClick={() => connectWithMatch(match.id)}
                         >
                           Connect
