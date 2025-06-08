@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { Users, Bell, Heart, ChevronUp } from "lucide-react";
 import DashboardHeader from "@/components/DashboardHeader";
@@ -16,6 +16,29 @@ const mockMatches = [
     interests: ["Art", "Design", "Reading"],
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
     status: "Pending",
+    about: "Creative and passionate about art, always seeking inspiration.",
+    zodiac: "Leo",
+    education: "Bachelor's Degree",
+    familyPlans: "Maybe children",
+    personalityType: "ENFP",
+    lifestyle: {
+      pets: "Have a cat",
+      drinking: "Socially",
+      smoking: "Non-smoker",
+      workout: "Regularly",
+      dietaryPreference: "Vegetarian",
+      socialMedia: "Occasionally active",
+      sleepingHabits: "Early bird",
+    },
+    interests: ["Painting", "Travel", "Yoga"],
+    lookingFor: "Long-term relationship",
+    essentials: {
+      distance: "5 miles away",
+      employment: "Self-employed",
+      education: "University of Lagos",
+      location: "Lagos",
+      languages: "Yoruba, English",
+    },
   },
   {
     id: "m2",
@@ -24,6 +47,29 @@ const mockMatches = [
     interests: ["Music", "Travel", "Photography"],
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
     status: "Pending",
+    about: "Adventurer who loves capturing moments and exploring new places.",
+    zodiac: "Sagittarius",
+    education: "High School",
+    familyPlans: "Not sure",
+    personalityType: "INTP",
+    lifestyle: {
+      pets: "Don't have, but love",
+      drinking: "On special occasions",
+      smoking: "Non-smoker",
+      workout: "Sometimes",
+      dietaryPreference: "Other",
+      socialMedia: "Socially active",
+      sleepingHabits: "Night owl",
+    },
+    interests: ["Hiking", "Jazz", "Cooking"],
+    lookingFor: "Short-term fun",
+    essentials: {
+      distance: "8 miles away",
+      employment: "Employed",
+      education: "Polytechnic Ibadan",
+      location: "Ibadan",
+      languages: "Hausa, Pidgin",
+    },
   },
   {
     id: "m3",
@@ -32,6 +78,29 @@ const mockMatches = [
     interests: ["Technology", "Entrepreneurship", "Design"],
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
     status: "Confirmed",
+    about: "Tech enthusiast building the future one project at a time.",
+    zodiac: "Virgo",
+    education: "Master's Degree",
+    familyPlans: "Want children",
+    personalityType: "ENTJ",
+    lifestyle: {
+      pets: "Have a dog",
+      drinking: "Rarely",
+      smoking: "Non-smoker",
+      workout: "Daily",
+      dietaryPreference: "Vegan",
+      socialMedia: "Very active",
+      sleepingHabits: "Early bird",
+    },
+    interests: ["Coding", "Innovation", "Networking"],
+    lookingFor: "Professional networking",
+    essentials: {
+      distance: "3 miles away",
+      employment: "Self-employed",
+      education: "MIT",
+      location: "Abuja",
+      languages: "Igbo, English",
+    },
   },
   {
     id: "m4",
@@ -40,6 +109,29 @@ const mockMatches = [
     interests: ["Gaming", "Technology", "Movies"],
     image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
     status: "Meetup Planned",
+    about: "Gamer and movie buff looking for cool friends.",
+    zodiac: "Gemini",
+    education: "High School",
+    familyPlans: "Not interested",
+    personalityType: "ISTP",
+    lifestyle: {
+      pets: "Don't have",
+      drinking: "Socially",
+      smoking: "Occasionally",
+      workout: "Rarely",
+      dietaryPreference: "Omnivore",
+      socialMedia: "Moderately active",
+      sleepingHabits: "Night owl",
+    },
+    interests: ["RPGs", "Sci-Fi", "Tech gadgets"],
+    lookingFor: "Friendship",
+    essentials: {
+      distance: "10 miles away",
+      employment: "Student",
+      education: "University of Nigeria",
+      location: "Enugu",
+      languages: "Igbo, English",
+    },
   },
   {
     id: "m5",
@@ -48,6 +140,29 @@ const mockMatches = [
     interests: ["Tech", "Innovation", "Coding"],
     image: "https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
     status: "Pending",
+    about: "Innovator passionate about solving problems with code.",
+    zodiac: "Libra",
+    education: "Bachelor's Degree",
+    familyPlans: "Maybe children",
+    personalityType: "INFJ",
+    lifestyle: {
+      pets: "Have a bird",
+      drinking: "Never",
+      smoking: "Non-smoker",
+      workout: "Sometimes",
+      dietaryPreference: "Gluten-free",
+      socialMedia: "Occasionally active",
+      sleepingHabits: "Early bird",
+    },
+    interests: ["AI", "Startups", "Reading"],
+    lookingFor: "Long-term relationship",
+    essentials: {
+      distance: "4 miles away",
+      employment: "Self-employed",
+      education: "Harvard",
+      location: "Lagos",
+      languages: "Yoruba, French",
+    },
   },
   {
     id: "m6",
@@ -56,6 +171,29 @@ const mockMatches = [
     interests: ["Sports", "Travel", "Music"],
     image: "https://images.unsplash.com/photo-1531123897727-8f129e672f9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
     status: "Confirmed",
+    about: "Sports lover who enjoys exploring new cultures.",
+    zodiac: "Taurus",
+    education: "High School",
+    familyPlans: "Not sure",
+    personalityType: "ESFP",
+    lifestyle: {
+      pets: "Have a dog",
+      drinking: "Socially",
+      smoking: "Non-smoker",
+      workout: "Regularly",
+      dietaryPreference: "Other",
+      socialMedia: "Very active",
+      sleepingHabits: "Night owl",
+    },
+    interests: ["Football", "Jazz", "Hiking"],
+    lookingFor: "Friendship",
+    essentials: {
+      distance: "7 miles away",
+      employment: "Employed",
+      education: "University of Ibadan",
+      location: "Ibadan",
+      languages: "Hausa, English",
+    },
   },
 ];
 
@@ -80,8 +218,81 @@ const fetchActivitiesFromAPI = async () => {
   return mockActivities;
 };
 
+const ProfileView = ({ match }) => {
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col p-4">
+      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+        <img src={match.image} alt={match.name} className="w-full h-64 object-cover rounded-t-lg mb-4" />
+        <h1 className="text-2xl font-bold">{match.name}, {match.lifestyle.drinking === "On special occasions" ? 37 : 35} <span className="text-teal-500">✔</span></h1>
+        <p className="text-gray-600 mb-2">&quot;{match.about}&quot;</p>
+      </div>
+      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+        <h2 className="text-xl font-semibold mb-2">Looking for</h2>
+        <p className="text-gray-600">{match.lookingFor}</p>
+      </div>
+      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+        <h2 className="text-xl font-semibold mb-2">About me</h2>
+        <p className="text-gray-600">{match.about}</p>
+      </div>
+      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+        <h2 className="text-xl font-semibold mb-2">More about me</h2>
+        <p><strong>Zodiac:</strong> {match.zodiac}</p>
+        <p><strong>Education:</strong> {match.education}</p>
+        <p><strong>Family plans:</strong> {match.familyPlans}</p>
+        <p><strong>Personality type:</strong> {match.personalityType}</p>
+        <Button variant="link" className="text-teal-500 mt-2">View all 6 ↓</Button>
+      </div>
+      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+        <h2 className="text-xl font-semibold mb-2">Lifestyle</h2>
+        <p><strong>Pets:</strong> {match.lifestyle.pets}</p>
+        <p><strong>Drinking:</strong> {match.lifestyle.drinking}</p>
+        <p><strong>Smoking:</strong> {match.lifestyle.smoking}</p>
+        <p><strong>Workout:</strong> {match.lifestyle.workout}</p>
+        <p><strong>Dietary preference:</strong> {match.lifestyle.dietaryPreference}</p>
+        <p><strong>Social media:</strong> {match.lifestyle.socialMedia}</p>
+        <p><strong>Sleeping habits:</strong> {match.lifestyle.sleepingHabits}</p>
+        <Button variant="link" className="text-teal-500 mt-2">View all 7 ↓</Button>
+      </div>
+      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+        <h2 className="text-xl font-semibold mb-2">Interests</h2>
+        <div className="flex flex-wrap gap-2">
+          {match.interests.map((interest, index) => (
+            <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
+          ))}
+        </div>
+      </div>
+      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+        <h2 className="text-xl font-semibold mb-2">Essentials</h2>
+        <p><strong>Distance:</strong> {match.essentials.distance}</p>
+        <p><strong>Employment:</strong> {match.essentials.employment}</p>
+        <p><strong>Education:</strong> {match.essentials.education}</p>
+        <p><strong>Location:</strong> {match.essentials.location}</p>
+        <p><strong>Languages:</strong> {match.essentials.languages}</p>
+      </div>
+      <div className="flex justify-around mt-4">
+        <button className="bg-red-500 text-white rounded-full p-2">
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+        <button className="bg-blue-500 text-white rounded-full p-2">
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+          </svg>
+        </button>
+        <button className="bg-green-500 text-white rounded-full p-2">
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const Dashboard = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [recentMatches, setRecentMatches] = useState(mockMatches.slice(0, 4));
   const [showAllMatches, setShowAllMatches] = useState(false);
   const [recentActivity, setRecentActivity] = useState(mockActivities.slice(0, 4));
@@ -106,6 +317,17 @@ const Dashboard = () => {
       loadAllActivities();
     }
   }, [showAllActivities]);
+
+  const viewProfile = (matchId) => {
+    const match = mockMatches.find(m => m.id === matchId);
+    navigate(`/profile/${matchId}`, { state: { match } });
+  };
+
+  if (location.pathname.startsWith('/profile/')) {
+    const matchId = location.pathname.split('/')[2];
+    const match = mockMatches.find(m => m.id === matchId);
+    return <ProfileView match={match} />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -224,7 +446,7 @@ const Dashboard = () => {
                         ))}
                       </div>
                       <div className="flex justify-between mt-4 space-x-1">
-                        <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 flex-1">
+                        <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 flex-1" onClick={() => viewProfile(match.id)}>
                           View Profile
                         </Button>
                         <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Connect</Button>
@@ -306,7 +528,7 @@ const Dashboard = () => {
                       ))}
                     </div>
                     <div className="flex justify-between mt-4 space-x-1">
-                      <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 flex-1">
+                      <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 flex-1" onClick={() => viewProfile(match.id)}>
                         View Profile
                       </Button>
                       <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Connect</Button>
