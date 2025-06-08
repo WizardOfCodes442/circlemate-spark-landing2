@@ -227,40 +227,45 @@ const ProfileView = ({ match, onBack }) => {
       <main className="container mx-auto px-4 py-6 flex-grow max-w-7xl">
         <div className="flex items-center justify-between gap-4 mb-6">
           <Button 
-            className="bg-teal-500 text-white rounded-full px-6 py-2 w-auto" 
+            className="bg-transparent text-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 w-auto" 
             onClick={onBack}
           >
+            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
             Back
           </Button>
-          <div className="flex justify-end gap-2">
-            <button className="bg-red-500 text-white rounded-full p-2 w-10 h-10 flex items-center justify-center">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
-            </button>
-            <button className="bg-blue-500 text-white rounded-full p-2 w-10 h-10 flex items-center justify-center">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-              </svg>
-            </button>
-            <button className="bg-green-500 text-white rounded-full p-2 w-10 h-10 flex items-center justify-center">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
           <img 
             src={match.image} 
             alt={match.name} 
-            className="w-full md:w-1/2 mx-auto h-64 object-cover rounded-t-lg mb-4" 
+            className="w-32 h-32 object-cover rounded-full mb-4 md:hidden" 
           />
-          <h1 className="text-2xl font-bold text-center">
+          <h1 className="text-2xl font-bold hidden md:block">
             {match.name}, {match.lifestyle.drinking === "On special occasions" ? 37 : 35} 
             <span className="text-teal-500">✔</span>
           </h1>
-          <p className="text-gray-600 text-center mb-2">"{match.about}"</p>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-4 md:flex md:items-center md:space-x-6">
+          <img 
+            src={match.image} 
+            alt={match.name} 
+            className="w-full md:w-1/3 mx-auto h-64 object-cover rounded-t-lg mb-4 md:mb-0 hidden md:block" 
+          />
+          <div className="md:flex-1">
+            <h1 className="text-2xl font-bold text-center md:text-left mb-2 md:mb-0">
+              {match.name}, {match.lifestyle.drinking === "On special occasions" ? 37 : 35} 
+              <span className="text-teal-500">✔</span>
+            </h1>
+            <div className="flex justify-center md:justify-start space-x-2 mb-4 md:mb-0">
+              <span className="text-teal-500 bg-teal-100 px-2 py-1 rounded-full text-sm">{match.role}</span>
+              <span className="text-gray-600">Lagos Tech Circle</span>
+            </div>
+            <div className="flex justify-center md:justify-start space-x-2">
+              <Button className="bg-teal-500 text-white rounded-full px-6 py-2">Connect</Button>
+              <Button className="bg-red-500 text-white rounded-full px-6 py-2">Report</Button>
+              <Button className="bg-gray-500 text-white rounded-full px-6 py-2">Block</Button>
+            </div>
+          </div>
         </div>
         <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
           <h2 className="text-xl font-semibold mb-2">Looking for</h2>
@@ -368,9 +373,9 @@ const Dashboard = () => {
             <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
               <div className="flex flex-col space-y-2 md:space-y-0">
                 {/* Mobile View */}
-                <div className="flex justify-between items-center md:hidden">
-                  <h1 className="text-2xl font-bold">Lagos Tech Circle</h1>
-                  <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full">Active</span>
+                <div className="flex items-center md:hidden">
+                  <h1 className="text-2xl font-bold mr-4">Lagos Tech Circle</h1>
+                  <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full ml-2">Active</span>
                 </div>
                 <div className="text-sm text-gray-600 flex items-center md:hidden">
                   <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
@@ -410,46 +415,46 @@ const Dashboard = () => {
 
             {/* Stats Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-              <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center w-full">
+              <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-start w-full">
                 <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center mb-2">
                   <ChevronUp className="h-5 w-5 text-teal-500" />
                 </div>
                 <div>
-                  <p className="text-gray-500 text-sm text-center">New Matches</p>
-                  <p className="text-lg font-semibold text-center">2 <span className="text-teal-500">+2 this week</span></p>
+                  <p className="text-gray-500 text-sm">New Matches</p>
+                  <p className="text-lg font-semibold">2 <span className="text-teal-500">+2 this week</span></p>
                 </div>
               </Card>
-              <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center w-full">
+              <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-start w-full">
                 <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mb-2">
                   <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-gray-500 text-sm text-center">Meetups Planned</p>
-                  <p className="text-lg font-semibold text-center">1 <span className="text-teal-500">1 upcoming</span></p>
+                  <p className="text-gray-500 text-sm">Meetups Planned</p>
+                  <p className="text-lg font-semibold">1 <span className="text-teal-500">1 upcoming</span></p>
                 </div>
               </Card>
-              <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center w-full">
+              <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-start w-full">
                 <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mb-2">
                   <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-gray-500 text-sm text-center">Profile Views</p>
-                  <p className="text-lg font-semibold text-center">15 <span className="text-teal-500">+6% from last week</span></p>
+                  <p className="text-gray-500 text-sm">Profile Views</p>
+                  <p className="text-lg font-semibold">15 <span className="text-teal-500">+6% from last week</span></p>
                 </div>
               </Card>
-              <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center w-full">
+              <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-start w-full">
                 <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center mb-2">
                   <svg className="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-gray-500 text-sm text-center">Satisfaction Rate</p>
-                  <p className="text-lg font-semibold text-center">95% <span className="text-teal-500">Based on feedback</span></p>
+                  <p className="text-gray-500 text-sm">Satisfaction Rate</p>
+                  <p className="text-lg font-semibold">95% <span className="text-teal-500">Based on feedback</span></p>
                 </div>
               </Card>
             </div>
@@ -518,12 +523,12 @@ const Dashboard = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                           </svg>}
                         </div>
-                        <div className="flex-1 flex justify-between">
+                        <div className="flex-1 flex justify-start">
                           <p className="text-sm font-medium">{activity.user} {activity.action}</p>
-                          <p className="text-xs text-gray-500">{activity.time}</p>
+                          <p className="text-xs text-gray-500 ml-4">{activity.time}</p>
                         </div>
                       </div>
-                      <div className="flex justify-center space-x-2">
+                      <div className="flex justify-start space-x-2">
                         {activity.status === "pending" && (
                           <>
                             <Button size="sm" className="bg-teal-500 text-white px-6 py-1 rounded-full">Accept</Button>
@@ -605,12 +610,12 @@ const Dashboard = () => {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                         </svg>}
                       </div>
-                      <div className="flex-1 flex justify-between">
+                      <div className="flex-1 flex justify-start">
                         <p className="text-sm font-medium">{activity.user} {activity.action}</p>
-                        <p className="text-xs text-gray-500">{activity.time}</p>
+                        <p className="text-xs text-gray-500 ml-4">{activity.time}</p>
                       </div>
                     </div>
-                    <div className="flex justify-center space-x-2">
+                    <div className="flex justify-start space-x-2">
                       {activity.status === "pending" && (
                         <>
                           <Button size="sm" className="bg-teal-500 text-white px-6 py-1 rounded-full">Accept</Button>
