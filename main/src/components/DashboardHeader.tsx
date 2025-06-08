@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  User,
   Bell,
   MessageCircle,
   Search,
@@ -49,7 +48,7 @@ const DashboardHeader = () => {
         </div>
 
         {/* Right Icons */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 flex-shrink-0">
           {/* Mobile Menu Toggle */}
           <div className="md:hidden">
             <Button
@@ -61,7 +60,7 @@ const DashboardHeader = () => {
             </Button>
           </div>
 
-          <div className="hidden md:flex items-center space-x-3">
+          <div className="hidden md:flex items-center space-x-2">
             <Button variant="ghost" size="icon">
               <Search className="h-6 w-6" />
             </Button>
