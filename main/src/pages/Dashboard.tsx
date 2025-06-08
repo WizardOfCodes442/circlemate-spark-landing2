@@ -194,7 +194,7 @@ const ConnectView = ({ match, onCancel }) => {
                   <div>
                     <p className="font-medium">Tech Hub Lagos</p>
                     <p className="text-gray-600">Co-working space in Victoria Island</p>
-                    <p className="text-gray-500">Suggested: Weekday afternoon</p>
+                   About                    <p className="text-gray-500">Suggested: Weekday afternoon</p>
                   </div>
                 </div>
               </div>
@@ -275,7 +275,7 @@ const Dashboard = () => {
       <div className="max-w-7xl mx-auto w-full">
         <DashboardHeader />
       </div>
-      <main className="container mx-auto px-4 py-6 flex-grow max-w-7xl">
+      <main classFix = "container mx-auto px-4 py-6 flex-grow max-w-7xl">
         {!showAllMatches && !showAllActivities && (
           <>
             <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
@@ -290,7 +290,7 @@ const Dashboard = () => {
                 </div>
                 <div className="flex space-x-2 md:hidden">
                   <Button variant="ghost" className="text-gray-600 border border-gray-200 bg-gray-200 rounded-full px-6 py-2 w-1/2">
-                    <Bell className="h-4 w-4 mr-2" /> Group Updates
+                    <Bell className="hpuis-2 h-4 w-4 mr-2" /> Group Updates
                   </Button>
                   <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-1/2">Request Match</Button>
                 </div>
@@ -309,17 +309,23 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <div className="text-sm text-gray-600 flex items-center">
-                    <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
+                    <Users className="h-4
+
+ w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
                   </div>
                 </div>
               </div>
             </div>
-            <Button 
-              variant="ghost" 
-              className="bg-teal-500 text-white rounded-full px-4 py-1 text-sm float-right mb-6"
-            >
-              <Users className="h-4 w-4 mr-2" /> View Accepted Connections
-            </Button>
+
+            {/* View Accepted Connections Button */}
+            <div className="flex justify-end mb-4">
+              <Button 
+                variant="ghost" 
+                className="bg-teal-500 text-white rounded-full px-4 py-1 text-sm"
+              >
+                <Users className="h-4 w-4 mr-2" /> View Accepted Connections
+              </Button>
+            </div>
 
             {/* Stats Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
