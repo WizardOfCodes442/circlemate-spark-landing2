@@ -1,145 +1,142 @@
 import { useEffect, useState } from "react";
-    import { useNavigate } from "react-router-dom";
-    import { toast } from "@/hooks/use-toast";
-    import { Users, Bell, Heart, ChevronUp } from "lucide-react";
-    import DashboardHeader from "@/components/DashboardHeader";
-    import { Button } from "@/components/ui/button";
-    import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-    import Footer from "@/components/Footer";
+import { useNavigate } from "react-router-dom";
+import { toast } from "@/hooks/use-toast";
+import { Users, Bell, Heart, ChevronUp } from "lucide-react";
+import DashboardHeader from "@/components/DashboardHeader";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Footer from "@/components/Footer";
 
-    // Mock data for recent matches with real images
-    const mockMatches = [
-      {
-        id: "m1",
-        name: "Sarah Thompson",
-        role: "Professional",
-        interests: ["Technology", "Entrepreneurship", "Design"],
-        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
-        status: "Pending",
-        about: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in odio at magna tincidunt congue eu vel nisi. Sed euismod, nisl vel aliquam luctus, nunc nisl aliquam mauris.",
-        zodiac: "Virgo",
-        education: "Master's Degree",
-        familyPlans: "Want children",
-        personalityType: "ENTJ",
-        lifestyle: {
-          pets: "Have a dog",
-          drinking: "Rarely",
-          smoking: "Non-smoker",
-          workout: "Daily",
-          dietaryPreference: "Vegan",
-          socialMedia: "Very active",
-          sleepingHabits: "Early bird",
-        },
-        interests: ["Coding", "Innovation", "Networking"],
-        lookingFor: "Professional networking",
-        essentials: {
-          distance: "3 miles away",
-          employment: "Self-employed",
-          education: "MIT",
-          location: "Lagos, Nigeria",
-          languages: "Igbo, English",
-        },
-      },
-      // Additional mock data can be added as needed
-    ];
+// Mock data for recent matches with real images
+const mockMatches = [
+  {
+    id: "m1",
+    name: "Sarah Thompson",
+    role: "Professional",
+    interests: ["Technology", "Entrepreneurship", "Design"],
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+    status: "Pending",
+    about: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in odio at magna tincidunt congue eu vel nisi. Sed euismod, nisl vel aliquam luctus, nunc nisl aliquam mauris.",
+    zodiac: "Virgo",
+    education: "Master's Degree",
+    familyPlans: "Want children",
+    personalityType: "ENTJ",
+    lifestyle: {
+      pets: "Have a dog",
+      drinking: "Rarely",
+      smoking: "Non-smoker",
+      workout: "Daily",
+      dietaryPreference: "Vegan",
+      socialMedia: "Very active",
+      sleepingHabits: "Early bird",
+    },
+    interests: ["Coding", "Innovation", "Networking"],
+    lookingFor: "Professional networking",
+    essentials: {
+      distance: "3 miles away",
+      employment: "Self-employed",
+      education: "MIT",
+      location: "Lagos, Nigeria",
+      languages: "Igbo, English",
+    },
+  },
+];
 
-    // Mock data for recent activities
-    const mockActivities = [
-      { id: 1, user: "David Brown", action: "requested to connect with you", time: "2 hours ago", status: "pending" },
-      { id: 2, user: "Jessica Williams", action: "scheduled a meetup with you", time: "1 day ago", date: "Tomorrow, 10:00 AM", location: "Coffee at The Brew House" },
-      { id: 3, user: "Michael Johnson", action: "left feedback on your meetup", time: "2 days ago", feedback: "Great conversation, would meet again!", rating: 4 },
-      { id: 4, user: "Sarah Thompson", action: "confirmed your connection request", time: "3 days ago" },
-      { id: 5, user: "Emily Davis", action: "requested to connect with you", time: "4 hours ago", status: "pending" },
-      { id: 6, user: "John Smith", action: "scheduled a meetup with you", time: "1 day ago", date: "Monday, 2:00 PM", location: "Tech Hub" },
-    ];
+// Mock data for recent activities
+const mockActivities = [
+  { id: 1, user: "David Brown", action: "requested to connect with you", time: "2 hours ago", status: "pending" },
+  { id: 2, user: "Jessica Williams", action: "scheduled a meetup with you", time: "1 day ago", date: "Tomorrow, 10:00 AM", location: "Coffee at The Brew House" },
+  { id: 3, user: "Michael Johnson", action: "left feedback on your meetup", time: "2 days ago", feedback: "Great conversation, would meet again!", rating: 4 },
+  { id: 4, user: "Sarah Thompson", action: "confirmed your connection request", time: "3 days ago" },
+  { id: 5, user: "Emily Davis", action: "requested to connect with you", time: "4 hours ago", status: "pending" },
+  { id: 6, user: "John Smith", action: "scheduled a meetup with you", time: "1 day ago", date: "Monday, 2:00 PM", location: "Tech Hub" },
+];
 
-    // Mock API fetch functions
-    const fetchMatchesFromAPI = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      return mockMatches;
-    };
+// Mock API fetch functions
+const fetchMatchesFromAPI = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return mockMatches;
+};
 
-    const fetchActivitiesFromAPI = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      return mockActivities;
-    };
+const fetchActivitiesFromAPI = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return mockActivities;
+};
 
-    const ProfileView = ({ match, onBack }) => {
-      return (
-        <div className="min-h-screen bg-gray-100 flex flex-col">
-          <div className="max-w-7xl mx-auto w-full">
-            <DashboardHeader />
-          </div>
-          <main className="container mx-auto px-4 py-6 flex-grow max-w-7xl">
-            <div className="flex items-center justify-between gap-4 mb-6 md:mb-8">
-              <Button 
-                className="bg-transparent text-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 w-auto flex items-center"
-                onClick={onBack}
-              >
-                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-                </svg>
-                Back
-              </Button>
-            </div>
-            <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-              <img 
-                src={match.image} 
-                alt={match.name} 
-                className="w-full h-64 object-cover mb-4 md:h-80 md:max-w-md md:mx-auto"
-              />
-              <h1 className="text-2xl font-bold mb-2 text-center md:text-left">{match.name}</h1>
-              <div className="flex flex-col md:flex-row md:justify-start space-y-2 md:space-y-0 md:space-x-2 mb-4">
-                <span className="text-teal-500 bg-teal-100 px-2 py-1 rounded-full text-sm">{match.role}</span>
-                <span className="text-gray-600">Lagos Tech Circle</span>
-              </div>
-              <div className="flex flex-col md:flex-row justify-center md:justify-start space-y-2 md:space-y-0 md:space-x-2 mb-4">
-                <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-full md:w-auto">Connect</Button>
-                <Button className="bg-red-500 text-white rounded-full px-6 py-2 w-full md:w-auto">Report</Button>
-                <Button className="bg-gray-500 text-white rounded-full px-6 py-2 w-full md:w-auto">Block</Button>
-              </div>
-              <div className="mt-4">
-                <h2 className="text-xl font-semibold mb-2">About</h2>
-                <p className="text-gray-600">{match.about}</p>
-              </div>
-              <div className="mt-4">
-                <h2 className="text-xl font-semibold mb-2">Location</h2>
-                <p className="text-gray-600">{match.essentials.location}</p>
-              </div>
-              <div className="mt-4">
-                <h2 className="text-xl font-semibold mb-2">Temperament</h2>
-                <p className="text-gray-600">Extroverted, Intuitive, Thinking, Judging (ENTJ)</p>
-              </div>
-              <div className="mt-4">
-                <h2 className="text-xl font-semibold mb-2">Interests</h2>
-                <div className="flex flex-wrap gap-2">
-                  {match.interests.map((interest, index) => (
-                    <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">
-                      {interest}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="mt-4">
-                <h2 className="text-xl font-semibold mb-2">Values</h2>
-                <div className="flex flex-wrap gap-2">
-                  <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Growth</span>
-                  <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Innovation</span>
-                  <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Authenticity</span>
-                </div>
-              </div>
-              <div className="mt-4">
-                <h2 className="text-xl font-semibold mb-2">Availability</h2>
-                <div className="flex flex-wrap gap-2">
-                  <span className="text-xs bg-orange-200 text-orange-700 px-2 py-1 rounded-full">Weekends</span>
-                  <span className="text-xs bg-orange-200 text-orange-700 px-2 py-1 rounded-full">Evenings</span>
-                </div>
-              </div>
-            </div>
-          </main>
-          <Footer />
-        </div>
+const ProfileView = ({ match, onBack }) => {
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col">
+      <div className="max-w-7xl mx-auto w-full">
+        <DashboardHeader />
       </div>
+      <main className="container mx-auto px-4 py-6 flex-grow max-w-7xl">
+        <div className="flex items-center justify-between gap-4 mb-6 md:mb-8">
+          <Button 
+            className="bg-transparent text-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 w-auto flex items-center"
+            onClick={onBack}
+          >
+            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+            Back
+          </Button>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+          <img 
+            src={match.image} 
+            alt={match.name} 
+            className="w-full h-64 object-cover mb-4 md:h-80 md:max-w-md md:mx-auto"
+          />
+          <h1 className="text-2xl font-bold mb-2 text-center md:text-left">{match.name}</h1>
+          <div className="flex flex-col md:flex-row md:justify-start space-y-2 md:space-y-0 md:space-x-2 mb-4">
+            <span className="text-teal-500 bg-teal-100 px-2 py-1 rounded-full text-sm">{match.role}</span>
+            <span className="text-gray-600">Lagos Tech Circle</span>
+          </div>
+          <div className="flex flex-col md:flex-row justify-center md:justify-start space-y-2 md:space-y-0 md:space-x-2 mb-4">
+            <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-full md:w-auto">Connect</Button>
+            <Button className="bg-red-500 text-white rounded-full px-6 py-2 w-full md:w-auto">Report</Button>
+            <Button className="bg-gray-500 text-white rounded-full px-6 py-2 w-full md:w-auto">Block</Button>
+          </div>
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold mb-2">About</h2>
+            <p className="text-gray-600">{match.about}</p>
+          </div>
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold mb-2">Location</h2>
+            <p className="text-gray-600">{match.essentials.location}</p>
+          </div>
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold mb-2">Temperament</h2>
+            <p className="text-gray-600">Extroverted, Intuitive, Thinking, Judging (ENTJ)</p>
+          </div>
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold mb-2">Interests</h2>
+            <div className="flex flex-wrap gap-2">
+              {match.interests.map((interest, index) => (
+                <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">
+                  {interest}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold mb-2">Values</h2>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Growth</span>
+              <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Innovation</span>
+              <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Authenticity</span>
+            </div>
+          </div>
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold mb-2">Availability</h2>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-xs bg-orange-200 text-orange-700 px-2 py-1 rounded-full">Weekends</span>
+              <span className="text-xs bg-orange-200 text-orange-700 px-2 py-1 rounded-full">Evenings</span>
+            </div>
+          </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };
@@ -253,12 +250,12 @@ const Dashboard = () => {
   }, [showAllActivities]);
 
   const viewProfile = (matchId) => {
-    const match = mockMatches.find(m => m.id === matchId);
+    const match = mockMatches.find((m) => m.id === matchId);
     setSelectedMatch(match);
   };
 
   const connectWithMatch = (matchId) => {
-    const match = mockMatches.find(m => m.id === matchId);
+    const match = mockMatches.find((m) => m.id === matchId);
     setConnectMatch(match);
     setSelectedMatch(null);
   };
@@ -546,3 +543,8 @@ const Dashboard = () => {
         )}
       </main>
       <Footer />
+    </div>
+  );
+};
+
+export default Dashboard;
