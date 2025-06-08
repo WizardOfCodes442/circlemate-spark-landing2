@@ -1,5 +1,7 @@
-import { Button, Card, CardContent, CardHeader } from "@/components/ui/card";
+import {  Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ArrowRight, ArrowLeft } from "lucide-react";
+import {Button } from "@/components/ui/button";
+
 
 interface Match {
   id: string;

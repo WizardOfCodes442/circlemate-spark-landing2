@@ -1,4 +1,6 @@
-import { Button, Card } from "@/components/ui/card";
+import {  Card } from "@/components/ui/card";
+import {Button } from "@/components/ui/button";
+
 import { ArrowRight, ArrowLeft } from "lucide-react";
 
 interface Activity {
