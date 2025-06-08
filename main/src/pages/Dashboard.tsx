@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { Users, Bell, Heart, ChevronUp } from "lucide-react";
 import DashboardHeader from "@/components/DashboardHeader";
@@ -218,13 +218,13 @@ const fetchActivitiesFromAPI = async () => {
   return mockActivities;
 };
 
-const ProfileView = ({ match }) => {
+const ProfileView = ({ match, onBack }) => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col p-4">
       <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
         <img src={match.image} alt={match.name} className="w-full h-64 object-cover rounded-t-lg mb-4" />
         <h1 className="text-2xl font-bold">{match.name}, {match.lifestyle.drinking === "On special occasions" ? 37 : 35} <span className="text-teal-500">✔</span></h1>
-        <p className="text-gray-600 mb-2">&quot;{match.about}&quot;</p>
+        <p className="text-gray-600 mb-2">"{match.about}"</p>
       </div>
       <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
         <h2 className="text-xl font-semibold mb-2">Looking for</h2>
@@ -286,17 +286,18 @@ const ProfileView = ({ match }) => {
           </svg>
         </button>
       </div>
+      <Button className="bg-teal-500 text-white rounded-full px-6 py-2 mt-4" onClick={onBack}>Back to Dashboard</Button>
     </div>
   );
 };
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [recentMatches, setRecentMatches] = useState(mockMatches.slice(0, 4));
   const [showAllMatches, setShowAllMatches] = useState(false);
   const [recentActivity, setRecentActivity] = useState(mockActivities.slice(0, 4));
   const [showAllActivities, setShowAllActivities] = useState(false);
+  const [selectedMatch, setSelectedMatch] = useState(null);
 
   useEffect(() => {
     if (showAllMatches) {
@@ -320,13 +321,15 @@ const Dashboard = () => {
 
   const viewProfile = (matchId) => {
     const match = mockMatches.find(m => m.id === matchId);
-    navigate(`/profile/${matchId}`, { state: { match } });
+    setSelectedMatch(match);
   };
 
-  if (location.pathname.startsWith('/profile/')) {
-    const matchId = location.pathname.split('/')[2];
-    const match = mockMatches.find(m => m.id === matchId);
-    return <ProfileView match={match} />;
+  const goBack = () => {
+    setSelectedMatch(null);
+  };
+
+  if (selectedMatch) {
+    return <ProfileView match={selectedMatch} onBack={goBack} />;
   }
 
   return (
