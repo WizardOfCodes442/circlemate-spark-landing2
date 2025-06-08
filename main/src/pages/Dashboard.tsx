@@ -228,6 +228,7 @@ const Dashboard = () => {
   const [recentActivity, setRecentActivity] = useState(mockActivities.slice(0, 4));
   const [showAllActivities, setShowAllActivities] = useState(false);
   const [selectedMatch, setSelectedMatch] = useState(null);
+  const [connectMatch, setConnectMatch] = useState(null);
 
   useEffect(() => {
     if (showAllMatches) {
@@ -254,12 +255,23 @@ const Dashboard = () => {
     setSelectedMatch(match);
   };
 
+  const connectWithMatch = (matchId) => {
+    const match = mockMatches.find(m => m.id === matchId);
+    setConnectMatch(match);
+    setSelectedMatch(null); // Ensure profile view is cleared when connecting
+  };
+
   const goBack = () => {
     setSelectedMatch(null);
+    setConnectMatch(null);
   };
 
   if (selectedMatch) {
     return <ProfileView match={selectedMatch} onBack={goBack} />;
+  }
+
+  if (connectMatch) {
+    return <ConnectView match={connectMatch} onCancel={goBack} />;
   }
 
   return (
@@ -390,7 +402,7 @@ const Dashboard = () => {
                         >
                           View Profile
                         </Button>
-                        <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Connect</Button>
+                        <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1" onClick={() => connectWithMatch(match.id)}>Connect</Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -476,7 +488,7 @@ const Dashboard = () => {
                       >
                         View Profile
                       </Button>
-                      <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1">Connect</Button>
+                      <Button className="bg-teal-500 text-white rounded-full px-6 py-2 flex-1" onClick={() => connectWithMatch(match.id)}>Connect</Button>
                     </div>
                   </CardContent>
                 </Card>
