@@ -23,24 +23,24 @@ const DashboardHeader = () => {
             <img src="/logo.png" alt="CircleMate Logo" className="h-12 w-12" />
           </Link>
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-4">
             <Link to="/discover">
-              <Button variant="ghost" className="text-muted-foreground text-lg">
+              <Button variant="ghost" className="text-muted-foreground text-base">
                 Discover
               </Button>
             </Link>
             <Link to="/community">
-              <Button variant="ghost" className="text-muted-foreground text-lg">
+              <Button variant="ghost" className="text-muted-foreground text-base">
                 Communities
               </Button>
             </Link>
             <Link to="/events">
-              <Button variant="ghost" className="text-muted-foreground text-lg">
+              <Button variant="ghost" className="text-muted-foreground text-base">
                 Events
               </Button>
             </Link>
             <Link to="/match-making">
-              <Button variant="ghost" className="text-muted-foreground text-lg">
+              <Button variant="ghost" className="text-muted-foreground text-base">
                 AI-Powered Match Making
               </Button>
             </Link>
