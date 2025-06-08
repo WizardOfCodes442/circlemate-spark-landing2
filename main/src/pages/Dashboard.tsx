@@ -220,73 +220,77 @@ const fetchActivitiesFromAPI = async () => {
 
 const ProfileView = ({ match, onBack }) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col p-4">
-      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-        <img src={match.image} alt={match.name} className="w-full md:w-3/4 mx-auto h-64 object-cover rounded-t-lg mb-4" />
-        <h1 className="text-2xl font-bold text-center">{match.name}, {match.lifestyle.drinking === "On special occasions" ? 37 : 35} <span className="text-teal-500">✔</span></h1>
-        <p className="text-gray-600 text-center mb-2">"{match.about}"</p>
-      </div>
-      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-        <h2 className="text-xl font-semibold mb-2">Looking for</h2>
-        <p className="text-gray-600">{match.lookingFor}</p>
-      </div>
-      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-        <h2 className="text-xl font-semibold mb-2">About me</h2>
-        <p className="text-gray-600">{match.about}</p>
-      </div>
-      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-        <h2 className="text-xl font-semibold mb-2">More about me</h2>
-        <p><strong>Zodiac:</strong> {match.zodiac}</p>
-        <p><strong>Education:</strong> {match.education}</p>
-        <p><strong>Family plans:</strong> {match.familyPlans}</p>
-        <p><strong>Personality type:</strong> {match.personalityType}</p>
-        <Button variant="link" className="text-teal-500 mt-2">View all 6 ↓</Button>
-      </div>
-      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-        <h2 className="text-xl font-semibold mb-2">Lifestyle</h2>
-        <p><strong>Pets:</strong> {match.lifestyle.pets}</p>
-        <p><strong>Drinking:</strong> {match.lifestyle.drinking}</p>
-        <p><strong>Smoking:</strong> {match.lifestyle.smoking}</p>
-        <p><strong>Workout:</strong> {match.lifestyle.workout}</p>
-        <p><strong>Dietary preference:</strong> {match.lifestyle.dietaryPreference}</p>
-        <p><strong>Social media:</strong> {match.lifestyle.socialMedia}</p>
-        <p><strong>Sleeping habits:</strong> {match.lifestyle.sleepingHabits}</p>
-        <Button variant="link" className="text-teal-500 mt-2">View all 7 ↓</Button>
-      </div>
-      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-        <h2 className="text-xl font-semibold mb-2">Interests</h2>
-        <div className="flex flex-wrap gap-2">
-          {match.interests.map((interest, index) => (
-            <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
-          ))}
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <DashboardHeader />
+      <main className="container mx-auto px-4 py-6 flex-grow">
+        <Button className="bg-teal-500 text-white rounded-full px-6 py-2 mb-4 w-full md:w-auto md:mx-auto" onClick={onBack}>Back to Dashboard</Button>
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+          <img src={match.image} alt={match.name} className="w-full md:w-3/4 mx-auto h-64 object-cover rounded-t-lg mb-4" />
+          <h1 className="text-2xl font-bold text-center">{match.name}, {match.lifestyle.drinking === "On special occasions" ? 37 : 35} <span className="text-teal-500">✔</span></h1>
+          <p className="text-gray-600 text-center mb-2">"{match.about}"</p>
         </div>
-      </div>
-      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-        <h2 className="text-xl font-semibold mb-2">Essentials</h2>
-        <p><strong>Distance:</strong> {match.essentials.distance}</p>
-        <p><strong>Employment:</strong> {match.essentials.employment}</p>
-        <p><strong>Education:</strong> {match.essentials.education}</p>
-        <p><strong>Location:</strong> {match.essentials.location}</p>
-        <p><strong>Languages:</strong> {match.essentials.languages}</p>
-      </div>
-      <div className="flex justify-around mt-4 md:flex-row md:space-x-4">
-        <button className="bg-red-500 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center md:w-10 md:h-10">
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-          </svg>
-        </button>
-        <button className="bg-blue-500 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center md:w-10 md:h-10">
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-          </svg>
-        </button>
-        <button className="bg-green-500 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center md:w-10 md:h-10">
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-          </svg>
-        </button>
-      </div>
-      <Button className="bg-teal-500 text-white rounded-full px-6 py-2 mt-4 w-full md:w-auto md:mx-auto" onClick={onBack}>Back to Dashboard</Button>
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+          <h2 className="text-xl font-semibold mb-2">Looking for</h2>
+          <p className="text-gray-600">{match.lookingFor}</p>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+          <h2 className="text-xl font-semibold mb-2">About me</h2>
+          <p className="text-gray-600">{match.about}</p>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+          <h2 className="text-xl font-semibold mb-2">More about me</h2>
+          <p><strong>Zodiac:</strong> {match.zodiac}</p>
+          <p><strong>Education:</strong> {match.education}</p>
+          <p><strong>Family plans:</strong> {match.familyPlans}</p>
+          <p><strong>Personality type:</strong> {match.personalityType}</p>
+          <Button variant="link" className="text-teal-500 mt-2">View all 6 ↓</Button>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+          <h2 className="text-xl font-semibold mb-2">Lifestyle</h2>
+          <p><strong>Pets:</strong> {match.lifestyle.pets}</p>
+          <p><strong>Drinking:</strong> {match.lifestyle.drinking}</p>
+          <p><strong>Smoking:</strong> {match.lifestyle.smoking}</p>
+          <p><strong>Workout:</strong> {match.lifestyle.workout}</p>
+          <p><strong>Dietary preference:</strong> {match.lifestyle.dietaryPreference}</p>
+          <p><strong>Social media:</strong> {match.lifestyle.socialMedia}</p>
+          <p><strong>Sleeping habits:</strong> {match.lifestyle.sleepingHabits}</p>
+          <Button variant="link" className="text-teal-500 mt-2">View all 7 ↓</Button>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+          <h2 className="text-xl font-semibold mb-2">Interests</h2>
+          <div className="flex flex-wrap gap-2">
+            {match.interests.map((interest, index) => (
+              <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">{interest}</span>
+            ))}
+          </div>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+          <h2 className="text-xl font-semibold mb-2">Essentials</h2>
+          <p><strong>Distance:</strong> {match.essentials.distance}</p>
+          <p><strong>Employment:</strong> {match.essentials.employment}</p>
+          <p><strong>Education:</strong> {match.essentials.education}</p>
+          <p><strong>Location:</strong> {match.essentials.location}</p>
+          <p><strong>Languages:</strong> {match.essentials.languages}</p>
+        </div>
+        <div className="flex justify-around mt-4 md:flex-row md:space-x-4">
+          <button className="bg-red-500 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center md:w-10 md:h-10">
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </button>
+          <button className="bg-blue-500 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center md:w-10 md:h-10">
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+            </svg>
+          </button>
+          <button className="bg-green-500 text-white rounded-full p-2 w-12 h-12 flex items-center justify-center md:w-10 md:h-10">
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+          </button>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };
@@ -350,7 +354,7 @@ const Dashboard = () => {
                   <Users className="h-4 w-4 mr-1" /> 546 members <Heart className="h-4 w-4 mx-2 text-red-500" /> 345 matches
                 </div>
                 <div className="flex space-x-2 md:hidden">
-                  <Button variant="ghost" size="sm" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 w-1/2">
+                  <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 w-1/2">
                     <Bell className="h-4 w-4 mr-2" /> Group Updates
                   </Button>
                   <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-1/2">Request Match</Button>
@@ -363,7 +367,7 @@ const Dashboard = () => {
                       <span className="text-white bg-teal-500 text-sm font-normal px-2 py-1 rounded-full ml-2">Active</span>
                     </div>
                     <div className="flex space-x-2">
-                      <Button variant="ghost" size="sm" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 w-1/2">
+                      <Button variant="ghost" className="text-gray-600 border border-gray-200 rounded-full px-6 py-2 w-1/2">
                         <Bell className="h-4 w-4 mr-2" /> Group Updates
                       </Button>
                       <Button className="bg-teal-500 text-white rounded-full px-6 py-2 w-1/2">Request Match</Button>
