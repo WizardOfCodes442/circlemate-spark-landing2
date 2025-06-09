@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Heart, Users, MapPin, Zap, RefreshCw, ArrowRight, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,8 @@ import Footer from "@/components/Footer";
 import TechCircleHeader from "@/components/ui/TechCircleHeader";
 import StatsSection from "@/components/ui/StatsSection";
 import RecentActivities from "@/components/ui/RecentActivities";
-import { useNavigate } from "react-router-dom";
+import ProfileView from "@/components/ProfileView";
+import ConnectView from "@/components/ConnectView";
 import { mockActivities } from "@/data/mockDashboardData";
 
 // Mock user data
@@ -61,7 +63,8 @@ const mockMatches = [
 const Matchmaking = () => {
   const [matches, setMatches] = useState(mockMatches);
   const [isCalculating, setIsCalculating] = useState(false);
-  const navigate = useNavigate();
+  const [selectedMatch, setSelectedMatch] = useState(null);
+  const [connectMatch, setConnectMatch] = useState(null);
 
   // Jaccard similarity calculation
   const calculateJaccardSimilarity = (set1: string[], set2: string[]) => {
@@ -82,7 +85,7 @@ const Matchmaking = () => {
         );
         const communitySimilarity = calculateJaccardSimilarity(
           currentUser.communities,
-          match.communities
+          match.match
         );
         
         // Weighted average (70% interests, 30% communities)
@@ -109,11 +112,18 @@ const Matchmaking = () => {
       title: "Connection Request Sent",
       description: `Your connection request has been sent to ${userName}.`,
     });
-    navigate("/connect-view", { state: { match: matches.find(m => m.id === userId) } });
+    const match = matches.find(m => m.id === userId);
+    setConnectMatch(match);
   };
 
   const viewProfile = (userId: string) => {
-    navigate("/profile-view", { state: { match: matches.find(m => m.id === userId) } });
+    const match = matches.find(m => m.id === userId);
+    setSelectedMatch(match);
+  };
+
+  const goBack = () => {
+    setSelectedMatch(null);
+    setConnectMatch(null);
   };
 
   const getCompatibilityColor = (score: number) => {
@@ -128,12 +138,49 @@ const Matchmaking = () => {
     return "Low Match";
   };
 
+  if (selectedMatch) {
+    return <ProfileView match={selectedMatch} onBack={goBack} />;
+  }
+
+  if (connectMatch) {
+    return <ConnectView match={connectMatch} onCancel={goBack} />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <div className="w-full">
         <Header />
       </div>
+      <div className="flex items-center justify-end text-white space-x-4 mb-8">
+ {/* Your Profile Summary */}
+          <Card className="mb-8 w-full">
+            <CardHeader>
+              <CardTitle>Your Profile</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-medium mb-2">Interests</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {currentUser.interests.map((interest, index) => (
+                      <Badge key={index} variant="secondary">{interest}</Badge>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-medium mb-2">Communities</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {currentUser.communities.map((community, index) => (
+                      <Badge key={index} variant="outline">{community}</Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+      </div>
       <main className="container mx-auto px-4 py-8 flex-grow w-full">
+        
         <TechCircleHeader />
         <StatsSection />
         <div className="max-w-6xl mx-auto">
@@ -174,32 +221,7 @@ const Matchmaking = () => {
             </CardContent>
           </Card>
 
-          {/* Your Profile Summary */}
-          <Card className="mb-8 w-full">
-            <CardHeader>
-              <CardTitle>Your Profile</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium mb-2">Interests</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {currentUser.interests.map((interest, index) => (
-                      <Badge key={index} variant="secondary">{interest}</Badge>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-medium mb-2">Communities</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {currentUser.communities.map((community, index) => (
-                      <Badge key={index} variant="outline">{community}</Badge>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+         
 
           {/* Matches */}
           <Card className="bg-white rounded-lg shadow-sm p-6 mb-8 w-full">
@@ -209,22 +231,20 @@ const Matchmaking = () => {
                 View All <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </div>
-            <div className="flex flex-col lg:flex-row gap-6 w-full">
-              <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 w-full lg:w-2/3">
-                {matches.map((match) => (
-                  <Card key={match.id} className="overflow-hidden w-full">
-                    <CardHeader className="bg-gradient-to-r from-teal-100 to-teal-50">
-                      <div className="flex items-center space-x-4">
-                        <Avatar className="h-16 w-16 border-2 border-white">
-                          <AvatarImage src={match.avatar} alt={match.name} />
-                          <AvatarFallback>{match.name.substring(0, 2)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-lg">{match.name}</h3>
-                          <div className="flex items-center text-sm text-gray-600">
-                            <MapPin className="h-4 w-4 mr-1" />
-                            {match.location}
-                          </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+              {matches.map((match) => (
+                <Card key={match.id} className="overflow-hidden w-full">
+                  <CardHeader className="bg-gradient-to-r from-teal-100 to-teal-50">
+                    <div className="flex items-center space-x-4">
+                      <Avatar className="h-16 w-16 border-2 border-white">
+                        <AvatarImage src={match.avatar} alt={match.name} />
+                        <AvatarFallback>{match.name.substring(0, 2)}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-lg">{match.name}</h3>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <MapPin className="h-4 w-4 mr-1" />
+                          {match.location}
                         </div>
                       </div>
                     </CardHeader>
@@ -281,10 +301,9 @@ const Matchmaking = () => {
                         View Profile
                       </Button>
                     </CardContent>
-                  </Card>
-                ))}
-              </div>
-              <RecentActivities activities={mockActivities.slice(0, 4)} onViewAll={() => {}} className="w-full lg:w-1/3" />
+                  </div>
+                </Card>
+              ))}
             </div>
           </Card>
 
@@ -296,6 +315,8 @@ const Matchmaking = () => {
               </CardContent>
             </Card>
           )}
+
+          <RecentActivities activities={mockActivities.slice(0, 4)} onViewAll={() => {}} className="w-full" />
         </div>
       </main>
       <Footer />
