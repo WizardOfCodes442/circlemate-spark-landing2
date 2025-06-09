@@ -84,7 +84,7 @@ const Matchmaking = () => {
         );
         const communitySimilarity = calculateJaccardSimilarity(
           currentUser.communities,
-          match.communities // Fixed: Changed match.match to match.communities
+          match.communities
         );
 
         // Weighted average (70% interests, 30% communities)
@@ -184,17 +184,33 @@ const Matchmaking = () => {
 
         <StatsSection />
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center space-x-3">
-              <Heart className="h-8 w-8 text-teal-500" />
-              <div>
-                <h1 className="text-3xl font-bold">Smart Matchmaking</h1>
-                <p className="text-gray-600">
-                  AI-powered compatibility using Jaccard similarity algorithm
-                </p>
+          {/* Algorithm Explanation and Smart Matchmaking */}
+          <Card className="mb-8 w-full">
+            <CardHeader>
+              <div className="flex items-center space-x-3">
+                <Heart className="h-8 w-8 text-teal-500" />
+                <div>
+                  <h1 className="text-3xl font-bold">Smart Matchmaking</h1>
+                  <p className="text-gray-600">
+                    AI-powered compatibility using Jaccard similarity algorithm
+                  </p>
+                </div>
               </div>
-            </div>
-          </div>
+              <CardTitle className="flex items-center mt-4">
+                <Zap className="h-5 w-5 mr-2" />
+                How It Works
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">
+                Our AI uses the Jaccard similarity algorithm to calculate compatibility
+                between users. It analyzes shared interests (70% weight) and common
+                communities (30% weight) to determine your compatibility score with
+                other users.
+              </p>
+            </CardContent>
+          </Card>
+
           <div className="flex items-center justify-end text-white space-x-4 mb-8">
             <Button
               onClick={recalculateMatches}
@@ -210,136 +226,126 @@ const Matchmaking = () => {
             </Button>
           </div>
 
-          {/* Algorithm Explanation */}
-          <Card className="mb-8 w-full">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Zap className="h-5 w-5 mr-2" />
-                How It Works
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600">
-                Our AI uses the Jaccard similarity algorithm to calculate compatibility
-                between users. It analyzes shared interests (70% weight) and common
-                communities (30% weight) to determine your compatibility score with
-                other users.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Matches */}
-          <Card className="bg-white rounded-lg shadow-sm p-6 mb-8 w-full">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Recent Matches</h2>
-              <Button variant="link" className="text-teal-500">
-                View All <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
-              {matches.map((match) => (
-                <Card key={match.id} className="overflow-hidden w-full">
-                  <CardHeader className="bg-gradient-to-r from-teal-100 to-teal-50">
-                    <div className="flex items-center space-x-4">
-                      <Avatar className="h-16 w-16 border-2 border-white">
-                        <AvatarImage src={match.avatar} alt={match.name} />
-                        <AvatarFallback>{match.name.substring(0, 2)}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-lg">{match.name}</h3>
-                        <div className="flex items-center text-sm text-gray-600">
-                          <MapPin className="h-4 w-4 mr-1" />
-                          {match.location}
+          {/* Matches and Recent Activities Side by Side on Desktop */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
+            {/* Recent Matches */}
+            <div className="lg:col-span-2">
+              <Card className="bg-white rounded-lg shadow-sm p-6 mb-8 w-full">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">Recent Matches</h2>
+                  <Button variant="link" className="text-teal-500">
+                    View All <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+                  {matches.map((match) => (
+                    <Card key={match.id} className="overflow-hidden w-full">
+                      <CardHeader className="bg-gradient-to-r from-teal-100 to-teal-50">
+                        <div className="flex items-center space-x-4">
+                          <Avatar className="h-16 w-16 border-2 border-white">
+                            <AvatarImage src={match.avatar} alt={match.name} />
+                            <AvatarFallback>{match.name.substring(0, 2)}</AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg">{match.name}</h3>
+                            <div className="flex items-center text-sm text-gray-600">
+                              <MapPin className="h-4 w-4 mr-1" />
+                              {match.location}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-4 space-y-4">
-                    {/* Compatibility Score */}
-                    <div className="text-center">
-                      <div
-                        className={`text-3xl font-bold ${getCompatibilityColor(
-                          match.compatibility
-                        )}`}
-                      >
-                        {match.compatibility}%
-                      </div>
-                      <Badge
-                        className="text-white"
-                        variant={
-                          match.compatibility >= 80
-                            ? "default"
-                            : match.compatibility >= 60
-                            ? "secondary"
-                            : "outline"
-                        }
-                      >
-                        {getCompatibilityBadge(match.compatibility)}
-                      </Badge>
-                      <Progress value={match.compatibility} className="mt-2" />
-                    </div>
-
-                    {/* Shared Interests */}
-                    <div>
-                      <h4 className="font-medium text-sm mb-2">Shared Interests</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {match.sharedInterests.map((interest, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs">
-                            {interest}
+                      </CardHeader>
+                      <CardContent className="pt-4 space-y-4">
+                        {/* Compatibility Score */}
+                        <div className="text-center">
+                          <div
+                            className={`text-3xl font-bold ${getCompatibilityColor(
+                              match.compatibility
+                            )}`}
+                          >
+                            {match.compatibility}%
+                          </div>
+                          <Badge
+                            className="text-white"
+                            variant={
+                              match.compatibility >= 80
+                                ? "default"
+                                : match.compatibility >= 60
+                                ? "secondary"
+                                : "outline"
+                            }
+                          >
+                            {getCompatibilityBadge(match.compatibility)}
                           </Badge>
-                        ))}
-                      </div>
-                    </div>
+                          <Progress value={match.compatibility} className="mt-2" />
+                        </div>
 
-                    {/* Shared Communities */}
-                    <div>
-                      <h4 className="font-medium text-sm mb-2">Shared Communities</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {match.sharedCommunities.map((community, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
-                            <Users className="h-3 w-3 mr-1" />
-                            {community}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
+                        {/* Shared Interests */}
+                        <div>
+                          <h4 className="font-medium text-sm mb-2">Shared Interests</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {match.sharedInterests.map((interest, index) => (
+                              <Badge key={index} variant="secondary" className="text-xs">
+                                {interest}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
 
-                    <Button
-                      className="w-full bg-teal-500 text-white rounded-full"
-                      onClick={() => connectWithUser(match.id, match.name)}
-                    >
-                      <Heart className="h-4 w-4 mr-2" />
-                      Connect
-                    </Button>
-                    <Button
-                      className="w-full bg-gray-200 text-gray-600 rounded-full"
-                      onClick={() => viewProfile(match.id)}
-                    >
-                      <User className="h-4 w-4 mr-2" />
-                      View Profile
-                    </Button>
+                        {/* Shared Communities */}
+                        <div>
+                          <h4 className="font-medium text-sm mb-2">Shared Communities</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {match.sharedCommunities.map((community, index) => (
+                              <Badge key={index} variant="outline" className="text-xs">
+                                <Users className="h-3 w-3 mr-1" />
+                                {community}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+
+                        <Button
+                          className="w-full bg-teal-500 text-white rounded-full"
+                          onClick={() => connectWithUser(match.id, match.name)}
+                        >
+                          <Heart className="h-4 w-4 mr-2" />
+                          Connect
+                        </Button>
+                        <Button
+                          className="w-full bg-gray-200 text-gray-600 rounded-full"
+                          onClick={() => viewProfile(match.id)}
+                        >
+                          <User className="h-4 w-4 mr-2" />
+                          View Profile
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </Card>
+
+              {matches.length === 0 && (
+                <Card className="w-full">
+                  <CardContent className="pt-8 text-center">
+                    <Heart className="h-12 w-12 text-gray-600 mx-auto mb-4" />
+                    <p className="text-gray-600">
+                      No matches found. Try updating your profile or interests.
+                    </p>
                   </CardContent>
                 </Card>
-              ))}
+              )}
             </div>
-          </Card>
 
-          {matches.length === 0 && (
-            <Card className="w-full">
-              <CardContent className="pt-8  text-center">
-                <Heart className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-600">
-                  No matches found. Try updating your profile or interests.
-                </p>
-              </CardContent>
-            </Card>
-          )}
-
-          <RecentActivities
-            activities={mockActivities.slice(0, 4)}
-            onViewAll={() => {}}
-            className="w-full"
-          />
+            {/* Recent Activities */}
+            <div className="lg:col-span-1">
+              <RecentActivities
+                activities={mockActivities.slice(0, 4)}
+                onViewAll={() => {}}
+                className="w-full"
+              />
+            </div>
+          </div>
         </div>
       </main>
       <Footer />
