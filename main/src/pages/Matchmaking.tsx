@@ -151,8 +151,8 @@ const Matchmaking = () => {
       <div className="w-full">
         <Header />
       </div>
-      <div className="flex items-center justify-end text-white space-x-4 mb-8">
- {/* Your Profile Summary */}
+      <main className="container mx-auto px-4 py-8 flex-grow w-full">
+         {/* Your Profile Summary */}
           <Card className="mb-8 w-full">
             <CardHeader>
               <CardTitle>Your Profile</CardTitle>
@@ -178,9 +178,6 @@ const Matchmaking = () => {
               </div>
             </CardContent>
           </Card>
-      </div>
-      <main className="container mx-auto px-4 py-8 flex-grow w-full">
-        
         <TechCircleHeader />
         <StatsSection />
         <div className="max-w-6xl mx-auto">
