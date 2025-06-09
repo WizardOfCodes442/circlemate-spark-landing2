@@ -1,15 +1,12 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, ChevronUp, Calendar, Heart, ArrowUp } from "lucide-react";
+import { Users, ChevronUp, Calendar, Heart } from "lucide-react";
 
 const PlatformOverview = () => {
   return (
     <>
-      <div className="flex justify-end mb-4">
-        <Button variant="ghost" className="bg-teal-500 text-white rounded-full px-4 py-1 text-sm">
-          <Users className="h-4 w-4 mr-2" /> View Accepted Connections
-        </Button>
-      </div>
+      
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-start w-full">
           <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center mb-2">
@@ -17,9 +14,8 @@ const PlatformOverview = () => {
           </div>
           <div>
             <p className="text-gray-500 text-sm font-bold">Total Communities</p>
-            <p className="text-2xl font-bold text-navy-700">287</p>
-            <p className="text-sm text-light-green-500 flex items-center">
-              <ArrowUp className="h-4 w-4 mr-1" /> +12% this month
+            <p className="text-2xl font-bold text-navy-700">
+              287 <span className="text-sm text-navy-700">+12% this month</span>
             </p>
           </div>
         </Card>
@@ -29,9 +25,8 @@ const PlatformOverview = () => {
           </div>
           <div>
             <p className="text-gray-500 text-sm font-bold">Verified Users</p>
-            <p className="text-2xl font-bold text-navy-700">12,458</p>
-            <p className="text-sm text-light-green-500 flex items-center">
-              <ArrowUp className="h-4 w-4 mr-1" /> +8% this month
+            <p className="text-2xl font-bold text-navy-700">
+              12,458 <span className="text-sm text-navy-700">+8% this month</span>
             </p>
           </div>
         </Card>
@@ -41,9 +36,8 @@ const PlatformOverview = () => {
           </div>
           <div>
             <p className="text-gray-500 text-sm font-bold">Successful Matches</p>
-            <p className="text-2xl font-bold text-navy-700">3,842</p>
-            <p className="text-sm text-light-green-500 flex items-center">
-              <ArrowUp className="h-4 w-4 mr-1" /> +15% this month
+            <p className="text-2xl font-bold text-navy-700">
+              3,842 <span className="text-sm text-navy-700">+15% this month</span>
             </p>
           </div>
         </Card>
@@ -53,31 +47,30 @@ const PlatformOverview = () => {
           </div>
           <div>
             <p className="text-gray-500 text-sm font-bold">Active Events</p>
-            <p className="text-2xl font-bold text-navy-700">162</p>
-            <p className="text-sm text-light-green-500 flex items-center">
-              <ArrowUp className="h-4 w-4 mr-1" /> +5% this month
+            <p className="text-2xl font-bold text-navy-700">
+              162 <span className="text-sm text-green-700">+5% this month</span>
             </p>
           </div>
         </Card>
       </div>
       <Card className="bg-white rounded-lg shadow-sm overflow-hidden w-full">
-        <CardHeader className="p-4 pl-2">
-          <h3 className="text-lg font-semibold">Platform Growth</h3>
+        <CardHeader className="p-4 pl-0">
+          <h3 className="text-lg font-semibold ml-4">Platform Growth</h3>
         </CardHeader>
         <CardContent className="p-4 pt-0">
-          <div className="w-full" style={{ position: 'relative', paddingBottom: '50%' }}>
+          <div className="w-full" style={{ position: 'relative', paddingLeft :'10%', paddingBottom: '50%' }}>
             <svg
               className="recharts-surface absolute top-0 left-0"
               width="100%"
               height="100%"
-              viewBox="0 0 600 450"
+              viewBox="0 0 600 500"
               preserveAspectRatio="xMidYMid meet"
             >
               <title></title>
               <desc></desc>
               <defs>
                 <clipPath id="recharts51-clip">
-                  <rect x="40" y="10" height="390" width="480"></rect>
+                  <rect x="60" y="10" height="390" width="480"></rect>
                 </clipPath>
               </defs>
               <defs>
@@ -99,14 +92,14 @@ const PlatformOverview = () => {
                   orientation="bottom"
                   width="480"
                   height="30"
-                  x="40"
+                  x="60"
                   y="400"
                   class="recharts-cartesian-axis-line"
                   stroke="#666"
                   fill="none"
-                  x1="40"
+                  x1="60"
                   y1="400"
-                  x2="520"
+                  x2="540"
                   y2="400"
                 ></line>
                 <g class="recharts-cartesian-axis-ticks">
@@ -115,14 +108,14 @@ const PlatformOverview = () => {
                       orientation="bottom"
                       width="480"
                       height="30"
-                      x="40"
+                      x="60"
                       y="400"
                       class="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="40"
+                      x1="60"
                       y1="406"
-                      x2="40"
+                      x2="60"
                       y2="400"
                     ></line>
                     <text
@@ -130,13 +123,13 @@ const PlatformOverview = () => {
                       width="480"
                       height="30"
                       stroke="none"
-                      x="40"
+                      x="60"
                       y="408"
                       class="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="40" dy="0.71em">Jan</tspan>
+                      <tspan x="60" dy="0.71em">Jan</tspan>
                     </text>
                   </g>
                   <g class="recharts-layer recharts-cartesian-axis-tick">
@@ -144,14 +137,14 @@ const PlatformOverview = () => {
                       orientation="bottom"
                       width="480"
                       height="30"
-                      x="40"
+                      x="60"
                       y="400"
                       class="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="112"
+                      x1="132"
                       y1="406"
-                      x2="112"
+                      x2="132"
                       y2="400"
                     ></line>
                     <text
@@ -159,13 +152,13 @@ const PlatformOverview = () => {
                       width="480"
                       height="30"
                       stroke="none"
-                      x="112"
+                      x="132"
                       y="408"
                       class="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="112" dy="0.71em">Feb</tspan>
+                      <tspan x="132" dy="0.71em">Feb</tspan>
                     </text>
                   </g>
                   <g class="recharts-layer recharts-cartesian-axis-tick">
@@ -173,14 +166,14 @@ const PlatformOverview = () => {
                       orientation="bottom"
                       width="480"
                       height="30"
-                      x="40"
+                      x="60"
                       y="400"
                       class="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="184"
+                      x1="204"
                       y1="406"
-                      x2="184"
+                      x2="204"
                       y2="400"
                     ></line>
                     <text
@@ -188,13 +181,13 @@ const PlatformOverview = () => {
                       width="480"
                       height="30"
                       stroke="none"
-                      x="184"
+                      x="204"
                       y="408"
                       class="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="184" dy="0.71em">Mar</tspan>
+                      <tspan x="204" dy="0.71em">Mar</tspan>
                     </text>
                   </g>
                   <g class="recharts-layer recharts-cartesian-axis-tick">
@@ -202,14 +195,14 @@ const PlatformOverview = () => {
                       orientation="bottom"
                       width="480"
                       height="30"
-                      x="40"
+                      x="60"
                       y="400"
                       class="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="256"
+                      x1="276"
                       y1="406"
-                      x2="256"
+                      x2="276"
                       y2="400"
                     ></line>
                     <text
@@ -217,13 +210,13 @@ const PlatformOverview = () => {
                       width="480"
                       height="30"
                       stroke="none"
-                      x="256"
+                      x="276"
                       y="408"
                       class="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="256" dy="0.71em">Apr</tspan>
+                      <tspan x="276" dy="0.71em">Apr</tspan>
                     </text>
                   </g>
                   <g class="recharts-layer recharts-cartesian-axis-tick">
@@ -231,14 +224,14 @@ const PlatformOverview = () => {
                       orientation="bottom"
                       width="480"
                       height="30"
-                      x="40"
+                      x="60"
                       y="400"
                       class="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="328"
+                      x1="348"
                       y1="406"
-                      x2="328"
+                      x2="348"
                       y2="400"
                     ></line>
                     <text
@@ -246,13 +239,13 @@ const PlatformOverview = () => {
                       width="480"
                       height="30"
                       stroke="none"
-                      x="328"
+                      x="348"
                       y="408"
                       class="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="328" dy="0.71em">May</tspan>
+                      <tspan x="348" dy="0.71em">May</tspan>
                     </text>
                   </g>
                   <g class="recharts-layer recharts-cartesian-axis-tick">
@@ -260,14 +253,14 @@ const PlatformOverview = () => {
                       orientation="bottom"
                       width="480"
                       height="30"
-                      x="40"
+                      x="60"
                       y="400"
                       class="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="400"
+                      x1="420"
                       y1="406"
-                      x2="400"
+                      x2="420"
                       y2="400"
                     ></line>
                     <text
@@ -275,13 +268,13 @@ const PlatformOverview = () => {
                       width="480"
                       height="30"
                       stroke="none"
-                      x="400"
+                      x="420"
                       y="408"
                       class="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="400" dy="0.71em">Jun</tspan>
+                      <tspan x="420" dy="0.71em">Jun</tspan>
                     </text>
                   </g>
                   <g class="recharts-layer recharts-cartesian-axis-tick">
@@ -289,14 +282,14 @@ const PlatformOverview = () => {
                       orientation="bottom"
                       width="480"
                       height="30"
-                      x="40"
+                      x="60"
                       y="400"
                       class="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="472"
+                      x1="492"
                       y1="406"
-                      x2="472"
+                      x2="492"
                       y2="400"
                     ></line>
                     <text
@@ -304,13 +297,13 @@ const PlatformOverview = () => {
                       width="480"
                       height="30"
                       stroke="none"
-                      x="472"
+                      x="492"
                       y="408"
                       class="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="472" dy="0.71em">Jul</tspan>
+                      <tspan x="492" dy="0.71em">Jul</tspan>
                     </text>
                   </g>
                 </g>
@@ -325,9 +318,9 @@ const PlatformOverview = () => {
                   class="recharts-cartesian-axis-line"
                   stroke="#666"
                   fill="none"
-                  x1="40"
+                  x1="60"
                   y1="10"
-                  x2="40"
+                  x2="60"
                   y2="400"
                 ></line>
                 <g class="recharts-cartesian-axis-ticks">
@@ -341,9 +334,9 @@ const PlatformOverview = () => {
                       class="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="34"
+                      x1="54"
                       y1="400"
-                      x2="40"
+                      x2="60"
                       y2="400"
                     ></line>
                     <text
@@ -351,13 +344,13 @@ const PlatformOverview = () => {
                       width="60"
                       height="390"
                       stroke="none"
-                      x="32"
+                      x="52"
                       y="400"
                       class="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="end"
                       fill="#666"
                     >
-                      <tspan x="32" dy="0.355em">0</tspan>
+                      <tspan x="52" dy="0.355em">0</tspan>
                     </text>
                   </g>
                   <g class="recharts-layer recharts-cartesian-axis-tick">
@@ -370,9 +363,9 @@ const PlatformOverview = () => {
                       class="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="34"
+                      x1="54"
                       y1="300"
-                      x2="40"
+                      x2="60"
                       y2="300"
                     ></line>
                     <text
@@ -380,13 +373,13 @@ const PlatformOverview = () => {
                       width="60"
                       height="390"
                       stroke="none"
-                      x="32"
+                      x="52"
                       y="300"
                       class="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="end"
                       fill="#666"
                     >
-                      <tspan x="32" dy="0.355em">2500</tspan>
+                      <tspan x="52" dy="0.355em">2500</tspan>
                     </text>
                   </g>
                   <g class="recharts-layer recharts-cartesian-axis-tick">
@@ -399,9 +392,9 @@ const PlatformOverview = () => {
                       class="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="34"
+                      x1="54"
                       y1="200"
-                      x2="40"
+                      x2="60"
                       y2="200"
                     ></line>
                     <text
@@ -409,13 +402,13 @@ const PlatformOverview = () => {
                       width="60"
                       height="390"
                       stroke="none"
-                      x="32"
+                      x="52"
                       y="200"
                       class="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="end"
                       fill="#666"
                     >
-                      <tspan x="32" dy="0.355em">5000</tspan>
+                      <tspan x="52" dy="0.355em">5000</tspan>
                     </text>
                   </g>
                   <g class="recharts-layer recharts-cartesian-axis-tick">
@@ -428,9 +421,9 @@ const PlatformOverview = () => {
                       class="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="34"
+                      x1="54"
                       y1="100"
-                      x2="40"
+                      x2="60"
                       y2="100"
                     ></line>
                     <text
@@ -438,13 +431,13 @@ const PlatformOverview = () => {
                       width="60"
                       height="390"
                       stroke="none"
-                      x="32"
+                      x="52"
                       y="100"
                       class="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="end"
                       fill="#666"
                     >
-                      <tspan x="32" dy="0.355em">7500</tspan>
+                      <tspan x="52" dy="0.355em">7500</tspan>
                     </text>
                   </g>
                   <g class="recharts-layer recharts-cartesian-axis-tick">
@@ -457,9 +450,9 @@ const PlatformOverview = () => {
                       class="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="34"
+                      x1="54"
                       y1="0"
-                      x2="40"
+                      x2="60"
                       y2="0"
                     ></line>
                     <text
@@ -467,13 +460,13 @@ const PlatformOverview = () => {
                       width="60"
                       height="390"
                       stroke="none"
-                      x="32"
+                      x="52"
                       y="0"
                       class="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="end"
                       fill="#666"
                     >
-                      <tspan x="32" dy="0.355em">10000</tspan>
+                      <tspan x="52" dy="0.355em">10000</tspan>
                     </text>
                   </g>
                 </g>
@@ -484,65 +477,65 @@ const PlatformOverview = () => {
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="40"
+                    x1="60"
                     y1="400"
-                    x2="520"
+                    x2="540"
                     y2="400"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="40"
+                    x1="60"
                     y1="300"
-                    x2="520"
+                    x2="540"
                     y2="300"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="40"
+                    x1="60"
                     y1="200"
-                    x2="520"
+                    x2="540"
                     y2="200"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="40"
+                    x1="60"
                     y1="100"
-                    x2="520"
+                    x2="540"
                     y2="100"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="40"
+                    x1="60"
                     y1="0"
-                    x2="520"
+                    x2="540"
                     y2="0"
                   ></line>
                 </g>
@@ -551,104 +544,104 @@ const PlatformOverview = () => {
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="40"
+                    x1="60"
                     y1="10"
-                    x2="40"
+                    x2="60"
                     y2="400"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="112"
+                    x1="132"
                     y1="10"
-                    x2="112"
+                    x2="132"
                     y2="400"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="184"
+                    x1="204"
                     y1="10"
-                    x2="184"
+                    x2="204"
                     y2="400"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="256"
+                    x1="276"
                     y1="10"
-                    x2="256"
+                    x2="276"
                     y2="400"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="328"
+                    x1="348"
                     y1="10"
-                    x2="328"
+                    x2="348"
                     y2="400"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="400"
+                    x1="420"
                     y1="10"
-                    x2="400"
+                    x2="420"
                     y2="400"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="472"
+                    x1="492"
                     y1="10"
-                    x2="472"
+                    x2="492"
                     y2="400"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="40"
+                    x="60"
                     y="10"
                     width="480"
                     height="390"
-                    x1="520"
+                    x1="540"
                     y1="10"
-                    x2="520"
+                    x2="540"
                     y2="400"
                   ></line>
                 </g>
@@ -662,7 +655,7 @@ const PlatformOverview = () => {
                     height="390"
                     stroke="none"
                     class="recharts-curve recharts-area-area"
-                    d="M40,249C89.333,235.667,138.667,222.333,188,209C237.333,195.667,286.667,182.333,336,169C385.333,155.667,434.667,142.333,484,129C533.333,115.667,582.667,102.333,632,89C681.333,75.667,730.667,62.333,780,49C828.333,35.667,876.667,22.333,925,9C973.333,-4.333,1021.667,-17.667,1070,10L1070,400C1021.667,400,973.333,400,925,400C876.667,400,828.333,400,780,400C730.667,400,681.333,400,632,400C582.667,400,533.333,400,484,400C434.667,400,385.333,400,336,400C286.667,400,237.333,400,188,400C138.667,400,89.333,400,40,400Z"
+                    d="M60,249C109.333,235.667,158.667,222.333,208,209C257.333,195.667,306.667,182.333,356,169C405.333,155.667,454.667,142.333,504,129C553.333,115.667,602.667,102.333,652,89C701.333,75.667,750.667,62.333,800,49C848.333,35.667,896.667,22.333,945,9C993.333,-4.333,1041.667,-17.667,1090,10L1090,400C1041.667,400,993.333,400,945,400C896.667,400,848.333,400,800,400C750.667,400,701.333,400,652,400C602.667,400,553.333,400,504,400C454.667,400,405.333,400,356,400C306.667,400,257.333,400,208,400C158.667,400,109.333,400,60,400Z"
                   ></path>
                   <path
                     stroke="#1FBAB4"
@@ -671,7 +664,7 @@ const PlatformOverview = () => {
                     width="480"
                     height="390"
                     class="recharts-curve recharts-area-curve"
-                    d="M40,249C89.333,235.667,138.667,222.333,188,209C237.333,195.667,286.667,182.333,336,169C385.333,155.667,434.667,142.333,484,129C533.333,115.667,582.667,102.333,632,89C681.333,75.667,730.667,62.333,780,49C828.333,35.667,876.667,22.333,925,9C973.333,-4.333,1021.667,-17.667,1070,10"
+                    d="M60,249C109.333,235.667,158.667,222.333,208,209C257.333,195.667,306.667,182.333,356,169C405.333,155.667,454.667,142.333,504,129C553.333,115.667,602.667,102.333,652,89C701.333,75.667,750.667,62.333,800,49C848.333,35.667,896.667,22.333,945,9C993.333,-4.333,1041.667,-17.667,1090,10"
                   ></path>
                 </g>
               </g>
@@ -684,7 +677,7 @@ const PlatformOverview = () => {
                     height="390"
                     stroke="none"
                     class="recharts-curve recharts-area-area"
-                    d="M40,311.4C89.333,306.2,138.667,301,188,295.8C237.333,290.6,286.667,285.4,336,280.2C385.333,275,434.667,270.6,484,266.2C533.333,261.8,582.667,258.4,632,255C681.333,251.6,730.667,248.8,780,246C828.333,243.2,876.667,240.4,925,237.6C973.333,234.8,1021.667,232,1070,225L1070,400C1021.667,400,973.333,400,925,400C876.667,400,828.333,400,780,400C730.667,400,681.333,400,632,400C582.667,400,533.333,400,484,400C434.667,400,385.333,400,336,400C286.667,400,237.333,400,188,400C138.667,400,89.333,400,40,400Z"
+                    d="M60,311.4C109.333,306.2,158.667,301,208,295.8C257.333,290.6,306.667,285.4,356,280.2C405.333,275,454.667,270.6,504,266.2C553.333,261.8,602.667,258.4,652,255C701.333,251.6,750.667,248.8,800,246C848.333,243.2,896.667,240.4,945,237.6C993.333,234.8,1041.667,232,1090,225L1090,400C1041.667,400,993.333,400,945,400C896.667,400,848.333,400,800,400C750.667,400,701.333,400,652,400C602.667,400,553.333,400,504,400C454.667,400,405.333,400,356,400C306.667,400,257.333,400,208,400C158.667,400,109.333,400,60,400Z"
                   ></path>
                   <path
                     stroke="#FF9500"
@@ -693,7 +686,7 @@ const PlatformOverview = () => {
                     width="480"
                     height="390"
                     class="recharts-curve recharts-area-curve"
-                    d="M40,311.4C89.333,306.2,138.667,301,188,295.8C237.333,290.6,286.667,285.4,336,280.2C385.333,275,434.667,270.6,484,266.2C533.333,261.8,582.667,258.4,632,255C681.333,251.6,730.667,248.8,780,246C828.333,243.2,876.667,240.4,925,237.6C973.333,234.8,1021.667,232,1070,225"
+                    d="M60,311.4C109.333,306.2,158.667,301,208,295.8C257.333,290.6,306.667,285.4,356,280.2C405.333,275,454.667,270.6,504,266.2C553.333,261.8,602.667,258.4,652,255C701.333,251.6,750.667,248.8,800,246C848.333,243.2,896.667,240.4,945,237.6C993.333,234.8,1041.667,232,1090,225"
                   ></path>
                 </g>
               </g>
@@ -706,7 +699,7 @@ const PlatformOverview = () => {
                     height="390"
                     stroke="none"
                     class="recharts-curve recharts-area-area"
-                    d="M40,373.8C89.333,372.5,138.667,371.2,188,369.9C237.333,368.6,286.667,367.3,336,366C385.333,364.7,434.667,363.8,484,362.5C533.333,361.2,582.667,359.9,632,358.6C681.333,357.3,730.667,356.3,780,355C828.333,353.7,876.667,352.4,925,351.1C973.333,349.8,1021.667,348.5,1070,347L1070,400C1021.667,400,973.333,400,925,400C876.667,400,828.333,400,780,400C730.667,400,681.333,400,632,400C582.667,400,533.333,400,484,400C434.667,400,385.333,400,336,400C286.667,400,237.333,400,188,400C138.667,400,89.333,400,40,400Z"
+                    d="M60,373.8C109.333,372.5,158.667,371.2,208,369.9C257.333,368.6,306.667,367.3,356,366C405.333,364.7,454.667,363.8,504,362.5C553.333,361.2,602.667,359.9,652,358.6C701.333,357.3,750.667,356.3,800,355C848.333,353.7,896.667,352.4,945,351.1C993.333,349.8,1041.667,348.5,1090,347L1090,400C1041.667,400,993.333,400,945,400C896.667,400,848.333,400,800,400C750.667,400,701.333,400,652,400C602.667,400,553.333,400,504,400C454.667,400,405.333,400,356,400C306.667,400,257.333,400,208,400C158.667,400,109.333,400,60,400Z"
                   ></path>
                   <path
                     stroke="#f87171"
@@ -715,7 +708,7 @@ const PlatformOverview = () => {
                     width="480"
                     height="390"
                     class="recharts-curve recharts-area-curve"
-                    d="M40,373.8C89.333,372.5,138.667,371.2,188,369.9C237.333,368.6,286.667,367.3,336,366C385.333,364.7,434.667,363.8,484,362.5C533.333,361.2,582.667,359.9,632,358.6C681.333,357.3,730.667,356.3,780,355C828.333,353.7,876.667,352.4,925,351.1C973.333,349.8,1021.667,348.5,1070,347"
+                    d="M60,373.8C109.333,372.5,158.667,371.2,208,369.9C257.333,368.6,306.667,367.3,356,366C405.333,364.7,454.667,363.8,504,362.5C553.333,361.2,602.667,359.9,652,358.6C701.333,357.3,750.667,356.3,800,355C848.333,353.7,896.667,352.4,945,351.1C993.333,349.8,1041.667,348.5,1090,347"
                   ></path>
                 </g>
               </g>
