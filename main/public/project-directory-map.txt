@@ -1,0 +1,47 @@
+
+============================================= 
+Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\public 
+============================================= 
+ Volume in drive C has no label.
+ Volume Serial Number is 78D1-D9D4
+
+ Directory of C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\public
+
+06/09/2025  03:36 AM    <DIR>          .
+06/09/2025  03:36 AM    <DIR>          ..
+06/08/2025  12:14 PM            95,412 cosmic.png
+06/08/2025  12:14 PM             7,645 favicon.ico
+06/08/2025  12:14 PM             6,943 group1.png
+06/08/2025  12:14 PM             8,029 group2.png
+06/08/2025  12:14 PM             7,761 group3.png
+06/08/2025  12:14 PM             6,945 group4.png
+06/08/2025  12:14 PM           140,356 icon.png
+06/08/2025  12:14 PM            39,927 logo.png
+06/08/2025  12:14 PM             3,253 placeholder.svg
+06/09/2025  03:36 AM               182 project-directory-map.txt
+06/08/2025  12:14 PM               174 robots.txt
+06/08/2025  12:14 PM           253,499 user1.png
+06/08/2025  12:14 PM            66,823 user2.png
+06/08/2025  12:14 PM           399,259 watermark.png
+06/08/2025  12:14 PM             1,040 zig.png
+              15 File(s)      1,037,248 bytes
+               2 Dir(s)  28,939,157,504 bytes free
+ 
+Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\public 
+----------------------------------- 
+cosmic.png
+favicon.ico
+group1.png
+group2.png
+group3.png
+group4.png
+icon.png
+logo.png
+placeholder.svg
+project-directory-map.txt
+robots.txt
+user1.png
+user2.png
+watermark.png
+zig.png
+ 

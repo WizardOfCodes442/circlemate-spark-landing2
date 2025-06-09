@@ -1,0 +1,59 @@
+
+============================================= 
+Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\pages 
+============================================= 
+ Volume in drive C has no label.
+ Volume Serial Number is 78D1-D9D4
+
+ Directory of C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\pages
+
+06/09/2025  03:36 AM    <DIR>          .
+06/09/2025  03:36 AM    <DIR>          ..
+06/08/2025  12:14 PM            13,769 Communities.tsx
+06/08/2025  12:14 PM             8,723 CommunityProfile.tsx
+06/08/2025  12:14 PM             8,157 CreateCommunity.tsx
+06/08/2025  12:16 PM             3,734 Dashboard.tsx
+06/08/2025  09:53 PM            14,126 Discover.tsx
+06/08/2025  12:14 PM             5,075 EditProfile.tsx
+06/08/2025  12:14 PM             3,499 Events.tsx
+06/08/2025  12:14 PM             3,281 ForgotPassword.tsx
+06/08/2025  12:14 PM             1,137 Index.tsx
+06/08/2025  12:14 PM             6,270 Login.tsx
+06/08/2025  12:14 PM            10,848 ManageCommunity.tsx
+06/09/2025  01:50 AM            15,654 Matchmaking.tsx
+06/08/2025  12:14 PM               947 NotFound.tsx
+06/08/2025  12:14 PM             7,115 Notification.tsx
+06/08/2025  12:14 PM             7,023 Notifications.tsx
+06/08/2025  12:14 PM    <DIR>          onboarding
+06/09/2025  03:36 AM               185 project-directory-map.txt
+06/08/2025  12:14 PM               426 Receipt.tsx
+06/08/2025  12:14 PM            10,265 Signup.tsx
+06/08/2025  12:14 PM             5,850 UserProfile.tsx
+06/08/2025  12:14 PM             1,709 VerifyEmail.tsx
+              20 File(s)        127,793 bytes
+               3 Dir(s)  28,939,096,064 bytes free
+ 
+Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\pages 
+----------------------------------- 
+Communities.tsx
+CommunityProfile.tsx
+CreateCommunity.tsx
+Dashboard.tsx
+Discover.tsx
+EditProfile.tsx
+Events.tsx
+ForgotPassword.tsx
+Index.tsx
+Login.tsx
+ManageCommunity.tsx
+Matchmaking.tsx
+NotFound.tsx
+Notification.tsx
+Notifications.tsx
+onboarding
+project-directory-map.txt
+Receipt.tsx
+Signup.tsx
+UserProfile.tsx
+VerifyEmail.tsx
+ 

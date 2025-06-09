@@ -34,6 +34,8 @@ import CreateCommunity from "./pages/CreateCommunity";
 import CommunityProfile from "./pages/CommunityProfile";
 import ManageCommunity from "./pages/ManageCommunity";
 import VerifyEmail from "./pages/VerifyEmail";
+import AdminDashboard from "./pages/AdminDashboard";
+
 
 
 const queryClient = new QueryClient();
@@ -48,6 +50,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/admindashboard" element={<AdminDashboard/>} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/dashboard" element={<Matchmaking/>} />
           <Route path="/discover" element={<Discover />} />

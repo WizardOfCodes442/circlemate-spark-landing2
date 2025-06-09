@@ -1,0 +1,25 @@
+
+============================================= 
+Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\data 
+============================================= 
+ Volume in drive C has no label.
+ Volume Serial Number is 78D1-D9D4
+
+ Directory of C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\data
+
+06/09/2025  03:36 AM    <DIR>          .
+06/09/2025  03:36 AM    <DIR>          ..
+06/08/2025  12:14 PM             1,334 mockCommunityData.ts
+06/08/2025  12:14 PM             1,332 mockCommunityData.tsx
+06/09/2025  12:59 AM             2,231 mockDashboardData.ts
+06/09/2025  03:36 AM               184 project-directory-map.txt
+               4 File(s)          5,081 bytes
+               2 Dir(s)  28,939,112,448 bytes free
+ 
+Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\data 
+----------------------------------- 
+mockCommunityData.ts
+mockCommunityData.tsx
+mockDashboardData.ts
+project-directory-map.txt
+ 

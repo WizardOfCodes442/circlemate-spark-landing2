@@ -1,0 +1,41 @@
+
+============================================= 
+Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src 
+============================================= 
+ Volume in drive C has no label.
+ Volume Serial Number is 78D1-D9D4
+
+ Directory of C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src
+
+06/09/2025  03:36 AM    <DIR>          .
+06/09/2025  03:36 AM    <DIR>          ..
+06/08/2025  12:14 PM               648 App.css
+06/09/2025  02:00 AM             3,959 App.tsx
+06/08/2025  12:26 PM    <DIR>          components
+06/08/2025  12:22 PM    <DIR>          data
+06/08/2025  12:14 PM    <DIR>          hooks
+06/08/2025  12:14 PM             2,550 index.css
+06/08/2025  12:14 PM    <DIR>          lib
+06/08/2025  12:14 PM               163 main.tsx
+06/08/2025  12:14 PM    <DIR>          pages
+06/09/2025  03:36 AM               179 project-directory-map.txt
+06/08/2025  12:14 PM    <DIR>          types
+06/08/2025  12:14 PM                39 vite-env.d.ts
+               6 File(s)          7,538 bytes
+               8 Dir(s)  28,939,153,408 bytes free
+ 
+Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src 
+----------------------------------- 
+App.css
+App.tsx
+components
+data
+hooks
+index.css
+lib
+main.tsx
+pages
+project-directory-map.txt
+types
+vite-env.d.ts
+ 

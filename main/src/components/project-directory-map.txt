@@ -1,0 +1,51 @@
+
+============================================= 
+Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\components 
+============================================= 
+ Volume in drive C has no label.
+ Volume Serial Number is 78D1-D9D4
+
+ Directory of C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\components
+
+06/09/2025  03:36 AM    <DIR>          .
+06/09/2025  03:36 AM    <DIR>          ..
+06/08/2025  12:14 PM    <DIR>          community
+06/08/2025  12:18 PM             4,424 ConnectView.tsx
+06/09/2025  01:59 AM             5,421 DashboardHeader.tsx
+06/08/2025  12:14 PM    <DIR>          effects
+06/08/2025  12:14 PM    <DIR>          events
+06/08/2025  12:14 PM             2,595 Features.tsx
+06/08/2025  12:14 PM             3,504 Footer.tsx
+06/08/2025  12:14 PM             3,653 Header.tsx
+06/08/2025  12:14 PM             4,895 Hero.tsx
+06/08/2025  12:14 PM             2,644 HowItWorks.tsx
+06/08/2025  12:14 PM    <DIR>          onboarding
+06/08/2025  12:17 PM             4,236 ProfileView.tsx
+06/09/2025  03:36 AM               190 project-directory-map.txt
+06/08/2025  12:14 PM             4,822 Receipt.tsx
+06/08/2025  12:14 PM             2,532 Stats.tsx
+06/08/2025  12:14 PM             2,891 Testimonials.tsx
+06/08/2025  12:21 PM    <DIR>          ui
+              12 File(s)         41,807 bytes
+               7 Dir(s)  28,939,149,312 bytes free
+ 
+Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\components 
+----------------------------------- 
+community
+ConnectView.tsx
+DashboardHeader.tsx
+effects
+events
+Features.tsx
+Footer.tsx
+Header.tsx
+Hero.tsx
+HowItWorks.tsx
+onboarding
+ProfileView.tsx
+project-directory-map.txt
+Receipt.tsx
+Stats.tsx
+Testimonials.tsx
+ui
+ 

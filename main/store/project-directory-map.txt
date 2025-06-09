@@ -1,0 +1,23 @@
+
+============================================= 
+Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\store 
+============================================= 
+ Volume in drive C has no label.
+ Volume Serial Number is 78D1-D9D4
+
+ Directory of C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\store
+
+06/09/2025  03:36 AM    <DIR>          .
+06/09/2025  03:36 AM    <DIR>          ..
+06/09/2025  03:36 AM               181 project-directory-map.txt
+06/08/2025  12:14 PM             4,173 useAuthStore.ts
+06/08/2025  12:14 PM               435 useOnboardingStore.ts
+               3 File(s)          4,789 bytes
+               2 Dir(s)  28,939,079,680 bytes free
+ 
+Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\store 
+----------------------------------- 
+project-directory-map.txt
+useAuthStore.ts
+useOnboardingStore.ts
+ 
