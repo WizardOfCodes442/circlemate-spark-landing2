@@ -1,4 +1,4 @@
-export const mockMatches = [
+export const mockMatches2 = [
   {
     id: "m1",
     name: "David Brown",
@@ -41,7 +41,7 @@ export const mockActivities = [
 
 export const fetchMatchesFromAPI = async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  return mockMatches;
+  return mockMatches2;
 };
 
 export const fetchActivitiesFromAPI = async () => {

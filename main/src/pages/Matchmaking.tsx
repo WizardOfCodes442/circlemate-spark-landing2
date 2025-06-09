@@ -14,6 +14,7 @@ import RecentActivities from "@/components/ui/RecentActivities";
 import ProfileView from "@/components/ProfileView";
 import ConnectView from "@/components/ConnectView";
 import { mockActivities } from "@/data/mockDashboardData";
+import { fetchMatchesFromAPI, fetchActivitiesFromAPI, mockMatches2 } from "@/data/mockDashboardData";
 
 // Mock user data
 const currentUser = {
@@ -74,8 +75,6 @@ const Matchmaking = () => {
 
   const recalculateMatches = () => {
     setIsCalculating(true);
-
-    // Simulate AI calculation
     setTimeout(() => {
       const updatedMatches = matches.map((match) => {
         const interestSimilarity = calculateJaccardSimilarity(
@@ -86,19 +85,13 @@ const Matchmaking = () => {
           currentUser.communities,
           match.communities
         );
-
-        // Weighted average (70% interests, 30% communities)
         const newCompatibility = Math.round(
           interestSimilarity * 0.7 + communitySimilarity * 0.3
         );
-
         return { ...match, compatibility: newCompatibility };
       });
-
-      // Sort by compatibility
       setMatches(updatedMatches.sort((a, b) => b.compatibility - a.compatibility));
       setIsCalculating(false);
-
       toast({
         title: "Matches Updated",
         description: "AI has recalculated your compatibility scores using Jaccard similarity.",
@@ -151,39 +144,45 @@ const Matchmaking = () => {
         <Header />
       </div>
       <main className="container mx-auto px-4 py-8 flex-grow w-full">
-        <TechCircleHeader />
-        <Card className="mb-8 w-full">
-          <CardHeader>
-            <CardTitle>Your Profile</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium mb-2">Interests</h4>
-                <div className="flex flex-wrap gap-2">
-                  {currentUser.interests.map((interest, index) => (
-                    <Badge key={index} variant="secondary">
-                      {interest}
-                    </Badge>
-                  ))}
+        <div className="w-full">
+          <TechCircleHeader />
+        </div>
+        <div className="w-full">
+          <Card className="mb-8 w-full">
+            <CardHeader>
+              <CardTitle>Your Profile</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-medium mb-2">Interests</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {currentUser.interests.map((interest, index) => (
+                      <Badge key={index} variant="secondary">
+                        {interest}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-medium mb-2">Communities</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {currentUser.communities.map((community, index) => (
+                      <Badge key={index} variant="outline">
+                        {community}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div>
-                <h4 className="font-medium mb-2">Communities</h4>
-                <div className="flex flex-wrap gap-2">
-                  {currentUser.communities.map((community, index) => (
-                    <Badge key={index} variant="outline">
-                      {community}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
 
-        <StatsSection />
-        <div className="max-w-7xl mx-auto">
+        <div className="w-full">
+          <StatsSection />
+        </div>
+        <div className="w-full">
           {/* Algorithm Explanation and Smart Matchmaking */}
           <Card className="mb-8 w-full">
             <CardHeader>
@@ -211,7 +210,7 @@ const Matchmaking = () => {
             </CardContent>
           </Card>
 
-          <div className="flex items-center justify-end text-white space-x-4 mb-8">
+          <div className="flex items-center justify-end text-white space-x-4 mb-8 w-full">
             <Button
               onClick={recalculateMatches}
               disabled={isCalculating}
@@ -227,9 +226,9 @@ const Matchmaking = () => {
           </div>
 
           {/* Matches and Recent Activities Side by Side on Desktop */}
-          <div className="grid grid-cols-1 lg:grid-cols-7 gap-8 w-full px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
             {/* Recent Matches */}
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-2 w-full">
               <Card className="bg-white rounded-lg shadow-sm p-6 mb-8 w-full">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-bold">Recent Matches</h2>
@@ -256,7 +255,6 @@ const Matchmaking = () => {
                         </div>
                       </CardHeader>
                       <CardContent className="pt-4 space-y-4">
-                        {/* Compatibility Score */}
                         <div className="text-center">
                           <div
                             className={`text-3xl font-bold ${getCompatibilityColor(
@@ -279,8 +277,6 @@ const Matchmaking = () => {
                           </Badge>
                           <Progress value={match.compatibility} className="mt-2" />
                         </div>
-
-                        {/* Shared Interests */}
                         <div>
                           <h4 className="font-medium text-sm mb-2">Shared Interests</h4>
                           <div className="flex flex-wrap gap-1">
@@ -291,8 +287,6 @@ const Matchmaking = () => {
                             ))}
                           </div>
                         </div>
-
-                        {/* Shared Communities */}
                         <div>
                           <h4 className="font-medium text-sm mb-2">Shared Communities</h4>
                           <div className="flex flex-wrap gap-1">
@@ -304,7 +298,6 @@ const Matchmaking = () => {
                             ))}
                           </div>
                         </div>
-
                         <Button
                           className="w-full bg-teal-500 text-white rounded-full"
                           onClick={() => connectWithUser(match.id, match.name)}
@@ -324,7 +317,6 @@ const Matchmaking = () => {
                   ))}
                 </div>
               </Card>
-
               {matches.length === 0 && (
                 <Card className="w-full">
                   <CardContent className="pt-8 text-center">
@@ -336,9 +328,8 @@ const Matchmaking = () => {
                 </Card>
               )}
             </div>
-
             {/* Recent Activities */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-1 w-full">
               <RecentActivities
                 activities={mockActivities.slice(0, 4)}
                 onViewAll={() => {}}
