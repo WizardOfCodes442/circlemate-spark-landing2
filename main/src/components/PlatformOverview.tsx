@@ -5,7 +5,9 @@ import { Users, ChevronUp, Calendar, Heart } from "lucide-react";
 const PlatformOverview = () => {
   return (
     <>
-      
+      <div className="flex justify-end mb-4">
+
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <Card className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-start w-full">
           <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center mb-2">
@@ -54,7 +56,7 @@ const PlatformOverview = () => {
       </div>
       <div className="mt-6">
         <h3 className="text-lg font-semibold mb-4">Platform Growth</h3>
-        <div className="w-full h-64" style={{ position: 'relative', paddingBottom: '90.91%' }}>
+        <div className="w-full" style={{ position: 'relative', paddingBottom: '50%' }}>
           <svg className="recharts-surface absolute top-0 left-0" width="100%" height="100%" viewBox="0 0 330 300" preserveAspectRatio="xMidYMid meet">
             <title></title>
             <desc></desc>
