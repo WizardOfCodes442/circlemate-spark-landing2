@@ -6,7 +6,10 @@ const PlatformOverview = () => {
   return (
     <>
       <div className="flex justify-end mb-4">
-        <Button variant="ghost" className="bg-teal-500 text-white rounded-full px-4 py-1 text-sm">
+        <Button
+          variant="ghost"
+          className="bg-teal-500 text-white rounded-full px-4 py-1 text-sm"
+        >
           <Users className="h-4 w-4 mr-2" /> View Accepted Connections
         </Button>
       </div>
@@ -57,23 +60,27 @@ const PlatformOverview = () => {
         </Card>
       </div>
       <Card className="bg-white rounded-lg shadow-sm overflow-hidden w-full">
-        <CardHeader className="p-4 pl-4">
-          <h3 className="text-lg font-semibold text-left">Platform Growth</h3>
+        <CardHeader className="p-4 pl-0">
+          <h3 className="text-lg font-semibold text-left pl-4">Platform Growth</h3>
         </CardHeader>
         <CardContent className="p-4 pt-0">
-          <div className="w-full" style={{ position: 'relative', paddingBottom: '40%' }}>
+          <div
+            className="w-full"
+            style={{
+              position: "relative",
+              paddingBottom: "50%", // Increased for mobile visibility
+            }}
+          >
             <svg
-              className="recharts-surface absolute top-0 left-0"
-              width="100%"
-              height="100%"
-              viewBox="0 0 600 400" // Increased viewBox width for desktop, height for mobile
+              className="recharts-surface absolute top-0 left-0 w-full h-full"
+              viewBox="0 0 600 450" // Increased viewBox for mobile
               preserveAspectRatio="xMidYMid meet"
             >
               <title></title>
               <desc></desc>
               <defs>
                 <clipPath id="recharts51-clip">
-                  <rect x="60" y="10" height="360" width="480"></rect> {/* Adjusted for larger SVG */}
+                  <rect x="80" y="15" height="390" width="460"></rect>
                 </clipPath>
               </defs>
               <defs>
@@ -93,220 +100,234 @@ const PlatformOverview = () => {
               <g className="recharts-layer recharts-cartesian-axis recharts-xAxis xAxis">
                 <line
                   orientation="bottom"
-                  width="480"
-                  height="30"
-                  x="60"
-                  y="370"
+                  width="460"
+                  height="45"
+                  x="80"
+                  y="405"
                   className="recharts-cartesian-axis-line"
                   stroke="#666"
                   fill="none"
-                  x1="60"
-                  y1="370"
+                  x1="80"
+                  y1="405"
                   x2="540"
-                  y2="370"
+                  y2="405"
                 ></line>
                 <g className="recharts-cartesian-axis-ticks">
                   <g className="recharts-layer recharts-cartesian-axis-tick">
                     <line
                       orientation="bottom"
-                      width="480"
-                      height="30"
-                      x="60"
-                      y="370"
+                      width="460"
+                      height="45"
+                      x="80"
+                      y="405"
                       className="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="60"
-                      y1="376"
-                      x2="60"
-                      y2="370"
+                      x1="80"
+                      y1="414"
+                      x2="80"
+                      y2="405"
                     ></line>
                     <text
                       orientation="bottom"
-                      width="480"
-                      height="30"
+                      width="460"
+                      height="45"
                       stroke="none"
-                      x="60"
-                      y="378"
+                      x="80"
+                      y="417"
                       className="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="60" dy="0.71em">Jan</tspan>
+                      <tspan x="80" dy="0.71em">
+                        Jan
+                      </tspan>
                     </text>
                   </g>
                   <g className="recharts-layer recharts-cartesian-axis-tick">
                     <line
                       orientation="bottom"
-                      width="480"
-                      height="30"
-                      x="60"
-                      y="370"
+                      width="460"
+                      height="45"
+                      x="80"
+                      y="405"
                       className="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="132"
-                      y1="376"
-                      x2="132"
-                      y2="370"
+                      x1="152.857"
+                      y1="414"
+                      x2="152.857"
+                      y2="405"
                     ></line>
                     <text
                       orientation="bottom"
-                      width="480"
-                      height="30"
+                      width="460"
+                      height="45"
                       stroke="none"
-                      x="132"
-                      y="378"
+                      x="152.857"
+                      y="417"
                       className="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="132" dy="0.71em">Feb</tspan>
+                      <tspan x="152.857" dy="0.71em">
+                        Feb
+                      </tspan>
                     </text>
                   </g>
                   <g className="recharts-layer recharts-cartesian-axis-tick">
                     <line
                       orientation="bottom"
-                      width="480"
-                      height="30"
-                      x="60"
-                      y="370"
+                      width="460"
+                      height="45"
+                      x="80"
+                      y="405"
                       className="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="204"
-                      y1="376"
-                      x2="204"
-                      y2="370"
+                      x1="225.714"
+                      y1="414"
+                      x2="225.714"
+                      y2="405"
                     ></line>
                     <text
                       orientation="bottom"
-                      width="480"
-                      height="30"
+                      width="460"
+                      height="45"
                       stroke="none"
-                      x="204"
-                      y="378"
+                      x="225.714"
+                      y="417"
                       className="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="204" dy="0.71em">Mar</tspan>
+                      <tspan x="225.714" dy="0.71em">
+                        Mar
+                      </tspan>
                     </text>
                   </g>
                   <g className="recharts-layer recharts-cartesian-axis-tick">
                     <line
                       orientation="bottom"
-                      width="480"
-                      height="30"
-                      x="60"
-                      y="370"
+                      width="460"
+                      height="45"
+                      x="80"
+                      y="405"
                       className="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="276"
-                      y1="376"
-                      x2="276"
-                      y2="370"
+                      x1="298.571"
+                      y1="414"
+                      x2="298.571"
+                      y2="405"
                     ></line>
                     <text
                       orientation="bottom"
-                      width="480"
-                      height="30"
+                      width="460"
+                      height="45"
                       stroke="none"
-                      x="276"
-                      y="378"
+                      x="298.571"
+                      y="417"
                       className="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="276" dy="0.71em">Apr</tspan>
+                      <tspan x="298.571" dy="0.71em">
+                        Apr
+                      </tspan>
                     </text>
                   </g>
                   <g className="recharts-layer recharts-cartesian-axis-tick">
                     <line
                       orientation="bottom"
-                      width="480"
-                      height="30"
-                      x="60"
-                      y="370"
+                      width="460"
+                      height="45"
+                      x="80"
+                      y="405"
                       className="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="348"
-                      y1="376"
-                      x2="348"
-                      y2="370"
+                      x1="371.429"
+                      y1="414"
+                      x2="371.429"
+                      y2="405"
                     ></line>
                     <text
                       orientation="bottom"
-                      width="480"
-                      height="30"
+                      width="460"
+                      height="45"
                       stroke="none"
-                      x="348"
-                      y="378"
+                      x="371.429"
+                      y="417"
                       className="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="348" dy="0.71em">May</tspan>
+                      <tspan x="371.429" dy="0.71em">
+                        May
+                      </tspan>
                     </text>
                   </g>
                   <g className="recharts-layer recharts-cartesian-axis-tick">
                     <line
                       orientation="bottom"
-                      width="480"
-                      height="30"
-                      x="60"
-                      y="370"
+                      width="460"
+                      height="45"
+                      x="80"
+                      y="405"
                       className="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="420"
-                      y1="376"
-                      x2="420"
-                      y2="370"
+                      x1="444.286"
+                      y1="414"
+                      x2="444.286"
+                      y2="405"
                     ></line>
                     <text
                       orientation="bottom"
-                      width="480"
-                      height="30"
+                      width="460"
+                      height="45"
                       stroke="none"
-                      x="420"
-                      y="378"
+                      x="444.286"
+                      y="417"
                       className="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="420" dy="0.71em">Jun</tspan>
+                      <tspan x="444.286" dy="0.71em">
+                        Jun
+                      </tspan>
                     </text>
                   </g>
                   <g className="recharts-layer recharts-cartesian-axis-tick">
                     <line
                       orientation="bottom"
-                      width="480"
-                      height="30"
-                      x="60"
-                      y="370"
+                      width="460"
+                      height="45"
+                      x="80"
+                      y="405"
                       className="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="492"
-                      y1="376"
-                      x2="492"
-                      y2="370"
+                      x1="517.143"
+                      y1="414"
+                      x2="517.143"
+                      y2="405"
                     ></line>
                     <text
                       orientation="bottom"
-                      width="480"
-                      height="30"
+                      width="460"
+                      height="45"
                       stroke="none"
-                      x="492"
-                      y="378"
+                      x="517.143"
+                      y="417"
                       className="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="middle"
                       fill="#666"
                     >
-                      <tspan x="492" dy="0.71em">Jul</tspan>
+                      <tspan x="517.143" dy="0.71em">
+                        Jul
+                      </tspan>
                     </text>
                   </g>
                 </g>
@@ -314,159 +335,172 @@ const PlatformOverview = () => {
               <g className="recharts-layer recharts-cartesian-axis recharts-yAxis yAxis">
                 <line
                   orientation="left"
-                  width="60"
-                  height="360"
+                  width="80"
+                  height="390"
                   x="0"
-                  y="10"
+                  y="15"
                   className="recharts-cartesian-axis-line"
                   stroke="#666"
                   fill="none"
-                  x1="60"
-                  y1="10"
-                  x2="60"
-                  y2="370"
+                  x1="80"
+                  y1="15"
+                  x2="80"
+                  y2="405"
                 ></line>
                 <g className="recharts-cartesian-axis-ticks">
                   <g className="recharts-layer recharts-cartesian-axis-tick">
                     <line
                       orientation="left"
-                      width="60"
-                      height="360"
+                      width="80"
+                      height="390"
                       x="0"
-                      y="10"
+                      y="15"
                       className="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="54"
-                      y1="370"
-                      x2="60"
-                      y2="370"
+                      x1="71"
+                      y1="405"
+                      x2="80"
+                      y2="405"
                     ></line>
                     <text
                       orientation="left"
-                      width="60"
-                      height="360"
+                      width="80"
+                      height="390"
                       stroke="none"
-                      x="52"
-                      y="370"
+                      x="68"
+                      y="405"
                       className="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="end"
                       fill="#666"
                     >
-                      <tspan x="52" dy="0.355em">0</tspan>
+                      <tspan x="68" dy="0.355em">
+                        0
+                      </tspan>
                     </text>
                   </g>
                   <g className="recharts-layer recharts-cartesian-axis-tick">
                     <line
                       orientation="left"
-                      width="60"
-                      height="360"
+                      width="80"
+                      height="390"
                       x="0"
-                      y="10"
+                      y="15"
                       className="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="54"
-                      y1="280"
-                      x2="60"
-                      y2="280"
+                      x1="71"
+                      y1="307.5"
+                      x2="80"
+                      y2="307.5"
                     ></line>
                     <text
                       orientation="left"
-                      width="60"
-                      height="360"
+                      width="80"
+                      height="390"
                       stroke="none"
-                      x="52"
-                      y="280"
+                      x="68"
+                      y="307.5"
                       className="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="end"
                       fill="#666"
                     >
-                      <tspan x="52" dy="0.355em">2500</tspan>
+                      <tspan x="68" dy="0.355em">
+                        2500
+                      </tspan>
                     </text>
                   </g>
                   <g className="recharts-layer recharts-cartesian-axis-tick">
                     <line
                       orientation="left"
-                      width="60"
-                      height="360"
+                      width="80"
+                      height="390"
                       x="0"
-                      y="10"
+                      y="15"
                       className="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="54"
-                      y1="190"
-                      x2="60"
-                      y2="190"
+                      x1="71"
+                      y1="210"
+                      x2="80"
+                      y2="210"
                     ></line>
                     <text
                       orientation="left"
-                      width="60"
-                      height="360"
+                      width="80"
+                      height="390"
                       stroke="none"
-                      x="52"
-                      y="190"
+                      x="68"
+                      y="210"
                       className="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="end"
                       fill="#666"
                     >
-                      <tspan x="52" dy="0.355em">5000</tspan>
+                      <tspan x="68" dy="0.355em">
+                        5000
+                      </tspan>
                     </text>
                   </g>
                   <g className="recharts-layer recharts-cartesian-axis-tick">
                     <line
                       orientation="left"
-                      width="60"
-                      height="360"
+                      width="80"
+                      height="390"
                       x="0"
-                      y="10"
+                      y="15"
                       className="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="54"
-                      y1="100"
-                      x2="60"
-                      y2="100"
+                      x1="71"
+                      y1="112.5"
+                      x2="80"
+                      y2="112.5"
                     ></line>
                     <text
                       orientation="left"
-                      width="60"
-                      height="360"
+                      width="80"
+                      height="390"
                       stroke="none"
-                      x="52"
-                      y="100"
-                      className="recharts-text recharts-cartesian！
-
+                      x="68"
+                      y="112.5"
+                      className="recharts-text recharts-cartesian-axis-tick-value"
+                      text-anchor="end"
+                      fill="#666"
+                    >
+                      <tspan x="68" dy="0.355em">
+                        7500
+                      </tspan>
                     </text>
                   </g>
                   <g className="recharts-layer recharts-cartesian-axis-tick">
                     <line
                       orientation="left"
-                      width="60"
-                      height="360"
+                      width="80"
+                      height="390"
                       x="0"
-                      y="10"
+                      y="15"
                       className="recharts-cartesian-axis-tick-line"
                       stroke="#666"
                       fill="none"
-                      x1="54"
-                      y1="10"
-                      x2="60"
-                      y2="10"
+                      x1="71"
+                      y1="15"
+                      x2="80"
+                      y2="15"
                     ></line>
                     <text
                       orientation="left"
-                      width="60"
-                      height="360"
+                      width="80"
+                      height="390"
                       stroke="none"
-                      x="52"
-                      y="10"
+                      x="68"
+                      y="15"
                       className="recharts-text recharts-cartesian-axis-tick-value"
                       text-anchor="end"
                       fill="#666"
                     >
-                      <tspan x="52" dy="0.355em">10000</tspan>
+                      <tspan x="68" dy="0.355em">
+                        10000
+                      </tspan>
                     </text>
                   </g>
                 </g>
@@ -477,66 +511,66 @@ const PlatformOverview = () => {
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
-                    x1="60"
-                    y1="370"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
+                    x1="80"
+                    y1="405"
                     x2="540"
-                    y2="370"
+                    y2="405"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
-                    x1="60"
-                    y1="280"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
+                    x1="80"
+                    y1="307.5"
                     x2="540"
-                    y2="280"
+                    y2="307.5"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
-                    x1="60"
-                    y1="190"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
+                    x1="80"
+                    y1="210"
                     x2="540"
-                    y2="190"
+                    y2="210"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
-                    x1="60"
-                    y1="100"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
+                    x1="80"
+                    y1="112.5"
                     x2="540"
-                    y2="100"
+                    y2="112.5"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
-                    x1="60"
-                    y1="10"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
+                    x1="80"
+                    y1="15"
                     x2="540"
-                    y2="10"
+                    y2="15"
                   ></line>
                 </g>
                 <g className="recharts-cartesian-grid-vertical">
@@ -544,105 +578,105 @@ const PlatformOverview = () => {
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
-                    x1="60"
-                    y1="10"
-                    x2="60"
-                    y2="370"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
+                    x1="80"
+                    y1="15"
+                    x2="80"
+                    y2="405"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
-                    x1="132"
-                    y1="10"
-                    x2="132"
-                    y2="370"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
+                    x1="152.857"
+                    y1="15"
+                    x2="152.857"
+                    y2="405"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
-                    x1="204"
-                    y1="10"
-                    x2="204"
-                    y2="370"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
+                    x1="225.714"
+                    y1="15"
+                    x2="225.714"
+                    y2="405"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
-                    x1="276"
-                    y1="10"
-                    x2="276"
-                    y2="370"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
+                    x1="298.571"
+                    y1="15"
+                    x2="298.571"
+                    y2="405"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
-                    x1="348"
-                    y1="10"
-                    x2="348"
-                    y2="370"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
+                    x1="371.429"
+                    y1="15"
+                    x2="371.429"
+                    y2="405"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
-                    x1="420"
-                    y1="10"
-                    x2="420"
-                    y2="370"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
+                    x1="444.286"
+                    y1="15"
+                    x2="444.286"
+                    y2="405"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
-                    x1="492"
-                    y1="10"
-                    x2="492"
-                    y2="370"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
+                    x1="517.143"
+                    y1="15"
+                    x2="517.143"
+                    y2="405"
                   ></line>
                   <line
                     stroke-dasharray="3 3"
                     stroke="#ccc"
                     fill="none"
-                    x="60"
-                    y="10"
-                    width="480"
-                    height="360"
+                    x="80"
+                    y="15"
+                    width="460"
+                    height="390"
                     x1="540"
-                    y1="10"
+                    y1="15"
                     x2="540"
-                    y2="370"
+                    y2="405"
                   ></line>
                 </g>
               </g>
@@ -651,20 +685,20 @@ const PlatformOverview = () => {
                   <path
                     fill-opacity="1"
                     fill="url(#colorUsers)"
-                    width="480"
-                    height="360"
+                    width="460"
+                    height="390"
                     stroke="none"
                     className="recharts-curve recharts-area-area"
-                    d="M60,230C80,220,100,210,132,200C164,190,196,180,228,170C260,160,292,150,324,140C356,130,388,120,420,110C452,100,484,90,516,80C548,70,580,60,600,50L600,370C580,370,548,370,516,370C484,370,452,370,420,370C388,370,356,370,324,370C292,370,260,370,228,370C196,370,164,370,132,370C100,370,80,370,60,370Z"
+                    d="M80,249C99.143,236,118.286,223,137.429,210C156.572,197,175.714,184,194.857,171C214,158,233.143,145,252.286,132C271.429,119,290.571,106,309.714,93C328.857,80,348,67,367.143,54C386.286,41,405.429,28,424.571,15C443.714,2,462.857,-11,482,15L482,405C462.857,405,443.714,405,424.571,405C405.429,405,386.286,405,367.143,405C348,405,328.857,405,309.714,405C290.571,405,271.429,405,252.286,405C233.143,405,214,405,194.857,405C175.714,405,156.572,405,137.429,405C118.286,405,99.143,405,80,405Z"
                   ></path>
                   <path
                     stroke="#1FBAB4"
                     fill-opacity="1"
                     fill="none"
-                    width="480"
-                    height="360"
+                    width="460"
+                    height="390"
                     className="recharts-curve recharts-area-curve"
-                    d="M60,230C80,220,100,210,132,200C164,190,196,180,228,170C260,160,292,150,324,140C356,130,388,120,420,110C452,100,484,90,516,80C548,70,580,60,600,50"
+                    d="M80,249C99.143,236,118.286,223,137.429,210C156.572,197,175.714,184,194.857,171C214,158,233.143,145,252.286,132C271.429,119,290.571,106,309.714,93C328.857,80,348,67,367.143,54C386.286,41,405.429,28,424.571,15C443.714,2,462.857,-11,482,15"
                   ></path>
                 </g>
               </g>
@@ -673,20 +707,20 @@ const PlatformOverview = () => {
                   <path
                     fill-opacity="1"
                     fill="url(#colorMatches)"
-                    width="480"
-                    height="360"
+                    width="460"
+                    height="390"
                     stroke="none"
                     className="recharts-curve recharts-area-area"
-                    d="M60,280C80,275,100,270,132,265C164,260,196,255,228,250C260,245,292,240,324,235C356,230,388,225,420,220C452,215,484,210,516,205C548,200,580,195,600,190L600,370C580,370,548,370,516,370C484,370,452,370,420,370C388,370,356,370,324,370C292,370,260,370,228,370C196,370,164,370,132,370C100,370,80,370,60,370Z"
+                    d="M80,311.4C99.143,306.2,118.286,301,137.429,295.8C156.572,290.6,175.714,285.4,194.857,280.2C214,275,233.143,269.5,252.286,264.6C271.429,259.7,290.571,256.4,309.714,253.2C328.857,250,348,247.525,367.143,244.8C386.286,242.075,405.429,239.35,424.571,236.7C443.714,234.05,462.857,231.4,482,225L482,405C462.857,405,443.714,405,424.571,405C405.429,405,386.286,405,367.143,405C348,405,328.857,405,309.714,405C290.571,405,271.429,405,252.286,405C233.143,405,214,405,194.857,405C175.714,405,156.572,405,137.429,405C118.286,405,99.143,405,80,405Z"
                   ></path>
                   <path
                     stroke="#FF9500"
                     fill-opacity="1"
                     fill="none"
-                    width="480"
-                    height="360"
+                    width="460"
+                    height="390"
                     className="recharts-curve recharts-area-curve"
-                    d="M60,280C80,275,100,270,132,265C164,260,196,255,228,250C260,245,292,240,324,235C356,230,388,225,420,220C452,215,484,210,516,205C548,200,580,195,600,190"
+                    d="M80,311.4C99.143,306.2,118.286,301,137.429,295.8C156.572,290.6,175.714,285.4,194.857,280.2C214,275,233.143,269.5,252.286,264.6C271.429,259.7,290.571,256.4,309.714,253.2C328.857,250,348,247.525,367.143,244.8C386.286,242.075,405.429,239.35,424.571,236.7C443.714,234.05,462.857,231.4,482,225"
                   ></path>
                 </g>
               </g>
@@ -695,20 +729,20 @@ const PlatformOverview = () => {
                   <path
                     fill-opacity="1"
                     fill="url(#colorEvents)"
-                    width="480"
-                    height="360"
+                    width="460"
+                    height="390"
                     stroke="none"
                     className="recharts-curve recharts-area-area"
-                    d="M60,340C80,338,100,336,132,334C164,332,196,330,228,328C260,326,292,324,324,322C356,320,388,318,420,316C452,314,484,312,516,310C548,308,580,306,600,304L600,370C580,370,548,370,516,370C484,370,452,370,420,370C388,370,356,370,324,370C292,370,260,370,228,370C196,370,164,370,132,370C100,370,80,370,60,370Z"
+                    d="M80,373.8C99.143,372.5,118.286,371.2,137.429,369.9C156.572,368.6,175.714,367.3,194.857,366C214,364.7,233.143,363.4,252.286,362.1C271.429,360.8,290.571,359.15,309.714,357.9C328.857,356.65,348,356,367.143,355.35C386.286,354.7,405.429,353.35,424.571,351.6C443.714,349.85,462.857,348.1,482,343.5L482,405C462.857,405,443.714,405,424.571,405C405.429,405,386.286,405,367.143,405C348,405,328.857,405,309.714,405C290.571,405,271.429,405,252.286,405C233.143,405,214,405,194.857,405C175.714,405,156.572,405,137.429,405C118.286,405,99.143,405,80,405Z"
                   ></path>
                   <path
                     stroke="#f87171"
                     fill-opacity="1"
                     fill="none"
-                    width="480"
-                    height="360"
+                    width="460"
+                    height="390"
                     className="recharts-curve recharts-area-curve"
-                    d="M60,340C80,338,100,336,132,334C164,332,196,330,228,328C260,326,292,324,324,322C356,320,388,318,420,316C452,314,484,312,516,310C548,308,580,306,600,304"
+                    d="M80,373.8C99.143,372.5,118.286,371.2,137.429,369.9C156.572,368.6,175.714,367.3,194.857,366C214,364.7,233.143,363.4,252.286,362.1C271.429,360.8,290.571,359.15,309.714,357.9C328.857,356.65,348,356,367.143,355.35C386.286,354.7,405.429,353.35,424.571,351.6C443.714,349.85,462.857,348.1,482,343.5"
                   ></path>
                 </g>
               </g>
