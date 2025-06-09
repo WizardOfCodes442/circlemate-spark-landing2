@@ -183,11 +183,11 @@ const Matchmaking = () => {
         </Card>
 
         <StatsSection />
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {/* Algorithm Explanation and Smart Matchmaking */}
           <Card className="mb-8 w-full">
             <CardHeader>
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-3 pb-4">
                 <Heart className="h-8 w-8 text-teal-500" />
                 <div>
                   <h1 className="text-3xl font-bold">Smart Matchmaking</h1>
@@ -196,7 +196,7 @@ const Matchmaking = () => {
                   </p>
                 </div>
               </div>
-              <CardTitle className="flex items-center mt-4">
+              <CardTitle className="flex items-center">
                 <Zap className="h-5 w-5 mr-2" />
                 How It Works
               </CardTitle>
@@ -227,9 +227,9 @@ const Matchmaking = () => {
           </div>
 
           {/* Matches and Recent Activities Side by Side on Desktop */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 w-full px-4">
             {/* Recent Matches */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-3">
               <Card className="bg-white rounded-lg shadow-sm p-6 mb-8 w-full">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-bold">Recent Matches</h2>
@@ -237,7 +237,7 @@ const Matchmaking = () => {
                     View All <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+                <div className="grid grid-cols-1 gap-6 w-full">
                   {matches.map((match) => (
                     <Card key={match.id} className="overflow-hidden w-full">
                       <CardHeader className="bg-gradient-to-r from-teal-100 to-teal-50">
@@ -338,7 +338,7 @@ const Matchmaking = () => {
             </div>
 
             {/* Recent Activities */}
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-2">
               <RecentActivities
                 activities={mockActivities.slice(0, 4)}
                 onViewAll={() => {}}
