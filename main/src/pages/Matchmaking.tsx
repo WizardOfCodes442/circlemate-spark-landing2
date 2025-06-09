@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Heart, Users, MapPin, Zap, RefreshCw, ArrowRight, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -152,8 +151,9 @@ const Matchmaking = () => {
         <Header />
       </div>
       <main className="container mx-auto px-4 py-8 flex-grow w-full">
-         {/* Your Profile Summary */}
-          <Card className="mb-8 w-full">
+        
+        <TechCircleHeader />
+        <Card className="mb-8 w-full">
             <CardHeader>
               <CardTitle>Your Profile</CardTitle>
             </CardHeader>
@@ -178,7 +178,7 @@ const Matchmaking = () => {
               </div>
             </CardContent>
           </Card>
-        <TechCircleHeader />
+
         <StatsSection />
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-8">
@@ -218,8 +218,8 @@ const Matchmaking = () => {
             </CardContent>
           </Card>
 
-         
-
+          {/* Your Profile Summary */}
+          
           {/* Matches */}
           <Card className="bg-white rounded-lg shadow-sm p-6 mb-8 w-full">
             <div className="flex justify-between items-center mb-4">
