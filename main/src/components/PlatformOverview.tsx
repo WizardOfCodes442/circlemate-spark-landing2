@@ -1,4 +1,4 @@
-{ Card, CardHeader, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Users, ChevronUp, Calendar, Heart } from "lucide-react";
 
