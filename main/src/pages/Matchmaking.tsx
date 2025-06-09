@@ -15,7 +15,7 @@ import ProfileView from "@/components/ProfileView";
 import ConnectView from "@/components/ConnectView";
 import { mockActivities } from "@/data/mockDashboardData";
 
-// Updated mock matches with 9 total entries for 3x3 grid
+// Updated mock matches with complete data
 const mockMatches = [
   {
     id: "m1",
@@ -51,10 +51,10 @@ const mockMatches = [
     sharedCommunities: ["Tech Enthusiasts"],
   },
   {
-    id: "m2",
+    id: "2",
     name: "Sarah Wilson",
     role: "Friendship",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+    image: "/user1.png",
     about: "Passionate about tech and art, always looking for new experiences.",
     zodiac: "Libra",
     education: "Bachelor's Degree",
@@ -84,10 +84,10 @@ const mockMatches = [
     sharedCommunities: ["Tech Enthusiasts"],
   },
   {
-    id: "m3",
+    id: "3",
     name: "Mike Chen",
     role: "Professional",
-    image: "https://images.unsplash.com/photo-1519085360753-afccb1a1f558?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+    image: "/user2.png",
     about: "Tech enthusiast and avid reader, always up for a good coffee chat.",
     zodiac: "Virgo",
     education: "Master's Degree",
@@ -115,204 +115,6 @@ const mockMatches = [
     compatibility: 78,
     sharedInterests: ["Coffee", "Reading", "Technology"],
     sharedCommunities: ["Coffee Lovers", "Book Club"],
-  },
-  {
-    id: "m4",
-    name: "Emma Rodriguez",
-    role: "Friendship",
-    image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
-    about: "Loves exploring new cultures and cuisines, always up for an adventure.",
-    zodiac: "Aries",
-    education: "Bachelor's Degree",
-    familyPlans: "Wants kids",
-    personalityType: "ESFJ",
-    lifestyle: {
-      pets: "Has a cat",
-      drinking: "Socially",
-      smoking: "Non-smoker",
-      workout: "Regularly",
-      dietaryPreference: "Vegan",
-      socialMedia: "Active",
-      sleepingHabits: "Early bird",
-    },
-    interests: ["Travel", "Cooking", "Yoga", "Reading"],
-    lookingFor: "Long-term connection",
-    essentials: {
-      distance: "12 miles away",
-      employment: "Freelancer",
-      education: "UCLA",
-      location: "Oakland, CA",
-      languages: "English, Spanish",
-    },
-    communities: ["Travel Enthusiasts", "Book Club"],
-    compatibility: 65,
-    sharedInterests: ["Travel", "Reading"],
-    sharedCommunities: ["Book Club"],
-  },
-  {
-    id: "m5",
-    name: "James Patel",
-    role: "Professional",
-    image: "https://images.unsplash.com/photo-1506794778202-6d1d91e7a433?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
-    about: "Avid coder and coffee enthusiast, always seeking new challenges.",
-    zodiac: "Capricorn",
-    education: "PhD",
-    familyPlans: "No kids",
-    personalityType: "ISTJ",
-    lifestyle: {
-      pets: "No pets",
-      drinking: "Never",
-      smoking: "Non-smoker",
-      workout: "Daily",
-      dietaryPreference: "Vegetarian",
-      socialMedia: "Minimally active",
-      sleepingHabits: "Early riser",
-    },
-    interests: ["Technology", "Coffee", uuidv4()],
-    lookingFor: "Networking",
-    essentials: {
-      distance: "15 miles away",
-      employment: "Software Engineer",
-      education: "MIT",
-      location: "Palo Alto, CA",
-      languages: "English, Hindi",
-    },
-    communities: ["Tech Enthusiasts", "Coffee Lovers"],
-    compatibility: 72,
-    sharedInterests: ["Technology", "Coffee"],
-    sharedCommunities: ["Tech Enthusiasts", "Coffee Lovers"],
-  },
-  {
-    id: "m6",
-    name: "Lisa Nguyen",
-    role: "Romance",
-    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
-    about: "Passionate about music and travel, looking for someone to share adventures with.",
-    zodiac: "Gemini",
-    education: "Bachelor's Degree",
-    familyPlans: "Wants kids",
-    personalityType: "ENFJ",
-    lifestyle: {
-      pets: "Has a dog",
-      drinking: "Socially",
-      smoking: "Non-smoker",
-      workout: "Occasionally",
-      dietaryPreference: "No restrictions",
-      socialMedia: "Very active",
-      sleepingHabits: "Night owl",
-    },
-    interests: ["Music", "Travel", "Photography"],
-    lookingFor: "Long-term relationship",
-    essentials: {
-      distance: "7 miles away",
-      employment: "Marketing",
-      education: "NYU",
-      location: "San Francisco, CA",
-      languages: "English, Vietnamese",
-    },
-    communities: ["Music Lovers", "Travel Enthusiasts"],
-    compatibility: 80,
-    sharedInterests: ["Music", "Travel", "Photography"],
-    sharedCommunities: [],
-  },
-  {
-    id: "m7",
-    name: "Alex Carter",
-    role: "Friendship",
-    image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
-    about: "Outdoor enthusiast and book lover, always up for a good discussion.",
-    zodiac: "Leo",
-    education: "Master's Degree",
-    familyPlans: "Not sure",
-    personalityType: "INFP",
-    lifestyle: {
-      pets: "Has a cat",
-      drinking: "On special occasions",
-      smoking: "Non-smoker",
-      workout: "Regularly",
-      dietaryPreference: "Vegetarian",
-      socialMedia: "Moderately active",
-      sleepingHabits: "Regular",
-    },
-    interests: ["Reading", "Hiking", "Photography"],
-    lookingFor: "Casual connection",
-    essentials: {
-      distance: "9 miles away",
-      employment: "Teacher",
-      education: "UC Davis",
-      location: "Berkeley, CA",
-      languages: "English",
-    },
-    communities: ["Book Club", "Outdoor Adventures"],
-    compatibility: 70,
-    sharedInterests: ["Reading", "Photography"],
-    sharedCommunities: ["Book Club"],
-  },
-  {
-    id: "m8",
-    name: "Rachel Kim",
-    role: "Professional",
-    image: "https://images.unsplash.com/photo-1517365830460-955ce3f6b1f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
-    about: "Tech innovator with a passion for gaming and coffee.",
-    zodiac: "Aquarius",
-    education: "Bachelor's Degree",
-    familyPlans: "No kids",
-    personalityType: "ENTP",
-    lifestyle: {
-      pets: "No pets",
-      drinking: "Socially",
-      smoking: "Non-smoker",
-      workout: "Sometimes",
-      dietaryPreference: "No restrictions",
-      socialMedia: "Active",
-      sleepingHabits: "Night owl",
-    },
-    interests: ["Technology", "Gaming", "Coffee"],
-    lookingFor: "Networking",
-    essentials: {
-      distance: "11 miles away",
-      employment: "Game Developer",
-      education: "Caltech",
-      location: "San Jose, CA",
-      languages: "English, Korean",
-    },
-    communities: ["Tech Enthusiasts", "Gaming Community"],
-    compatibility: 75,
-    sharedInterests: ["Technology", "Coffee"],
-    sharedCommunities: ["Tech Enthusiasts"],
-  },
-  {
-    id: "m9",
-    name: "Sophie Turner",
-    role: "Romance",
-    image: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
-    about: "Loves art, yoga, and deep conversations over coffee.",
-    zodiac: "Pisces",
-    education: "Bachelor's Degree",
-    familyPlans: "Wants kids",
-    personalityType: "INFJ",
-    lifestyle: {
-      pets: "Has a dog",
-      drinking: "Never",
-      smoking: "Non-smoker",
-      workout: "Daily",
-      dietaryPreference: "Vegan",
-      socialMedia: "Minimally active",
-      sleepingHabits: "Early bird",
-    },
-    interests: ["Art", "Yoga", "Coffee", "Reading"],
-    lookingFor: "Long-term relationship",
-    essentials: {
-      distance: "6 miles away",
-      employment: "Artist",
-      education: "RISD",
-      location: "San Francisco, CA",
-      languages: "English",
-    },
-    communities: ["Art Lovers", "Coffee Lovers"],
-    compatibility: 68,
-    sharedInterests: ["Coffee", "Reading"],
-    sharedCommunities: ["Coffee Lovers"],
   },
 ];
 
@@ -495,7 +297,7 @@ const Matchmaking = () => {
                   View All <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
                 {matches.map((match) => (
                   <Card key={match.id} className="overflow-hidden w-full">
                     <CardHeader className="bg-gradient-to-r from-teal-100 to-teal-50">
@@ -513,7 +315,7 @@ const Matchmaking = () => {
                         </div>
                       </div>
                     </CardHeader>
-                    <CardContent className="pt-4 space-y-4">
+                    <CardContent className="pt- Deterministic4 space-y-4">
                       <div className="text-center">
                         <div
                           className={`text-3xl font-bold ${getCompatibilityColor(
