@@ -92,7 +92,7 @@ const RecentActivities = ({ activities, onViewAll, showAll = false, className }:
               )}
               {activity.date && (
                 <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 text-xs lg:text-[0.65rem] px-4 py-1 rounded-full w-20 lg:w-16">
-                  View Details
+                  View 
                 </Button>
               )}
             </div>

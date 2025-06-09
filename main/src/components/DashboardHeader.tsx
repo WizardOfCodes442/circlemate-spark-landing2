@@ -24,6 +24,11 @@ const DashboardHeader = () => {
           </Link>
           {/* Desktop Links */}
           <div className="hidden md:flex items-center space-x-4">
+            <Link to="/dashboard">
+              <Button variant="ghost" className="text-muted-foreground text-base">
+                Dashboard
+              </Button>
+            </Link>
             <Link to="/discover">
               <Button variant="ghost" className="text-muted-foreground text-base">
                 Discover
@@ -39,11 +44,7 @@ const DashboardHeader = () => {
                 Events
               </Button>
             </Link>
-            <Link to="/match-making">
-              <Button variant="ghost" className="text-muted-foreground text-base">
-                AI-Powered Match Making
-              </Button>
-            </Link>
+
           </div>
         </div>
 
@@ -92,7 +93,11 @@ const DashboardHeader = () => {
                 <X className="h-8 w-8" />
               </Button>
             </div>
-
+            <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
+              <Button variant="ghost" className="w-full justify-start text-lg">
+                Dashboard
+              </Button>
+            </Link>
             <Link to="/discover" onClick={() => setIsMenuOpen(false)}>
               <Button variant="ghost" className="w-full justify-start text-lg">
                 Discover
@@ -108,11 +113,7 @@ const DashboardHeader = () => {
                 Events
               </Button>
             </Link>
-            <Link to="/match-making" onClick={() => setIsMenuOpen(false)}>
-              <Button variant="ghost" className="w-full justify-start text-lg">
-                AI-Powered Match Making
-              </Button>
-            </Link>
+
 
             <div className="flex justify-around pt-4 border-t mt-4">
               <Button variant="ghost" size="icon">

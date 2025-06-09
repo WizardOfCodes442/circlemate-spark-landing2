@@ -49,7 +49,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Matchmaking/>} />
           <Route path="/discover" element={<Discover />} />
           <Route path="/community" element={<Communities />} />
           <Route path="/events" element={<Events />} />
@@ -57,7 +57,6 @@ const App = () => (
           <Route path="/notification" element={<Notifications />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/edit-profile" element={<EditProfile />} />
-          <Route path="/match-making" element={<Matchmaking />} />
           <Route path="/create-community" element={<CreateCommunity />} />
           <Route path="/community-profile" element={<CommunityProfile />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
