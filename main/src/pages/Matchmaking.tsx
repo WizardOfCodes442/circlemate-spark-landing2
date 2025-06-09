@@ -227,9 +227,9 @@ const Matchmaking = () => {
           </div>
 
           {/* Matches and Recent Activities Side by Side on Desktop */}
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 w-full px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-7 gap-8 w-full px-4">
             {/* Recent Matches */}
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-5">
               <Card className="bg-white rounded-lg shadow-sm p-6 mb-8 w-full">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-bold">Recent Matches</h2>
@@ -237,7 +237,7 @@ const Matchmaking = () => {
                     View All <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
                 </div>
-                <div className="grid grid-cols-1 gap-6 w-full">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
                   {matches.map((match) => (
                     <Card key={match.id} className="overflow-hidden w-full">
                       <CardHeader className="bg-gradient-to-r from-teal-100 to-teal-50">
