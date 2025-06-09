@@ -137,48 +137,6 @@ const AdminDashboardHeader = () => {
                 Signup
               </Button>
             </Link>
-            <div className="flex flex-col space-y-2 pt-4 border-t mt-4">
-              <Link to="/command-centre/platform-overview" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start text-lg">
-                  Platform Overview
-                </Button>
-              </Link>
-              <Link to="/command-centre/communities" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start text-lg">
-                  Communities
-                </Button>
-              </Link>
-              <Link to="/command-centre/events" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start text-lg">
-                  Events
-                </Button>
-              </Link>
-              <Link to="/command-centre/revenue" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start text-lg">
-                  Revenue
-                </Button>
-              </Link>
-              <Link to="/command-centre/moderation" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start text-lg">
-                  Moderation
-                </Button>
-              </Link>
-              <Link to="/command-centre/match-analytics" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start text-lg">
-                  Match Analytics
-                </Button>
-              </Link>
-              <Link to="/command-centre/reports" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start text-lg">
-                  Reports
-                </Button>
-              </Link>
-              <Link to="/command-centre/leaderboard" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start text-lg">
-                  Leaderboard
-                </Button>
-              </Link>
-            </div>
             <div className="flex justify-around pt-4 border-t mt-4">
               <Button variant="ghost" size="icon">
                 <Search className="h-6 w-6" />
