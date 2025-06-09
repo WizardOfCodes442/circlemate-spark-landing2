@@ -333,19 +333,11 @@ const [showOnboardingModal, setShowOnboardingModal] = useState(false);
           />
         )}
       </main>
-      <Dialog
-  open={showOnboardingModal}
-  onOpenChange={(open) => {
-    // Only allow closing if explicitly called via setShowOnboardingModal(false)
-    // Prevent close if user tries to click outside or press ESC
-    if (!open) {
-      // Do nothing here to block closing
-      // or just keep open true:
-      setShowOnboardingModal(true);
-    }
-  }}
->
-  <DialogContent className="max-w-md rounded-lg p-6 bg-white shadow-lg">
+<Dialog open={showOnboardingModal}>
+  <DialogContent
+    className="max-w-md rounded-lg p-6 bg-white shadow-lg"
+    onClose={() => setShowOnboardingModal(false)}
+  >
     <DialogHeader>
       <DialogTitle>Complete Your Onboarding</DialogTitle>
     </DialogHeader>
@@ -353,7 +345,9 @@ const [showOnboardingModal, setShowOnboardingModal] = useState(false);
       You have not set up your onboarding yet. Please complete it to proceed.
     </div>
     <DialogFooter className="flex justify-end">
-      <Button className="text-white" onClick={handleGoToOnboarding}>Go to Onboarding</Button>
+      <Button className="text-white" onClick={handleGoToOnboarding}>
+        Go to Onboarding
+      </Button>
     </DialogFooter>
   </DialogContent>
 </Dialog>
