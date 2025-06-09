@@ -1,6 +1,5 @@
-import {  Card } from "@/components/ui/card";
-import {Button } from "@/components/ui/button";
-
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 
 interface Activity {
@@ -17,37 +16,38 @@ interface RecentActivitiesProps {
   activities: Activity[];
   onViewAll: () => void;
   showAll?: boolean;
+  className?: string;
 }
 
-const RecentActivities = ({ activities, onViewAll, showAll = false }: RecentActivitiesProps) => {
+const RecentActivities = ({ activities, onViewAll, showAll = false, className }: RecentActivitiesProps) => {
   return (
-    <Card className="bg-white rounded-lg shadow-sm p-8">
+    <Card className={`bg-white rounded-lg shadow-sm p-6 ${className}`}>
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">{showAll ? "All Activities" : "Recent Activity"}</h2>
-        <Button variant="link" className="text-teal-500" onClick={onViewAll}>
+        <h2 className="text-lg font-bold lg:text-base">{showAll ? "All Activities" : "Recent Activity"}</h2>
+        <Button variant="link" className="text-teal-500 text-sm lg:text-xs" onClick={onViewAll}>
           {showAll ? (
             <>
-              <ArrowLeft className="h-4 w-4 mr-2" /> Back
+              <ArrowLeft className="h-3 w-3 mr-1 lg:h-2.5 lg:w-2.5" /> Back
             </>
           ) : (
             <>
-              View All <ArrowRight className="h-4 w-4 ml-2" />
+              View All <ArrowRight className="h-3 w-3 ml-1 lg:h-2.5 lg:w-2.5" />
             </>
           )}
         </Button>
       </div>
-      <div className="space-y-6">
+      <div className="space-y-4">
         {activities.map((activity) => (
           <div key={activity.id} className="flex flex-col">
             <div className="flex items-center mb-2">
-              <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center mr-3">
+              <div className="w-6 h-6 bg-teal-100 rounded-full flex items-center justify-center mr-2 lg:w-5 lg:h-5">
                 {activity.status === "pending" && (
-                  <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3 h-3 text-teal-500 lg:w-2.5 lg:h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
                   </svg>
                 )}
                 {activity.date && (
-                  <svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3 h-3 text-teal-500 lg:w-2.5 lg:h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -57,7 +57,7 @@ const RecentActivities = ({ activities, onViewAll, showAll = false }: RecentActi
                   </svg>
                 )}
                 {activity.feedback && (
-                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3 h-3 text-gray-500 lg:w-2.5 lg:h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -67,31 +67,31 @@ const RecentActivities = ({ activities, onViewAll, showAll = false }: RecentActi
                   </svg>
                 )}
                 {activity.action.includes("confirmed") && (
-                  <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3 h-3 text-orange-500 lg:w-2.5 lg:h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                 )}
               </div>
               <div className="flex-1 flex justify-start">
-                <p className="text-sm font-medium">
+                <p className="text-xs font-medium lg:text-[0.65rem]">
                   {activity.user} {activity.action}
                 </p>
-                <p className="text-xs text-gray-500 ml-4">{activity.time}</p>
+                <p className="text-[0.65rem] text-gray-500 ml-3 lg:text-[0.6rem]">{activity.time}</p>
               </div>
             </div>
             <div className="flex justify-start space-x-2">
               {activity.status === "pending" && (
                 <>
-                  <Button size="sm" className="bg-teal-500 text-white px-6 py-1 rounded-full">
+                  <Button size="sm" className="bg-teal-500 text-white text-xs lg:text-[0.65rem] px-4 py-1 rounded-full w-20 lg:w-16">
                     Accept
                   </Button>
-                  <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">
+                  <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 text-xs lg:text-[0.65rem] px-4 py-1 rounded-full w-20 lg:w-16">
                     Decline
                   </Button>
                 </>
               )}
               {activity.date && (
-                <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 px-6 py-1 rounded-full">
+                <Button variant="ghost" size="sm" className="text-gray-700 bg-gray-200 text-xs lg:text-[0.65rem] px-4 py-1 rounded-full w-20 lg:w-16">
                   View Details
                 </Button>
               )}
