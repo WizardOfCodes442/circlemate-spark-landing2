@@ -62,7 +62,9 @@ vite-env.d.ts
  
 Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\components 
 ----------------------------------- 
+AdminDashboardHeader.tsx
 community
+CommunityAdminTabs.tsx
 ConnectView.tsx
 DashboardHeader.tsx
 effects
@@ -73,6 +75,7 @@ Header.tsx
 Hero.tsx
 HowItWorks.tsx
 onboarding
+PlatformOverview.tsx
 ProfileView.tsx
 project-directory-map.txt
 Receipt.tsx
@@ -83,6 +86,11 @@ ui
  
 Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\components\community 
 ----------------------------------- 
+CommunityAdminAnnouncementsPanel.tsx
+CommunityAdminMeetupsPanel.tsx
+CommunityAdminMemberPanel.tsx
+CommunityAdminRulesPanel.tsx
+CommunityAdminSettingsPanel.tsx
 InsightsTab.tsx
 MembersTab.tsx
 PricingModal.tsx
@@ -117,6 +125,8 @@ project-directory-map.txt
 Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\components\ui 
 ----------------------------------- 
 accordion.tsx
+AdminStatsSection.tsx
+AdminTabs.tsx
 alert-dialog.tsx
 alert.tsx
 aspect-ratio.tsx
@@ -196,7 +206,9 @@ utils.ts
  
 Directory: C:\Users\USER\Documents\Work\work\circlemate-spark-landing\main\src\pages 
 ----------------------------------- 
+AdminDashboard.tsx
 Communities.tsx
+CommunityAdminDashboard.tsx
 CommunityProfile.tsx
 CreateCommunity.tsx
 Dashboard.tsx
