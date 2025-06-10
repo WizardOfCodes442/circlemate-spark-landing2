@@ -35,7 +35,7 @@ import CommunityProfile from "./pages/CommunityProfile";
 import ManageCommunity from "./pages/ManageCommunity";
 import VerifyEmail from "./pages/VerifyEmail";
 import AdminDashboard from "./pages/AdminDashboard";
-
+import CommunityAdminDashboard from "./pages/CommunityAdminDashboard";
 
 
 const queryClient = new QueryClient();
@@ -63,6 +63,8 @@ const App = () => (
           <Route path="/create-community" element={<CreateCommunity />} />
           <Route path="/community-profile" element={<CommunityProfile />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/community-admin" element={<CommunityAdminDashboard />} />
+          
           
           {/* Catch-all route for 404 */}
           
