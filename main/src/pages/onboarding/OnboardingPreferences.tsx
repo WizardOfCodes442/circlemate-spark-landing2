@@ -122,7 +122,7 @@ const handleNext = async () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/preferences", {
+      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/preferences", {
         method: "POST",
         headers: { "Content-Type": "application/json" ,  Authorization: `Bearer ${token}` },
         body: JSON.stringify({
