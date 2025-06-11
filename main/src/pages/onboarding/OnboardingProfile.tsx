@@ -65,7 +65,7 @@ const OnboardingProfile = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/profile", {
+      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/profile/v1", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(form.getValues()),
