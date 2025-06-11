@@ -9,7 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import OnboardingLayout from "@/components/onboarding/OnboardingLayout";
 
 interface Community {
-  id: string; // Matches MongoDB id as string
+  id: string;
   name: string;
   members: number;
   active: boolean;
@@ -25,7 +25,7 @@ const OnboardingCommunity = () => {
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<any>(null);
 
-  // Fallback mock data in case API fails
+  // Fallback mock data
   const fallbackCommunities: Community[] = [
     { id: "1", name: "Tech Enthusiasts", members: 5243, active: true },
     { id: "2", name: "Fitness & Wellness", members: 8712, active: false },
@@ -73,18 +73,19 @@ const OnboardingCommunity = () => {
         const communitiesData = await communitiesResponse.json();
         console.log("Communities response:", communitiesData);
 
-        // Validate and normalize community data
+        // Normalize community data
         const data = Array.isArray(communitiesData) ? communitiesData : communitiesData.data || [];
         if (!Array.isArray(data)) {
           throw new Error("Invalid communities data format");
         }
 
         const normalizedCommunities = data.map((item: any) => ({
-          id: item.id || item._id || `fallback-${Math.random()}`, // Handle id or _id
+          id: item.id || item._id || `fallback-${Math.random()}`,
           name: item.name || item.communityName || "Unknown Community",
-          members: item.memberCount || item["member Count"] || item.members || 0, // Handle memberCount or "member Count"
+          members: item.memberCount || item["member Count"] || item.members || 0,
           active: item.active || false,
         }));
+        console.log("Normalized communities:", normalizedCommunities);
         setCommunities(normalizedCommunities);
       } catch (err: any) {
         console.error("Fetch error:", err);
@@ -108,111 +109,99 @@ const OnboardingCommunity = () => {
     setError(null);
   };
 
-  const handleNext = async () => {
+  const handleNext = () => {
     setLoading(true);
     setError(null);
 
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        throw new Error("No authentication token found. Please log in again.");
-      }
-
-      const payload = inviteCode
-        ? { inviteCode }
-        : { communityId: selectedCommunityId };
-
-      const response = await fetch(
-        "https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/community",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(payload),
+    const submitCommunity = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("No authentication token found. Please log in again.");
         }
-      );
 
-      if (!response.ok) {
-        throw new Error(`Community submission error: ${response.status} ${response.statusText}`);
+        const payload = inviteCode
+          ? { inviteCode }
+          : { communityId: selectedCommunityId };
+
+        const response = await fetch(
+          "https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/community",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Community submission error: ${response.status} ${response.statusText}`);
+        }
+
+        const responseData = await response.json();
+        console.log("Community submission response:", responseData);
+        navigate("/onboarding/profile");
+      } catch (err: any) {
+        setError(err.message || "Failed to submit community selection. Please try again.");
+        console.error("Submission error:", err);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const responseData = await response.json();
-      console.log("Community submission response:", responseData);
-      navigate("/onboarding/profile");
-    } catch (err: any) {
-      setError(err.message || "Failed to submit community selection. Please try again.");
-      console.error("Submission error:", err);
-    } finally {
-      setLoading(false);
-    }
+    submitCommunity();
   };
 
-  const handleSkip = async () => {
+  const handleSkip = () => {
     setLoading(true);
     setError(null);
 
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        throw new Error("No authentication token found. Please log in again.");
-      }
-
-      const response = await fetch(
-        "https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/skip",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ reason: "Skipped community selection" }),
+    const skipCommunity = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("No authentication token found. Please log in again.");
         }
-      );
 
-      if (!response.ok) {
-        throw new Error(`Skip error: ${response.status} ${response.statusText}`);
+        const response = await fetch(
+          "https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/skip",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ reason: "Skipped community selection" }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Skip error: ${response.status} ${response.statusText}`);
+        }
+
+        const responseData = await response.json();
+        console.log("Skip response:", responseData);
+        navigate("/onboarding/profile");
+      } catch (err: any) {
+        setError(err.message || "Failed to skip community selection. Please try again.");
+        console.error("Skip error:", err);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const responseData = await response.json();
-      console.log("Skip response:", responseData);
-      navigate("/onboarding/profile");
-    } catch (err: any) {
-      setError(err.message || "Failed to skip community selection. Please try again.");
-      console.error("Skip error:", err);
-    } finally {
-      setLoading(false);
-    }
+    skipCommunity();
   };
 
   return (
     <OnboardingLayout
       currentStep={progress?.completed || 0}
       totalSteps={progress?.total || 7}
-      nextAction={handleNext}
+      nextAction={handleNext} // Pass as function reference, not invoked
       nextDisabled={(!selectedCommunityId && !inviteCode.trim()) || loading}
       nextLabel={loading ? "Submitting..." : "Next"}
-      footerButtons={
-        <div className="flex justify-end gap-2">
-          <Button
-            variant="outline"
-            size="default"
-            onClick={handleSkip}
-            disabled={loading}
-          >
-            Skip
-          </Button>
-          <Button
-            variant="default"
-            size="default"
-            onClick={handleNext}
-            disabled={(!selectedCommunityId && !inviteCode.trim()) || loading}
-          >
-            {loading ? "Submitting..." : "Next"}
-          </Button>
-        </div>
-      }
     >
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold mb-2">Find Your Community</h1>
@@ -295,6 +284,25 @@ const OnboardingCommunity = () => {
           }}
           disabled={loading}
         />
+      </div>
+
+      <div className="mt-6 flex justify-end gap-2">
+        <Button
+          variant="outline"
+          size="default"
+          onClick={handleSkip}
+          disabled={loading}
+        >
+          Skip
+        </Button>
+        <Button
+          variant="default"
+          size="default"
+          onClick={handleNext}
+          disabled={(!selectedCommunityId && !inviteCode.trim()) || loading}
+        >
+          {loading ? "Submitting..." : "Next"}
+        </Button>
       </div>
     </OnboardingLayout>
   );
