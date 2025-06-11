@@ -30,7 +30,7 @@ interface AuthState {
   getProfile: () => Promise<void>;
 }
 
-const BASE_URL = 'https://circlemate-spark-landing-jet.vercel.app/api';
+const BASE_URL = 'https://circlemate-spark-landing-jet.vercel.app/api/v1';
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   baseUrl: BASE_URL,
