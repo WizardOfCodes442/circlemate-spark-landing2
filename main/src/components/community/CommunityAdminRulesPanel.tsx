@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Switch } from '../ui/switch';
-import { Badge } from '../ui/badge';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from '../ui/dialog';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { CirclePlus, SquarePen, Trash2, X, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { CirclePlus, SquarePen, Trash2 } from 'lucide-react';
 
 const CommunityAdminRulesPanel = () => {
   const [rules, setRules] = useState([
@@ -31,8 +31,9 @@ const CommunityAdminRulesPanel = () => {
       active: false,
     },
   ]);
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
   const [currentRule, setCurrentRule] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -42,7 +43,7 @@ const CommunityAdminRulesPanel = () => {
     criteriaValue: '',
   });
 
-  const handleOpenAddDialog = () => {
+  const resetForm = () => {
     setFormData({
       name: '',
       description: '',
@@ -50,10 +51,17 @@ const CommunityAdminRulesPanel = () => {
       criteriaCondition: 'contains',
       criteriaValue: '',
     });
-    setIsAddDialogOpen(true);
+  };
+
+  const handleOpenAddDialog = () => {
+    setIsEditMode(false);
+    setCurrentRule(null);
+    resetForm();
+    setIsDialogOpen(true);
   };
 
   const handleOpenEditDialog = (rule) => {
+    setIsEditMode(true);
     setCurrentRule(rule);
     setFormData({
       name: rule.name,
@@ -62,10 +70,14 @@ const CommunityAdminRulesPanel = () => {
       criteriaCondition: rule.criteria.condition,
       criteriaValue: rule.criteria.value,
     });
-    setIsEditDialogOpen(true);
+    setIsDialogOpen(true);
   };
 
-  const handleSaveRule = (isEditMode) => {
+  const handleSaveRule = () => {
+    if (!formData.name.trim() || !formData.description.trim() || !formData.criteriaValue.trim()) {
+      return; // Basic validation
+    }
+
     if (isEditMode && currentRule) {
       setRules(
         rules.map((rule) =>
@@ -83,12 +95,12 @@ const CommunityAdminRulesPanel = () => {
             : rule
         )
       );
-      setIsEditDialogOpen(false);
     } else {
+      const newId = Math.max(...rules.map(r => r.id), 0) + 1;
       setRules([
         ...rules,
         {
-          id: rules.length + 1,
+          id: newId,
           name: formData.name,
           description: formData.description,
           criteria: {
@@ -99,8 +111,8 @@ const CommunityAdminRulesPanel = () => {
           active: true,
         },
       ]);
-      setIsAddDialogOpen(false);
     }
+    setIsDialogOpen(false);
   };
 
   const handleDeleteRule = (id) => {
@@ -115,6 +127,13 @@ const CommunityAdminRulesPanel = () => {
     );
   };
 
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+    resetForm();
+    setCurrentRule(null);
+    setIsEditMode(false);
+  };
+
   return (
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm w-full max-w-full">
       <div className="flex flex-col sm:flex-row items-start justify-between space-y-1.5 p-6">
@@ -122,111 +141,29 @@ const CommunityAdminRulesPanel = () => {
           <h3 className="text-2xl font-semibold leading-none tracking-tight">Community Matching Rules</h3>
           <p className="text-sm text-muted-foreground">Configure matching rules and criteria for your community members.</p>
         </div>
-        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-          <DialogTrigger asChild>
-            <Button
-              className="bg-teal hover:bg-teal/90 text-white"
-              onClick={handleOpenAddDialog}
-            >
-              <CirclePlus className="h-4 w-4 mr-2" />
-              Add Rule
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[500px]">
-            <DialogHeader>
-              <DialogTitle>Create Matching Rule</DialogTitle>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <label className="text-sm font-medium" htmlFor="rule-name">
-                  Rule Name
-                </label>
-                <Input
-                  id="rule-name"
-                  placeholder="e.g., Similar Interests"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                />
-              </div>
-              <div className="grid gap-2">
-                <label className="text-sm font-medium" htmlFor="rule-description">
-                  Description
-                </label>
-                <Input
-                  id="rule-description"
-                  placeholder="Describe what this rule does"
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                />
-              </div>
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Criteria</label>
-                <div className="flex gap-2">
-                  <Select
-                    value={formData.criteriaField}
-                    onValueChange={(value) => setFormData({ ...formData, criteriaField: value })}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select field" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="interests">Interests</SelectItem>
-                      <SelectItem value="location">Location</SelectItem>
-                      <SelectItem value="personality">Personality</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Select
-                    value={formData.criteriaCondition}
-                    onValueChange={(value) => setFormData({ ...formData, criteriaCondition: value })}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select condition" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="contains">Contains</SelectItem>
-                      <SelectItem value="equals">Equals</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Input
-                    className="flex-grow"
-                    placeholder="Value"
-                    value={formData.criteriaValue}
-                    onChange={(e) => setFormData({ ...formData, criteriaValue: e.target.value })}
-                  />
-                </div>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setIsAddDialogOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button
-                className="bg-teal hover:bg-teal/90 text-white"
-                onClick={() => handleSaveRule(false)}
-              >
-                Create Rule
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <Button
+          className="bg-teal-600 hover:bg-teal-700 text-white"
+          onClick={handleOpenAddDialog}
+        >
+          <CirclePlus className="h-4 w-4 mr-2" />
+          Add Rule
+        </Button>
       </div>
+      
       <div className="p-6 pt-0">
         <div className="space-y-4">
           {rules.map((rule) => (
             <div
               key={rule.id}
               className={`border rounded-lg p-4 transition-shadow hover:shadow-sm ${
-                rule.active ? 'border-teal/30 bg-teal/5' : 'border-gray-200'
+                rule.active ? 'border-teal-300 bg-teal-50' : 'border-gray-200'
               }`}
             >
               <div className="flex items-start justify-between">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <h4 className="font-medium">{rule.name}</h4>
-                    <Badge className={rule.active ? 'bg-green-500' : 'text-gray-500 border-gray-300'}>
+                    <Badge className={rule.active ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-500'}>
                       {rule.active ? 'Active' : 'Inactive'}
                     </Badge>
                   </div>
@@ -251,96 +188,13 @@ const CommunityAdminRulesPanel = () => {
                       {rule.active ? 'Active' : 'Inactive'}
                     </label>
                   </div>
-                  <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleOpenEditDialog(rule)}
-                      >
-                        <SquarePen className="h-4 w-4" />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[500px]">
-                      <DialogHeader>
-                        <DialogTitle>Edit Matching Rule</DialogTitle>
-                      </DialogHeader>
-                      <div className="grid gap-4 py-4">
-                        <div className="grid gap-2">
-                          <label className="text-sm font-medium" htmlFor="rule-name-edit">
-                            Rule Name
-                          </label>
-                          <Input
-                            id="rule-name-edit"
-                            placeholder="e.g., Similar Interests"
-                            value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          />
-                        </div>
-                        <div className="grid gap-2">
-                          <label className="text-sm font-medium" htmlFor="rule-description-edit">
-                            Description
-                          </label>
-                          <Input
-                            id="rule-description-edit"
-                            placeholder="Describe what this rule does"
-                            value={formData.description}
-                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                          />
-                        </div>
-                        <div className="grid gap-2">
-                          <label className="text-sm font-medium">Criteria</label>
-                          <div className="flex gap-2">
-                            <Select
-                              value={formData.criteriaField}
-                              onValueChange={(value) => setFormData({ ...formData, criteriaField: value })}
-                            >
-                              <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Select field" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="interests">Interests</SelectItem>
-                                <SelectItem value="location">Location</SelectItem>
-                                <SelectItem value="personality">Personality</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            <Select
-                              value={formData.criteriaCondition}
-                              onValueChange={(value) => setFormData({ ...formData, criteriaCondition: value })}
-                            >
-                              <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Select condition" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="contains">Contains</SelectItem>
-                                <SelectItem value="equals">Equals</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            <Input
-                              className="flex-grow"
-                              placeholder="Value"
-                              value={formData.criteriaValue}
-                              onChange={(e) => setFormData({ ...formData, criteriaValue: e.target.value })}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <DialogFooter>
-                        <Button
-                          variant="outline"
-                          onClick={() => setIsEditDialogOpen(false)}
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          className="bg-teal hover:bg-teal/90 text-white"
-                          onClick={() => handleSaveRule(true)}
-                        >
-                          Update Rule
-                        </Button>
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleOpenEditDialog(rule)}
+                  >
+                    <SquarePen className="h-4 w-4" />
+                  </Button>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -355,6 +209,96 @@ const CommunityAdminRulesPanel = () => {
           ))}
         </div>
       </div>
+
+      {/* Single Dialog for both Add and Edit */}
+      <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>
+              {isEditMode ? 'Edit Matching Rule' : 'Create Matching Rule'}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <label className="text-sm font-medium" htmlFor="rule-name">
+                Rule Name
+              </label>
+              <Input
+                id="rule-name"
+                placeholder="e.g., Similar Interests"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              />
+            </div>
+            <div className="grid gap-2">
+              <label className="text-sm font-medium" htmlFor="rule-description">
+                Description
+              </label>
+              <Input
+                id="rule-description"
+                placeholder="Describe what this rule does"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              />
+            </div>
+            <div className="grid gap-2">
+              <label className="text-sm font-medium">Criteria</label>
+              <div className="flex gap-2">
+                <Select
+                  value={formData.criteriaField}
+                  onValueChange={(value) => setFormData({ ...formData, criteriaField: value })}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select field" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="interests">Interests</SelectItem>
+                    <SelectItem value="location">Location</SelectItem>
+                    <SelectItem value="personality">Personality</SelectItem>
+                    <SelectItem value="age">Age</SelectItem>
+                    <SelectItem value="experience">Experience</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select
+                  value={formData.criteriaCondition}
+                  onValueChange={(value) => setFormData({ ...formData, criteriaCondition: value })}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select condition" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="contains">Contains</SelectItem>
+                    <SelectItem value="equals">Equals</SelectItem>
+                    <SelectItem value="greater_than">Greater Than</SelectItem>
+                    <SelectItem value="less_than">Less Than</SelectItem>
+                    <SelectItem value="within">Within Range</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Input
+                  placeholder="Value"
+                  value={formData.criteriaValue}
+                  onChange={(e) => setFormData({ ...formData, criteriaValue: e.target.value })}
+                />
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={handleCloseDialog}
+            >
+              Cancel
+            </Button>
+            <Button
+              className="bg-teal-600 hover:bg-teal-700 text-white"
+              onClick={handleSaveRule}
+              disabled={!formData.name.trim() || !formData.description.trim() || !formData.criteriaValue.trim()}
+            >
+              {isEditMode ? 'Update Rule' : 'Create Rule'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
