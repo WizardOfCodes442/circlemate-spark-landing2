@@ -1,29 +1,72 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, Check } from "lucide-react";
-import { Input} from "@/components/ui/input"
-import  { Button }  from "@/components/ui/button"
-import  { Card,  CardContent } from "@/components/ui/card"
-import {  Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import OnboardingLayout from "@/components/onboarding/OnboardingLayout";
 
-const communities = [
-  { id: 1, name: "Tech Enthusiasts", members: 5243, active: true },
-  { id: 2, name: "Fitness & Wellness", members: 8712, active: false },
-  { id: 3, name: "Book Lovers", members: 3819, active: false },
-  { id: 4, name: "Photography Club", members: 4567, active: false },
-  { id: 5, name: "Foodies Network", members: 9231, active: false },
-  { id: 6, name: "Travel Adventurers", members: 6854, active: false },
-];
+interface Community {
+  id: number;
+  name: string;
+  members: number;
+  active: boolean;
+}
 
 const OnboardingCommunity = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCommunityId, setSelectedCommunityId] = useState<number | null>(1);
+  const [selectedCommunityId, setSelectedCommunityId] = useState<number | null>(null);
   const [inviteCode, setInviteCode] = useState("");
+  const [communities, setCommunities] = useState<Community[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState<any>(null);
+
+  // Fetch onboarding progress and communities
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const token = localStorage.getItem("token");
+
+        // Fetch onboarding progress
+        const progressResponse = await fetch(
+          "https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/progress",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        if (!progressResponse.ok) {
+          throw new Error("Failed to fetch onboarding progress");
+        }
+        const progressData = await progressResponse.json();
+        setProgress(progressData.data);
+
+        // Fetch communities
+        const communitiesResponse = await fetch(
+          "https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/communities",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        if (!communitiesResponse.ok) {
+          throw new Error("Failed to fetch communities");
+        }
+        const communitiesData = await communitiesResponse.json();
+        setCommunities(communitiesData);
+      } catch (err) {
+        setError("Failed to load data. Please try again.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const filteredCommunities = communities.filter((community) =>
     community.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -40,25 +83,27 @@ const OnboardingCommunity = () => {
     setError(null);
 
     try {
-      const token = localStorage.getItem("token"); // Adjust the key if your token is stored under a different name
-
+      const token = localStorage.getItem("token");
       const payload = inviteCode
         ? { inviteCode }
         : { communityId: selectedCommunityId };
-      console.log(payload);
-      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/community", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" , 
-                  Authorization: `Bearer ${token}`,},
-        body: JSON.stringify(payload),
-      });
+
+      const response = await fetch(
+        "https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/community",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to submit community selection");
       }
 
-      const data = await response.json();
-      console.log("Community submission response:", data);
       navigate("/onboarding/profile");
     } catch (err) {
       setError("Failed to submit community selection. Please try again.");
@@ -68,10 +113,41 @@ const OnboardingCommunity = () => {
     }
   };
 
+  const handleSkip = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        "https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/skip",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ reason: "Skipped community selection" }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to skip community selection");
+      }
+
+      navigate("/onboarding/profile");
+    } catch (err) {
+      setError("Failed to skip community selection. Please try again.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <OnboardingLayout
-      currentStep={0}
-      totalSteps={7}
+      currentStep={progress?.completed || 0}
+      totalSteps={progress?.total || 7}
       nextAction={handleNext}
       nextDisabled={(!selectedCommunityId && !inviteCode.trim()) || loading}
       nextLabel={loading ? "Submitting..." : "Next"}
@@ -96,6 +172,7 @@ const OnboardingCommunity = () => {
           className="pl-10 py-6"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          disabled={loading}
         />
       </div>
 
@@ -142,7 +219,18 @@ const OnboardingCommunity = () => {
             setSelectedCommunityId(null);
             setError(null);
           }}
+          disabled={loading}
         />
+      </div>
+
+      <div className="mt-6 text-center">
+        <Button
+          variant="outline"
+          onClick={handleSkip}
+          disabled={loading}
+        >
+          Skip Community Selection
+        </Button>
       </div>
     </OnboardingLayout>
   );
