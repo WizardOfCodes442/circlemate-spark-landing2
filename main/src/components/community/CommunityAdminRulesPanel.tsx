@@ -31,8 +31,8 @@ const CommunityAdminRulesPanel = () => {
       active: false,
     },
   ]);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [currentRule, setCurrentRule] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -42,33 +42,31 @@ const CommunityAdminRulesPanel = () => {
     criteriaValue: '',
   });
 
-  const handleOpenDialog = (rule = null) => {
-    if (rule) {
-      setIsEditMode(true);
-      setCurrentRule(rule);
-      setFormData({
-        name: rule.name,
-        description: rule.description,
-        criteriaField: rule.criteria.field,
-        criteriaCondition: rule.criteria.condition,
-        criteriaValue: rule.criteria.value,
-      });
-    } else {
-      setIsEditMode(false);
-      setCurrentRule(null);
-      setFormData({
-        name: '',
-        description: '',
-        criteriaField: 'interests',
-        criteriaCondition: 'contains',
-        criteriaValue: '',
-      });
-    }
-    setIsDialogOpen(true);
+  const handleOpenAddDialog = () => {
+    setFormData({
+      name: '',
+      description: '',
+      criteriaField: 'interests',
+      criteriaCondition: 'contains',
+      criteriaValue: '',
+    });
+    setIsAddDialogOpen(true);
   };
 
-  const handleSaveRule = () => {
-    if (isEditMode) {
+  const handleOpenEditDialog = (rule) => {
+    setCurrentRule(rule);
+    setFormData({
+      name: rule.name,
+      description: rule.description,
+      criteriaField: rule.criteria.field,
+      criteriaCondition: rule.criteria.condition,
+      criteriaValue: rule.criteria.value,
+    });
+    setIsEditDialogOpen(true);
+  };
+
+  const handleSaveRule = (isEditMode) => {
+    if (isEditMode && currentRule) {
       setRules(
         rules.map((rule) =>
           rule.id === currentRule.id
@@ -85,6 +83,7 @@ const CommunityAdminRulesPanel = () => {
             : rule
         )
       );
+      setIsEditDialogOpen(false);
     } else {
       setRules([
         ...rules,
@@ -100,8 +99,8 @@ const CommunityAdminRulesPanel = () => {
           active: true,
         },
       ]);
+      setIsAddDialogOpen(false);
     }
-    setIsDialogOpen(false);
   };
 
   const handleDeleteRule = (id) => {
@@ -123,11 +122,11 @@ const CommunityAdminRulesPanel = () => {
           <h3 className="text-2xl font-semibold leading-none tracking-tight">Community Matching Rules</h3>
           <p className="text-sm text-muted-foreground">Configure matching rules and criteria for your community members.</p>
         </div>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
             <Button
               className="bg-teal hover:bg-teal/90 text-white"
-              onClick={() => handleOpenDialog()}
+              onClick={handleOpenAddDialog}
             >
               <CirclePlus className="h-4 w-4 mr-2" />
               Add Rule
@@ -135,7 +134,7 @@ const CommunityAdminRulesPanel = () => {
           </DialogTrigger>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
-              <DialogTitle>{isEditMode ? 'Edit Matching Rule' : 'Create Matching Rule'}</DialogTitle>
+              <DialogTitle>Create Matching Rule</DialogTitle>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
@@ -189,6 +188,7 @@ const CommunityAdminRulesPanel = () => {
                     </SelectContent>
                   </Select>
                   <Input
+                    className="flex-grow"
                     placeholder="Value"
                     value={formData.criteriaValue}
                     onChange={(e) => setFormData({ ...formData, criteriaValue: e.target.value })}
@@ -199,15 +199,15 @@ const CommunityAdminRulesPanel = () => {
             <DialogFooter>
               <Button
                 variant="outline"
-                onClick={() => setIsDialogOpen(false)}
+                onClick={() => setIsAddDialogOpen(false)}
               >
                 Cancel
               </Button>
               <Button
                 className="bg-teal hover:bg-teal/90 text-white"
-                onClick={handleSaveRule}
+                onClick={() => handleSaveRule(false)}
               >
-                {isEditMode ? 'Update Rule' : 'Create Rule'}
+                Create Rule
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -251,12 +251,12 @@ const CommunityAdminRulesPanel = () => {
                       {rule.active ? 'Active' : 'Inactive'}
                     </label>
                   </div>
-                  <Dialog>
+                  <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
                     <DialogTrigger asChild>
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleOpenDialog(rule)}
+                        onClick={() => handleOpenEditDialog(rule)}
                       >
                         <SquarePen className="h-4 w-4" />
                       </Button>
@@ -317,6 +317,7 @@ const CommunityAdminRulesPanel = () => {
                               </SelectContent>
                             </Select>
                             <Input
+                              className="flex-grow"
                               placeholder="Value"
                               value={formData.criteriaValue}
                               onChange={(e) => setFormData({ ...formData, criteriaValue: e.target.value })}
@@ -327,13 +328,13 @@ const CommunityAdminRulesPanel = () => {
                       <DialogFooter>
                         <Button
                           variant="outline"
-                          onClick={() => setIsDialogOpen(false)}
+                          onClick={() => setIsEditDialogOpen(false)}
                         >
                           Cancel
                         </Button>
                         <Button
                           className="bg-teal hover:bg-teal/90 text-white"
-                          onClick={handleSaveRule}
+                          onClick={() => handleSaveRule(true)}
                         >
                           Update Rule
                         </Button>
