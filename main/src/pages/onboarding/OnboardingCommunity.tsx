@@ -9,7 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import OnboardingLayout from "@/components/onboarding/OnboardingLayout";
 
 interface Community {
-  id: number;
+  id: string; // Matches MongoDB id as string
   name: string;
   members: number;
   active: boolean;
@@ -18,19 +18,33 @@ interface Community {
 const OnboardingCommunity = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCommunityId, setSelectedCommunityId] = useState<number | null>(null);
+  const [selectedCommunityId, setSelectedCommunityId] = useState<string | null>(null);
   const [inviteCode, setInviteCode] = useState("");
   const [communities, setCommunities] = useState<Community[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<any>(null);
 
-  // Fetch onboarding progress and communities
+  // Fallback mock data in case API fails
+  const fallbackCommunities: Community[] = [
+    { id: "1", name: "Tech Enthusiasts", members: 5243, active: true },
+    { id: "2", name: "Fitness & Wellness", members: 8712, active: false },
+    { id: "3", name: "Book Lovers", members: 3819, active: false },
+    { id: "4", name: "Photography Club", members: 4567, active: false },
+    { id: "5", name: "Foodies Network", members: 9231, active: false },
+    { id: "6", name: "Travel Adventurers", members: 6854, active: false },
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+      setError(null);
+
       try {
         const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("No authentication token found. Please log in again.");
+        }
 
         // Fetch onboarding progress
         const progressResponse = await fetch(
@@ -40,10 +54,11 @@ const OnboardingCommunity = () => {
           }
         );
         if (!progressResponse.ok) {
-          throw new Error("Failed to fetch onboarding progress");
+          throw new Error(`Progress API error: ${progressResponse.status} ${progressResponse.statusText}`);
         }
         const progressData = await progressResponse.json();
-        setProgress(progressData.data);
+        console.log("Progress response:", progressData);
+        setProgress(progressData.data || { completed: 0, total: 7 });
 
         // Fetch communities
         const communitiesResponse = await fetch(
@@ -53,13 +68,28 @@ const OnboardingCommunity = () => {
           }
         );
         if (!communitiesResponse.ok) {
-          throw new Error("Failed to fetch communities");
+          throw new Error(`Communities API error: ${communitiesResponse.status} ${communitiesResponse.statusText}`);
         }
         const communitiesData = await communitiesResponse.json();
-        setCommunities(communitiesData);
-      } catch (err) {
-        setError("Failed to load data. Please try again.");
-        console.error(err);
+        console.log("Communities response:", communitiesData);
+
+        // Validate and normalize community data
+        const data = Array.isArray(communitiesData) ? communitiesData : communitiesData.data || [];
+        if (!Array.isArray(data)) {
+          throw new Error("Invalid communities data format");
+        }
+
+        const normalizedCommunities = data.map((item: any) => ({
+          id: item.id || item._id || `fallback-${Math.random()}`, // Handle id or _id
+          name: item.name || item.communityName || "Unknown Community",
+          members: item.memberCount || item["member Count"] || item.members || 0, // Handle memberCount or "member Count"
+          active: item.active || false,
+        }));
+        setCommunities(normalizedCommunities);
+      } catch (err: any) {
+        console.error("Fetch error:", err);
+        setError("Failed to load communities. Using fallback data.");
+        setCommunities(fallbackCommunities);
       } finally {
         setLoading(false);
       }
@@ -72,7 +102,7 @@ const OnboardingCommunity = () => {
     community.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleSelectCommunity = (id: number) => {
+  const handleSelectCommunity = (id: string) => {
     setSelectedCommunityId(id);
     setInviteCode("");
     setError(null);
@@ -84,6 +114,10 @@ const OnboardingCommunity = () => {
 
     try {
       const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No authentication token found. Please log in again.");
+      }
+
       const payload = inviteCode
         ? { inviteCode }
         : { communityId: selectedCommunityId };
@@ -101,13 +135,15 @@ const OnboardingCommunity = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to submit community selection");
+        throw new Error(`Community submission error: ${response.status} ${response.statusText}`);
       }
 
+      const responseData = await response.json();
+      console.log("Community submission response:", responseData);
       navigate("/onboarding/profile");
-    } catch (err) {
-      setError("Failed to submit community selection. Please try again.");
-      console.error(err);
+    } catch (err: any) {
+      setError(err.message || "Failed to submit community selection. Please try again.");
+      console.error("Submission error:", err);
     } finally {
       setLoading(false);
     }
@@ -119,6 +155,10 @@ const OnboardingCommunity = () => {
 
     try {
       const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No authentication token found. Please log in again.");
+      }
+
       const response = await fetch(
         "https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/skip",
         {
@@ -132,13 +172,15 @@ const OnboardingCommunity = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to skip community selection");
+        throw new Error(`Skip error: ${response.status} ${response.statusText}`);
       }
 
+      const responseData = await response.json();
+      console.log("Skip response:", responseData);
       navigate("/onboarding/profile");
-    } catch (err) {
-      setError("Failed to skip community selection. Please try again.");
-      console.error(err);
+    } catch (err: any) {
+      setError(err.message || "Failed to skip community selection. Please try again.");
+      console.error("Skip error:", err);
     } finally {
       setLoading(false);
     }
@@ -151,6 +193,26 @@ const OnboardingCommunity = () => {
       nextAction={handleNext}
       nextDisabled={(!selectedCommunityId && !inviteCode.trim()) || loading}
       nextLabel={loading ? "Submitting..." : "Next"}
+      footerButtons={
+        <div className="flex justify-end gap-2">
+          <Button
+            variant="outline"
+            size="default"
+            onClick={handleSkip}
+            disabled={loading}
+          >
+            Skip
+          </Button>
+          <Button
+            variant="default"
+            size="default"
+            onClick={handleNext}
+            disabled={(!selectedCommunityId && !inviteCode.trim()) || loading}
+          >
+            {loading ? "Submitting..." : "Next"}
+          </Button>
+        </div>
+      }
     >
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold mb-2">Find Your Community</h1>
@@ -162,6 +224,18 @@ const OnboardingCommunity = () => {
       {error && (
         <Alert variant="destructive" className="mb-6">
           <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
+      {loading && (
+        <Alert className="mb-6">
+          <AlertDescription>Loading communities...</AlertDescription>
+        </Alert>
+      )}
+
+      {!loading && filteredCommunities.length === 0 && (
+        <Alert className="mb-6">
+          <AlertDescription>No communities found matching your search.</AlertDescription>
         </Alert>
       )}
 
@@ -221,16 +295,6 @@ const OnboardingCommunity = () => {
           }}
           disabled={loading}
         />
-      </div>
-
-      <div className="mt-6 text-center">
-        <Button
-          variant="outline"
-          onClick={handleSkip}
-          disabled={loading}
-        >
-          Skip Community Selection
-        </Button>
       </div>
     </OnboardingLayout>
   );
