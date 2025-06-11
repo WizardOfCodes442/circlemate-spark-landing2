@@ -98,7 +98,7 @@ const handleNext = async () => {
     setError(null);
 
     try {
-      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/personality", {
+      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/personality", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ traits: selectedTraits }),
