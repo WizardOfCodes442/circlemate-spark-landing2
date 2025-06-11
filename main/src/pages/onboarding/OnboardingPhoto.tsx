@@ -127,7 +127,7 @@ const OnboardingPhoto = () => {
       setError(null);
 
       try {
-        const response = await fetch(`/api/onboarding/photos/${photo.photoId}`, {
+        const response = await fetch(`https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/photos/${photo.photoId}`, {
           method: "DELETE",
         });
 
