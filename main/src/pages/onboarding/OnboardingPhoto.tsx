@@ -94,7 +94,7 @@ const OnboardingPhoto = () => {
         const formData = new FormData();
         formData.append("photo", file);
 
-        const response = await fetch("/api/onboarding/photos", {
+        const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/personality/photos", {
           method: "POST",
           body: formData,
         });
@@ -161,7 +161,7 @@ const OnboardingPhoto = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/photos", {
+      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/photos", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({
