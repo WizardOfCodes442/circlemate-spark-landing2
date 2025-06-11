@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, Check } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -21,7 +21,8 @@ const OnboardingCommunity = () => {
   const [selectedCommunityId, setSelectedCommunityId] = useState<string | null>(null);
   const [inviteCode, setInviteCode] = useState("");
   const [communities, setCommunities] = useState<Community[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<any>(null);
 
@@ -37,7 +38,7 @@ const OnboardingCommunity = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      setIsFetching(true);
       setError(null);
 
       try {
@@ -92,25 +93,23 @@ const OnboardingCommunity = () => {
         setError("Failed to load communities. Using fallback data.");
         setCommunities(fallbackCommunities);
       } finally {
-        setLoading(false);
+        setIsFetching(false);
       }
     };
 
     fetchData();
   }, []);
 
-  const filteredCommunities = communities.filter((community) =>
-    community.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const handleSelectCommunity = (id: string) => {
+  const handleSelectCommunity = useCallback((id: string) => {
     setSelectedCommunityId(id);
     setInviteCode("");
     setError(null);
-  };
+  }, []);
 
-  const handleNext = () => {
-    setLoading(true);
+  const handleNext = useCallback(() => {
+    if (isFetching || isSubmitting) return; // Prevent submission during fetch or submit
+
+    setIsSubmitting(true);
     setError(null);
 
     const submitCommunity = async () => {
@@ -147,15 +146,17 @@ const OnboardingCommunity = () => {
         setError(err.message || "Failed to submit community selection. Please try again.");
         console.error("Submission error:", err);
       } finally {
-        setLoading(false);
+        setIsSubmitting(false);
       }
     };
 
     submitCommunity();
-  };
+  }, [inviteCode, selectedCommunityId, isFetching, isSubmitting, navigate]);
 
-  const handleSkip = () => {
-    setLoading(true);
+  const handleSkip = useCallback(() => {
+    if (isFetching || isSubmitting) return; // Prevent skip during fetch or submit
+
+    setIsSubmitting(true);
     setError(null);
 
     const skipCommunity = async () => {
@@ -188,20 +189,24 @@ const OnboardingCommunity = () => {
         setError(err.message || "Failed to skip community selection. Please try again.");
         console.error("Skip error:", err);
       } finally {
-        setLoading(false);
+        setIsSubmitting(false);
       }
     };
 
     skipCommunity();
-  };
+  }, [isFetching, isSubmitting, navigate]);
+
+  const filteredCommunities = communities.filter((community) =>
+    community.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <OnboardingLayout
       currentStep={progress?.completed || 0}
       totalSteps={progress?.total || 7}
       nextAction={handleNext}
-      nextDisabled={(!selectedCommunityId && !inviteCode.trim()) || loading}
-      nextLabel={loading ? "Submitting..." : "Next"}
+      nextDisabled={(!selectedCommunityId && !inviteCode.trim()) || isFetching || isSubmitting}
+      nextLabel={isSubmitting ? "Submitting..." : "Next"}
     >
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
@@ -217,13 +222,13 @@ const OnboardingCommunity = () => {
           </Alert>
         )}
 
-        {loading && (
+        {isFetching && (
           <Alert className="mb-6">
             <AlertDescription>Loading communities...</AlertDescription>
           </Alert>
         )}
 
-        {!loading && filteredCommunities.length === 0 && (
+        {!isFetching && filteredCommunities.length === 0 && (
           <Alert className="mb-6">
             <AlertDescription>No communities found matching your search.</AlertDescription>
           </Alert>
@@ -236,39 +241,41 @@ const OnboardingCommunity = () => {
             className="pl-10 py-6 rounded-md"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            disabled={loading}
+            disabled={isFetching || isSubmitting}
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          {filteredCommunities.map((community) => (
-            <Card
-              key={community.id}
-              className={`cursor-pointer border-2 transition-all ${
-                selectedCommunityId === community.id
-                  ? "border-primary bg-[#22CCBE]/5"
-                  : "hover:border-primary/20"
-              }`}
-              onClick={() => handleSelectCommunity(community.id)}
-            >
-              <CardContent className="p-4 flex justify-between items-center">
-                <div>
-                  <h3 className="font-medium">{community.name}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {community.members.toLocaleString()} members
-                  </p>
-                </div>
-                {selectedCommunityId === community.id ? (
-                  <Button variant="default" size="icon" className="rounded-full">
-                    <Check className="h-4 w-4 text-white" />
-                  </Button>
-                ) : (
-                  <Badge variant="outline" className="bg-secondary text-white">Select</Badge>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        {!isFetching && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            {filteredCommunities.map((community) => (
+              <Card
+                key={community.id}
+                className={`cursor-pointer border-2 transition-all ${
+                  selectedCommunityId === community.id
+                    ? "border-primary bg-[#22CCBE]/5"
+                    : "hover:border-primary/20"
+                }`}
+                onClick={() => handleSelectCommunity(community.id)}
+              >
+                <CardContent className="p-4 flex justify-between items-center">
+                  <div>
+                    <h3 className="font-medium">{community.name}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {community.members.toLocaleString()} members
+                    </p>
+                  </div>
+                  {selectedCommunityId === community.id ? (
+                    <Button variant="default" size="icon" className="rounded-full">
+                      <Check className="h-4 w-4 text-white" />
+                    </Button>
+                  ) : (
+                    <Badge variant="outline" className="bg-secondary text-white">Select</Badge>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
 
         <div className="mb-6">
           <p className="text-sm text-center text-muted-foreground mb-2">
@@ -283,7 +290,7 @@ const OnboardingCommunity = () => {
               setSelectedCommunityId(null);
               setError(null);
             }}
-            disabled={loading}
+            disabled={isFetching || isSubmitting}
           />
         </div>
 
@@ -292,7 +299,7 @@ const OnboardingCommunity = () => {
             variant="outline"
             size="default"
             onClick={handleSkip}
-            disabled={loading}
+            disabled={isFetching || isSubmitting}
           >
             Skip
           </Button>
