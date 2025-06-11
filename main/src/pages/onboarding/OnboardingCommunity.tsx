@@ -20,20 +20,39 @@ const OnboardingCommunity = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCommunityId, setSelectedCommunityId] = useState<string | null>(null);
   const [inviteCode, setInviteCode] = useState("");
+  const [skipReason, setSkipReason] = useState("");
   const [communities, setCommunities] = useState<Community[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<any>(null);
 
-  // Fallback mock data
+  // Fallback data from provided API response
   const fallbackCommunities: Community[] = [
-    { id: "1", name: "Tech Enthusiasts", members: 5243, active: true },
-    { id: "2", name: "Fitness & Wellness", members: 8712, active: false },
-    { id: "3", name: "Book Lovers", members: 3819, active: false },
-    { id: "4", name: "Photography Club", members: 4567, active: false },
-    { id: "5", name: "Foodies Network", members: 9231, active: false },
-    { id: "6", name: "Travel Adventurers", members: 6854, active: false },
+    {
+      id: "6846ae0ce3a92502d47879df",
+      name: "Lagos Tech Circle",
+      members: 1,
+      active: false,
+    },
+    {
+      id: "6846ae0ce3a92502d47879e1",
+      name: "Remote Workers Hub",
+      members: 1,
+      active: false,
+    },
+    {
+      id: "6846ae0ce3a92502d47879e0",
+      name: "Abuja Creatives",
+      members: 0,
+      active: false,
+    },
+    {
+      id: "6846ae0ce3a92502d47879e2",
+      name: "Women in Business",
+      members: 0,
+      active: false,
+    },
   ];
 
   useEffect(() => {
@@ -87,10 +106,10 @@ const OnboardingCommunity = () => {
           active: item.active || false,
         }));
         console.log("Normalized communities:", normalizedCommunities);
-        setCommunities(normalizedCommunities);
+        setCommunities(normalizedCommunities.length > 0 ? normalizedCommunities : fallbackCommunities);
       } catch (err: any) {
         console.error("Fetch error:", err);
-        setError("Failed to load communities. Using fallback data.");
+        setError("Failed to load communities due to server issue (possibly CORS). Using fallback data.");
         setCommunities(fallbackCommunities);
       } finally {
         setIsFetching(false);
@@ -107,7 +126,7 @@ const OnboardingCommunity = () => {
   }, []);
 
   const handleNext = useCallback(() => {
-    if (isFetching || isSubmitting) return; // Prevent submission during fetch or submit
+    if (isFetching || isSubmitting) return;
 
     setIsSubmitting(true);
     setError(null);
@@ -154,7 +173,7 @@ const OnboardingCommunity = () => {
   }, [inviteCode, selectedCommunityId, isFetching, isSubmitting, navigate]);
 
   const handleSkip = useCallback(() => {
-    if (isFetching || isSubmitting) return; // Prevent skip during fetch or submit
+    if (isFetching || isSubmitting) return;
 
     setIsSubmitting(true);
     setError(null);
@@ -166,6 +185,8 @@ const OnboardingCommunity = () => {
           throw new Error("No authentication token found. Please log in again.");
         }
 
+        const payload = { reason: skipReason || "No reason provided" };
+
         const response = await fetch(
           "https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/skip",
           {
@@ -174,7 +195,7 @@ const OnboardingCommunity = () => {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ reason: "Skipped community selection" }),
+            body: JSON.stringify(payload),
           }
         );
 
@@ -194,7 +215,7 @@ const OnboardingCommunity = () => {
     };
 
     skipCommunity();
-  }, [isFetching, isSubmitting, navigate]);
+  }, [skipReason, isFetching, isSubmitting, navigate]);
 
   const filteredCommunities = communities.filter((community) =>
     community.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -212,7 +233,7 @@ const OnboardingCommunity = () => {
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold mb-2">Find Your Community</h1>
           <p className="text-muted-foreground">
-            Select the community you want to join or enter an invite code
+            Select a community to join or enter an invite code
           </p>
         </div>
 
@@ -247,7 +268,7 @@ const OnboardingCommunity = () => {
 
         {!isFetching && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            {filteredCommunities.map((community) => (
+            {filteredCommunities.map((community, index) => (
               <Card
                 key={community.id}
                 className={`cursor-pointer border-2 transition-all ${
@@ -259,7 +280,9 @@ const OnboardingCommunity = () => {
               >
                 <CardContent className="p-4 flex justify-between items-center">
                   <div>
-                    <h3 className="font-medium">{community.name}</h3>
+                    <h3 className="font-medium">
+                      {index + 1}. {community.name}
+                    </h3>
                     <p className="text-sm text-muted-foreground">
                       {community.members.toLocaleString()} members
                     </p>
@@ -295,6 +318,13 @@ const OnboardingCommunity = () => {
         </div>
 
         <div className="flex justify-end gap-2">
+          <Input
+            className="w-40 py-2 text-sm rounded-md"
+            placeholder="Reason for skipping"
+            value={skipReason}
+            onChange={(e) => setSkipReason(e.target.value)}
+            disabled={isFetching || isSubmitting}
+          />
           <Button
             variant="outline"
             size="default"
