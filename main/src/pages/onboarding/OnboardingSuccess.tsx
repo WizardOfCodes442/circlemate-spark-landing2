@@ -26,7 +26,7 @@ const OnboardingSuccess = () => {
   const markOnboardingCompleted = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch('/api/onboarding/complete', {
+      const response = await fetch('/api/v1/onboarding/complete', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
