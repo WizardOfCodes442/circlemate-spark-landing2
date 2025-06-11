@@ -71,7 +71,7 @@ const OnboardingAvailability = () => {
     setError(null);
 
     try {
-      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/onboarding/availability", {
+      const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/availability", {
         method: "POST",
         headers: { "Content-Type": "application/json" , Authorization: `Bearer ${token}`},
         body: JSON.stringify({ days: selectedDays, times: selectedTimes }),
