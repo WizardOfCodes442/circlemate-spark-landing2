@@ -1,4 +1,3 @@
-```tsx
 import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -616,4 +615,3 @@ const CommunityAdminSettingsPanel: React.FC = () => {
 };
 
 export default CommunityAdminSettingsPanel;
-```
