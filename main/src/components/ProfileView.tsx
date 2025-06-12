@@ -93,7 +93,7 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
         <div
           className={`fixed z-50 w-full max-w-md mx-auto p-4 bg-teal-500 text-white rounded-lg shadow-lg transition-transform duration-300 ease-in-out ${
             window.innerWidth < 768 ? "top-4" : "bottom-4"
-          } transform ${window.innerWidth < 768 ? "translate-y-0" : "translate-y-0"}`}
+          } transform translate-y-0`}
         >
           <div className="flex items-center justify-between">
             <p className="text-sm">{showNotification.message}</p>
@@ -128,6 +128,28 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
                   onClick={() => setSelectedMedia({ type: "image", src: match.image })}
                 />
               </DialogTrigger>
+              {/* Media Gallery */}
+              <div className="grid grid-cols-3 gap-2 mb-4">
+                {mediaGallery.map((media, index) => (
+                  <DialogTrigger key={index} asChild>
+                    <div
+                      className="relative w-full h-20 rounded-lg overflow-hidden cursor-pointer"
+                      onClick={() => setSelectedMedia({ type: media.type, src: media.src })}
+                    >
+                      <img
+                        src={media.type === "video" ? media.thumbnail : media.src}
+                        alt={`Gallery item ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      {media.type === "video" && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+                          <Play className="h-6 w-6 text-white" />
+                        </div>
+                      )}
+                    </div>
+                  </DialogTrigger>
+                ))}
+              </div>
               <DialogContent className="bg-black p-0 max-w-[90vw] max-h-[90vh] flex items-center justify-center">
                 {selectedMedia?.type === "image" ? (
                   <img src={selectedMedia.src} alt="Full-size media" className="max-w-full max-h-[90vh] object-contain" />
@@ -146,50 +168,6 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
                 </button>
               </DialogContent>
             </Dialog>
-
-            {/* Media Gallery */}
-            <div className="grid grid-cols-3 gap-2 mb-4">
-              {mediaGallery.slice(0, 8).map((media, index) => (
-                <Dialog key={index}>
-                  <DialogTrigger asChild>
-                    <div
-                      className="relative w-full h-20 rounded-lg overflow-hidden cursor-pointer"
-                      onClick={() => setSelectedMedia({ type: media.type, src: media.src })}
-                    >
-                      <img
-                        src={media.type === "video" ? media.thumbnail : media.src}
-                        alt={`Gallery item ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                      {media.type === "video" && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
-                          <Play className="h-6 w-6 text-white" />
-                        </div>
-                      )}
-                    </div>
-                  </DialogTrigger>
-                </Dialog>
-              ))}
-              {mediaGallery[8] && (
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div
-                      className="relative w-full h-20 rounded-lg overflow-hidden cursor-pointer"
-                      onClick={() => setSelectedMedia({ type: mediaGallery[8].type, src: mediaGallery[8].src })}
-                    >
-                      <img
-                        src={mediaGallery[8].thumbnail}
-                        alt="Video thumbnail"
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
-                        <Play className="h-6 w-6 text-white" />
-                      </div>
-                    </div>
-                  </DialogTrigger>
-                </Dialog>
-              )}
-            </div>
 
             <div className="flex items-center gap-2 mb-2">
               <h1 className="text-2xl font-bold">{match.name}</h1>

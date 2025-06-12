@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, X } from "lucide-react";
 import DashboardHeader from "@/components/DashboardHeader";
@@ -19,27 +19,12 @@ interface ConnectViewProps {
 const ConnectView = ({ match, onCancel }: ConnectViewProps) => {
   const [showNotification, setShowNotification] = useState<{ message: string } | null>(null);
   const [isRequestSent, setIsRequestSent] = useState(false);
-  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-
-  // Show notification on component mount
-  useEffect(() => {
-    setShowNotification({ message: `You are now viewing ${match.name}'s connection options.` });
-    setTimeout(() => {
-      setShowNotification(null);
-    }, 3000); // Auto-dismiss after 3 seconds
-  }, [match.name]);
-
-  const showNotificationMessage = (message: string) => {
-    setShowNotification({ message });
-    setTimeout(() => {
-      setShowNotification(null);
-    }, 3000); // Auto-dismiss after 3 seconds
-  };
 
   const handleSendRequest = () => {
-    setIsRequestSent(true);
-    setIsButtonEnabled(false); // Disable button after sending
-    showNotificationMessage(`Connection request sent to ${match.name}.`);
+    if (!isRequestSent) {
+      setIsRequestSent(true);
+      setShowNotification({ message: `Connection request sent to ${match.name}.` });
+    }
   };
 
   return (
@@ -49,7 +34,7 @@ const ConnectView = ({ match, onCancel }: ConnectViewProps) => {
         <div
           className={`fixed z-50 w-full max-w-md mx-auto p-4 bg-teal-500 text-white rounded-lg shadow-lg transition-transform duration-300 ease-in-out ${
             window.innerWidth < 768 ? "top-4" : "bottom-4"
-          } transform ${window.innerWidth < 768 ? "translate-y-0" : "translate-y-0"}`}
+          } transform translate-y-0`}
         >
           <div className="flex items-center justify-between">
             <p className="text-sm">{showNotification.message}</p>
@@ -105,7 +90,7 @@ const ConnectView = ({ match, onCancel }: ConnectViewProps) => {
               </div>
               <div className="p-4 bg-gray-50 rounded-lg">
                 <div className="flex items-start">
-                  <svg className="w-5 h-5 text-teal-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-teal-500 mr-2" fill="none" stroke="currentColor" viewBox="0 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
@@ -128,7 +113,6 @@ const ConnectView = ({ match, onCancel }: ConnectViewProps) => {
             <Button
               className="bg-teal-500 text-white rounded-full px-6 py-2 w-full md:w-auto"
               onClick={handleSendRequest}
-              disabled={!isButtonEnabled || isRequestSent}
             >
               Send Connection Request
             </Button>
