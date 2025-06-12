@@ -9,6 +9,18 @@ import { Link } from "react-router-dom";
 import DashboardHeader from "@/components/DashboardHeader";
 import { useCommunities } from "./CommunityContext";
 
+interface Community {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  memberCount: number;
+  tags: string[];
+  subscriptionType: "Admin-Paid" | "Individual-Paid";
+  isFeatured?: boolean;
+  members: { id: string; name: string; avatar: string; lastActive: string }[];
+}
+
 interface PaymentDetails {
   method: "credit_card" | "bank_transfer";
   cardNumber: string;
@@ -19,7 +31,9 @@ interface PaymentDetails {
 }
 
 const Communities = () => {
+  console.log("Communities: Rendering component");
   const { communities, setCommunities } = useCommunities();
+  console.log("Communities: Context data", { communitiesCount: communities.length });
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [newCommunity, setNewCommunity] = useState({
@@ -59,8 +73,10 @@ const Communities = () => {
       (community.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         community.description.toLowerCase().includes(searchQuery.toLowerCase()))
   );
+  console.log("Communities: Filtered communities", { count: filteredCommunities.length });
 
   const handleCreateCommunity = () => {
+    console.log("Communities: handleCreateCommunity called", newCommunity);
     if (!newCommunity.name || !newCommunity.description || !newCommunity.image) {
       alert("Please fill all fields and upload an image.");
       return;
@@ -83,6 +99,7 @@ const Communities = () => {
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("Communities: handleImageUpload called");
     const file = e.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
@@ -91,6 +108,7 @@ const Communities = () => {
   };
 
   const handlePayment = () => {
+    console.log("Communities: handlePayment called", paymentDetails);
     if (paymentDetails.method === "credit_card") {
       if (!/^\d{16}$/.test(paymentDetails.cardNumber) || !/^\d{2}\/\d{2}$/.test(paymentDetails.expiry) || !/^\d{3,4}$/.test(paymentDetails.cvv)) {
         alert("Invalid credit card details");
@@ -129,7 +147,7 @@ const Communities = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background border-2 border-red-500">
       <DashboardHeader />
       <main className="flex-grow pt-20">
         <div className="container mx-auto py-8">
