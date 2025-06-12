@@ -39,6 +39,8 @@ const Communities = () => {
   const [paymentStatus, setPaymentStatus] = useState<"processing" | "success" | null>(null);
   const [progress, setProgress] = useState(0);
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(null);
+  const [mainDialogOpen, setMainDialogOpen] = useState(false);
+  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
 
   const categories = [
     "All",
@@ -127,9 +129,6 @@ const Communities = () => {
       }
     }, 500);
   };
-// Add these state variables at the top of your component
-const [mainDialogOpen, setMainDialogOpen] = useState(false);
-const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
@@ -276,7 +275,7 @@ const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
                       {community.isFeatured && (
                         <div className="absolute top-3 right-3 bg-orange-500 text-white text-xs px-2.5 py-1.5 rounded-full z-10">Featured</div>
                       )}
-                     <div className="absolute top-3 left-3 bg-white text-blue-900 text-xs px-2.5 py-1.5 rounded-full z-10">
+                      <div className="absolute top-3 left-3 bg-white text-blue-900 text-xs px-2.5 py-1.5 rounded-full z-10">
                         {community.subscriptionType}
                       </div>
                     </div>
@@ -292,175 +291,173 @@ const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-gray-500">{community.memberCount} members</span>
-                        // Your dialog JSX with the fixes:
                         <Dialog open={mainDialogOpen} onOpenChange={setMainDialogOpen}>
-                            <DialogTrigger asChild>
-                                <Button
-                                    className="bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-9 px-3 rounded-md"
-                                    onClick={(e) => {
-                                    e.preventDefault(); // Prevent Link navigation
-                                    e.stopPropagation(); // Stop event bubbling to Link
-                                    setSelectedCommunity(community);
-                                    setMainDialogOpen(true); // Open main dialog
-                                    }}
-                                >
-                                    Join Community
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
-                                <DialogHeader>
-                                <DialogTitle>Join {community.name}</DialogTitle>
-                                    <p className="text-sm text-muted-foreground">
-                                         This community requires individual subscriptions. Members must have a Basic or Premium plan.
-                                    </p>
-                                </DialogHeader>
-                                <div className="py-4">
-                                    <p className="mb-4">
-                                         Subscription type: <span className="font-medium">{community.subscriptionType}</span>
-                                    </p>
-                                    {community.subscriptionType === "Individual-Paid" && (
-                                    <div className="bg-amber-50 p-4 rounded-lg border border-amber-200 mb-4">
-                                    <p className="text-amber-800 text-sm">
+                          <DialogTrigger asChild>
+                            <Button
+                              className="bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-9 px-3 rounded-md"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setSelectedCommunity(community);
+                                setMainDialogOpen(true);
+                              }}
+                            >
+                              Join Community
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
+                            <DialogHeader>
+                              <DialogTitle>Join {community.name}</DialogTitle>
+                              <p className="text-sm text-muted-foreground">
+                                This community requires individual subscriptions. Members must have a Basic or Premium plan.
+                              </p>
+                            </DialogHeader>
+                            <div className="py-4">
+                              <p className="mb-4">
+                                Subscription type: <span className="font-medium">{community.subscriptionType}</span>
+                              </p>
+                              {community.subscriptionType === "Individual-Paid" && (
+                                <div className="bg-amber-50 p-4 rounded-lg border border-amber-200 mb-4">
+                                  <p className="text-amber-800 text-sm">
                                     This community requires each member to have an active Basic or Premium subscription.
-                                </p>
+                                  </p>
                                 </div>
-      )}
-      {community.subscriptionType === "Individual-Paid" ? (
-        <Dialog open={paymentDialogOpen} onOpenChange={setPaymentDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="w-full bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
-              Subscribe & Join
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
-            <DialogHeader>
-              <DialogTitle>Payment for {community.name}</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div>
-                <Label>Payment Method</Label>
-                <Select
-                  value={paymentDetails.method}
-                  onValueChange={(value) =>
-                    setPaymentDetails({ ...paymentDetails, method: value as "credit_card" | "bank_transfer" })
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select payment method" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="credit_card">Credit Card</SelectItem>
-                    <SelectItem value="bank_transfer">Bank Transfer</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              {paymentDetails.method === "credit_card" ? (
-                <>
-                  <div>
-                    <Label>Card Number</Label>
-                    <Input
-                      value={paymentDetails.cardNumber}
-                      onChange={(e) => setPaymentDetails({ ...paymentDetails, cardNumber: e.target.value })}
-                      placeholder="1234 5678 9012 3456"
-                    />
-                  </div>
-                  <div className="flex gap-4">
-                    <div>
-                      <Label>Expiry (MM/YY)</Label>
-                      <Input
-                        value={paymentDetails.expiry}
-                        onChange={(e) => setPaymentDetails({ ...paymentDetails, expiry: e.target.value })}
-                        placeholder="MM/YY"
-                      />
-                    </div>
-                    <div>
-                      <Label>CVV</Label>
-                      <Input
-                        value={paymentDetails.cvv}
-                        onChange={(e) => setPaymentDetails({ ...paymentDetails, cvv: e.target.value })}
-                        placeholder="123"
-                      />
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div>
-                    <Label>Account Number</Label>
-                    <Input
-                      value={paymentDetails.accountNumber}
-                      onChange={(e) => setPaymentDetails({ ...paymentDetails, accountNumber: e.target.value })}
-                      placeholder="Enter account number"
-                    />
-                  </div>
-                  <div>
-                    <Label>IBAN</Label>
-                    <Input
-                      value={paymentDetails.iban}
-                      onChange={(e) => setPaymentDetails({ ...paymentDetails, iban: e.target.value })}
-                      placeholder="Enter IBAN"
-                    />
-                  </div>
-                </>
-              )}
-              {paymentStatus === "processing" && (
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  <div
-                    className="bg-teal-500 h-2.5 rounded-full transition-all duration-500"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-              )}
-              {paymentStatus === "success" && (
-                <div className="text-green-600 flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5" />
-                  Payment Successful!
-                </div>
-              )}
-            </div>
-            <DialogFooter>
-              <Button
-                className="bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md"
-                onClick={async () => {
-                  await handlePayment();
-                  // Close both dialogs after successful payment
-                  if (paymentStatus === "success") {
-                    setPaymentDialogOpen(false);
-                    setMainDialogOpen(false);
-                  }
-                }}
-                disabled={paymentStatus === "processing"}
-              >
-                {paymentStatus === "processing" ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                    Processing...
-                  </>
-                ) : (
-                  "Confirm Payment"
-                )}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      ) : (
-        <Button
-          className="w-full bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md"
-          onClick={() => {
-            setCommunities(
-              communities.map((c) =>
-                c.id === community.id ? { ...c, memberCount: c.memberCount + 1 } : c
-              )
-            );
-            setMainDialogOpen(false); // Close the main dialog
-          }}
-        >
-          Join Community
-        </Button>
-      )}
-    </div>
-  </DialogContent>
-</Dialog>
+                              )}
+                              {community.subscriptionType === "Individual-Paid" ? (
+                                <Dialog open={paymentDialogOpen} onOpenChange={setPaymentDialogOpen}>
+                                  <DialogTrigger asChild>
+                                    <Button className="w-full bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
+                                      Subscribe & Join
+                                    </Button>
+                                  </DialogTrigger>
+                                  <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
+                                    <DialogHeader>
+                                      <DialogTitle>Payment for {community.name}</DialogTitle>
+                                    </DialogHeader>
+                                    <div className="space-y-4">
+                                      <div>
+                                        <Label>Payment Method</Label>
+                                        <Select
+                                          value={paymentDetails.method}
+                                          onValueChange={(value) =>
+                                            setPaymentDetails({ ...paymentDetails, method: value as "credit_card" | "bank_transfer" })
+                                          }
+                                        >
+                                          <SelectTrigger>
+                                            <SelectValue placeholder="Select payment method" />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="credit_card">Credit Card</SelectItem>
+                                            <SelectItem value="bank_transfer">Bank Transfer</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      </div>
+                                      {paymentDetails.method === "credit_card" ? (
+                                        <>
+                                          <div>
+                                            <Label>Card Number</Label>
+                                            <Input
+                                              value={paymentDetails.cardNumber}
+                                              onChange={(e) => setPaymentDetails({ ...paymentDetails, cardNumber: e.target.value })}
+                                              placeholder="1234 5678 9012 3456"
+                                            />
+                                          </div>
+                                          <div className="flex gap-4">
+                                            <div>
+                                              <Label>Expiry (MM/YY)</Label>
+                                              <Input
+                                                value={paymentDetails.expiry}
+                                                onChange={(e) => setPaymentDetails({ ...paymentDetails, expiry: e.target.value })}
+                                                placeholder="MM/YY"
+                                              />
+                                            </div>
+                                            <div>
+                                              <Label>CVV</Label>
+                                              <Input
+                                                value={paymentDetails.cvv}
+                                                onChange={(e) => setPaymentDetails({ ...paymentDetails, cvv: e.target.value })}
+                                                placeholder="123"
+                                              />
+                                            </div>
+                                          </div>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <div>
+                                            <Label>Account Number</Label>
+                                            <Input
+                                              value={paymentDetails.accountNumber}
+                                              onChange={(e) => setPaymentDetails({ ...paymentDetails, accountNumber: e.target.value })}
+                                              placeholder="Enter account number"
+                                            />
+                                          </div>
+                                          <div>
+                                            <Label>IBAN</Label>
+                                            <Input
+                                              value={paymentDetails.iban}
+                                              onChange={(e) => setPaymentDetails({ ...paymentDetails, iban: e.target.value })}
+                                              placeholder="Enter IBAN"
+                                            />
+                                          </div>
+                                        </>
+                                      )}
+                                      {paymentStatus === "processing" && (
+                                        <div className="w-full bg-gray-200 rounded-full h-2.5">
+                                          <div
+                                            className="bg-teal-500 h-2.5 rounded-full transition-all duration-500"
+                                            style={{ width: `${progress}%` }}
+                                          />
+                                        </div>
+                                      )}
+                                      {paymentStatus === "success" && (
+                                        <div className="text-green-600 flex items-center gap-2">
+                                          <CheckCircle className="h-5 w-5" />
+                                          Payment Successful!
+                                        </div>
+                                      )}
+                                    </div>
+                                    <DialogFooter>
+                                      <Button
+                                        className="bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md"
+                                        onClick={async () => {
+                                          await handlePayment();
+                                          if (paymentStatus === "success") {
+                                            setPaymentDialogOpen(false);
+                                            setMainDialogOpen(false);
+                                          }
+                                        }}
+                                        disabled={paymentStatus === "processing"}
+                                      >
+                                        {paymentStatus === "processing" ? (
+                                          <>
+                                            <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                            Processing...
+                                          </>
+                                        ) : (
+                                          "Confirm Payment"
+                                        )}
+                                      </Button>
+                                    </DialogFooter>
+                                  </DialogContent>
+                                </Dialog>
+                              ) : (
+                                <Button
+                                  className="w-full bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md"
+                                  onClick={() => {
+                                    setCommunities(
+                                      communities.map((c) =>
+                                        c.id === community.id ? { ...c, memberCount: c.memberCount + 1 } : c
+                                      )
+                                    );
+                                    setMainDialogOpen(false);
+                                  }}
+                                >
+                                  Join Community
+                                </Button>
+                              )}
+                            </div>
+                          </DialogContent>
+                        </Dialog>
                       </div>
                     </div>
                   </div>
@@ -482,26 +479,26 @@ const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
                   <div className="grid gap-4 py-4">
                     <div className="grid gap-2">
                       <Label htmlFor="community-name">Community Name</Label>
-                      <input
-                        id="community-name" input
-                        placeholder="text" type="Enter community name"
+                      <Input
+                        id="community-name"
+                        placeholder="Enter community name"
                         value={newCommunity.name}
                         onChange={(e) => setNewCommunity({ ...newCommunity, name: e.target.value })}
                       />
                     </div>
                     <div className="grid gap-2">
-                      <Label for="description">Description</Label>
+                      <Label htmlFor="description">Description</Label>
                       <textarea
                         id="description"
                         placeholder="Describe your community and its purpose"
-                        className="w-full rounded-md border rounded-full h-2.5 border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus:ring-2 focus:ring-teal focus-visible:ring-offset-2"
+                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus:ring-2 focus:ring-teal focus-visible:ring-offset-2"
                         rows={3}
                         value={newCommunity.description}
                         onChange={(e) => setNewCommunity({ ...newCommunity, description: e.target.value })}
                       />
                     </div>
                     <div className="grid gap-2">
-                      <Label for="image">Community Photo</Label>
+                      <Label htmlFor="image">Community Photo</Label>
                       <input
                         id="image"
                         type="file"
@@ -510,7 +507,7 @@ const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
                         onChange={handleImageUpload}
                       />
                       {newCommunity.image && (
-                        <img src={newCommunity.image} alt="Community preview" className="w-full h-32 object-cover rounded-md mt-2" />}
+                        <img src={newCommunity.image} alt="Community preview" className="w-full h-32 object-cover rounded-md mt-2" />
                       )}
                     </div>
                     <div className="grid gap-2">
