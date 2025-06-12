@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CirclePlus, Settings, Search, Users, MapPin, X, CreditCard, Banknote, CheckCircle, Loader2 } from "lucide-react";
+import { CirclePlus, Settings, Search, CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import DashboardHeader from "@/components/DashboardHeader";
-import { useCommunities } from "./CommunityContext";
+import { useCommunities } from "@/context/CommunityContext";
 
 interface PaymentDetails {
   method: "credit_card" | "bank_transfer";
@@ -138,13 +138,10 @@ const Communities = () => {
               <h1 className="text-3xl font-bold text-navy mb-2">Find Your Community</h1>
               <p className="text-gray-600 text-sm">Discover communities where you can connect with like-minded individuals</p>
             </div>
-            <div className="flex gap-3 z-10">
+            <div className="flex gap-3">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button 
-                    className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
-                    onClick={(e) => e.stopPropagation()}
-                  >
+                  <Button className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
                     <CirclePlus className="h-4 w-4" />
                     Create Community
                   </Button>
@@ -233,10 +230,7 @@ const Communities = () => {
                 </DialogContent>
               </Dialog>
               <Link to="/community-admin">
-                <Button 
-                  className="border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
-                  onClick={(e) => e.stopPropagation()}
-                >
+                <Button className="border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
                   <Settings className="h-4 w-4" />
                   Manage Community
                 </Button>
@@ -262,7 +256,7 @@ const Communities = () => {
                       selectedCategory === category
                         ? "bg-teal-500 hover:bg-teal-600 text-white"
                         : "border border-input bg-background hover:bg-accent hover:text-accent-foreground"
-                    } inline-flex items-center gap-2 whitespace-nowrap rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2`}
+                    } inline-flex items-center gap-2 whitespace-nowrap rounded-md`}
                     onClick={() => setSelectedCategory(category)}
                   >
                     {category}
@@ -272,211 +266,197 @@ const Communities = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredCommunities.map((community) => (
-                <Link to={`/community/${community.id}`} key={community.id} className="block">
-                  <div className="border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-                    <div className="h-48 bg-gray-200 relative">
-                      <img src={community.image} alt={community.name} className="w-full h-full object-cover" />
-                      {community.isFeatured && (
-                        <div className="absolute top-3 right-3 bg-orange text-white text-xs px-2.5 py-1.5 rounded-full">Featured</div>
-                      )}
-                      <div className="absolute top-3 left-3 bg-white text-navy text-xs px-2.5 py-1.5 rounded-full">
-                        {community.subscriptionType}
-                      </div>
+                <div key={community.id} className="border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                  <div className="h-48 bg-gray-200 relative">
+                    <img src={community.image} alt={community.name} className="w-full h-full object-cover" />
+                    {community.isFeatured && (
+                      <div className="absolute top-3 right-3 bg-orange text-white text-xs px-2.5 py-1.5 rounded-full">Featured</div>
+                    )}
+                    <div className="absolute top-3 left-3 bg-white text-navy text-xs px-2.5 py-1.5 rounded-full">
+                      {community.subscriptionType}
                     </div>
-                    <div className="p-5">
+                  </div>
+                  <div className="p-5">
+                    <Link to={`/community/${community.id}`}>
                       <h3 className="font-bold text-navy">{community.name}</h3>
-                      <p className="text-gray-600 text-sm mt-1 mb-3">{community.description}</p>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {community.tags.map((tag) => (
-                          <span key={tag} className="bg-teal-100 text-teal-700 text-xs px-2.5 py-1 rounded-full">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-500">{community.memberCount} members</span>
-                        <Dialog>
-                          <DialogTrigger asChild>
+                    </Link>
+                    <p className="text-gray-600 text-sm mt-1 mb-3">{community.description}</p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {community.tags.map((tag) => (
+                        <span key={tag} className="bg-teal-500/10 text-teal-500 text-xs px-2.5 py-1 rounded-full">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500">{community.memberCount} members</span>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-9 px-3 rounded-md"
+                            onClick={() => setSelectedCommunity(community)}
+                          >
+                            Join Community
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
+                          <DialogHeader>
+                            <DialogTitle>Join {community.name}</DialogTitle>
+                            <p className="text-sm text-muted-foreground">
+                              This community requires individual subscriptions. Members must have a Basic or Premium plan.
+                            </p>
+                          </DialogHeader>
+                          <div className="py-4">
+                            <p className="mb-4">
+                              Subscription type: <span className="font-medium">{community.subscriptionType}</span>
+                            </p>
+                            {community.subscriptionType === "Individual-Paid" && (
+                              <div className="bg-amber-50 p-4 rounded-lg border border-amber-200 mb-4">
+                                <p className="text-amber-800 text-sm">
+                                  This community requires each member to have an active Basic or Premium subscription.
+                                </p>
+                              </div>
+                            )}
+                            {community.subscriptionType === "Individual-Paid" ? (
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button className="w-full bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
+                                    Subscribe & Join
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
+                                  <DialogHeader>
+                                    <DialogTitle>Payment for {community.name}</DialogTitle>
+                                  </DialogHeader>
+                                  <div className="space-y-4">
+                                    <div>
+                                      <Label>Payment Method</Label>
+                                      <Select
+                                        value={paymentDetails.method}
+                                        onValueChange={(value) =>
+                                          setPaymentDetails({ ...paymentDetails, method: value as "credit_card" | "bank_transfer" })
+                                        }
+                                      >
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select payment method" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          <SelectItem value="credit_card">Credit Card</SelectItem>
+                                          <SelectItem value="bank_transfer">Bank Transfer</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    </div>
+                                    {paymentDetails.method === "credit_card" ? (
+                                      <>
+                                        <div>
+                                          <Label>Card Number</Label>
+                                          <Input
+                                            value={paymentDetails.cardNumber}
+                                            onChange={(e) => setPaymentDetails({ ...paymentDetails, cardNumber: e.target.value })}
+                                            placeholder="1234 5678 9012 3456"
+                                          />
+                                        </div>
+                                        <div className="flex gap-4">
+                                          <div>
+                                            <Label>Expiry (MM/YY)</Label>
+                                            <Input
+                                              value={paymentDetails.expiry}
+                                              onChange={(e) => setPaymentDetails({ ...paymentDetails, expiry: e.target.value })}
+                                              placeholder="MM/YY"
+                                            />
+                                          </div>
+                                          <div>
+                                            <Label>CVV</Label>
+                                            <Input
+                                              value={paymentDetails.cvv}
+                                              onChange={(e) => setPaymentDetails({ ...paymentDetails, cvv: e.target.value })}
+                                              placeholder="123"
+                                            />
+                                          </div>
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <div>
+                                          <Label>Account Number</Label>
+                                        <Input
+                                          value={paymentDetails.accountNumber}
+                                          onChange={(e) => setPaymentDetails({ ...paymentDetails, accountNumber: e.target.value })}
+                                          placeholder="Enter account number"
+                                        />
+                                      </div>
+                                      <div>
+                                        <Label>IBAN</Label>
+                                        <Input
+                                          value={paymentDetails.iban}
+                                          onChange={(e) => setPaymentDetails({ ...paymentDetails, iban: e.target.value })}
+                                          placeholder="Enter IBAN"
+                                        />
+                                      </div>
+                                    </>
+                                  )}
+                                  {paymentStatus === "processing" && (
+                                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                                      <div
+                                        className="bg-teal-500 h-2.5 rounded-full transition-all duration-500"
+                                        style={{ width: `${progress}%` }}
+                                      />
+                                    </div>
+                                  )}
+                                  {paymentStatus === "success" && (
+                                    <div className="text-green-600 flex items-center gap-2">
+                                      <CheckCircle className="h-5 w-5" />
+                                      Payment Successful!
+                                    </div>
+                                  )}
+                                </div>
+                                <DialogFooter>
+                                  <Button
+                                    className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md"
+                                    onClick={handlePayment}
+                                    disabled={paymentStatus === "processing"}
+                                  >
+                                    {paymentStatus === "processing" ? (
+                                      <>
+                                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                        Processing...
+                                      </>
+                                    ) : (
+                                      "Confirm Payment"
+                                    )}
+                                  </Button>
+                                </DialogFooter>
+                              </DialogContent>
+                            </Dialog>
+                          ) : (
                             <Button
-                              className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-9 px-3 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedCommunity(community);
+                              className="w-full bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md"
+                              onClick={() => {
+                                setCommunities(
+                                  communities.map((c) =>
+                                    c.id === community.id ? { ...c, memberCount: c.memberCount + 1 } : c
+                                  )
+                                );
                               }}
                             >
                               Join Community
                             </Button>
-                          </DialogTrigger>
-                          <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
-                            <DialogHeader>
-                              <DialogTitle>Join {community.name}</DialogTitle>
-                              <p className="text-sm text-muted-foreground">
-                                This community requires individual subscriptions. Members must have a Basic or Premium plan.
-                              </p>
-                            </DialogHeader>
-                            <div className="py-4">
-                              <p className="mb-4">
-                                Subscription type: <span className="font-medium">{community.subscriptionType}</span>
-                              </p>
-                              {community.subscriptionType === "Individual-Paid" && (
-                                <div className="bg-amber-50 p-4 rounded-lg border border-amber-200 mb-4">
-                                  <p className="text-amber-800 text-sm">
-                                    This community requires each member to have an active Basic or Premium subscription.
-                                  </p>
-                                </div>
-                              )}
-                              {community.subscriptionType === "Individual-Paid" ? (
-                                <Dialog>
-                                  <DialogTrigger asChild>
-                                    <Button 
-                                      className="w-full bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
-                                      onClick={(e) => e.stopPropagation()}
-                                    >
-                                      Subscribe & Join
-                                    </Button>
-                                  </DialogTrigger>
-                                  <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
-                                    <DialogHeader>
-                                      <DialogTitle>Payment for {community.name}</DialogTitle>
-                                    </DialogHeader>
-                                    <div className="space-y-4">
-                                      <div>
-                                        <Label>Payment Method</Label>
-                                        <Select
-                                          value={paymentDetails.method}
-                                          onValueChange={(value) =>
-                                            setPaymentDetails({ ...paymentDetails, method: value as "credit_card" | "bank_transfer" })
-                                          }
-                                        >
-                                          <SelectTrigger>
-                                            <SelectValue placeholder="Select payment method" />
-                                          </SelectTrigger>
-                                          <SelectContent>
-                                            <SelectItem value="credit_card">Credit Card</SelectItem>
-                                            <SelectItem value="bank_transfer">Bank Transfer</SelectItem>
-                                          </SelectContent>
-                                        </Select>
-                                      </div>
-                                      {paymentDetails.method === "credit_card" ? (
-                                        <>
-                                          <div>
-                                            <Label>Card Number</Label>
-                                            <Input
-                                              value={paymentDetails.cardNumber}
-                                              onChange={(e) => setPaymentDetails({ ...paymentDetails, cardNumber: e.target.value })}
-                                              placeholder="1234 5678 9012 3456"
-                                            />
-                                          </div>
-                                          <div className="flex gap-4">
-                                            <div>
-                                              <Label>Expiry (MM/YY)</Label>
-                                              <Input
-                                                value={paymentDetails.expiry}
-                                                onChange={(e) => setPaymentDetails({ ...paymentDetails, expiry: e.target.value })}
-                                                placeholder="MM/YY"
-                                              />
-                                            </div>
-                                            <div>
-                                              <Label>CVV</Label>
-                                              <Input
-                                                value={paymentDetails.cvv}
-                                                onChange={(e) => setPaymentDetails({ ...paymentDetails, cvv: e.target.value })}
-                                                placeholder="123"
-                                              />
-                                            </div>
-                                          </div>
-                                        </>
-                                      ) : (
-                                        <>
-                                          <div>
-                                            <Label>Account Number</Label>
-                                            <Input
-                                              value={paymentDetails.accountNumber}
-                                              onChange={(e) => setPaymentDetails({ ...paymentDetails, accountNumber: e.target.value })}
-                                              placeholder="Enter account number"
-                                            />
-                                          </div>
-                                          <div>
-                                            <Label>IBAN</Label>
-                                            <Input
-                                              value={paymentDetails.iban}
-                                              onChange={(e) => setPaymentDetails({ ...paymentDetails, iban: e.target.value })}
-                                              placeholder="Enter IBAN"
-                                            />
-                                          </div>
-                                        </>
-                                      )}
-                                      {paymentStatus === "processing" && (
-                                        <div className="w-full bg-gray-200 rounded-full h-2.5">
-                                          <div
-                                            className="bg-teal-500 h-2.5 rounded-full transition-all duration-500"
-                                            style={{ width: `${progress}%` }}
-                                          />
-                                        </div>
-                                      )}
-                                      {paymentStatus === "success" && (
-                                        <div className="text-green-600 flex items-center gap-2">
-                                          <CheckCircle className="h-5 w-5" />
-                                          Payment Successful!
-                                        </div>
-                                      )}
-                                    </div>
-                                    <DialogFooter>
-                                      <Button
-                                        className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          handlePayment();
-                                        }}
-                                        disabled={paymentStatus === "processing"}
-                                      >
-                                        {paymentStatus === "processing" ? (
-                                          <>
-                                            <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                                            Processing...
-                                          </>
-                                        ) : (
-                                          "Confirm Payment"
-                                        )}
-                                      </Button>
-                                    </DialogFooter>
-                                  </DialogContent>
-                                </Dialog>
-                              ) : (
-                                <Button
-                                  className="w-full bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setCommunities(
-                                      communities.map((c) =>
-                                        c.id === community.id ? { ...c, memberCount: c.memberCount + 1 } : c
-                                      )
-                                    );
-                                  }}
-                                >
-                                  Join Community
-                                </Button>
-                              )}
-                            </div>
-                          </DialogContent>
-                        </Dialog>
-                      </div>
-                    </div>
+                          )}
+                        </div>
+                      </DialogContent>
+                    </Dialog>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </div>
           <div className="bg-navy/5 rounded-xl p-6 text-center">
             <h2 className="text-xl font-bold text-navy mb-3">Don't see your community?</h2>
             <p className="text-gray-600 mb-4">Create your own community or contact us for more information</p>
-            <div className="flex gap-3 justify-center z-10">
+            <div className="flex gap-3 justify-center">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button 
-                    className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
-                    onClick={(e) => e.stopPropagation()}
-                  >
+                  <Button className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
                     Create Community
                   </Button>
                 </DialogTrigger>
@@ -564,10 +544,7 @@ const Communities = () => {
                 </DialogContent>
               </Dialog>
               <Link to="/contact">
-                <Button 
-                  className="border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
-                  onClick={(e) => e.stopPropagation()}
-                >
+                <Button className="border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
                   Contact Us
                 </Button>
               </Link>
