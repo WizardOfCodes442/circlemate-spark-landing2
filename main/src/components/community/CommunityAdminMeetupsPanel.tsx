@@ -72,7 +72,11 @@ const CommunityAdminMeetupsPanel = () => {
   const [selectedParticipants, setSelectedParticipants] = useState([]);
   const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
+  const [isRestoreDialogOpen, setIsRestoreDialogOpen] = useState(false);
   const [currentMeetup, setCurrentMeetup] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedMeetupType, setSelectedMeetupType] = useState('');
   const [newMeetup, setNewMeetup] = useState({
     title: '',
     date: '',
@@ -85,6 +89,16 @@ const CommunityAdminMeetupsPanel = () => {
     location: '',
     notes: '',
   });
+  const [cancelForm, setCancelForm] = useState({
+    note: '',
+    adminName: '',
+    password: '',
+  });
+  const [restoreForm, setRestoreForm] = useState({
+    note: '',
+    adminName: '',
+    password: '',
+  });
 
   const upcomingCount = meetups.filter((m) => m.status === 'upcoming').length;
   const completedCount = meetups.filter((m) => m.status === 'completed').length;
@@ -93,23 +107,76 @@ const CommunityAdminMeetupsPanel = () => {
   const successRate = totalMeetups > 0 ? Math.round((completedCount / totalMeetups) * 100) : 0;
   const averageRating = 4.8; // Static for demo; replace with dynamic data if available
 
-  const handleStatusChange = (meetupId, newStatus) => {
+  const filterMeetups = (meetups, status) => {
+    return meetups
+      .filter((meetup) => meetup.status === status)
+      .filter((meetup) => {
+        if (!selectedMonth) return true;
+        const monthIndex = new Date(meetup.date).getMonth();
+        const monthNames = [
+          'january',
+          'february',
+          'march',
+          'april',
+          'may',
+          'june',
+          'july',
+          'august',
+          'september',
+          'october',
+          'november',
+          'december',
+        ];
+        return monthNames[monthIndex] === selectedMonth;
+      })
+      .filter((meetup) => {
+        if (!selectedMeetupType) return true;
+        const titleLower = meetup.title.toLowerCase();
+        switch (selectedMeetupType) {
+          case 'networking':
+            return titleLower.includes('networking') || titleLower.includes('lunch') || titleLower.includes('coffee');
+          case 'mentoring':
+            return titleLower.includes('mentoring') || titleLower.includes('career');
+          case 'pitch':
+            return titleLower.includes('pitch');
+          case 'hackathon':
+            return titleLower.includes('hackathon');
+          default:
+            return true;
+        }
+      });
+  };
+
+  const handleStatusChange = (meetupId, newStatus, note = '') => {
     setMeetups(
       meetups.map((meetup) =>
         meetup.id === meetupId
-          ? { ...meetup, status: newStatus, confirmed: newStatus === 'completed' }
+          ? {
+              ...meetup,
+              status: newStatus,
+              confirmed: newStatus === 'completed',
+              notes: note ? `${meetup.notes} | ${note}` : meetup.notes,
+            }
           : meetup
       )
     );
   };
 
-  const handleRestore = (meetupId) => {
+  const handleRestore = (meetupId, note = '') => {
     setMeetups(
       meetups.map((meetup) =>
-        meetup.id === meetupId ? { ...meetup, status: 'upcoming', confirmed: false } : meetup
+        meetup.id === meetupId
+          ? {
+              ...meetup,
+              status: 'upcoming',
+              confirmed: false,
+              notes: note ? `${meetup.notes} | ${note}` : meetup.notes,
+            }
+          : meetup
       )
     );
     setIsParticipantsDialogOpen(false);
+    setIsRestoreDialogOpen(false);
   };
 
   const handleShowParticipants = (participants) => {
@@ -163,6 +230,34 @@ const CommunityAdminMeetupsPanel = () => {
     setIsEditDialogOpen(false);
   };
 
+  const handleOpenCancelDialog = (meetup) => {
+    setCurrentMeetup(meetup);
+    setCancelForm({ note: '', adminName: '', password: '' });
+    setIsCancelDialogOpen(true);
+  };
+
+  const handleConfirmCancel = () => {
+    if (currentMeetup) {
+      const note = `Cancelled by ${cancelForm.adminName}: ${cancelForm.note}`;
+      handleStatusChange(currentMeetup.id, 'cancelled', note);
+    }
+    setIsCancelDialogOpen(false);
+  };
+
+  const handleOpenRestoreDialog = (meetupId) => {
+    setCurrentMeetup(meetups.find((m) => m.id === meetupId));
+    setRestoreForm({ note: '', adminName: '', password: '' });
+    setIsRestoreDialogOpen(true);
+  };
+
+  const handleConfirmRestore = () => {
+    if (currentMeetup) {
+      const note = `Restored by ${restoreForm.adminName}: ${restoreForm.note}`;
+      handleRestore(currentMeetup.id, note);
+    }
+    setIsRestoreDialogOpen(false);
+  };
+
   return (
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm w-full max-w-full">
       <div className="flex flex-col space-y-1.5 p-6">
@@ -174,7 +269,7 @@ const CommunityAdminMeetupsPanel = () => {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
-            <Select>
+            <Select onValueChange={setSelectedMonth} value={selectedMonth}>
               <SelectTrigger className="w-[140px]">
                 <Calendar className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="Month" />
@@ -194,7 +289,7 @@ const CommunityAdminMeetupsPanel = () => {
                 <SelectItem value="december">December</SelectItem>
               </SelectContent>
             </Select>
-            <Select>
+            <Select onValueChange={setSelectedMeetupType} value={selectedMeetupType}>
               <SelectTrigger className="w-[140px]">
                 <SelectValue placeholder="Meetup Type" />
               </SelectTrigger>
@@ -267,195 +362,189 @@ const CommunityAdminMeetupsPanel = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="upcoming" className="border rounded-md p-4 space-y-4">
-            {meetups
-              .filter((meetup) => meetup.status === 'upcoming')
-              .map((meetup) => (
-                <div key={meetup.id} className="bg-white rounded-lg border p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-semibold">{meetup.title}</h3>
-                    <span
-                      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${
-                        meetup.confirmed ? 'bg-green-500' : 'bg-amber-500'
-                      } text-primary-foreground`}
-                    >
-                      {meetup.confirmed ? 'Confirmed' : 'Pending'}
-                    </span>
+            {filterMeetups(meetups, 'upcoming').map((meetup) => (
+              <div key={meetup.id} className="bg-white rounded-lg border p-4">
+                <div className="flex items-start justify-between mb-2">
+                  <h3 className="font-semibold">{meetup.title}</h3>
+                  <span
+                    className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${
+                      meetup.confirmed ? 'bg-green-500' : 'bg-amber-500'
+                    } text-primary-foreground`}
+                  >
+                    {meetup.confirmed ? 'Confirmed' : 'Pending'}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6">
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Clock className="h-4 w-4 text-gray-400" />
+                    {new Date(meetup.date).toLocaleString()}
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Clock className="h-4 w-4 text-gray-400" />
-                      {new Date(meetup.date).toLocaleString()}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <MapPin className="h-4 w-4 text-gray-400" />
-                      {meetup.location}
-                    </div>
-                  </div>
-                  <div className="mt-3 flex items-center gap-2">
-                    <Users className="h-4 w-4 text-gray-400" />
-                    <span className="text-sm text-gray-600">Participants:</span>
-                    <div
-                      className="flex -space-x-2 cursor-pointer"
-                      onClick={() => meetup.participants.length > 3 && handleShowParticipants(meetup.participants)}
-                    >
-                      {meetup.participants.slice(0, 3).map((participant, index) => (
-                        <span
-                          key={index}
-                          className="relative flex shrink-0 overflow-hidden rounded-full h-6 w-6 border-2 border-white"
-                        >
-                          <img className="aspect-square h-full w-full" alt={participant.name} src={participant.avatar} />
-                        </span>
-                      ))}
-                      {meetup.participants.length > 3 && (
-                        <span className="relative flex shrink-0 rounded-full h-6 w-6 border-2 border-white bg-gray-200 text-xs flex items-center justify-center">
-                          +{meetup.participants.length - 3}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mt-3 text-sm text-gray-600 bg-gray-50 p-2 rounded">
-                    <span className="font-medium">Notes:</span> {meetup.notes}
-                  </div>
-                  <div className="mt-3 flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleStatusChange(meetup.id, 'cancelled')}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={() => handleStatusChange(meetup.id, 'completed')}
-                    >
-                      Confirm
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleOpenEditDialog(meetup)}
-                    >
-                      <Edit className="h-4 w-4 mr-2" />
-                      Edit
-                    </Button>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <MapPin className="h-4 w-4 text-gray-400" />
+                    {meetup.location}
                   </div>
                 </div>
-              ))}
+                <div className="mt-3 flex items-center gap-2">
+                  <Users className="h-4 w-4 text-gray-400" />
+                  <span className="text-sm text-gray-600">Participants:</span>
+                  <div
+                    className="flex -space-x-2 cursor-pointer"
+                    onClick={() => meetup.participants.length > 3 && handleShowParticipants(meetup.participants)}
+                  >
+                    {meetup.participants.slice(0, 3).map((participant, index) => (
+                      <span
+                        key={index}
+                        className="relative flex shrink-0 overflow-hidden rounded-full h-6 w-6 border-2 border-white"
+                      >
+                        <img className="aspect-square h-full w-full" alt={participant.name} src={participant.avatar} />
+                      </span>
+                    ))}
+                    {meetup.participants.length > 3 && (
+                      <span className="relative flex shrink-0 rounded-full h-6 w-6 border-2 border-white bg-gray-200 text-xs flex items-center justify-center">
+                        +{meetup.participants.length - 3}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="mt-3 text-sm text-gray-600 bg-gray-50 p-2 rounded">
+                  <span className="font-medium">Notes:</span> {meetup.notes}
+                </div>
+                <div className="mt-3 flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleOpenCancelDialog(meetup)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={() => handleStatusChange(meetup.id, 'completed')}
+                  >
+                    Confirm
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleOpenEditDialog(meetup)}
+                  >
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit
+                  </Button>
+                </div>
+              </div>
+            ))}
           </TabsContent>
           <TabsContent value="completed" className="border rounded-md p-4 space-y-4">
-            {meetups
-              .filter((meetup) => meetup.status === 'completed')
-              .map((meetup) => (
-                <div key={meetup.id} className="bg-white rounded-lg border p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-semibold">{meetup.title}</h3>
-                    <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-green-500 text-primary-foreground">
-                      Confirmed
-                    </span>
+            {filterMeetups(meetups, 'completed').map((meetup) => (
+              <div key={meetup.id} className="bg-white rounded-lg border p-4">
+                <div className="flex items-start justify-between mb-2">
+                  <h3 className="font-semibold">{meetup.title}</h3>
+                  <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-green-500 text-primary-foreground">
+                    Confirmed
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6">
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Clock className="h-4 w-4 text-gray-400" />
+                    {new Date(meetup.date).toLocaleString()}
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Clock className="h-4 w-4 text-gray-400" />
-                      {new Date(meetup.date).toLocaleString()}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <MapPin className="h-4 w-4 text-gray-400" />
-                      {meetup.location}
-                    </div>
-                  </div>
-                  <div className="mt-3 flex items-center gap-2">
-                    <Users className="h-4 w-4 text-gray-400" />
-                    <span className="text-sm text-gray-600">Participants:</span>
-                    <div
-                      className="flex -space-x-2 cursor-pointer"
-                      onClick={() => meetup.participants.length > 3 && handleShowParticipants(meetup.participants)}
-                    >
-                      {meetup.participants.slice(0, 3).map((participant, index) => (
-                        <span
-                          key={index}
-                          className="relative flex shrink-0 overflow-hidden rounded-full h-6 w-6 border-2 border-white"
-                        >
-                          <img className="aspect-square h-full w-full" alt={participant.name} src={participant.avatar} />
-                        </span>
-                      ))}
-                      {meetup.participants.length > 3 && (
-                        <span className="relative flex shrink-0 rounded-full h-6 w-6 border-2 border-white bg-gray-200 text-xs flex items-center justify-center">
-                          +{meetup.participants.length - 3}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mt-3 text-sm text-gray-600 bg-gray-50 p-2 rounded">
-                    <span className="font-medium">Notes:</span> {meetup.notes}
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <MapPin className="h-4 w-4 text-gray-400" />
+                    {meetup.location}
                   </div>
                 </div>
-              ))}
+                <div className="mt-3 flex items-center gap-2">
+                  <Users className="h-4 w-4 text-gray-400" />
+                  <span className="text-sm text-gray-600">Participants:</span>
+                  <div
+                    className="flex -space-x-2 cursor-pointer"
+                    onClick={() => meetup.participants.length > 3 && handleShowParticipants(meetup.participants)}
+                  >
+                    {meetup.participants.slice(0, 3).map((participant, index) => (
+                      <span
+                        key={index}
+                        className="relative flex shrink-0 overflow-hidden rounded-full h-6 w-6 border-2 border-white"
+                      >
+                        <img className="aspect-square h-full w-full" alt={participant.name} src={participant.avatar} />
+                      </span>
+                    ))}
+                    {meetup.participants.length > 3 && (
+                      <span className="relative flex shrink-0 rounded-full h-6 w-6 border-2 border-white bg-gray-200 text-xs flex items-center justify-center">
+                        +{meetup.participants.length - 3}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="mt-3 text-sm text-gray-600 bg-gray-50 p-2 rounded">
+                  <span className="font-medium">Notes:</span> {meetup.notes}
+                </div>
+              </div>
+            ))}
           </TabsContent>
           <TabsContent value="cancelled" className="border rounded-md p-4 space-y-4">
-            {meetups
-              .filter((meetup) => meetup.status === 'cancelled')
-              .map((meetup) => (
-                <div key={meetup.id} className="bg-white rounded-lg border p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-semibold">{meetup.title}</h3>
-                    <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-red-500 text-primary-foreground">
-                      Cancelled
-                    </span>
+            {filterMeetups(meetups, 'cancelled').map((meetup) => (
+              <div key={meetup.id} className="bg-white rounded-lg border p-4">
+                <div className="flex items-start justify-between mb-2">
+                  <h3 className="font-semibold">{meetup.title}</h3>
+                  <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-red-500 text-primary-foreground">
+                    Cancelled
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6">
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Clock className="h-4 w-4 text-gray-400" />
+                    {new Date(meetup.date).toLocaleString()}
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Clock className="h-4 w-4 text-gray-400" />
-                      {new Date(meetup.date).toLocaleString()}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <MapPin className="h-4 w-4 text-gray-400" />
-                      {meetup.location}
-                    </div>
-                  </div>
-                  <div className="mt-3 flex items-center gap-2">
-                    <Users className="h-4 w-4 text-gray-400" />
-                    <span className="text-sm text-gray-600">Participants:</span>
-                    <div
-                      className="flex -space-x-2 cursor-pointer"
-                      onClick={() => meetup.participants.length > 3 && handleShowParticipants(meetup.participants)}
-                    >
-                      {meetup.participants.slice(0, 3).map((participant, index) => (
-                        <span
-                          key={index}
-                          className="relative flex shrink-0 overflow-hidden rounded-full h-6 w-6 border-2 border-white"
-                        >
-                          <img className="aspect-square h-full w-full" alt={participant.name} src={participant.avatar} />
-                        </span>
-                      ))}
-                      {meetup.participants.length > 3 && (
-                        <span className="relative flex shrink-0 rounded-full h-6 w-6 border-2 border-white bg-gray-200 text-xs flex items-center justify-center">
-                          +{meetup.participants.length - 3}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mt-3 text-sm text-gray-600 bg-gray-50 p-2 rounded">
-                    <span className="font-medium">Notes:</span> {meetup.notes}
-                  </div>
-                  <div className="mt-3 flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleRestore(meetup.id)}
-                    >
-                      Restore
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleOpenEditDialog(meetup)}
-                    >
-                      <Edit className="h-4 w-4 mr-2" />
-                      Edit
-                    </Button>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <MapPin className="h-4 w-4 text-gray-400" />
+                    {meetup.location}
                   </div>
                 </div>
-              ))}
+                <div className="mt-3 flex items-center gap-2">
+                  <Users className="h-4 w-4 text-gray-400" />
+                  <span className="text-sm text-gray-600">Participants:</span>
+                  <div
+                    className="flex -space-x-2 cursor-pointer"
+                    onClick={() => meetup.participants.length > 3 && handleShowParticipants(meetup.participants)}
+                  >
+                    {meetup.participants.slice(0, 3).map((participant, index) => (
+                      <span
+                        key={index}
+                        className="relative flex shrink-0 overflow-hidden rounded-full h-6 w-6 border-2 border-white"
+                      >
+                        <img className="aspect-square h-full w-full" alt={participant.name} src={participant.avatar} />
+                      </span>
+                    ))}
+                    {meetup.participants.length > 3 && (
+                      <span className="relative flex shrink-0 rounded-full h-6 w-6 border-2 border-white bg-gray-200 text-xs flex items-center justify-center">
+                        +{meetup.participants.length - 3}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="mt-3 text-sm text-gray-600 bg-gray-50 p-2 rounded">
+                  <span className="font-medium">Notes:</span> {meetup.notes}
+                </div>
+                <div className="mt-3 flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleOpenRestoreDialog(meetup.id)}
+                  >
+                    Restore
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleOpenEditDialog(meetup)}
+                  >
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit
+                  </Button>
+                </div>
+              </div>
+            ))}
           </TabsContent>
         </Tabs>
         <Dialog open={isParticipantsDialogOpen} onOpenChange={setIsParticipantsDialogOpen}>
@@ -477,7 +566,7 @@ const CommunityAdminMeetupsPanel = () => {
               (m) => m.participants === selectedParticipants && m.status === 'cancelled'
             ) && (
               <DialogFooter>
-                <Button onClick={() => handleRestore(meetups.find((m) => m.participants === selectedParticipants).id)}>
+                <Button onClick={() => handleOpenRestoreDialog(meetups.find((m) => m.participants === selectedParticipants).id)}>
                   Restore
                 </Button>
               </DialogFooter>
@@ -589,6 +678,92 @@ const CommunityAdminMeetupsPanel = () => {
                 Cancel
               </Button>
               <Button onClick={handleEditMeetup}>Update</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <Dialog open={isCancelDialogOpen} onOpenChange={setIsCancelDialogOpen}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Confirm Cancellation</DialogTitle>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="cancel-note">Note</Label>
+                <Input
+                  id="cancel-note"
+                  value={cancelForm.note}
+                  onChange={(e) => setCancelForm({ ...cancelForm, note: e.target.value })}
+                  placeholder="Reason for cancellation"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="cancel-admin-name">Admin Name</Label>
+                <Input
+                  id="cancel-admin-name"
+                  value={cancelForm.adminName}
+                  onChange={(e) => setCancelForm({ ...cancelForm, adminName: e.target.value })}
+                  placeholder="Enter admin name"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="cancel-password">Password</Label>
+                <Input
+                  id="cancel-password"
+                  type="password"
+                  value={cancelForm.password}
+                  onChange={(e) => setCancelForm({ ...cancelForm, password: e.target.value })}
+                  placeholder="Enter password"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsCancelDialogOpen(false)}>
+                Close
+              </Button>
+              <Button onClick={handleConfirmCancel}>Confirm Cancel</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <Dialog open={isRestoreDialogOpen} onOpenChange={setIsRestoreDialogOpen}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Confirm Restoration</DialogTitle>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="restore-note">Note</Label>
+                <Input
+                  id="restore-note"
+                  value={restoreForm.note}
+                  onChange={(e) => setRestoreForm({ ...restoreForm, note: e.target.value })}
+                  placeholder="Reason for restoration"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="restore-admin-name">Admin Name</Label>
+                <Input
+                  id="restore-admin-name"
+                  value={restoreForm.adminName}
+                  onChange={(e) => setRestoreForm({ ...restoreForm, adminName: e.target.value })}
+                  placeholder="Enter admin name"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="restore-password">Password</Label>
+                <Input
+                  id="restore-password"
+                  type="password"
+                  value={restoreForm.password}
+                  onChange={(e) => setRestoreForm({ ...restoreForm, password: e.target.value })}
+                  placeholder="Enter password"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsRestoreDialogOpen(false)}>
+                Close
+              </Button>
+              <Button onClick={handleConfirmRestore}>Confirm Restore</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
