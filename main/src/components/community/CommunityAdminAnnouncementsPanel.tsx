@@ -58,7 +58,7 @@ const CommunityAdminAnnouncementsPanel = () => {
       id: announcements.length + 1,
       title: form.title,
       content: form.content,
-      date: new Date().toISOString(), // Current date: June 12, 2025, 10:15 AM WAT
+      date: new Date().toISOString(), // Current date: June 12, 2025, 10:27 AM WAT
       recipient: form.recipient,
       readCount: 0,
       totalRecipients: form.recipient === 'all' ? 35 : form.recipient === 'active' ? 30 : 5,
@@ -140,7 +140,7 @@ const CommunityAdminAnnouncementsPanel = () => {
                 </div>
               </RadioGroup>
             </div>
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-between">
+            <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex items-center space-x-2">
                 <Switch
                   id="email-notification"
