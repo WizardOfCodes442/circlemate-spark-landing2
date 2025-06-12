@@ -12,38 +12,38 @@ const CommunityAdminTabs = () => {
 
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-      <TabsList className="inline-flex items-center rounded-md p-1 text-muted-foreground w-full bg-transparent justify-start gap-4 h-auto pb-2 border-b mb-4 overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+      <TabsList className="flex items-center rounded-md p-1 text-muted-foreground w-full bg-transparent gap-4 h-auto pb-2 border-b mb-4 overflow-x-auto">
         <TabsTrigger
           value="members"
-          className="justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground min-w-[100px]"
+          className="flex items-center gap-2 justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground min-w-[100px]"
         >
           <Users className="h-4 w-4" />
           <span>Members</span>
         </TabsTrigger>
         <TabsTrigger
           value="rules"
-          className="justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground min-w-[100px]"
+          className="flex items-center gap-2 justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground min-w-[100px]"
         >
           <Shield className="h-4 w-4" />
           <span>Rules</span>
         </TabsTrigger>
         <TabsTrigger
           value="meetups"
-          className="justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground min-w-[100px]"
+          className="flex items-center gap-2 justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground min-w-[100px]"
         >
           <Calendar className="h-4 w-4" />
           <span>Meetups</span>
         </TabsTrigger>
         <TabsTrigger
           value="announcements"
-          className="justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground min-w-[100px]"
+          className="flex items-center gap-2 justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground min-w-[100px]"
         >
           <Bell className="h-4 w-4" />
           <span>Announcements</span>
         </TabsTrigger>
         <TabsTrigger
           value="settings"
-          className="justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground min-w-[100px]"
+          className="flex items-center gap-2 justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground min-w-[100px]"
         >
           <Settings className="h-4 w-4" />
           <span>Settings</span>
