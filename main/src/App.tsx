@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { CommunityProvider } from "./pages/CommunityContext"; // Adjust the path to your CommunityContext file
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -65,10 +65,7 @@ const App = () => (
           <Route path="/community-profile" element={<CommunityProfile />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/community-admin" element={<CommunityAdminDashboard />} />
-          <Route path="/community/:id" element={<CommunityView />} />
-          <Route path="/community/:id/chat/:memberId" element={<ChatCommunityMemberView />} />
-          
-          
+        
           {/* Catch-all route for 404 */}
           
           {/* Onboarding Routes */}
@@ -85,6 +82,14 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      <CommunityProvider>
+           <BrowserRouter>
+            <Route path="/community/:id" element={<CommunityView />} />
+            <Route path="/community/:id/chat/:memberId" element={<ChatCommunityMemberView />} />
+            <Route path="/community" element={<Communities />} />
+          </BrowserRouter>
+        </CommunityProvider>
+          
     </TooltipProvider>
   </QueryClientProvider>
 );
