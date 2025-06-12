@@ -58,7 +58,7 @@ const CommunityAdminAnnouncementsPanel = () => {
       id: announcements.length + 1,
       title: form.title,
       content: form.content,
-      date: new Date().toISOString(), // Current date: June 12, 2025, 10:42 AM WAT
+      date: new Date().toISOString(), // Current date: June 12, 2025, 10:50 AM WAT
       recipient: form.recipient,
       readCount: 0,
       totalRecipients: form.recipient === 'all' ? 35 : form.recipient === 'active' ? 30 : 5,
@@ -165,7 +165,7 @@ const CommunityAdminAnnouncementsPanel = () => {
             <div className="flex justify-start mt-2">
               <Button
                 onClick={handleSendAnnouncement}
-                className="bg-teal-500 hover:bg-teal-600 text-white !block min-h-10 px-4 py-2"
+                className="bg-teal-500 hover:bg-teal-600 text-white !block min-h-10 px-6 py-2 flex items-center justify-center"
                 data-testid="send-button"
               >
                 <Send className="h-4 w-4 mr-2" />
@@ -199,11 +199,11 @@ const CommunityAdminAnnouncementsPanel = () => {
                 <p className="text-gray-600 text-sm mb-2">{announcement.content}</p>
                 <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-gray-500">
                   <div className="flex items-center">
-                    <Clock className="h-3 w-3 mr-1 text-gray-500" />
+                    <Clock className="h-3 w-3 mr-1" />
                     {new Date(announcement.date).toLocaleString()}
                   </div>
                   <div className="flex items-center">
-                    <CheckCheck className="h-3 w-3 mr-1 text-gray-500" />
+                    <CheckCheck className="h-3 w-3 mr-1" />
                     Read by: {announcement.readCount}/{announcement.totalRecipients}
                   </div>
                   <div>Sent by: {announcement.sentBy}</div>
