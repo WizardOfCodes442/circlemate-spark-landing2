@@ -163,14 +163,14 @@ const CommunityAdminAnnouncementsPanel = () => {
               </div>
             </div>
             <div className="flex justify-start mt-2">
-              <Button
+              <button
                 onClick={handleSendAnnouncement}
-                className="bg-teal-500 hover:bg-teal-600 text-white !block min-h-10 px-8 py-2 inline-flex items-center justify-center whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-teal hover:bg-teal/90 text-white mt-2"
                 data-testid="send-button"
               >
                 <Send className="h-4 w-4 mr-2" />
                 Send Announcement
-              </Button>
+              </button>
             </div>
           </div>
           <hr className="shrink-0 bg-gray-200 h-[1px] w-full" />
