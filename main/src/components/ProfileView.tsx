@@ -29,18 +29,22 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
   const [blockReason, setBlockReason] = useState<string>("");
   const [reportReason, setReportReason] = useState<string>("");
   const [selectedMedia, setSelectedMedia] = useState<{ type: "image" | "video"; src: string } | null>(null);
+  const [isBlocked, setIsBlocked] = useState(false);
+  const [isReported, setIsReported] = useState(false);
+  const [blockDialogOpen, setBlockDialogOpen] = useState(false);
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
 
-  // Mock data for gallery (8 images + 1 video)
+  // Placeholder media from the internet
   const mediaGallery = [
-    { type: "image", src: "/gallery/image1.jpg" },
-    { type: "image", src: "/gallery/image2.jpg" },
-    { type: "image", src: "/gallery/image3.jpg" },
-    { type: "image", src: "/gallery/image4.jpg" },
-    { type: "image", src: "/gallery/image5.jpg" },
-    { type: "image", src: "/gallery/image6.jpg" },
-    { type: "image", src: "/gallery/image7.jpg" },
-    { type: "image", src: "/gallery/image8.jpg" },
-    { type: "video", src: "/gallery/video1.mp4" },
+    { type: "image", src: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3" },
+    { type: "image", src: "https://images.unsplash.com/photo-1531403009284-440f080d1e12" },
+    { type: "image", src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085" },
+    { type: "image", src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97" },
+    { type: "image", src: "https://images.unsplash.com/photo-1520085601670-ee14aa5fa3e8" },
+    { type: "image", src: "https://images.unsplash.com/photo-1516321497487-e288fb19713f" },
+    { type: "image", src: "https://images.unsplash.com/photo-1508830524289-0adcbe822b40" },
+    { type: "image", src: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2" },
+    { type: "video", src: "https://videos.pexels.com/video-files/3195393/3195393-hd_1920_1080_30fps.mp4", thumbnail: "https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg" },
   ];
 
   const showNotificationMessage = (message: string) => {
@@ -55,8 +59,10 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
       alert("Please select a reason to block.");
       return;
     }
+    setIsBlocked(true);
     showNotificationMessage("You successfully blocked this user. They won't show up in chat again.");
     setBlockReason("");
+    setBlockDialogOpen(false);
   };
 
   const handleReportConfirm = () => {
@@ -64,8 +70,20 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
       alert("Please select a reason to report.");
       return;
     }
+    setIsReported(true);
     showNotificationMessage("Your report has been submitted. We will review it shortly.");
     setReportReason("");
+    setReportDialogOpen(false);
+  };
+
+  const handleRevertBlock = () => {
+    setIsBlocked(false);
+    showNotificationMessage("Block reverted successfully.");
+  };
+
+  const handleRevertReport = () => {
+    setIsReported(false);
+    showNotificationMessage("Report reverted successfully.");
   };
 
   return (
@@ -139,7 +157,7 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
                       onClick={() => setSelectedMedia({ type: media.type, src: media.src })}
                     >
                       <img
-                        src={media.type === "video" ? "/gallery/video1_thumbnail.jpg" : media.src}
+                        src={media.type === "video" ? media.thumbnail : media.src}
                         alt={`Gallery item ${index + 1}`}
                         className="w-full h-full object-cover"
                       />
@@ -160,7 +178,7 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
                       onClick={() => setSelectedMedia({ type: mediaGallery[8].type, src: mediaGallery[8].src })}
                     >
                       <img
-                        src="/gallery/video1_thumbnail.jpg"
+                        src={mediaGallery[8].thumbnail}
                         alt="Video thumbnail"
                         className="w-full h-full object-cover"
                       />
@@ -173,7 +191,33 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
               )}
             </div>
 
-            <h1 className="text-2xl font-bold mb-2">{match.name}</h1>
+            <div className="flex items-center gap-2 mb-2">
+              <h1 className="text-2xl font-bold">{match.name}</h1>
+              {isBlocked && (
+                <span className="text-white bg-red-500 text-sm font-normal px-2 py-1 rounded-full flex items-center">
+                  Blocked
+                  <Button
+                    variant="ghost"
+                    className="text-white text-xs p-1 ml-2 h-auto"
+                    onClick={handleRevertBlock}
+                  >
+                    Revert
+                  </Button>
+                </span>
+              )}
+              {isReported && !isBlocked && (
+                <span className="text-white bg-orange-500 text-sm font-normal px-2 py-1 rounded-full flex items-center">
+                  Reported
+                  <Button
+                    variant="ghost"
+                    className="text-white text-xs p-1 ml-2 h-auto"
+                    onClick={handleRevertReport}
+                  >
+                    Revert
+                  </Button>
+                </span>
+              )}
+            </div>
             <div className="flex justify-start space-x-2 mb-4">
               <span className="text-teal-500 bg-teal-100 px-2 py-1 rounded-full text-sm">{match.role}</span>
               <span className="text-gray-600">Lagos Tech Circle</span>
@@ -182,12 +226,15 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
               <Button
                 className="bg-teal-500 text-white rounded-full px-6 py-2"
                 onClick={() => showNotificationMessage("Your connection request has been sent.")}
+                disabled={isBlocked}
               >
                 Connect
               </Button>
-              <Dialog>
+              <Dialog open={reportDialogOpen} onOpenChange={setReportDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-red-500 text-white rounded-full px-6 py-2">Report</Button>
+                  <Button className="bg-red-500 text-white rounded-full px-6 py-2" disabled={isBlocked || isReported}>
+                    Report
+                  </Button>
                 </DialogTrigger>
                 <DialogContent className="bg-white p-6 rounded-lg max-w-md">
                   <div className="grid gap-4">
@@ -214,7 +261,10 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
                     <div className="flex justify-end gap-2">
                       <Button
                         variant="outline"
-                        onClick={() => setReportReason("")}
+                        onClick={() => {
+                          setReportReason("");
+                          setReportDialogOpen(false);
+                        }}
                       >
                         Cancel
                       </Button>
@@ -228,9 +278,11 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
                   </div>
                 </DialogContent>
               </Dialog>
-              <Dialog>
+              <Dialog open={blockDialogOpen} onOpenChange={setBlockDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-gray-500 text-white rounded-full px-6 py-2">Block</Button>
+                  <Button className="bg-gray-500 text-white rounded-full px-6 py-2" disabled={isBlocked}>
+                    Block
+                  </Button>
                 </DialogTrigger>
                 <DialogContent className="bg-white p-6 rounded-lg max-w-md">
                   <div className="grid gap-4">
@@ -257,7 +309,10 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
                     <div className="flex justify-end gap-2">
                       <Button
                         variant="outline"
-                        onClick={() => setBlockReason("")}
+                        onClick={() => {
+                          setBlockReason("");
+                          setBlockDialogOpen(false);
+                        }}
                       >
                         Cancel
                       </Button>
