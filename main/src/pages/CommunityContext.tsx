@@ -1,4 +1,3 @@
-```tsx
 import { createContext, useContext, useState, ReactNode } from "react";
 
 interface Community {
@@ -121,4 +120,4 @@ export const useCommunities = () => {
   }
   return context;
 };
-```
+
