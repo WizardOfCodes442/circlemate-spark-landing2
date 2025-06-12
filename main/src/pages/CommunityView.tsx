@@ -1,4 +1,3 @@
-```tsx
 import { useState } from "react";
 import { Users, MapPin } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -145,4 +144,3 @@ const CommunityView = () => {
 };
 
 export default CommunityView;
-```
