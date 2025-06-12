@@ -65,6 +65,9 @@ const App = () => (
           <Route path="/community-profile" element={<CommunityProfile />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/community-admin" element={<CommunityAdminDashboard />} />
+          <Route path="/community" element={<Communities />} />
+
+          
         
           {/* Catch-all route for 404 */}
           
@@ -82,13 +85,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-      <CommunityProvider>
-           <BrowserRouter>
-            <Route path="/community/:id" element={<CommunityView />} />
-            <Route path="/community/:id/chat/:memberId" element={<ChatCommunityMemberView />} />
-            <Route path="/community" element={<Communities />} />
-          </BrowserRouter>
-        </CommunityProvider>
+   
           
     </TooltipProvider>
   </QueryClientProvider>
