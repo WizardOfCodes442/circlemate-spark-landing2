@@ -58,7 +58,7 @@ const CommunityAdminAnnouncementsPanel = () => {
       id: announcements.length + 1,
       title: form.title,
       content: form.content,
-      date: new Date().toISOString(), // Current date: June 12, 2025, 10:27 AM WAT
+      date: new Date().toISOString(), // Current date: June 12, 2025, 10:34 AM WAT
       recipient: form.recipient,
       readCount: 0,
       totalRecipients: form.recipient === 'all' ? 35 : form.recipient === 'active' ? 30 : 5,
@@ -140,7 +140,7 @@ const CommunityAdminAnnouncementsPanel = () => {
                 </div>
               </RadioGroup>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 items-center">
               <div className="flex items-center space-x-2">
                 <Switch
                   id="email-notification"
@@ -162,13 +162,15 @@ const CommunityAdminAnnouncementsPanel = () => {
                 </Label>
               </div>
             </div>
-            <Button
-              onClick={handleSendAnnouncement}
-              className="bg-teal hover:bg-teal/90 text-white"
-            >
-              <Send className="h-4 w-4 mr-2" />
-              Send Announcement
-            </Button>
+            <div className="mt-2">
+              <Button
+                onClick={handleSendAnnouncement}
+                className="bg-teal hover:bg-teal/90 text-white w-full sm:w-auto"
+              >
+                <Send className="h-4 w-4 mr-2" />
+                Send Announcement
+              </Button>
+            </div>
           </div>
           <hr className="shrink-0 bg-border h-[1px] w-full" />
           <div className="space-y-4">
