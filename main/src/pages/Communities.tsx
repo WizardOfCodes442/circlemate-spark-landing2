@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { CirclePlus, Settings, Search, Users, MapPin, X, CreditCard, Banknote, CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -5,44 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-// Mock components and data for demonstration
-const DashboardHeader = () => <div className="fixed top-0 left-0 right-0 h-16 bg-white shadow-sm z-50"></div>;
-
-interface Community {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-  memberCount: number;
-  tags: string[];
-  subscriptionType: string;
-  members: any[];
-  isFeatured?: boolean;
-}
-
-const initialCommunities: Community[] = [
-  {
-    id: "1",
-    name: "Tech Innovators",
-    description: "A community for technology enthusiasts",
-    image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=400",
-    memberCount: 150,
-    tags: ["Technology", "Professional"],
-    subscriptionType: "Individual-Paid",
-    members: [],
-  },
-  {
-    id: "2", 
-    name: "Alumni Network",
-    description: "Connect with fellow alumni",
-    image: "https://images.unsplash.com/photo-1523240795316-9b1ba4f6b7d8?w=400",
-    memberCount: 89,
-    tags: ["Alumni", "Networking"],
-    subscriptionType: "Admin-Paid",
-    members: [],
-    isFeatured: true,
-  },
-];
+import { Link } from "react-router-dom";
+import DashboardHeader from "@/components/DashboardHeader";
+import { Community, initialCommunities } from "@/data/communityData";
 
 interface PaymentDetails {
   method: "credit_card" | "bank_transfer";
@@ -76,7 +42,7 @@ const Communities = () => {
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(null);
   const [mainDialogOpen, setMainDialogOpen] = useState(false);
   const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
-  const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [createDialogOpen, setCreateDialogOpen] = useState(false); // New state for create dialog
 
   const categories = [
     "All",
@@ -116,8 +82,8 @@ const Communities = () => {
     };
     setCommunities([newCommunityData, ...communities]);
     setNewCommunity({ name: "", description: "", subscriptionType: "Community", image: "" });
-    setCreateDialogOpen(false);
-    alert("Community created successfully!");
+    setCreateDialogOpen(false); // Close the dialog
+    alert("Community created successfully!"); // User feedback
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -172,26 +138,26 @@ const Communities = () => {
     <div className="min-h-screen bg-background">
       <DashboardHeader />
       <main className="flex-grow pt-20">
-        <div className="container mx-auto py-8 px-4">
+        <div className="container mx-auto py-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
             <div>
               <h1 className="text-3xl font-bold text-navy mb-2">Find Your Community</h1>
               <p className="text-gray-600 text-sm">Discover communities where you can connect with like-minded individuals</p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <div className="flex gap-3">
               <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center justify-center gap-2 text-sm font-medium h-10 px-3 sm:px-4 rounded-md w-full sm:w-auto">
+                  <Button className="bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
                     <CirclePlus className="h-4 w-4" />
-                    <span className="sm:inline">Create</span>
+                    Create Community
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="bg-white p-4 sm:p-6 rounded-lg max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto">
+                <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
                   <DialogHeader>
                     <DialogTitle>Create New Community</DialogTitle>
                     <p className="text-sm text-muted-foreground">Fill in the details below to create a new community.</p>
                   </DialogHeader>
-                  <div className="grid gap-3 py-2">
+                  <div className="grid gap-4 py-4">
                     <div className="grid gap-2">
                       <Label htmlFor="community-name">Community Name</Label>
                       <Input
@@ -207,7 +173,7 @@ const Communities = () => {
                         id="description"
                         placeholder="Describe your community and its purpose"
                         className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                        rows={2}
+                        rows={3}
                         value={newCommunity.description}
                         onChange={(e) => setNewCommunity({ ...newCommunity, description: e.target.value })}
                       />
@@ -218,69 +184,69 @@ const Communities = () => {
                         id="image"
                         type="file"
                         accept="image/*"
-                        className="w-full border rounded-md p-2 text-sm"
+                        className="w-full border rounded-md p-2"
                         onChange={handleImageUpload}
                       />
                       {newCommunity.image && (
-                        <img src={newCommunity.image} alt="Community preview" className="w-full h-20 sm:h-24 object-cover rounded-md" />
+                        <img src={newCommunity.image} alt="Community preview" className="w-full h-32 object-cover rounded-md mt-2" />
                       )}
                     </div>
                     <div className="grid gap-2">
                       <Label>Subscription Type</Label>
-                      <div className="grid gap-2">
-                        <div className="flex items-start space-x-3 border p-3 rounded-lg">
+                      <div className="grid gap-3">
+                        <div className="flex items-start space-x-3 border p-4 rounded-lg">
                           <input
                             type="radio"
                             id="community"
                             value="Community"
                             checked={newCommunity.subscriptionType === "Community"}
                             onChange={() => setNewCommunity({ ...newCommunity, subscriptionType: "Community" })}
-                            className="h-4 w-4 rounded-full border border-primary mt-1"
+                            className="h-4 w-4 rounded-full border border-primary"
                           />
-                          <div className="grid gap-1">
-                            <Label htmlFor="community" className="font-medium text-sm">Community Plan</Label>
-                            <p className="text-xs text-muted-foreground">You pay monthly for all members. Free for your first community.</p>
+                          <div className="grid gap-1.5">
+                            <Label htmlFor="community" className="font-medium">Community Plan</Label>
+                            <p className="text-sm text-muted-foreground">You as the admin pay monthly for all members. Free for your first community.</p>
                           </div>
                         </div>
-                        <div className="flex items-start space-x-3 border p-3 rounded-lg">
+                        <div className="flex items-start space-x-3 border p-4 rounded-lg">
                           <input
                             type="radio"
                             id="individual"
                             value="Individual"
                             checked={newCommunity.subscriptionType === "Individual"}
                             onChange={() => setNewCommunity({ ...newCommunity, subscriptionType: "Individual" })}
-                            className="h-4 w-4 rounded-full border border-primary mt-1"
+                            className="h-4 w-4 rounded-full border border-primary"
                           />
-                          <div className="grid gap-1">
-                            <Label htmlFor="individual" className="font-medium text-sm">Individual Plan</Label>
-                            <p className="text-xs text-muted-foreground">Each member pays separately to join the community.</p>
+                          <div className="grid gap-1.5">
+                            <Label htmlFor="individual" className="font-medium">Individual Plan</Label>
+                            <p className="text-sm text-muted-foreground">Each member pays separately to join the community.</p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <DialogFooter className="flex flex-col sm:flex-row gap-2">
+                  <DialogFooter>
                     <Button variant="outline" onClick={() => {
                       setNewCommunity({ name: "", description: "", subscriptionType: "Community", image: "" });
                       setCreateDialogOpen(false);
-                    }} className="w-full sm:w-auto">
+                    }}>
                       Cancel
                     </Button>
-                    <Button className="bg-teal-500 hover:bg-teal-500/90 text-white w-full sm:w-auto" onClick={handleCreateCommunity}>
+                    <Button className="bg-teal-500 hover:bg-teal-500/90 text-white" onClick={handleCreateCommunity}>
                       Create Community
                     </Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
-              <Link to="/community-admin" className="w-full sm:w-auto">
-                <Button className="border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center gap-2 text-sm font-medium h-10 px-3 sm:px-4 rounded-md w-full">
+              <Link to="/community-admin">
+                <Button className="border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
                   <Settings className="h-4 w-4" />
-                  <span className="sm:inline">Manage</span>
+                  Manage Community
                 </Button>
               </Link>
             </div>
           </div>
-          <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-8">
+          <div className="bg-white rounded-xl shadow-md p-6 mb-8">
             <div className="flex flex-col md:flex-row gap-4 mb-6">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
@@ -295,11 +261,11 @@ const Communities = () => {
                 {categories.map((category) => (
                   <Button
                     key={category}
-                    className={`h-10 px-3 sm:px-4 py-2 text-sm font-medium ${
+                    className={`h-10 px-4 py-2 text-sm font-medium ${
                       selectedCategory === category
                         ? "bg-teal-500 hover:bg-teal-500/90 text-white"
                         : "border border-input bg-background hover:bg-accent hover:text-accent-foreground"
-                    } inline-flex items-center gap-1 whitespace-nowrap rounded-md`}
+                    } inline-flex items-center gap-2 whitespace-nowrap rounded-md`}
                     onClick={() => setSelectedCategory(category)}
                   >
                     {category}
@@ -503,104 +469,108 @@ const Communities = () => {
             </DialogContent>
           </Dialog>
 
-          <div className="bg-navy/5 rounded-xl p-4 sm:p-6 text-center">
+          <div className="bg-navy/5 rounded-xl p-6 text-center">
             <h2 className="text-xl font-bold text-navy mb-3">Don't see your community?</h2>
             <p className="text-gray-600 text-sm mb-4">Create your own community or contact us for more information</p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex gap-3 justify-center">
+              
               <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center justify-center gap-2 text-sm font-medium h-10 px-4 rounded-md w-full sm:w-auto">
-                    Create Community
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="bg-white p-4 sm:p-6 rounded-lg max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto">
+                  <Button className="bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
+                    <CirclePlus className="h-4 w-4" />
+                       Create Community
+                        </Button>
+                     </DialogTrigger>
+                     <DialogContent className="bg-white p-6 rounded-lg max-w-lg max-h-[80vh] flex flex-col">
                   <DialogHeader>
-                    <DialogTitle>Create New Community</DialogTitle>
+                  <DialogTitle>Create New Community</DialogTitle>
                     <p className="text-sm text-muted-foreground">Fill in the details below to create a new community.</p>
-                  </DialogHeader>
-                  <div className="grid gap-3 py-2">
-                    <div className="grid gap-2">
-                      <Label htmlFor="community-name">Community Name</Label>
-                      <Input
-                        id="community-name"
-                        placeholder="Enter community name"
-                        value={newCommunity.name}
-                        onChange={(e) => setNewCommunity({ ...newCommunity, name: e.target.value })}
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="description">Description</Label>
-                      <textarea
-                        id="description"
-                        placeholder="Describe your community and its purpose"
-                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus:ring-2 focus:ring-teal focus-visible:ring-offset-2"
-                        rows={2}
-                        value={newCommunity.description}
-                        onChange={(e) => setNewCommunity({ ...newCommunity, description: e.target.value })}
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="image">Community Photo</Label>
-                      <input
-                        id="image"
-                        type="file"
-                        accept="image/*"
-                        className="w-full border rounded-md p-2 text-sm"
-                        onChange={handleImageUpload}
-                      />
-                      {newCommunity.image && (
-                        <img src={newCommunity.image} alt="Community preview" className="w-full h-20 sm:h-24 object-cover rounded-md" />
-                      )}
-                    </div>
-                    <div className="grid gap-2">
-                      <Label>Subscriptions</Label>
+                    </DialogHeader>
+                     <div className="flex-1 overflow-y-auto">
+                      <div className="grid gap-4 py-4">
+                        <div className="grid gap-2">
+                          <Label htmlFor="community-name">Community Name</Label>
+                            <Input
+                              id="community-name"
+                              placeholder="Enter community name"
+                              value={newCommunity.name}
+                              onChange={(e) => setNewCommunity({ ...newCommunity, name: e.target.value })}
+                            />
+                          </div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="description">Description</Label>
+                              <textarea
+                                 id="description"
+                                  placeholder="Describe your community and its purpose"
+                                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                 rows={3}
+                                value={newCommunity.description}
+                                onChange={(e) => setNewCommunity({ ...newCommunity, description: e.target.value })}
+                            />
+                         </div>
+                        <div className="grid gap-2">
+                          <Label htmlFor="image">Community Photo</Label>
+                          <input
+                           id="image"
+                           type="file"
+                           accept="image/*"
+                           className="w-full border rounded-md p-2"
+                            onChange={handleImageUpload}
+                          />
+                          {newCommunity.image && (
+                          <img src={newCommunity.image} alt="Community preview" className="w-full h-32 object-cover rounded-md mt-2" />
+                          )}
+                        </div>
                       <div className="grid gap-2">
-                        <div className="flex items-start space-x-3 border p-3 rounded-lg">
-                          <input
-                            type="radio"
-                            id="community"
-                            value="Community"
-                            checked={newCommunity.subscriptionType === "Community"}
-                            onChange={() => setNewCommunity({ ...newCommunity, subscriptionType: "Community" })}
-                            className="h-4 w-4 rounded-full border border-primary mt-1"
-                          />
-                          <div className="grid gap-1">
-                            <Label htmlFor="community" className="font-medium text-sm">Community Plan</Label>
-                            <p className="text-xs text-muted-foreground">You pay monthly for all members. Free for your first community.</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start space-x-3 border p-3 rounded-lg">
-                          <input
-                            type="radio"
-                            id="individual"
-                            value="Individual"
-                            checked={newCommunity.subscriptionType === "Individual"}
-                            onChange={() => setNewCommunity({ ...newCommunity, subscriptionType: "Individual" })}
-                            className="h-4 w-4 rounded-full border border-primary mt-1"
-                          />
-                          <div className="grid gap-1">
-                            <Label htmlFor="individual" className="font-medium text-sm">Individual Plan</Label>
-                            <p className="text-xs text-muted-foreground">Each member pays separately to join the community.</p>
-                          </div>
-                        </div>
-                      </div>
+                      <Label>Subscription Type</Label>
+                      <div className="grid gap-3">
+                      <div className="flex items-start space-x-3 border p-4 rounded-lg">
+                        <input
+                          type="radio"
+                          id="community"
+                          value="Community"
+                          checked={newCommunity.subscriptionType === "Community"}
+                          onChange={() => setNewCommunity({ ...newCommunity, subscriptionType: "Community" })}
+                          className="h-4 w-4 rounded-full border border-primary"
+                        />
+                      <div className="grid gap-1.5">
+                      <Label htmlFor="community" className="font-medium">Community Plan</Label>
+                      <p className="text-sm text-muted-foreground">You as the admin pay monthly for all members. Free for your first community.</p>
+                     </div>
                     </div>
+                    <div className="flex items-start space-x-3 border p-4 rounded-lg">
+                     <input
+                     type="radio"
+                     id="individual"
+                     value="Individual"
+                    checked={newCommunity.subscriptionType === "Individual"}
+                    onChange={() => setNewCommunity({ ...newCommunity, subscriptionType: "Individual" })}
+                    className="h-4 w-4 rounded-full border border-primary"
+                  />
+                      <div className="grid gap-1.5">
+                  <Label htmlFor="individual" className="font-medium">Individual Plan</Label>
+                  <p className="text-sm text-muted-foreground">Each member pays separately to join the community.</p>
                   </div>
-                  <DialogFooter className="flex flex-col sm:flex-row gap-2">
-                    <Button variant="outline" onClick={() => {
-                      setNewCommunity({ name: "", description: "", subscriptionType: "Community", image: "" });
-                      setCreateDialogOpen(false);
-                    }} className="w-full sm:w-auto">
-                      Cancel
-                    </Button>
-                    <Button className="bg-teal-500 hover:bg-teal-500/90 text-white w-full sm:w-auto" onClick={handleCreateCommunity}>
-                      Create Community
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-              <Link to="/contact" className="w-full sm:w-auto">
-                <Button className="border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center gap-2 text-sm font-medium h-10 px-4 rounded-md w-full">
+              </div>
+            </div>
+         </div>
+        </div>
+     </div>
+        <DialogFooter className="flex justify-end gap-2 sticky bottom-0 bg-white p-4">
+        <Button variant="outline" onClick={() => {
+        setNewCommunity({ name: "", description: "", subscriptionType: "Community", image: "" });
+        setCreateDialogOpen(false);
+          }}>
+          Cancel
+        </Button>
+         <Button className="bg-teal-500 hover:bg-teal-500/90 text-white" onClick={handleCreateCommunity}>
+           Create Community
+          </Button>
+          </DialogFooter>
+        </DialogContent>
+        </Dialog>
+              <Link to="/contact">
+                <Button className="border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
                   Contact Us
                 </Button>
               </Link>
