@@ -22,7 +22,7 @@ const CommunityAdminAnnouncementsPanel = () => {
     {
       id: 2,
       title: 'New Matching Feature Available',
-      content: 'We’ve just launched a new matching algorithm to help you find even better connections within the community.',
+      content: 'We've just launched a new matching algorithm to help you find even better connections within the community.',
       date: '2023-11-22T10:15:00',
       recipient: 'active',
       readCount: 30,
@@ -162,10 +162,10 @@ const CommunityAdminAnnouncementsPanel = () => {
                 </Label>
               </div>
             </div>
-            <div className="mt-2">
+            <div className="mt-4">
               <Button
                 onClick={handleSendAnnouncement}
-                className="bg-teal hover:bg-teal/90 text-white w-full sm:w-auto"
+                className="bg-teal-600 hover:bg-teal-700 text-white w-full sm:w-auto px-6 py-2"
               >
                 <Send className="h-4 w-4 mr-2" />
                 Send Announcement
@@ -179,7 +179,7 @@ const CommunityAdminAnnouncementsPanel = () => {
               <div key={announcement.id} className="border rounded-lg p-4">
                 <div className="flex justify-between items-start mb-2">
                   <h4 className="font-semibold flex items-center">
-                    <Bell className="h-4 w-4 mr-2 text-teal" />
+                    <Bell className="h-4 w-4 mr-2 text-teal-600" />
                     {announcement.title}
                   </h4>
                   <div className="flex items-center gap-2">
