@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogT
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Progress } from '../ui/progress';
-import { Calendar, Clock, MapPin, Users, CircleCheck, CircleX, Star, ChevronDown } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, CircleCheck, CircleX, Star, ChevronDown, Edit } from 'lucide-react';
 
 const CommunityAdminMeetupsPanel = () => {
   const [meetups, setMeetups] = useState([
@@ -71,7 +71,15 @@ const CommunityAdminMeetupsPanel = () => {
   const [isParticipantsDialogOpen, setIsParticipantsDialogOpen] = useState(false);
   const [selectedParticipants, setSelectedParticipants] = useState([]);
   const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [currentMeetup, setCurrentMeetup] = useState(null);
   const [newMeetup, setNewMeetup] = useState({
+    title: '',
+    date: '',
+    location: '',
+    notes: '',
+  });
+  const [editMeetup, setEditMeetup] = useState({
     title: '',
     date: '',
     location: '',
@@ -125,6 +133,34 @@ const CommunityAdminMeetupsPanel = () => {
     ]);
     setNewMeetup({ title: '', date: '', location: '', notes: '' });
     setIsScheduleDialogOpen(false);
+  };
+
+  const handleOpenEditDialog = (meetup) => {
+    setCurrentMeetup(meetup);
+    setEditMeetup({
+      title: meetup.title,
+      date: new Date(meetup.date).toISOString().slice(0, 16),
+      location: meetup.location,
+      notes: meetup.notes,
+    });
+    setIsEditDialogOpen(true);
+  };
+
+  const handleEditMeetup = () => {
+    setMeetups(
+      meetups.map((meetup) =>
+        meetup.id === currentMeetup.id
+          ? {
+              ...meetup,
+              title: editMeetup.title,
+              date: new Date(editMeetup.date).toISOString(),
+              location: editMeetup.location,
+              notes: editMeetup.notes,
+            }
+          : meetup
+      )
+    );
+    setIsEditDialogOpen(false);
   };
 
   return (
@@ -294,7 +330,12 @@ const CommunityAdminMeetupsPanel = () => {
                     >
                       Confirm
                     </Button>
-                    <Button variant="outline" size="sm">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleOpenEditDialog(meetup)}
+                    >
+                      <Edit className="h-4 w-4 mr-2" />
                       Edit
                     </Button>
                   </div>
@@ -396,6 +437,23 @@ const CommunityAdminMeetupsPanel = () => {
                   <div className="mt-3 text-sm text-gray-600 bg-gray-50 p-2 rounded">
                     <span className="font-medium">Notes:</span> {meetup.notes}
                   </div>
+                  <div className="mt-3 flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleRestore(meetup.id)}
+                    >
+                      Restore
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleOpenEditDialog(meetup)}
+                    >
+                      <Edit className="h-4 w-4 mr-2" />
+                      Edit
+                    </Button>
+                  </div>
                 </div>
               ))}
           </TabsContent>
@@ -480,6 +538,57 @@ const CommunityAdminMeetupsPanel = () => {
                 Cancel
               </Button>
               <Button onClick={handleScheduleMeetup}>Schedule</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Edit Meetup</DialogTitle>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="edit-title">Title</Label>
+                <Input
+                  id="edit-title"
+                  value={editMeetup.title}
+                  onChange={(e) => setEditMeetup({ ...editMeetup, title: e.target.value })}
+                  placeholder="e.g., Tech Networking Lunch"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-date">Date and Time</Label>
+                <Input
+                  id="edit-date"
+                  type="datetime-local"
+                  value={editMeetup.date}
+                  onChange={(e) => setEditMeetup({ ...editMeetup, date: e.target.value })}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-location">Location</Label>
+                <Input
+                  id="edit-location"
+                  value={editMeetup.location}
+                  onChange={(e) => setEditMeetup({ ...editMeetup, location: e.target.value })}
+                  placeholder="e.g., Radisson Blu Hotel, Lagos"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-notes">Notes</Label>
+                <Input
+                  id="edit-notes"
+                  value={editMeetup.notes}
+                  onChange={(e) => setEditMeetup({ ...editMeetup, notes: e.target.value })}
+                  placeholder="e.g., Business cards recommended."
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleEditMeetup}>Update</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
