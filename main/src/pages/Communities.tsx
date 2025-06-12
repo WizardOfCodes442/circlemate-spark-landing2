@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { CirclePlus, Settings, Search, Users, MapPin, X, CreditCard, Banknote, CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -41,6 +42,7 @@ const Communities = () => {
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(null);
   const [mainDialogOpen, setMainDialogOpen] = useState(false);
   const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
+  const [createDialogOpen, setCreateDialogOpen] = useState(false); // New state for create dialog
 
   const categories = [
     "All",
@@ -68,20 +70,20 @@ const Communities = () => {
       return;
     }
     const newId = (communities.length + 1).toString();
-    setCommunities([
-      {
-        id: newId,
-        name: newCommunity.name,
-        description: newCommunity.description,
-        image: newCommunity.image,
-        memberCount: 1,
-        tags: ["Community"],
-        subscriptionType: newCommunity.subscriptionType === "Community" ? "Admin-Paid" : "Individual-Paid",
-        members: [{ id: "user1", name: "Current User", avatar: "/user1.png", lastActive: "2025-06-12", role: "admin" }],
-      },
-      ...communities,
-    ]);
+    const newCommunityData: Community = {
+      id: newId,
+      name: newCommunity.name,
+      description: newCommunity.description,
+      image: newCommunity.image,
+      memberCount: 1,
+      tags: ["Community"],
+      subscriptionType: newCommunity.subscriptionType === "Community" ? "Admin-Paid" : "Individual-Paid",
+      members: [{ id: "user1", name: "Current User", avatar: "/user1.png", lastActive: "2025-06-12", role: "admin" }],
+    };
+    setCommunities([newCommunityData, ...communities]);
     setNewCommunity({ name: "", description: "", subscriptionType: "Community", image: "" });
+    setCreateDialogOpen(false); // Close the dialog
+    alert("Community created successfully!"); // User feedback
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,7 +145,7 @@ const Communities = () => {
               <p className="text-gray-600 text-sm">Discover communities where you can connect with like-minded individuals</p>
             </div>
             <div className="flex gap-3">
-              <Dialog>
+              <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
                 <DialogTrigger asChild>
                   <Button className="bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
                     <CirclePlus className="h-4 w-4" />
@@ -224,7 +226,10 @@ const Communities = () => {
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button variant="outline" onClick={() => setNewCommunity({ name: "", description: "", subscriptionType: "Community", image: "" })}>
+                    <Button variant="outline" onClick={() => {
+                      setNewCommunity({ name: "", description: "", subscriptionType: "Community", image: "" });
+                      setCreateDialogOpen(false);
+                    }}>
                       Cancel
                     </Button>
                     <Button className="bg-teal-500 hover:bg-teal-500/90 text-white" onClick={handleCreateCommunity}>
@@ -468,13 +473,17 @@ const Communities = () => {
             <h2 className="text-xl font-bold text-navy mb-3">Don't see your community?</h2>
             <p className="text-gray-600 text-sm mb-4">Create your own community or contact us for more information</p>
             <div className="flex gap-3 justify-center">
-              <Dialog>
+              <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
                 <DialogTrigger asChild>
                   <Button className="bg-teal-500 hover:bg-teal-500/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 rounded-md">
                     Create Community
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
+                  <DialogHeader>
+                    <DialogTitle>Create New Community</DialogTitle>
+                    <p className="text-sm text-muted-foreground">Fill in the details below to create a new community.</p>
+                  </DialogHeader>
                   <div className="grid gap-4 py-4">
                     <div className="grid gap-2">
                       <Label htmlFor="community-name">Community Name</Label>
@@ -544,7 +553,10 @@ const Communities = () => {
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button variant="outline" onClick={() => setNewCommunity({ name: "", description: "", subscriptionType: "Community", image: "" })}>
+                    <Button variant="outline" onClick={() => {
+                      setNewCommunity({ name: "", description: "", subscriptionType: "Community", image: "" });
+                      setCreateDialogOpen(false);
+                    }}>
                       Cancel
                     </Button>
                     <Button className="bg-teal-500 hover:bg-teal-500/90 text-white" onClick={handleCreateCommunity}>
