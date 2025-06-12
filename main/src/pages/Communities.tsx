@@ -7,18 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import DashboardHeader from "@/components/DashboardHeader";
-
-interface Community {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-  memberCount: number;
-  tags: string[];
-  subscriptionType: "Admin-Paid" | "Individual-Paid";
-  isFeatured?: boolean;
-  members: { id: string; name: string; avatar: string; lastActive: string }[];
-}
+import { useCommunities } from "./CommunityContext";
 
 interface PaymentDetails {
   method: "credit_card" | "bank_transfer";
@@ -29,92 +18,8 @@ interface PaymentDetails {
   iban: string;
 }
 
-const initialCommunities: Community[] = [
-  {
-    id: "1",
-    name: "Lagos Tech Circle",
-    description: "For tech professionals and enthusiasts in Lagos",
-    image: "https://images.unsplash.com/photo-1558403194-611308249627",
-    memberCount: 534,
-    tags: ["Technology", "Professional"],
-    subscriptionType: "Admin-Paid",
-    isFeatured: true,
-    members: [
-      { id: "m1", name: "John Doe", avatar: "/user1.png", lastActive: "2025-06-10" },
-      { id: "m2", name: "Jane Smith", avatar: "/user2.png", lastActive: "2025-06-05" },
-    ],
-  },
-  {
-    id: "2",
-    name: "Church of Grace Fellowship",
-    description: "A spiritual community focused on growth and service",
-    image: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
-    memberCount: 328,
-    tags: ["Religious", "Community"],
-    subscriptionType: "Individual-Paid",
-    members: [
-      { id: "m3", name: "Emma Wilson", avatar: "/user3.png", lastActive: "2025-06-11" },
-      { id: "m4", name: "Michael Brown", avatar: "/user4.png", lastActive: "2025-06-01" },
-    ],
-  },
-  {
-    id: "3",
-    name: "University of Lagos Alumni",
-    description: "Graduates from University of Lagos across all years",
-    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1",
-    memberCount: 742,
-    tags: ["Education", "Alumni"],
-    subscriptionType: "Admin-Paid",
-    isFeatured: true,
-    members: [
-      { id: "m5", name: "Alice Cooper", avatar: "/user5.png", lastActive: "2025-06-12" },
-      { id: "m6", name: "Bob Dylan", avatar: "/user6.png", lastActive: "2025-05-30" },
-    ],
-  },
-  {
-    id: "4",
-    name: "Lagos Young Professionals",
-    description: "Network of ambitious professionals under 35",
-    image: "https://images.unsplash.com/photo-1541746972996-4fc1d4ee96f0",
-    memberCount: 621,
-    tags: ["Professional", "Networking"],
-    subscriptionType: "Individual-Paid",
-    members: [
-      { id: "m7", name: "Sarah Lee", avatar: "/user7.png", lastActive: "2025-06-09" },
-      { id: "m8", name: "David Kim", avatar: "/user8.png", lastActive: "2025-06-02" },
-    ],
-  },
-  {
-    id: "5",
-    name: "Lagos Book Club",
-    description: "For avid readers who enjoy discussing literature",
-    image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353",
-    memberCount: 156,
-    tags: ["Hobby", "Education"],
-    subscriptionType: "Admin-Paid",
-    members: [
-      { id: "m9", name: "Lisa Wong", avatar: "/user9.png", lastActive: "2025-06-12" },
-      { id: "m10", name: "Tom Chen", avatar: "/user10.png", lastActive: "2025-05-28" },
-    ],
-  },
-  {
-    id: "6",
-    name: "Nigerian Medical Association",
-    description: "For healthcare professionals across Nigeria",
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d",
-    memberCount: 412,
-    tags: ["Professional", "Medical"],
-    subscriptionType: "Individual-Paid",
-    isFeatured: true,
-    members: [
-      { id: "m11", name: "Grace Adebayo", avatar: "/user11.png", lastActive: "2025-06-11" },
-      { id: "m12", name: "Victor Obi", avatar: "/user12.png", lastActive: "2025-06-03" },
-    ],
-  },
-];
-
 const Communities = () => {
-  const [communities, setCommunities] = useState<Community[]>(initialCommunities);
+  const { communities, setCommunities } = useCommunities();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [newCommunity, setNewCommunity] = useState({
@@ -237,7 +142,7 @@ const Communities = () => {
               <Dialog>
                 <DialogTrigger asChild>
                   <Button 
-                    className="bg-teal hover:bg-teal/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 z-20"
+                    className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <CirclePlus className="h-4 w-4" />
@@ -321,7 +226,7 @@ const Communities = () => {
                     <Button variant="outline" onClick={() => setNewCommunity({ name: "", description: "", subscriptionType: "Community", image: "" })}>
                       Cancel
                     </Button>
-                    <Button className="bg-teal hover:bg-teal/90 text-white" onClick={handleCreateCommunity}>
+                    <Button className="bg-teal-500 hover:bg-teal-600 text-white" onClick={handleCreateCommunity}>
                       Create Community
                     </Button>
                   </DialogFooter>
@@ -329,7 +234,7 @@ const Communities = () => {
               </Dialog>
               <Link to="/community-admin">
                 <Button 
-                  className="border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 z-20"
+                  className="border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Settings className="h-4 w-4" />
@@ -343,7 +248,7 @@ const Communities = () => {
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                 <Input
-                  className="pl-10 w-full border border-gray-300 rounded-lg py-2.5 px-3 focus:outline-none focus:ring-1 focus:ring-teal"
+                  className="pl-10 w-full border border-gray-300 rounded-lg py-2.5 px-3 focus:outline-none focus:ring-1 focus:ring-teal-500"
                   placeholder="Search for communities by name or description"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -355,9 +260,9 @@ const Communities = () => {
                     key={category}
                     className={`h-10 px-4 py-2 text-sm font-medium ${
                       selectedCategory === category
-                        ? "bg-teal hover:bg-teal/90 text-white"
+                        ? "bg-teal-500 hover:bg-teal-600 text-white"
                         : "border border-input bg-background hover:bg-accent hover:text-accent-foreground"
-                    } inline-flex items-center gap-2 whitespace-nowrap rounded-md focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2`}
+                    } inline-flex items-center gap-2 whitespace-nowrap rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2`}
                     onClick={() => setSelectedCategory(category)}
                   >
                     {category}
@@ -383,7 +288,7 @@ const Communities = () => {
                       <p className="text-gray-600 text-sm mt-1 mb-3">{community.description}</p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         {community.tags.map((tag) => (
-                          <span key={tag} className="bg-teal/10 text-teal text-xs px-2.5 py-1 rounded-full">
+                          <span key={tag} className="bg-teal-100 text-teal-700 text-xs px-2.5 py-1 rounded-full">
                             {tag}
                           </span>
                         ))}
@@ -393,7 +298,7 @@ const Communities = () => {
                         <Dialog>
                           <DialogTrigger asChild>
                             <Button
-                              className="bg-teal hover:bg-teal/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-9 px-3 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 z-20"
+                              className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-9 px-3 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedCommunity(community);
@@ -424,7 +329,7 @@ const Communities = () => {
                                 <Dialog>
                                   <DialogTrigger asChild>
                                     <Button 
-                                      className="w-full bg-teal hover:bg-teal/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 z-20"
+                                      className="w-full bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
                                       onClick={(e) => e.stopPropagation()}
                                     >
                                       Subscribe & Join
@@ -504,7 +409,7 @@ const Communities = () => {
                                       {paymentStatus === "processing" && (
                                         <div className="w-full bg-gray-200 rounded-full h-2.5">
                                           <div
-                                            className="bg-teal h-2.5 rounded-full transition-all duration-500"
+                                            className="bg-teal-500 h-2.5 rounded-full transition-all duration-500"
                                             style={{ width: `${progress}%` }}
                                           />
                                         </div>
@@ -518,7 +423,7 @@ const Communities = () => {
                                     </div>
                                     <DialogFooter>
                                       <Button
-                                        className="bg-teal hover:bg-teal/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 z-20"
+                                        className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           handlePayment();
@@ -539,7 +444,7 @@ const Communities = () => {
                                 </Dialog>
                               ) : (
                                 <Button
-                                  className="w-full bg-teal hover:bg-teal/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 z-20"
+                                  className="w-full bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     setCommunities(
@@ -569,7 +474,7 @@ const Communities = () => {
               <Dialog>
                 <DialogTrigger asChild>
                   <Button 
-                    className="bg-teal hover:bg-teal/90 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 z-20"
+                    className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
                     onClick={(e) => e.stopPropagation()}
                   >
                     Create Community
@@ -652,7 +557,7 @@ const Communities = () => {
                     <Button variant="outline" onClick={() => setNewCommunity({ name: "", description: "", subscriptionType: "Community", image: "" })}>
                       Cancel
                     </Button>
-                    <Button className="bg-teal hover:bg-teal/90 text-white" onClick={handleCreateCommunity}>
+                    <Button className="bg-teal-500 hover:bg-teal-600 text-white" onClick={handleCreateCommunity}>
                       Create Community
                     </Button>
                   </DialogFooter>
@@ -660,7 +565,7 @@ const Communities = () => {
               </Dialog>
               <Link to="/contact">
                 <Button 
-                  className="border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 z-20"
+                  className="border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 z-20"
                   onClick={(e) => e.stopPropagation()}
                 >
                   Contact Us
