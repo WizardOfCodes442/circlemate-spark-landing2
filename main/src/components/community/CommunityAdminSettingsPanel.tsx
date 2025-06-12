@@ -1,11 +1,13 @@
+```tsx
 import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from '../ui/dialog';
-import { Settings, CirclePlus, ShieldCheck, Shield, X, CreditCard, Banknote, CheckCircle, Loader2 } from 'lucide-react';
+import { Settings, CirclePlus, ShieldCheck, Shield, X, CreditCard, Banknote, CheckCircle, Loader2, ChevronDown } from 'lucide-react';
 import { Label } from '../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Textarea } from '../ui/textarea';
+import * as Accordion from '@radix-ui/react-accordion';
 
 interface Admin {
   id: number;
@@ -30,6 +32,16 @@ interface PaymentDetails {
   cvv: string;
   accountNumber: string;
   iban: string;
+}
+
+interface Transaction {
+  id: string;
+  amount: number;
+  date: string;
+  status: 'Paid' | 'Pending' | 'Failed';
+  method: 'Credit Card' | 'Bank Transfer';
+  plan: string;
+  nextBillingDue: string;
 }
 
 const CommunityAdminSettingsPanel: React.FC = () => {
@@ -61,13 +73,14 @@ const CommunityAdminSettingsPanel: React.FC = () => {
   const [editAdmin, setEditAdmin] = useState<Admin | null>(null);
 
   // State for subscriptions
-  const [currentPlan, setCurrentPlan] = useState<string>('Free');
+  const [currentPlan, setCurrentPlan] = useState<string>('Community Starter');
   const [subscriptionPlans] = useState<SubscriptionPlan[]>([
     { name: 'Free', price: 0, features: ['Basic features', 'Up to 50 members', '1 admin'], billingCycle: 'Free' },
     { name: 'Basic', price: 10, features: ['All Free features', 'Up to 200 members', '3 admins', 'Email support'], billingCycle: 'Monthly' },
     { name: 'Pro', price: 25, features: ['All Basic features', 'Up to 500 members', '5 admins', 'Priority support', 'Analytics'], billingCycle: 'Monthly' },
     { name: 'Enterprise', price: 50, features: ['All Pro features', 'Unlimited members', 'Unlimited admins', 'Dedicated support', 'Custom branding'], billingCycle: 'Monthly' },
   ]);
+  const [billingHistory, setBillingHistory] = useState<Transaction[]>([]);
   const [paymentDetails, setPaymentDetails] = useState<PaymentDetails>({ method: 'credit_card', cardNumber: '', expiry: '', cvv: '', accountNumber: '', iban: '' });
   const [paymentStatus, setPaymentStatus] = useState<'processing' | 'success' | null>(null);
   const [progress, setProgress] = useState<number>(0);
@@ -133,7 +146,26 @@ const CommunityAdminSettingsPanel: React.FC = () => {
         clearInterval(interval);
         setPaymentStatus('success');
         if (selectedPlan) {
+          // Update current plan
           setCurrentPlan(selectedPlan.name);
+
+          // Calculate next billing due date (30 days from now)
+          const today = new Date('2025-06-14');
+          const nextBilling = new Date(today);
+          nextBilling.setDate(today.getDate() + 30);
+          const nextBillingStr = nextBilling.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
+          // Add transaction to billing history
+          const transaction: Transaction = {
+            id: crypto.randomUUID(),
+            amount: selectedPlan.price,
+            date: today.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }),
+            status: 'Paid',
+            method: paymentDetails.method === 'credit_card' ? 'Credit Card' : 'Bank Transfer',
+            plan: selectedPlan.name,
+            nextBillingDue: nextBillingStr,
+          };
+          setBillingHistory([transaction, ...billingHistory]);
         }
         setTimeout(() => {
           setPaymentStatus(null);
@@ -297,7 +329,7 @@ const CommunityAdminSettingsPanel: React.FC = () => {
                                     setNewAdmin({ ...newAdmin, permissions: updated });
                                   }}
                                 />
-                                <span>{perm}</span>
+                                {perm}
                               </label>
                             ))}
                           </div>
@@ -370,7 +402,7 @@ const CommunityAdminSettingsPanel: React.FC = () => {
                                               setEditAdmin({ ...editAdmin, permissions: updated });
                                             }}
                                           />
-                                          <span>{perm}</span>
+                                          {perm}
                                         </label>
                                       ))}
                                     </div>
@@ -385,7 +417,6 @@ const CommunityAdminSettingsPanel: React.FC = () => {
                           <Dialog>
                             <DialogTrigger asChild>
                               <Button
-                                variant="outline"
                                 className="inline-flex items-center gap-2 whitespace-nowrap flex-nowrap rounded-md text-sm border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
                               >
                                 <X className="h-4 w-4" />
@@ -398,7 +429,7 @@ const CommunityAdminSettingsPanel: React.FC = () => {
                               </DialogHeader>
                               <p>Are you sure you want to remove {admin.name} as an admin?</p>
                               <DialogFooter>
-                                <Button variant="outline">
+                                <Button variant="outline" onClick={() => {}}>
                                   Cancel
                                 </Button>
                                 <Button className="bg-red-600 hover:bg-red-700 text-white" onClick={() => handleRemoveAdmin(admin.id)}>
@@ -430,11 +461,11 @@ const CommunityAdminSettingsPanel: React.FC = () => {
           </div>
         </div>
 
-        {/* Subscription Management */}
+        {/* Existing Subscription Management */}
         <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
           <div className="flex flex-col space-y-1.5 p-6">
-            <h3 className="text-2xl font-semibold leading-none tracking-tight">Subscription Management</h3>
-            <p className="text-sm text-muted-foreground">Manage your community subscription plan</p>
+            <h3 className="text-2xl font-semibold leading-none tracking-tight">Subscription Management (Legacy)</h3>
+            <p className="text-sm text-muted-foreground">Manage your community subscription plan (older version).</p>
           </div>
           <div className="p-6 pt-0">
             <div className="mb-6">
@@ -610,9 +641,218 @@ const CommunityAdminSettingsPanel: React.FC = () => {
             </Dialog>
           </div>
         </div>
+
+        {/* New Subscription Management */}
+        <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+          <div className="flex flex-col space-y-1.5 p-6">
+            <h3 className="text-2xl font-semibold leading-none tracking-tight">Subscription Management</h3>
+            <p className="text-sm text-muted-foreground">Manage your community subscription plan</p>
+          </div>
+          <div className="p-6 pt-0">
+            <Accordion.Root type="single" defaultValue="current-plan" collapsible className="w-full" data-orientation="vertical">
+              <Accordion.Item value="current-plan" className="border-b">
+                <Accordion.Trigger className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180">
+                  Current Plan
+                  <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+                </Accordion.Trigger>
+                <Accordion.Content className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+                  <div className="pb-4 pt-0">
+                    <div className="p-4 border rounded-md">
+                      <p className="font-medium">{currentPlan}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {currentPlan === 'Free' ? 'Up to 50 members' : currentPlan === 'Basic' ? 'Up to 200 members' : currentPlan === 'Pro' ? 'Up to 500 members' : 'Unlimited members'}
+                      </p>
+                      {currentPlan !== 'Free' && (
+                        <p className="text-sm text-muted-foreground mt-2">
+                          Next billing date: {billingHistory[0]?.nextBillingDue || '06/23/2025'}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </Accordion.Content>
+              </Accordion.Item>
+              <Accordion.Item value="billing-history" className="border-b">
+                <Accordion.Trigger className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180">
+                  Billing History
+                  <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+                </Accordion.Trigger>
+                <Accordion.Content className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+                  <div className="pb-4 pt-0">
+                    {billingHistory.length === 0 ? (
+                      <p className="p-4 text-sm text-gray-500">No billing history available.</p>
+                    ) : (
+                      billingHistory.map((transaction) => (
+                        <div key={transaction.id} className="p-4 border rounded-md mb-2">
+                          <p className="font-medium">Transaction ID: {transaction.id}</p>
+                          <p className="text-sm text-muted-foreground">Plan: {transaction.plan}</p>
+                          <p className="text-sm text-muted-foreground">Amount: ${transaction.amount}</p>
+                          <p className="text-sm text-muted-foreground">Date: {transaction.date}</p>
+                          <p className="text-sm text-muted-foreground">Status: {transaction.status}</p>
+                          <p className="text-sm text-muted-foreground">Method: {transaction.method}</p>
+                          <p className="text-sm text-muted-foreground">Next Billing Due: {transaction.nextBillingDue}</p>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </Accordion.Content>
+              </Accordion.Item>
+              <Accordion.Item value="upgrade-plan" className="border-b">
+                <Accordion.Trigger className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180">
+                  Upgrade Plan
+                  <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+                </Accordion.Trigger>
+                <Accordion.Content className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+                  <div className="pb-4 pt-0">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {subscriptionPlans.map((plan) => (
+                        <div key={plan.name} className="border rounded-lg p-4 flex flex-col justify-between">
+                          <div>
+                            <h4 className="text-lg font-semibold">{plan.name}</h4>
+                            <p className="text-2xl font-bold">${plan.price}<span className="text-sm font-normal">/{plan.billingCycle}</span></p>
+                            <ul className="mt-2 space-y-1 text-sm text-gray-600">
+                              {plan.features.map((feature) => (
+                                <li key={feature} className="flex items-center gap-1">
+                                  <CheckCircle className="h-4 w-4 text-teal-500" />
+                                  {feature}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div className="mt-4">
+                            {currentPlan === plan.name ? (
+                              <Button
+                                className="w-full bg-red-600 hover:bg-red-700 text-white inline-flex items-center gap-2 whitespace-nowrap flex-nowrap rounded-md text-sm"
+                                onClick={() => setIsCancelDialogOpen(true)}
+                              >
+                                Unsubscribe
+                              </Button>
+                            ) : (
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button
+                                    className="w-full bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap flex-nowrap rounded-md text-sm"
+                                    onClick={() => setSelectedPlan(plan)}
+                                  >
+                                    Select Plan
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
+                                  <DialogHeader>
+                                    <DialogTitle>Payment for {selectedPlan?.name} Plan</DialogTitle>
+                                  </DialogHeader>
+                                  <div className="space-y-4">
+                                    <div>
+                                      <Label>Payment Method</Label>
+                                      <Select
+                                        value={paymentDetails.method}
+                                        onValueChange={(value) => setPaymentDetails({ ...paymentDetails, method: value as 'credit_card' | 'bank_transfer' })}
+                                      >
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select payment method" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          <SelectItem value="credit_card">Credit Card</SelectItem>
+                                          <SelectItem value="bank_transfer">Bank Transfer</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    </div>
+                                    {paymentDetails.method === 'credit_card' ? (
+                                      <>
+                                        <div>
+                                          <Label>Card Number</Label>
+                                          <Input
+                                            value={paymentDetails.cardNumber}
+                                            onChange={(e) => setPaymentDetails({ ...paymentDetails, cardNumber: e.target.value })}
+                                            placeholder="1234 5678 9012 3456"
+                                          />
+                                        </div>
+                                        <div className="flex gap-4">
+                                          <div>
+                                            <Label>Expiry (MM/YY)</Label>
+                                            <Input
+                                              value={paymentDetails.expiry}
+                                              onChange={(e) => setPaymentDetails({ ...paymentDetails, expiry: e.target.value })}
+                                              placeholder="MM/YY"
+                                            />
+                                          </div>
+                                          <div>
+                                            <Label>CVV</Label>
+                                            <Input
+                                              value={paymentDetails.cvv}
+                                              onChange={(e) => setPaymentDetails({ ...paymentDetails, cvv: e.target.value })}
+                                              placeholder="123"
+                                            />
+                                          </div>
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <div>
+                                          <Label>Account Number</Label>
+                                          <Input
+                                            value={paymentDetails.accountNumber}
+                                            onChange={(e) => setPaymentDetails({ ...paymentDetails, accountNumber: e.target.value })}
+                                            placeholder="Enter account number"
+                                          />
+                                        </div>
+                                        <div>
+                                          <Label>IBAN</Label>
+                                          <Input
+                                            value={paymentDetails.iban}
+                                            onChange={(e) => setPaymentDetails({ ...paymentDetails, iban: e.target.value })}
+                                            placeholder="Enter IBAN"
+                                          />
+                                        </div>
+                                      </>
+                                    )}
+                                    {paymentStatus === 'processing' && (
+                                      <div className="w-full bg-gray-200 rounded-full h-2.5">
+                                        <div
+                                          className="bg-teal-500 h-2.5 rounded-full transition-all duration-500"
+                                          style={{ width: `${progress}%` }}
+                                        />
+                                      </div>
+                                    )}
+                                    {paymentStatus === 'success' && (
+                                      <div className="text-green-600 flex items-center gap-2">
+                                        <CheckCircle className="h-5 w-5" />
+                                        Payment Successful!
+                                      </div>
+                                    )}
+                                  </div>
+                                  <DialogFooter>
+                                    <Button
+                                      className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap flex-nowrap rounded-md text-sm"
+                                      onClick={handlePayment}
+                                      disabled={paymentStatus === 'processing'}
+                                    >
+                                      {paymentStatus === 'processing' ? (
+                                        <>
+                                          <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                          Processing...
+                                        </>
+                                      ) : (
+                                        'Confirm Payment'
+                                      )}
+                                    </Button>
+                                  </DialogFooter>
+                                </DialogContent>
+                              </Dialog>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Accordion.Content>
+              </Accordion.Item>
+            </Accordion.Root>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
 export default CommunityAdminSettingsPanel;
+```
