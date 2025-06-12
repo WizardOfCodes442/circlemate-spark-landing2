@@ -183,7 +183,7 @@ const CommunityAdminRulesPanel = () => {
                     />
                     <label
                       htmlFor={`rule-switch-${rule.id}`}
-                      className="text-sm font-medium"
+                      className="text-sm font-medium hidden"
                     >
                       {rule.active ? 'Active' : 'Inactive'}
                     </label>

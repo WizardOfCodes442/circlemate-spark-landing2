@@ -58,7 +58,7 @@ const CommunityAdminAnnouncementsPanel = () => {
       id: announcements.length + 1,
       title: form.title,
       content: form.content,
-      date: new Date().toISOString(), // Current date: June 12, 2025, 11:37 AM WAT
+      date: new Date().toISOString(), // Current date: June 12, 2025, 09:35 PM WAT
       recipient: form.recipient,
       readCount: 0,
       totalRecipients: form.recipient === 'all' ? 35 : form.recipient === 'active' ? 30 : 5,
@@ -165,10 +165,10 @@ const CommunityAdminAnnouncementsPanel = () => {
             <div className="mt-2">
               <Button
                 onClick={handleSendAnnouncement}
-                className="bg-teal-500 hover:bg-teal-600 text-white !block min-h-10 px-6 py-2 w-full inline-flex items-center gap-2 whitespace-nowrap flex-nowrap rounded-md text-sm"
+                className="justify-center font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 mt-4 bg-teal-500 hover:bg-teal-600 text-white w-full inline-flex items-center gap-2 whitespace-nowrap flex-nowrap rounded-md text-sm"
                 data-testid="send-button"
               >
-                <Send className="h-4 w-4" />
+                <Send className="h-4 w-4 pointer-events-none shrink-0" />
                 Send Announcement
               </Button>
             </div>
