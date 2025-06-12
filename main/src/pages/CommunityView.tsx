@@ -4,53 +4,34 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { useParams, useNavigate } from "react-router-dom";
 import DashboardHeader from "@/components/DashboardHeader";
-
-interface Member {
-  id: string;
-  name: string;
-  avatar: string;
-  lastActive: string;
-}
-
-interface Community {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-  memberCount: number;
-  tags: string[];
-  subscriptionType: "Admin-Paid" | "Individual-Paid";
-  isFeatured?: boolean;
-  members: Member[];
-}
-
-const mockCommunities: Community[] = [
-  // Same as initialCommunities in Communities.tsx
-  {
-    id: "1",
-    name: "Lagos Tech Circle",
-    description: "For tech professionals and enthusiasts in Lagos",
-    image: "https://images.unsplash.com/photo-1558403194-611308249627",
-    memberCount: 534,
-    tags: ["Technology", "Professional"],
-    subscriptionType: "Admin-Paid",
-    isFeatured: true,
-    members: [
-      { id: "m1", name: "John Doe", avatar: "/user1.png", lastActive: "2025-06-10" },
-      { id: "m2", name: "Jane Smith", avatar: "/user2.png", lastActive: "2025-06-05" },
-    ],
-  },
-  // ... (other communities from Communities.tsx)
-];
+import { useCommunities } from "./CommunityContext";
 
 const CommunityView = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const community = mockCommunities.find((c) => c.id === id);
+  const { communities } = useCommunities();
   const [activeTab, setActiveTab] = useState("active");
 
-  if (!community) {
-    return <div>Community not found</div>;
+  const community = communities.find((c) => c.id === id);
+
+  if (!community || !id) {
+    return (
+      <div className="min-h-screen bg-background">
+        <DashboardHeader />
+        <main className="container mx-auto px-4 py-8">
+          <div className="bg-white rounded-xl shadow-md p-6 text-center">
+            <h2 className="text-2xl font-bold text-navy mb-4">Community Not Found</h2>
+            <p className="text-gray-600 mb-4">The community you’re looking for doesn’t exist or has been removed.</p>
+            <Button
+              className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-10 px-4 py-2 rounded-md focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2"
+              onClick={() => navigate("/discover")}
+            >
+              Back to Communities
+            </Button>
+          </div>
+        </main>
+      </div>
+    );
   }
 
   const today = new Date("2025-06-12");
@@ -80,7 +61,7 @@ const CommunityView = () => {
           </div>
           <div className="flex flex-wrap gap-2 mb-4">
             {community.tags.map((tag) => (
-              <span key={tag} className="bg-teal/10 text-teal text-xs px-2.5 py-1 rounded-full">
+              <span key={tag} className="bg-teal-100 text-teal-700 text-xs px-2.5 py-1 rounded-full">
                 {tag}
               </span>
             ))}
