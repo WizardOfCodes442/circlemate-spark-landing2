@@ -286,7 +286,7 @@ const CommunityAdminSettingsPanel: React.FC = () => {
                           <Label>Permissions</Label>
                           <div className="flex flex-wrap gap-3">
                             {permissionOptions.map((perm) => (
-                              <label key={perm" class="flex items-center gap-1">
+                              <label key={perm} className="flex items-center gap-1">
                                 <input
                                   type="checkbox"
                                   checked={newAdmin.permissions.includes(perm)}
@@ -295,9 +295,9 @@ const CommunityAdminSettingsPanel: React.FC = () => {
                                       ? [...newAdmin.permissions, perm]
                                       : newAdmin.permissions.filter((p) => p !== perm);
                                     setNewAdmin({ ...newAdmin, permissions: updated });
-                                  }
+                                  }}
                                 />
-                                {perm}
+                                <span>{perm}</span>
                               </label>
                             ))}
                           </div>
@@ -370,7 +370,7 @@ const CommunityAdminSettingsPanel: React.FC = () => {
                                               setEditAdmin({ ...editAdmin, permissions: updated });
                                             }}
                                           />
-                                          {perm}
+                                          <span>{perm}</span>
                                         </label>
                                       ))}
                                     </div>
@@ -385,6 +385,7 @@ const CommunityAdminSettingsPanel: React.FC = () => {
                           <Dialog>
                             <DialogTrigger asChild>
                               <Button
+                                variant="outline"
                                 className="inline-flex items-center gap-2 whitespace-nowrap flex-nowrap rounded-md text-sm border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
                               >
                                 <X className="h-4 w-4" />
@@ -397,7 +398,7 @@ const CommunityAdminSettingsPanel: React.FC = () => {
                               </DialogHeader>
                               <p>Are you sure you want to remove {admin.name} as an admin?</p>
                               <DialogFooter>
-                                <Button variant="outline" onClick={() => {}}>
+                                <Button variant="outline">
                                   Cancel
                                 </Button>
                                 <Button className="bg-red-600 hover:bg-red-700 text-white" onClick={() => handleRemoveAdmin(admin.id)}>
