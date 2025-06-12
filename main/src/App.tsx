@@ -62,7 +62,7 @@ const App = () => (
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/create-community" element={<CreateCommunity />} />
-          <Route path="/community-profile" element={<CommunityProfile />} />
+          <Route path="/community/:id" element={<CommunityProfile />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/community-admin" element={<CommunityAdminDashboard />} />
           <Route path="/community" element={<Communities />} />
