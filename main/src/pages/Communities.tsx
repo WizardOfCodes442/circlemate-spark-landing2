@@ -1,7 +1,3 @@
-<div class="absolute top-3 right-3 bg-orange text-white text-xs px-2.5 py-1.5 rounded-full">Featured</div>
-
-
-// src/components/Communities.tsx
 import { useState } from "react";
 import { CirclePlus, Settings, Search, Users, MapPin, X, CreditCard, Banknote, CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
