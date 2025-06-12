@@ -556,7 +556,7 @@ const Communities = () => {
          </div>
         </div>
      </div>
-        <DialogFooter className="flex justify-end gap-2 sticky bottom-0 bg-white p-4">
+        <DialogFooter className="flex justify-end gap-2 bottom-0 bg-white p-4">
         <Button variant="outline" onClick={() => {
         setNewCommunity({ name: "", description: "", subscriptionType: "Community", image: "" });
         setCreateDialogOpen(false);
