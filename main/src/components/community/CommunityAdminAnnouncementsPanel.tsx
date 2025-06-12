@@ -22,7 +22,7 @@ const CommunityAdminAnnouncementsPanel = () => {
     {
       id: 2,
       title: 'New Matching Feature Available',
-      content: 'We've just launched a new matching algorithm to help you find even better connections within the community.',
+      content: 'We’ve just launched a new matching algorithm to help you find even better connections within the community.',
       date: '2023-11-22T10:15:00',
       recipient: 'active',
       readCount: 30,
@@ -58,7 +58,7 @@ const CommunityAdminAnnouncementsPanel = () => {
       id: announcements.length + 1,
       title: form.title,
       content: form.content,
-      date: new Date().toISOString(), // Current date: June 12, 2025, 10:34 AM WAT
+      date: new Date().toISOString(), // Current date: June 12, 2025, 10:42 AM WAT
       recipient: form.recipient,
       readCount: 0,
       totalRecipients: form.recipient === 'all' ? 35 : form.recipient === 'active' ? 30 : 5,
@@ -162,28 +162,29 @@ const CommunityAdminAnnouncementsPanel = () => {
                 </Label>
               </div>
             </div>
-            <div className="mt-4">
+            <div className="flex justify-start mt-2">
               <Button
                 onClick={handleSendAnnouncement}
-                className="bg-teal-600 hover:bg-teal-700 text-white w-full sm:w-auto px-6 py-2"
+                className="bg-teal-500 hover:bg-teal-600 text-white !block min-h-10 px-4 py-2"
+                data-testid="send-button"
               >
                 <Send className="h-4 w-4 mr-2" />
                 Send Announcement
               </Button>
             </div>
           </div>
-          <hr className="shrink-0 bg-border h-[1px] w-full" />
+          <hr className="shrink-0 bg-gray-200 h-[1px] w-full" />
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">Recent Announcements ({announcements.length})</h3>
+            <h3 className="text-xl font-medium">Recent Announcements ({announcements.length})</h3>
             {announcements.map((announcement) => (
-              <div key={announcement.id} className="border rounded-lg p-4">
+              <div key={announcement.id} className="border rounded-lg p-3">
                 <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-semibold flex items-center">
-                    <Bell className="h-4 w-4 mr-2 text-teal-600" />
+                  <h4 className="font-semibold text-base">
+                    <Bell className="h-4 w-4 mr-2 text-teal-500 inline" />
                     {announcement.title}
                   </h4>
                   <div className="flex items-center gap-2">
-                    <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-foreground">
+                    <span className="inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold text-gray-700">
                       Sent to {announcement.recipient} members
                     </span>
                     <Button
@@ -195,15 +196,15 @@ const CommunityAdminAnnouncementsPanel = () => {
                     </Button>
                   </div>
                 </div>
-                <p className="text-gray-600 text-sm mb-3">{announcement.content}</p>
+                <p className="text-gray-600 text-sm mb-2">{announcement.content}</p>
                 <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-gray-500">
                   <div className="flex items-center">
-                    <Clock className="h-3.5 w-3.5 mr-1" />
+                    <Clock className="h-3 w-3 mr-1 text-gray-500" />
                     {new Date(announcement.date).toLocaleString()}
                   </div>
                   <div className="flex items-center">
-                    <CheckCheck className="h-3.5 w-3.5 mr-1" />
-                    Read by {announcement.readCount}/{announcement.totalRecipients}
+                    <CheckCheck className="h-3 w-3 mr-1 text-gray-500" />
+                    Read by: {announcement.readCount}/{announcement.totalRecipients}
                   </div>
                   <div>Sent by: {announcement.sentBy}</div>
                 </div>
