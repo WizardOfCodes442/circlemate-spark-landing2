@@ -1,3 +1,4 @@
+```tsx
 import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -7,13 +8,38 @@ import { Label } from '../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Textarea } from '../ui/textarea';
 
-const CommunityAdminSettingsPanel = () => {
+interface Admin {
+  id: number;
+  name: string;
+  email: string;
+  role: 'Super Admin' | 'Co-Admin';
+  avatar: string;
+  permissions: string[];
+}
+
+interface SubscriptionPlan {
+  name: string;
+  price: number;
+  features: string[];
+  billingCycle: string;
+}
+
+interface PaymentDetails {
+  method: 'credit_card' | 'bank_transfer';
+  cardNumber: string;
+  expiry: string;
+  cvv: string;
+  accountNumber: string;
+  iban: string;
+}
+
+const CommunityAdminSettingsPanel: React.FC = () => {
   // State for settings
-  const [communityName, setCommunityName] = useState('Tech Circle');
-  const [description, setDescription] = useState('A community for tech enthusiasts.');
+  const [communityName, setCommunityName] = useState<string>('Tech Circle');
+  const [description, setDescription] = useState<string>('A community for tech enthusiasts.');
 
   // State for co-admins
-  const [admins, setAdmins] = useState([
+  const [admins, setAdmins] = useState<Admin[]>([
     {
       id: 1,
       name: 'Alex Johnson',
@@ -31,24 +57,24 @@ const CommunityAdminSettingsPanel = () => {
       permissions: ['Manage Members', 'Approve Join Requests', 'Manage Events', 'Send Announcements'],
     },
   ]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [newAdmin, setNewAdmin] = useState({ name: '', email: '', role: 'Co-Admin', permissions: [] });
-  const [editAdmin, setEditAdmin] = useState(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [newAdmin, setNewAdmin] = useState<Admin>({ id: 0, name: '', email: '', role: 'Co-Admin', permissions: [], avatar: '' });
+  const [editAdmin, setEditAdmin] = useState<Admin | null>(null);
 
   // State for subscriptions
-  const [currentPlan, setCurrentPlan] = useState('Free');
-  const [subscriptionPlans] = useState([
+  const [currentPlan, setCurrentPlan] = useState<string>('Free');
+  const [subscriptionPlans] = useState<SubscriptionPlan[]>([
     { name: 'Free', price: 0, features: ['Basic features', 'Up to 50 members', '1 admin'], billingCycle: 'Free' },
     { name: 'Basic', price: 10, features: ['All Free features', 'Up to 200 members', '3 admins', 'Email support'], billingCycle: 'Monthly' },
     { name: 'Pro', price: 25, features: ['All Basic features', 'Up to 500 members', '5 admins', 'Priority support', 'Analytics'], billingCycle: 'Monthly' },
     { name: 'Enterprise', price: 50, features: ['All Pro features', 'Unlimited members', 'Unlimited admins', 'Dedicated support', 'Custom branding'], billingCycle: 'Monthly' },
   ]);
-  const [paymentDetails, setPaymentDetails] = useState({ method: 'credit_card', cardNumber: '', expiry: '', cvv: '', accountNumber: '', iban: '' });
-  const [paymentStatus, setPaymentStatus] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [cancelReason, setCancelReason] = useState('');
-  const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState<PaymentDetails>({ method: 'credit_card', cardNumber: '', expiry: '', cvv: '', accountNumber: '', iban: '' });
+  const [paymentStatus, setPaymentStatus] = useState<'processing' | 'success' | null>(null);
+  const [progress, setProgress] = useState<number>(0);
+  const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan | null>(null);
+  const [cancelReason, setCancelReason] = useState<string>('');
+  const [isCancelDialogOpen, setIsCancelDialogOpen] = useState<boolean>(false);
 
   // Handle settings save
   const handleSaveSettings = () => {
@@ -64,22 +90,24 @@ const CommunityAdminSettingsPanel = () => {
   const handleAddAdmin = () => {
     if (!newAdmin.name || !newAdmin.email) return;
     setAdmins([...admins, { ...newAdmin, id: admins.length + 1, avatar: `https://randomuser.me/api/portraits/men/${admins.length + 1}.jpg` }]);
-    setNewAdmin({ name: '', email: '', role: 'Co-Admin', permissions: [] });
+    setNewAdmin({ id: 0, name: '', email: '', role: 'Co-Admin', permissions: [], avatar: '' });
   };
 
   // Handle edit permissions
-  const handleEditPermissions = (admin) => {
+  const handleEditPermissions = (admin: Admin) => {
     setEditAdmin(admin);
   };
 
   // Handle save permissions
   const handleSavePermissions = () => {
-    setAdmins(admins.map((a) => (a.id === editAdmin.id ? editAdmin : a)));
-    setEditAdmin(null);
+    if (editAdmin) {
+      setAdmins(admins.map((a) => (a.id === editAdmin.id ? editAdmin : a)));
+      setEditAdmin(null);
+    }
   };
 
   // Handle remove admin
-  const handleRemoveAdmin = (id) => {
+  const handleRemoveAdmin = (id: number) => {
     setAdmins(admins.filter((admin) => admin.id !== id));
   };
 
@@ -105,7 +133,9 @@ const CommunityAdminSettingsPanel = () => {
       if (progressValue >= 100) {
         clearInterval(interval);
         setPaymentStatus('success');
-        setCurrentPlan(selectedPlan.name);
+        if (selectedPlan) {
+          setCurrentPlan(selectedPlan.name);
+        }
         setTimeout(() => {
           setPaymentStatus(null);
           setProgress(0);
@@ -129,7 +159,7 @@ const CommunityAdminSettingsPanel = () => {
   };
 
   // Permissions options
-  const permissionOptions = [
+  const permissionOptions: string[] = [
     'Manage Members',
     'Approve Join Requests',
     'Manage Events',
@@ -166,6 +196,7 @@ const CommunityAdminSettingsPanel = () => {
           </div>
           <Button
             className="mt-4 bg-teal-500 hover:bg-teal-600 text-white w-full inline-flex items-center gap-2 whitespace-nowrap flex-nowrap rounded-md text-sm"
+            data-testid="settings-save-button"
             onClick={handleSaveSettings}
           >
             <Settings className="h-4 w-4" />
@@ -180,9 +211,9 @@ const CommunityAdminSettingsPanel = () => {
             <p className="text-sm text-muted-foreground">Assign or remove co-admins for your community</p>
           </div>
           <div className="p-6 pt-0">
-            <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
-              <div className="p-6 pt-6">
-                <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
+            <div className="rounded-lg">
+              <div className="p-6">
+                <div className="flex flex-col md:flex-row justify-between gap-4 mb-4">
                   <div className="relative flex-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +225,7 @@ const CommunityAdminSettingsPanel = () => {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="absolute left-3 top-3 h-4 w-4 text-gray-400"
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500"
                     >
                       <circle cx="11" cy="11" r="8" />
                       <path d="m21 21-4.3-4.3" />
@@ -208,12 +239,14 @@ const CommunityAdminSettingsPanel = () => {
                   </div>
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button className="bg-teal-500 hover:bg-teal-600 text-white w-full md:w-auto inline-flex items-center gap-2 whitespace-nowrap flex-nowrap rounded-md text-sm">
+                      <Button
+                        className="bg-teal-500 hover:bg-teal-600 text-white mt-4 md:mt-0 w-full md:w-auto inline-flex items-center gap-2 whitespace-nowrap flex-nowrap rounded-md text-sm"
+                      >
                         <CirclePlus className="h-4 w-4" />
                         Add Co-Admin
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="bg-white p-6 rounded-lg max-w-md">
+                    <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
                       <DialogHeader>
                         <DialogTitle>Add Co-Admin</DialogTitle>
                       </DialogHeader>
@@ -227,8 +260,9 @@ const CommunityAdminSettingsPanel = () => {
                           />
                         </div>
                         <div>
-                          <Label>Email</Label>
+                          <Label htmlFor="email-input">Email</Label>
                           <Input
+                            id="email-input"
                             value={newAdmin.email}
                             onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
                             placeholder="Enter email"
@@ -238,7 +272,7 @@ const CommunityAdminSettingsPanel = () => {
                           <Label>Role</Label>
                           <Select
                             value={newAdmin.role}
-                            onValueChange={(value) => setNewAdmin({ ...newAdmin, role: value })}
+                            onValueChange={(value) => setNewAdmin({ ...newAdmin, role: value as 'Super Admin' | 'Co-Admin' })}
                           >
                             <SelectTrigger>
                               <SelectValue placeholder="Select role" />
@@ -251,9 +285,9 @@ const CommunityAdminSettingsPanel = () => {
                         </div>
                         <div>
                           <Label>Permissions</Label>
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-wrap gap-3">
                             {permissionOptions.map((perm) => (
-                              <label key={perm} className="flex items-center gap-1">
+                              <label key={perm" class="flex items-center gap-1">
                                 <input
                                   type="checkbox"
                                   checked={newAdmin.permissions.includes(perm)}
@@ -262,7 +296,7 @@ const CommunityAdminSettingsPanel = () => {
                                       ? [...newAdmin.permissions, perm]
                                       : newAdmin.permissions.filter((p) => p !== perm);
                                     setNewAdmin({ ...newAdmin, permissions: updated });
-                                  }}
+                                  }
                                 />
                                 {perm}
                               </label>
@@ -277,19 +311,19 @@ const CommunityAdminSettingsPanel = () => {
                   </Dialog>
                 </div>
                 <div className="space-y-4">
-                  {filteredAdmins.map((admin, index) => (
+                  {filteredAdmins.map((admin) => (
                     <div key={admin.id} className="border rounded-lg p-4">
                       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
                           <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                            <img className="aspect-square h-full w-full alt="img" src={admin.avatar} />
+                            <img className="aspect-square h-full w-full" alt={`Avatar of ${admin.name}`} src={admin.avatar} />
                           </span>
                           <div>
                             <div className="flex items-center gap-2">
                               <h3 className="font-medium">{admin.name}</h3>
                               <div
                                 className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-white ${
-                                  admin.role === 'Super Admin' ? 'bg-blue-600' : 'bg-gray-500'
+                                  admin.role === 'Super Admin' ? 'bg-blue-600' : 'bg-teal-500'
                                 }`}
                               >
                                 <div className="flex items-center gap-1">
@@ -317,7 +351,7 @@ const CommunityAdminSettingsPanel = () => {
                               </Button>
                             </DialogTrigger>
                             {editAdmin && (
-                              <DialogContent className="bg-white p-6 rounded-lg max-w-md">
+                              <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
                                 <DialogHeader>
                                   <DialogTitle>Edit Permissions for {editAdmin.name}</DialogTitle>
                                 </DialogHeader>
@@ -358,7 +392,7 @@ const CommunityAdminSettingsPanel = () => {
                                 Remove
                               </Button>
                             </DialogTrigger>
-                            <DialogContent className="bg-white p-6 rounded-lg max-w-md">
+                            <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
                               <DialogHeader>
                                 <DialogTitle>Confirm Removal</DialogTitle>
                               </DialogHeader>
@@ -442,7 +476,7 @@ const CommunityAdminSettingsPanel = () => {
                             Select Plan
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="bg-white p-6 rounded-lg max-w-md">
+                        <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
                           <DialogHeader>
                             <DialogTitle>Payment for {selectedPlan?.name} Plan</DialogTitle>
                           </DialogHeader>
@@ -451,7 +485,7 @@ const CommunityAdminSettingsPanel = () => {
                               <Label>Payment Method</Label>
                               <Select
                                 value={paymentDetails.method}
-                                onValueChange={(value) => setPaymentDetails({ ...paymentDetails, method: value })}
+                                onValueChange={(value) => setPaymentDetails({ ...paymentDetails, method: value as 'credit_card' | 'bank_transfer' })}
                               >
                                 <SelectTrigger>
                                   <SelectValue placeholder="Select payment method" />
@@ -528,7 +562,7 @@ const CommunityAdminSettingsPanel = () => {
                           </div>
                           <DialogFooter>
                             <Button
-                              className="bg-teal-500 hover:bg-teal-600 text-white"
+                              className="bg-teal-500 hover:bg-teal-600 text-white inline-flex items-center gap-2 whitespace-nowrap flex-nowrap rounded-md text-sm"
                               onClick={handlePayment}
                               disabled={paymentStatus === 'processing'}
                             >
@@ -550,7 +584,7 @@ const CommunityAdminSettingsPanel = () => {
               ))}
             </div>
             <Dialog open={isCancelDialogOpen} onOpenChange={setIsCancelDialogOpen}>
-              <DialogContent className="bg-white p-6 rounded-lg max-w-md">
+              <DialogContent className="bg-white p-6 rounded-lg max-w-lg">
                 <DialogHeader>
                   <DialogTitle>Unsubscribe from {currentPlan} Plan</DialogTitle>
                 </DialogHeader>
@@ -582,3 +616,4 @@ const CommunityAdminSettingsPanel = () => {
 };
 
 export default CommunityAdminSettingsPanel;
+```
