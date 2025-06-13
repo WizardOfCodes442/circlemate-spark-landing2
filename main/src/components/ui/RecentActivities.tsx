@@ -59,37 +59,37 @@ const RecentActivities = ({
       case "heart":
         return <Heart className={`h-4 w-4 ${colorClass}`} />;
       default:
-        return null;
+        return null; // This should not happen with proper typing
     }
   };
 
   const getIconBgColor = (iconType: Activity["iconType"]) => {
     switch (iconType) {
       case "user":
-        return "bg-orange-100";
+        return "bg-orange-100"; // Matches bg-orange/20
       case "calendar":
-        return "bg-teal-100";
+        return "bg-teal-100"; // Matches bg-teal/20
       case "message":
-        return "bg-blue-100";
+        return "bg-blue-100"; // Matches bg-navy/20
       case "heart":
-        return "bg-orange-100";
+        return "bg-orange-100"; // Matches bg-orange/20
       default:
-        return "bg-gray-100";
+        return "bg-gray-100"; // Fallback, but should be avoided
     }
   };
 
   const getIconColor = (iconType: Activity["iconType"]) => {
     switch (iconType) {
       case "user":
-        return "text-orange-500";
+        return "text-orange-500"; // Matches text-orange
       case "calendar":
-        return "text-teal-500";
+        return "text-teal-500"; // Matches text-teal
       case "message":
-        return "text-blue-600";
+        return "text-blue-600"; // Matches text-navy
       case "heart":
-        return "text-orange-500";
+        return "text-orange-500"; // Matches text-orange
       default:
-        return "text-gray-500";
+        return "text-gray-500"; // Fallback, but should be avoided
     }
   };
 
@@ -190,44 +190,43 @@ const RecentActivities = ({
     </div>
   );
 
-  // Sample data for demonstration
-  const sampleActivities = [
+  // Sample data aligned with desired HTML
+  const sampleActivities: Activity[] = [
     {
       id: 1,
-      user: "Sarah Johnson",
-      action: "requested a session",
+      user: "David Brown",
+      action: "requested to connect with you",
       time: "2 hours ago",
-      iconType: "user" as const,
-      details: "Yoga session for beginners",
-      date: "June 15, 2025 at 3:00 PM",
-      status: "pending" as const
+      iconType: "user",
+      status: "pending",
     },
     {
       id: 2,
-      user: "Mike Chen",
-      action: "scheduled a meeting",
-      time: "4 hours ago",
-      iconType: "calendar" as const,
-      date: "June 16, 2025 at 10:00 AM",
-      status: "confirmed" as const
+      user: "Jessica Williams",
+      action: "scheduled a meetup with you",
+      time: "1 day ago",
+      iconType: "calendar",
+      details: "Coffee at The Brew House",
+      date: "Tomorrow, 10:00 AM",
+      status: "confirmed",
     },
     {
       id: 3,
-      user: "Emma Wilson",
-      action: "sent you a message",
-      time: "6 hours ago",
-      iconType: "message" as const,
-      details: "Thanks for the great session yesterday!"
+      user: "Michael Johnson",
+      action: "left feedback on your meetup",
+      time: "2 days ago",
+      iconType: "message",
+      feedback: "Great conversation, would meet again!",
+      rating: 5,
     },
     {
       id: 4,
-      user: "David Brown",
-      action: "left a review",
-      time: "1 day ago",
-      iconType: "heart" as const,
-      feedback: "Excellent trainer, very professional and knowledgeable!",
-      rating: 5
-    }
+      user: "Sarah Thompson",
+      action: "confirmed your connection request",
+      time: "3 days ago",
+      iconType: "heart",
+      status: "confirmed",
+    },
   ];
 
   const activitiesToShow = activities.length > 0 ? activities : sampleActivities;
@@ -269,7 +268,7 @@ const RecentActivities = ({
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-sm font-semibold">Activity Details</h3>
-              <button 
+              <button
                 onClick={() => setShowDialog(false)}
                 className="text-gray-500 hover:text-gray-700 text-xl"
               >
@@ -305,7 +304,7 @@ const RecentActivities = ({
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 max-h-[80vh]">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-sm font-semibold">All Activities</h3>
-              <button 
+              <button
                 onClick={() => setShowAllDialog(false)}
                 className="text-gray-500 hover:text-gray-700 text-xl"
               >
@@ -322,4 +321,4 @@ const RecentActivities = ({
   );
 };
 
-export default RecentActivities
+export default RecentActivities;
