@@ -37,6 +37,8 @@ const OnboardingLocation = () => {
       state: "",
       country: "",
       postalCode: "",
+      longitude: "",
+      lattitude: ""
     },
   });
 
@@ -69,6 +71,8 @@ const OnboardingLocation = () => {
 
     setLoading(true);
     setError(null);
+    form.setValue("longitude", "");
+    form.setValue("lattitude", "")
 
     try {
       const response = await fetch("https://circlemate-spark-landing-jet.vercel.app/api/v1/onboarding/location", {
@@ -133,6 +137,7 @@ const OnboardingLocation = () => {
           form.setValue("country", countryName);
           form.setValue("city", cityName);
           form.setValue("postalCode", postal);
+          
 
           if (countryName) {
             handleCountryChange(countryName);

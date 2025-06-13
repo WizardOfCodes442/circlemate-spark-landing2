@@ -30,7 +30,7 @@ const DashboardHeader = () => {
               </Button>
             </Link>
             <Link to="/discover">
-              <Button variant="ghost" className="text-muted-foreground text-base">
+              <Button variant="ghost " className="text-muted-foreground text-base">
                 Discover
               </Button>
             </Link>
@@ -44,7 +44,6 @@ const DashboardHeader = () => {
                 Events
               </Button>
             </Link>
-
           </div>
         </div>
 
@@ -65,9 +64,11 @@ const DashboardHeader = () => {
             <Button variant="ghost" size="icon">
               <Search className="h-6 w-6" />
             </Button>
-            <Button variant="ghost" size="icon">
-              <MessageCircle className="h-6 w-6" />
-            </Button>
+            <Link to="/chat">
+              <Button variant="ghost" size="icon">
+                <MessageCircle className="h-6 w-6" />
+              </Button>
+            </Link>
             <Link to="/notification">
               <Button variant="ghost" size="icon">
                 <Bell className="h-6 w-6" />
@@ -113,26 +114,26 @@ const DashboardHeader = () => {
                 Events
               </Button>
             </Link>
-
-
             <div className="flex justify-around pt-4 border-t mt-4">
               <Button variant="ghost" size="icon">
                 <Search className="h-6 w-6" />
               </Button>
-              <Button variant="ghost" size="icon">
-                <MessageCircle className="h-6 w-6" />
-              </Button>
-              <Link to="/notification">
+              <Link to="/chat" onClick={() => setIsMenuOpen(false)}>
+                <Button variant="ghost" size="icon">
+                  <MessageCircle className="h-6 w-6" />
+                </Button>
+              </Link>
+              <Link to="/notification" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="ghost" size="icon">
                   <Bell className="h-6 w-6" />
                 </Button>
               </Link>
-              <Link to="/login">
+              <Link to="/login" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="ghost" size="icon">
                   <LogOut className="h-6 w-6" />
                 </Button>
               </Link>
-              <Link to="/profile">
+              <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="/icon.png" />
                   <AvatarFallback>JD</AvatarFallback>

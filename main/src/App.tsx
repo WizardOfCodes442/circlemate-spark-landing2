@@ -9,6 +9,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
+import ChatListView from "@/components/ChatListView";
+import ChatCommunityMemberView from "@/components/community/ChatCommunityMemberView";
+
 
 import NotFound from "./pages/NotFound";
 
@@ -66,6 +69,8 @@ const App = () => (
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/community-admin" element={<CommunityAdminDashboard />} />
           <Route path="/community" element={<Communities />} />
+                <Route path="/chat" element={<ChatListView />} />
+        <Route path="/chat/:communityId/:memberId" element={<ChatCommunityMemberView />} />
 
           
         

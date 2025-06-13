@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Play, X } from "lucide-react";
+import { ArrowLeft, Play, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -28,14 +28,15 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
   const [showNotification, setShowNotification] = useState<{ message: string } | null>(null);
   const [blockReason, setBlockReason] = useState<string>("");
   const [reportReason, setReportReason] = useState<string>("");
-  const [selectedMedia, setSelectedMedia] = useState<{ type: "image" | "video"; src: string } | null>(null);
+  const [selectedMediaIndex, setSelectedMediaIndex] = useState<number | null>(null);
   const [isBlocked, setIsBlocked] = useState(false);
   const [isReported, setIsReported] = useState(false);
   const [blockDialogOpen, setBlockDialogOpen] = useState(false);
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
 
-  // Placeholder media from the internet
+  // Combine profile image with media gallery
   const mediaGallery = [
+    { type: "image", src: match.image },
     { type: "image", src: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3" },
     { type: "image", src: "https://images.unsplash.com/photo-1531403009284-440f080d1e12" },
     { type: "image", src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085" },
@@ -86,6 +87,18 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
     showNotificationMessage("Report reverted successfully.");
   };
 
+  const handleNextMedia = () => {
+    if (selectedMediaIndex !== null && selectedMediaIndex < mediaGallery.length - 1) {
+      setSelectedMediaIndex(selectedMediaIndex + 1);
+    }
+  };
+
+  const handlePreviousMedia = () => {
+    if (selectedMediaIndex !== null && selectedMediaIndex > 0) {
+      setSelectedMediaIndex(selectedMediaIndex - 1);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* Notification */}
@@ -111,7 +124,7 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
         <DashboardHeader />
       </div>
       <main className="container mx-auto px-4 py-6 flex-grow max-w-7xl flex justify-center">
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-4 md:w-3/4 lg:w-1/2">
+        <div className="bg-white rounded-lg shadow-sm p SIX-6 px-4 mb-4 md:w-3/4 lg:w-1/2">
           <div className="flex items-center justify-between gap-4 mb-6">
             <Button className="bg-transparent text-teal-500 hover:bg-teal-100 rounded-full px-6 py-2 w-auto" onClick={onBack}>
               <ArrowLeft className="w-5 h-5 mr-2" />
@@ -125,16 +138,16 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
                   src={match.image}
                   alt={match.name}
                   className="w-full h-64 object-cover rounded-t-lg mb-4 cursor-pointer"
-                  onClick={() => setSelectedMedia({ type: "image", src: match.image })}
+                  onClick={() => setSelectedMediaIndex(0)}
                 />
               </DialogTrigger>
               {/* Media Gallery */}
               <div className="grid grid-cols-3 gap-2 mb-4">
-                {mediaGallery.map((media, index) => (
+                {mediaGallery.slice(1).map((media, index) => (
                   <DialogTrigger key={index} asChild>
                     <div
                       className="relative w-full h-20 rounded-lg overflow-hidden cursor-pointer"
-                      onClick={() => setSelectedMedia({ type: media.type, src: media.src })}
+                      onClick={() => setSelectedMediaIndex(index + 1)}
                     >
                       <img
                         src={media.type === "video" ? media.thumbnail : media.src}
@@ -150,29 +163,49 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
                   </DialogTrigger>
                 ))}
               </div>
-              <DialogContent className="bg-black p-0 max-w-[90vw] max-h-[90vh] flex items-center justify-center">
-                {selectedMedia?.type === "image" ? (
-                  <img src={selectedMedia.src} alt="Full-size media" className="max-w-full max-h-[90vh] object-contain" />
-                ) : (
-                  <video
-                    src={selectedMedia?.src}
-                    controls
-                    className="max-w-full max-h-[90vh] object-contain"
-                  />
-                )}
-                <button
-                  className="absolute top-4 right-4 text-white hover:text-gray-300"
-                  onClick={() => setSelectedMedia(null)}
-                >
-                  <X className="h-6 w-6" />
-                </button>
-              </DialogContent>
+              {selectedMediaIndex !== null && (
+                <DialogContent className="bg-black p-0 max-w-[90vw] max-h-[90vh] flex items-center justify-center relative">
+                  {mediaGallery[selectedMediaIndex].type === "image" ? (
+                    <img
+                      src={mediaGallery[selectedMediaIndex].src}
+                      alt="Full-size media"
+                      className="max-w-full max-h-[90vh] object-contain"
+                    />
+                  ) : (
+                    <video
+                      src={mediaGallery[selectedMediaIndex].src}
+                      controls
+                      className="max-w-full max-h-[90vh] object-contain"
+                    />
+                  )}
+                  <button
+                    className="absolute top-4 right-4 text-white hover:text-gray-300"
+                    onClick={() => setSelectedMediaIndex(null)}
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                  <button
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300"
+                    onClick={handlePreviousMedia}
+                    disabled={selectedMediaIndex === 0}
+                  >
+                    <ChevronLeft className="h-8 w-8" />
+                  </button>
+                  <button
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300"
+                    onClick={handleNextMedia}
+                    disabled={selectedMediaIndex === mediaGallery.length - 1}
+                  >
+                    <ChevronRight className="h-8 w-8" />
+                  </button>
+                </DialogContent>
+              )}
             </Dialog>
 
             <div className="flex items-center gap-2 mb-2">
               <h1 className="text-2xl font-bold">{match.name}</h1>
               {isBlocked && (
-                <span className="text-white bg-red-500 text-sm font-normal px-2 py-1 rounded-full flex items-center">
+                <span className="text-white bg-red-500 text-sm font-normal px-2 py-1 rounded-fullReconcilable items-center">
                   Blocked
                   <Button
                     variant="ghost"
@@ -318,7 +351,7 @@ const ProfileView = ({ match, onBack }: ProfileViewProps) => {
               <p className="text-gray-600">{match.personalityType} (ENTJ)</p>
             </div>
             <div className="mt-6">
-              <h2 className="text-xl font-semibold mb-2">Interests</h2>
+              <h2 class-className="text-xl font-semibold mb-2">Interests</h2>
               <div className="flex flex-wrap gap-2">
                 {match.interests.map((interest, index) => (
                   <span key={index} className="text-xs bg-teal-100 text-teal-500 px-2 py-1 rounded-full">
