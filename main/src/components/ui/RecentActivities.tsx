@@ -28,13 +28,6 @@ interface RecentActivitiesProps {
   className?: string;
 }
 
-const iconMap: Record<Activity["iconType"], (props: { className: string }) => JSX.Element> = {
-  user: User,
-  calendar: Calendar,
-  message: MessageCircle,
-  heart: Heart,
-};
-
 const RecentActivities = ({
   activities = [],
   onViewAll = () => {},
@@ -95,39 +88,57 @@ const RecentActivities = ({
     setAcceptedActivities((prev) => prev.filter((activityId) => activityId !== id));
   };
 
-  const getIcon = (iconType: Activity["iconType"]) => {
-    const colorClass = getIconColor(iconType);
-    const IconComponent = iconMap[iconType];
-    return <IconComponent className={`h-4 w-4 ${colorClass}`} />;
+const getIcon = (iconType: Activity["iconType"]) => {
+  const colorClass = getIconColor(iconType);
+  
+  // Log the iconType for debugging
+  console.log(`getIcon called with iconType: ${iconType}`);
+
+  // Map iconType to corresponding Lucide icon
+  const iconMap: Record<Activity["iconType"], JSX.Element> = {
+    user: <User className={`h-4 w-4 ${colorClass}`} />,
+    calendar: <Calendar className={`h-4 w-4 ${colorClass}`} />,
+    message: <MessageCircle className={`h-4 w-4 ${colorClass}`} />,
+    heart: <Heart className={`h-4 w-4 ${colorClass}`} />,
   };
 
+  // Return the matching icon or default to User icon with a warning
+  const icon = iconMap[iconType];
+  if (!icon) {
+    console.warn(`Invalid iconType: ${iconType}, defaulting to User icon`);
+    return <User className={`h-4 w-4 text-gray-500`} />;
+  }
+
+  return icon;
+};
+
   const getIconBgColor = (iconType: Activity["iconType"]) => {
-    switch (iconType) {
-      case "user":
-        return "bg-orange-100";
-      case "calendar":
-        return "bg-teal-100";
-      case "message":
-        return "bg-blue-100";
-      case "heart":
-        return "bg-pink-100";
-      default:
-        return "bg-gray-100";
+    if (iconType === "user") {
+      return "bg-orange-100";
+    } else if (iconType === "calendar") {
+      return "bg-teal-100";
+    } else if (iconType === "message") {
+      return "bg-blue-100";
+    } else if (iconType === "heart") {
+      return "bg-pink-100";
+    } else {
+      console.warn(`Invalid iconType for bg color: ${iconType}`);
+      return "bg-gray-100";
     }
   };
 
   const getIconColor = (iconType: Activity["iconType"]) => {
-    switch (iconType) {
-      case "user":
-        return "text-orange-500";
-      case "calendar":
-        return "text-teal-500";
-      case "message":
-        return "text-blue-600";
-      case "heart":
-        return "text-pink-500";
-      default:
-        return "text-gray-500";
+    if (iconType === "user") {
+      return "text-orange-500";
+    } else if (iconType === "calendar") {
+      return "text-teal-500";
+    } else if (iconType === "message") {
+      return "text-blue-600";
+    } else if (iconType === "heart") {
+      return "text-pink-500";
+    } else {
+      console.warn(`Invalid iconType for color: ${iconType}`);
+      return "text-gray-500";
     }
   };
 
