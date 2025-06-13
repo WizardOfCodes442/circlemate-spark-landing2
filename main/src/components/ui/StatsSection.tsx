@@ -18,7 +18,7 @@ const StatsSection = () => {
           <div>
             <p className="text-gray-500 text-sm font-bold">New Matches</p>
             <p className="text-2xl font-bold text-navy-700">
-              2 <span className="text-sm text-navy-700">+2 this week</span>
+              2 <span className="text-sm text-gray-500">+2 this week</span>
             </p>
           </div>
         </Card>
@@ -31,7 +31,7 @@ const StatsSection = () => {
           <div>
             <p className="text-gray-500 text-sm font-bold">Meetups Planned</p>
             <p className="text-2xl font-bold text-navy-700">
-              1 <span className="text-sm text-navy-700">1 upcoming</span>
+              1 <span className="text-sm text-gray-500">1 upcoming</span>
             </p>
           </div>
         </Card>
@@ -44,7 +44,7 @@ const StatsSection = () => {
           <div>
             <p className="text-gray-500 text-sm font-bold">Profile Views</p>
             <p className="text-2xl font-bold text-navy-700">
-              15 <span className="text-sm text-navy-700">+6% from last week</span>
+              15 <span className="text-sm text-gray-500">+6% from last week</span>
             </p>
           </div>
         </Card>
@@ -57,7 +57,7 @@ const StatsSection = () => {
           <div>
             <p className="text-gray-500 text-sm font-bold">Satisfaction Rate</p>
             <p className="text-2xl font-bold text-navy-700">
-              95% <span className="text-sm text-navy-700">Based on feedback</span>
+              95% <span className="text-sm text-gray-500">Based on feedback</span>
             </p>
           </div>
         </Card>
