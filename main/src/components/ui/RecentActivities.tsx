@@ -40,7 +40,15 @@ const RecentActivities = ({
   const [showAllDialog, setShowAllDialog] = useState(false);
 
   // Debugging: Log activities to verify iconType values
-  console.log("Activities to show:", activities.length > 0 ? activities : sampleActivities);
+  const activitiesToShow = activities.length > 0 ? activities : sampleActivities;
+  console.log(
+    "Activities to show:",
+    activitiesToShow.map((a) => ({
+      id: a.id,
+      user: a.user,
+      iconType: a.iconType,
+    }))
+  );
 
   const handleAccept = (id: number) => {
     setAcceptedActivities((prev) => [...prev, id]);
@@ -52,6 +60,7 @@ const RecentActivities = ({
 
   const getIcon = (iconType: Activity["iconType"]) => {
     const colorClass = getIconColor(iconType);
+    console.log(`Processing iconType: ${iconType}`); // Debug iconType
     switch (iconType) {
       case "user":
         return <User className={`h-4 w-4 ${colorClass}`} />;
@@ -62,15 +71,15 @@ const RecentActivities = ({
       case "heart":
         return <Heart className={`h-4 w-4 ${colorClass}`} />;
       default:
-        console.warn(`Invalid iconType: ${iconType}`);
-        return <User className={`h-4 w-4 text-gray-500`} />; // Fallback icon
+        console.warn(`Invalid iconType: ${iconType}, defaulting to User icon`);
+        return <User className={`h-4 w-4 text-gray-500`} />;
     }
   };
 
   const getIconBgColor = (iconType: Activity["iconType"]) => {
     switch (iconType) {
       case "user":
-        return "bg-orange-100/20"; // Adjusted to support opacity
+        return "bg-orange-100/20";
       case "calendar":
         return "bg-teal-100/20";
       case "message":
@@ -234,8 +243,6 @@ const RecentActivities = ({
       status: "confirmed",
     },
   ];
-
-  const activitiesToShow = activities.length > 0 ? activities : sampleActivities;
 
   return (
     <div className="relative">
