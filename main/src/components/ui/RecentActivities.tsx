@@ -39,6 +39,9 @@ const RecentActivities = ({
   const [showDialog, setShowDialog] = useState(false);
   const [showAllDialog, setShowAllDialog] = useState(false);
 
+  // Debugging: Log activities to verify iconType values
+  console.log("Activities to show:", activities.length > 0 ? activities : sampleActivities);
+
   const handleAccept = (id: number) => {
     setAcceptedActivities((prev) => [...prev, id]);
   };
@@ -59,37 +62,40 @@ const RecentActivities = ({
       case "heart":
         return <Heart className={`h-4 w-4 ${colorClass}`} />;
       default:
-        return null; // This should not happen with proper typing
+        console.warn(`Invalid iconType: ${iconType}`);
+        return <User className={`h-4 w-4 text-gray-500`} />; // Fallback icon
     }
   };
 
   const getIconBgColor = (iconType: Activity["iconType"]) => {
     switch (iconType) {
       case "user":
-        return "bg-orange-100"; // Matches bg-orange/20
+        return "bg-orange-100/20"; // Adjusted to support opacity
       case "calendar":
-        return "bg-teal-100"; // Matches bg-teal/20
+        return "bg-teal-100/20";
       case "message":
-        return "bg-blue-100"; // Matches bg-navy/20
+        return "bg-blue-100/20";
       case "heart":
-        return "bg-orange-100"; // Matches bg-orange/20
+        return "bg-orange-100/20";
       default:
-        return "bg-gray-100"; // Fallback, but should be avoided
+        console.warn(`Invalid iconType for bg color: ${iconType}`);
+        return "bg-gray-100";
     }
   };
 
   const getIconColor = (iconType: Activity["iconType"]) => {
     switch (iconType) {
       case "user":
-        return "text-orange-500"; // Matches text-orange
+        return "text-orange-500";
       case "calendar":
-        return "text-teal-500"; // Matches text-teal
+        return "text-teal-500";
       case "message":
-        return "text-blue-600"; // Matches text-navy
+        return "text-blue-600";
       case "heart":
-        return "text-orange-500"; // Matches text-orange
+        return "text-orange-500";
       default:
-        return "text-gray-500"; // Fallback, but should be avoided
+        console.warn(`Invalid iconType for color: ${iconType}`);
+        return "text-gray-500";
     }
   };
 
@@ -259,7 +265,9 @@ const RecentActivities = ({
             )}
           </button>
         </div>
-        <div className="space-y-4">{activitiesToShow.map((activity) => renderActivity(activity))}</div>
+        <div className="space-y-4">
+          {activitiesToShow.map((activity) => renderActivity(activity))}
+        </div>
       </div>
 
       {/* Activity Details Dialog */}
