@@ -1,6 +1,21 @@
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ArrowLeft } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  User,
+  Calendar,
+  MessageCircle,
+  Heart,
+  ArrowRight,
+  ArrowLeft,
+} from "lucide-react";
 
 interface Activity {
   id: number;
@@ -12,7 +27,7 @@ interface Activity {
   date?: string;
   feedback?: string;
   rating?: number;
-  status?: "pending" | "confirmed";
+  status?: "pending" | "confirmed" | "accepted";
 }
 
 interface RecentActivitiesProps {
@@ -28,80 +43,28 @@ const RecentActivities = ({
   showAll = false,
   className,
 }: RecentActivitiesProps) => {
-  const getIcon = (iconType: Activity["iconType"], colorClass: string) => {
+  const [acceptedActivities, setAcceptedActivities] = useState<number[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
+
+  const handleAccept = (id: number) => {
+    setAcceptedActivities((prev) => [...prev, id]);
+  };
+
+  const handleRevert = (id: number) => {
+    setAcceptedActivities((prev) => prev.filter((activityId) => activityId !== id));
+  };
+
+  const getIcon = (iconType: Activity["iconType"]) => {
+    const colorClass = getIconColor(iconType);
     switch (iconType) {
       case "user":
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={`h-4 w-4 ${colorClass}`}
-          >
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-        );
+        return <User className={`h-4 w-4 ${colorClass}`} />;
       case "calendar":
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={`h-4 w-4 ${colorClass}`}
-          >
-            <path d="M8 2v4"></path>
-            <path d="M16 2v4"></path>
-            <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-            <path d="M3 10h18"></path>
-          </svg>
-        );
+        return <Calendar className={`h-4 w-4 ${colorClass}`} />;
       case "message":
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={`h-4 w-4 ${colorClass}`}
-          >
-            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
-          </svg>
-        );
+        return <MessageCircle className={`h-4 w-4 ${colorClass}`} />;
       case "heart":
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={`h-4 w-4 ${colorClass}`}
-          >
-            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-          </svg>
-        );
+        return <Heart className={`h-4 w-4 ${colorClass}`} />;
       default:
         return null;
     }
@@ -121,121 +84,184 @@ const RecentActivities = ({
     }
   };
 
+  const getIconColor = (iconType: Activity["iconType"]) => {
+    switch (iconType) {
+      case "user":
+      case "heart":
+        return "text-orange-500";
+      case "calendar":
+        return "text-teal-500";
+      case "message":
+        return "text-navy-500";
+      default:
+        return "text-gray-500";
+    }
+  };
+
   const renderStars = (rating: number) => {
     return Array(5)
       .fill(0)
       .map((_, i) => (
         <svg
           key={i}
-          className="w-4 h-4 text-yellow-500"
+          className="w-3 h-3 text-yellow-500"
           fill="currentColor"
           viewBox="0 0 20 20"
         >
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.05-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
         </svg>
       ));
   };
 
+  const renderActivity = (activity: Activity) => (
+    <div key={activity.id} className="flex gap-2">
+      <div
+        className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${getIconBgColor(
+          activity.iconType
+        )}`}
+      >
+        {getIcon(activity.iconType)}
+      </div>
+      <div className="flex-1">
+        <div className="flex justify-between items-center">
+          <div>
+            <span className="font-medium text-xs text-navy-800">
+              {activity.user}
+            </span>
+            <span className="ml-1 text-xs text-gray-500">{activity.action}</span>
+          </div>
+          <span className="text-xs text-gray-400">{activity.time}</span>
+        </div>
+        {(activity.details || activity.date || activity.feedback) && (
+          <div className="mt-1 text-xs text-gray-600">
+            {activity.details && <p>{activity.details}</p>}
+            {activity.date && (
+              <p className="flex items-center gap-1 mt-0.5">
+                <Calendar className="h-3 w-3 text-gray-600" />
+                {activity.date}
+              </p>
+            )}
+            {activity.feedback && <p>{activity.feedback}</p>}
+          </div>
+        )}
+        {activity.rating && (
+          <div className="flex mt-0.5">{renderStars(activity.rating)}</div>
+        )}
+        <div className="mt-2 flex gap-2">
+          {activity.status === "pending" &&
+            !acceptedActivities.includes(activity.id) && (
+              <>
+                <Button
+                  className="bg-blue-500 hover:bg-blue-600 text-white text-xs h-8 rounded-md px-3"
+                  onClick={() => handleAccept(activity.id)}
+                >
+                  Accept
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border border-gray-300 bg-white hover:bg-gray-50 text-gray-600 text-xs h-8 rounded-md px-3"
+                >
+                  Decline
+                </Button>
+              </>
+            )}
+          {acceptedActivities.includes(activity.id) && (
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-green-600 font-medium">
+                Accepted
+              </span>
+              <Button
+                variant="link"
+                className="text-blue-500 text-xs h-8 px-1"
+                onClick={() => handleRevert(activity.id)}
+              >
+                Revert
+              </Button>
+            </div>
+          )}
+          {(activity.date ||
+            activity.feedback ||
+            activity.status === "confirmed") && (
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="border border-gray-300 bg-white hover:bg-gray-50 text-gray-600 text-xs h-8 rounded-md px-3"
+                  onClick={() => setSelectedActivity(activity)}
+                >
+                  View Details
+                </Button>
+              </DialogTrigger>
+              {selectedActivity?.id === activity.id && (
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle className="text-sm">Activity Details</DialogTitle>
+                  </DialogHeader>
+                  <div className="mt-2 text-xs">
+                    <p>
+                      <strong>{activity.user}</strong> {activity.action}
+                    </p>
+                    <p className="text-gray-400">{activity.time}</p>
+                    {activity.details && <p className="mt-1">{activity.details}</p>}
+                    {activity.date && (
+                      <p className="mt-1 flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {activity.date}
+                      </p>
+                    )}
+                    {activity.feedback && (
+                      <p className="mt-1">{activity.feedback}</p>
+                    )}
+                    {activity.rating && (
+                      <div className="flex mt-1">{renderStars(activity.rating)}</div>
+                    )}
+                  </div>
+                </DialogContent>
+              )}
+            </Dialog>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <Card className={`bg-white rounded-xl shadow-md p-6 ${className}`}>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-navy-800">
+    <Card className={`bg-white rounded-xl shadow-md p-4 ${className}`}>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-bold text-navy-800">
           {showAll ? "All Activities" : "Recent Activity"}
         </h2>
-        <Button
-          variant="link"
-          className="text-teal-500 text-sm"
-          onClick={onViewAll}
-        >
-          {showAll ? (
-            <>
-              <ArrowLeft className="h-4 w-4 mr-1" /> Back
-            </>
-          ) : (
-            <>
-              View All <ArrowRight className="h-4 w-4 ml-1" />
-            </>
-          )}
-        </Button>
-      </div>
-      <div className="space-y-6">
-        {activities.map((activity) => (
-          <div key={activity.id} className="flex gap-4">
-            <div
-              className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${getIconBgColor(activity.iconType)}`}
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              variant="link"
+              className="text-blue-500 text-xs"
+              onClick={onViewAll}
             >
-              {getIcon(activity.iconType, "")}
-            </div>
-            <div className="flex-1">
-              <div className="flex justify-between">
-                <div>
-                  <span className="font-medium text-navy-800">
-                    {activity.user}
-                  </span>
-                  <span className="ml-1">{activity.action}</span>
-                </div>
-                <span className="text-sm text-gray-500">{activity.time}</span>
-              </div>
-              {(activity.details || activity.date || activity.feedback) && (
-                <div className="mt-1 text-sm text-gray-600">
-                  {activity.details && <p>{activity.details}</p>}
-                  {activity.date && (
-                    <p className="flex items-center gap-1 mt-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-3.5 w-3.5"
-                      >
-                        <path d="M8 2v4"></path>
-                        <path d="M16 2v4"></path>
-                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                        <path d="M3 10h18"></path>
-                      </svg>
-                      {activity.date}
-                    </p>
-                  )}
-                  {activity.feedback && <p>{activity.feedback}</p>}
-                </div>
+              {showAll ? (
+                <>
+                  <ArrowLeft className="h-3 w-3 mr-1" /> Back
+                </>
+              ) : (
+                <>
+                  View All <ArrowRight className="h-3 w-3 ml-1" />
+                </>
               )}
-              {activity.rating && (
-                <div className="flex mt-1">{renderStars(activity.rating)}</div>
-              )}
-              <div className="mt-3 flex gap-2">
-                {activity.status === "pending" && (
-                  <>
-                    <Button
-                      className="bg-teal-500 hover:bg-teal-600 text-white text-sm h-9 rounded-md px-3"
-                    >
-                      Accept
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="border border-gray-300 bg-white hover:bg-gray-50 text-sm h-9 rounded-md px-3"
-                    >
-                      Decline
-                    </Button>
-                  </>
-                )}
-                {(activity.date || activity.feedback || activity.status === "confirmed") && (
-                  <Button
-                    variant="outline"
-                    className="border border-gray-300 bg-white hover:bg-gray-50 text-sm h-9 rounded-md px-3"
-                  >
-                    View Details
-                  </Button>
-                )}
+            </Button>
+          </DialogTrigger>
+          {!showAll && (
+            <DialogContent className="sm:max-w-[425px] max-h-[80vh]">
+              <DialogHeader>
+                <DialogTitle className="text-sm">All Activities</DialogTitle>
+              </DialogHeader>
+              <div className="mt-2 space-y-4 overflow-y-auto max-h-[60vh] pr-2">
+                {activities.map((activity) => renderActivity(activity))}
               </div>
-            </div>
-          </div>
-        ))}
+            </DialogContent>
+          )}
+        </Dialog>
       </div>
+      <div className="space-y-4">{activities.map((activity) => renderActivity(activity))}</div>
     </Card>
   );
 };
