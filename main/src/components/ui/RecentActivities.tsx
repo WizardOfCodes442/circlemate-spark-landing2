@@ -39,16 +39,46 @@ const RecentActivities = ({
   const [showDialog, setShowDialog] = useState(false);
   const [showAllDialog, setShowAllDialog] = useState(false);
 
-  // Debugging: Log activities to verify iconType values
+  // Sample data aligned with desired HTML
+  const sampleActivities: Activity[] = [
+    {
+      id: 1,
+      user: "David Brown",
+      action: "requested to connect with you",
+      time: "2 hours ago",
+      iconType: "user",
+      status: "pending",
+    },
+    {
+      id: 2,
+      user: "Jessica Williams",
+      action: "scheduled a meetup with you",
+      time: "1 day ago",
+      iconType: "calendar",
+      details: "Coffee at The Brew House",
+      date: "Tomorrow, 10:00 AM",
+      status: "confirmed",
+    },
+    {
+      id: 3,
+      user: "Michael Johnson",
+      action: "left feedback on your meetup",
+      time: "2 days ago",
+      iconType: "message",
+      feedback: "Great conversation, would meet again!",
+      rating: 5,
+    },
+    {
+      id: 4,
+      user: "Sarah Thompson",
+      action: "confirmed your connection request",
+      time: "3 days ago",
+      iconType: "heart",
+      status: "confirmed",
+    },
+  ];
+
   const activitiesToShow = activities.length > 0 ? activities : sampleActivities;
-  console.log(
-    "Activities to show:",
-    activitiesToShow.map((a) => ({
-      id: a.id,
-      user: a.user,
-      iconType: a.iconType,
-    }))
-  );
 
   const handleAccept = (id: number) => {
     setAcceptedActivities((prev) => [...prev, id]);
@@ -60,51 +90,49 @@ const RecentActivities = ({
 
   const getIcon = (iconType: Activity["iconType"]) => {
     const colorClass = getIconColor(iconType);
-    console.log(`Processing iconType: ${iconType}`); // Debug iconType
-    switch (iconType) {
-      case "user":
-        return <User className={`h-4 w-4 ${colorClass}`} />;
-      case "calendar":
-        return <Calendar className={`h-4 w-4 ${colorClass}`} />;
-      case "message":
-        return <MessageCircle className={`h-4 w-4 ${colorClass}`} />;
-      case "heart":
-        return <Heart className={`h-4 w-4 ${colorClass}`} />;
-      default:
-        console.warn(`Invalid iconType: ${iconType}, defaulting to User icon`);
-        return <User className={`h-4 w-4 text-gray-500`} />;
+    
+    // Using explicit string comparison instead of switch statement
+    if (iconType === "user") {
+      return <User className={`h-4 w-4 ${colorClass}`} />;
+    } else if (iconType === "calendar") {
+      return <Calendar className={`h-4 w-4 ${colorClass}`} />;
+    } else if (iconType === "message") {
+      return <MessageCircle className={`h-4 w-4 ${colorClass}`} />;
+    } else if (iconType === "heart") {
+      return <Heart className={`h-4 w-4 ${colorClass}`} />;
+    } else {
+      console.warn(`Invalid iconType: ${iconType}, defaulting to User icon`);
+      return <User className={`h-4 w-4 text-gray-500`} />;
     }
   };
 
   const getIconBgColor = (iconType: Activity["iconType"]) => {
-    switch (iconType) {
-      case "user":
-        return "bg-orange-100/20";
-      case "calendar":
-        return "bg-teal-100/20";
-      case "message":
-        return "bg-blue-100/20";
-      case "heart":
-        return "bg-orange-100/20";
-      default:
-        console.warn(`Invalid iconType for bg color: ${iconType}`);
-        return "bg-gray-100";
+    if (iconType === "user") {
+      return "bg-orange-100";
+    } else if (iconType === "calendar") {
+      return "bg-teal-100";
+    } else if (iconType === "message") {
+      return "bg-blue-100";
+    } else if (iconType === "heart") {
+      return "bg-pink-100";
+    } else {
+      console.warn(`Invalid iconType for bg color: ${iconType}`);
+      return "bg-gray-100";
     }
   };
 
   const getIconColor = (iconType: Activity["iconType"]) => {
-    switch (iconType) {
-      case "user":
-        return "text-orange-500";
-      case "calendar":
-        return "text-teal-500";
-      case "message":
-        return "text-blue-600";
-      case "heart":
-        return "text-orange-500";
-      default:
-        console.warn(`Invalid iconType for color: ${iconType}`);
-        return "text-gray-500";
+    if (iconType === "user") {
+      return "text-orange-500";
+    } else if (iconType === "calendar") {
+      return "text-teal-500";
+    } else if (iconType === "message") {
+      return "text-blue-600";
+    } else if (iconType === "heart") {
+      return "text-pink-500";
+    } else {
+      console.warn(`Invalid iconType for color: ${iconType}`);
+      return "text-gray-500";
     }
   };
 
@@ -204,45 +232,6 @@ const RecentActivities = ({
       </div>
     </div>
   );
-
-  // Sample data aligned with desired HTML
-  const sampleActivities: Activity[] = [
-    {
-      id: 1,
-      user: "David Brown",
-      action: "requested to connect with you",
-      time: "2 hours ago",
-      iconType: "user",
-      status: "pending",
-    },
-    {
-      id: 2,
-      user: "Jessica Williams",
-      action: "scheduled a meetup with you",
-      time: "1 day ago",
-      iconType: "calendar",
-      details: "Coffee at The Brew House",
-      date: "Tomorrow, 10:00 AM",
-      status: "confirmed",
-    },
-    {
-      id: 3,
-      user: "Michael Johnson",
-      action: "left feedback on your meetup",
-      time: "2 days ago",
-      iconType: "message",
-      feedback: "Great conversation, would meet again!",
-      rating: 5,
-    },
-    {
-      id: 4,
-      user: "Sarah Thompson",
-      action: "confirmed your connection request",
-      time: "3 days ago",
-      iconType: "heart",
-      status: "confirmed",
-    },
-  ];
 
   return (
     <div className="relative">
