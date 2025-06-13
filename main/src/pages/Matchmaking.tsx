@@ -79,7 +79,7 @@ const mockMatches = [
       languages: "English, Spanish",
     },
     communities: ["Tech Enthusiasts", "Photography Club"],
-    compatibility: 65,
+    compatibility: 85,
     sharedInterests: ["Technology", "Photography", "Travel"],
     sharedCommunities: ["Tech Enthusiasts"],
   },
@@ -112,7 +112,7 @@ const mockMatches = [
       languages: "English, Mandarin",
     },
     communities: ["Coffee Lovers", "Book Club", "Gaming Community"],
-    compatibility: 45,
+    compatibility: 78,
     sharedInterests: ["Coffee", "Reading", "Technology"],
     sharedCommunities: ["Coffee Lovers", "Book Club"],
   },
@@ -196,8 +196,8 @@ const Matchmaking = () => {
 
   const getCompatibilityBadge = (score: number) => {
     if (score >= 80) return "High Match";
-    if (score >= 60) return "Average Match";
-    return "Poor Match";
+    if (score >= 60) return "Good Match";
+    return "Low Match";
   };
 
   if (selectedMatch) {
@@ -315,7 +315,7 @@ const Matchmaking = () => {
                         </div>
                       </div>
                     </CardHeader>
-                    <CardContent className="pt-4 space-y-4">
+                    <CardContent className="pt- Deterministic4 space-y-4">
                       <div className="text-center">
                         <div
                           className={`text-3xl font-bold ${getCompatibilityColor(
@@ -325,13 +325,7 @@ const Matchmaking = () => {
                           {match.compatibility}%
                         </div>
                         <Badge
-                          className={
-                            match.compatibility >= 80
-                              ? "bg-green-600 text-white"
-                              : match.compatibility >= 60
-                              ? "bg-yellow-400 text-gray-800"
-                              : "bg-red-500 text-white"
-                          }
+                          className="text-white"
                           variant={
                             match.compatibility >= 80
                               ? "default"
