@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { UserCheck, ChevronUp, X } from "lucide-react";
-import * as Dialog from "@/components/ui/dialog";
+import { Dialog, DialogTrigger, DialogPortal, DialogOverlay, DialogContent, DialogTitle, DialogClose } from "@/components/ui/dialog";
 import { useState } from "react";
 
 const StatsSection = () => {
@@ -65,27 +65,27 @@ const StatsSection = () => {
   return (
     <>
       <div className="flex justify-end mb-4">
-        <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <Dialog.Trigger asChild>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
             <Button variant="ghost" className="bg-teal-500 text-white rounded-full px-4 py-1 text-sm">
               <UserCheck className="h-4 w-4 mr-2" /> View Accepted Connections
             </Button>
-          </Dialog.Trigger>
-          <Dialog.Portal>
-            <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-            <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-6 max-w-4xl w-full max-h-[80vh] overflow-y-auto">
+          </DialogTrigger>
+          <DialogPortal>
+            <DialogOverlay className="fixed inset-0 bg-black/50" />
+            <DialogContent className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-6 max-w-4xl w-full max-h-[80vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-4">
-                <Dialog.Title className="text-lg font-bold">Accepted Connections Stats</Dialog.Title>
-                <Dialog.Close asChild>
+                <DialogTitle className="text-lg font-bold">Accepted Connections Stats</DialogTitle>
+                <DialogClose asChild>
                   <Button variant="ghost" className="p-1">
                     <X className="h-5 w-5" />
                   </Button>
-                </Dialog.Close>
+                </DialogClose>
               </div>
               {statsCards}
-            </Dialog.Content>
-          </Dialog.Portal>
-        </Dialog.Root>
+            </DialogContent>
+          </DialogPortal>
+        </Dialog>
       </div>
       {statsCards}
     </>
