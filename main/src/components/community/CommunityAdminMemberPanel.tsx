@@ -69,32 +69,35 @@ const CommunityAdminMemberPanel = () => {
           </div>
         </div>
         <Tabs value={memberTab} onValueChange={setMemberTab} className="w-full">
-          <TabsList className="flex h-10 items-center rounded-md p-1 text-muted-foreground mb-4 bg-muted overflow-x-auto whitespace-nowrap">
-            <TabsTrigger
-              value="active"
-              className="flex items-center gap-2 justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm min-w-[120px]"
-            >
-              <UserCheck className="h-4 w-4" />
-              <span>Active Members</span>
-              <Badge className="ml-1 bg-teal text-white">{activeMembers.length}</Badge>
-            </TabsTrigger>
-            <TabsTrigger
-              value="pending"
-              className="flex items-center gap-2 justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm min-w-[120px]"
-            >
-              <UserPlus className="h-4 w-4" />
-              <span>Pending Requests</span>
-              <Badge className="ml-1 bg-amber-500 text-white">{pendingRequests.length}</Badge>
-            </TabsTrigger>
-            <TabsTrigger
-              value="blacklisted"
-              className="flex items-center gap-2 justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm min-w-[120px]"
-            >
-              <UserX className="h-4 w-4" />
-              <span>Blacklisted</span>
-              <Badge className="ml-1 bg-red-500 text-white">{blacklisted.length}</Badge>
-            </TabsTrigger>
-          </TabsList>
+<TabsList className="flex h-10 items-center rounded-md p-1 text-muted-foreground mb-4 bg-muted overflow-x-auto whitespace-nowrap">
+  <TabsTrigger
+    value="active"
+    className="flex items-center gap-2 justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm min-w-[100px] sm:min-w-[60px] sm:text-xs max-[400px]:w-[50px] max-[400px]:justify-center"
+    data-tooltip="Active Members"
+  >
+    <UserCheck className="h-4 w-4" />
+    <span className="max-[400px]:hidden">Active</span>
+    <Badge className="ml-1 bg-teal text-white max-[400px]:absolute max-[400px]:-top-1 max-[400px]:-right-1">{activeMembers.length}</Badge>
+  </TabsTrigger>
+  <TabsTrigger
+    value="pending"
+    className="flex items-center gap-2 justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm min-w-[100px] sm:min-w-[60px] sm:text-xs max-[400px]:w-[50px] max-[400px]:justify-center"
+    data-tooltip="Pending Requests"
+  >
+    <UserPlus className="h-4 w-4" />
+    <span className="max-[400px]:hidden">Pending</span>
+    <Badge className="ml-1 bg-amber-500 text-white max-[400px]:absolute max-[400px]:-top-1 max-[400px]:-right-1">{pendingRequests.length}</Badge>
+  </TabsTrigger>
+  <TabsTrigger
+    value="blacklisted"
+    className="flex items-center gap-2 justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm min-w-[100px] sm:min-w-[60px] sm:text-xs max-[400px]:w-[50px] max-[400px]:justify-center"
+    data-tooltip="Blacklisted"
+  >
+    <UserX className="h-4 w-4" />
+    <span className="max-[400px]:hidden">Blocked</span>
+    <Badge className="ml-1 bg-red-500 text-white max-[400px]:absolute max-[400px]:-top-1 max-[400px]:-right-1">{blacklisted.length}</Badge>
+  </TabsTrigger>
+</TabsList>
           <TabsContent value="active" className="mt-2 border rounded-md p-4">
             <div className="grid gap-4">
               {activeMembers.map((member) => (

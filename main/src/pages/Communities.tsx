@@ -248,15 +248,25 @@ const Communities = () => {
           </div>
           <div className="bg-white rounded-xl shadow-md p-6 mb-8">
             <div className="flex flex-col md:flex-row gap-4 mb-6">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                <Input
-                  className="pl-10 w-full border border-gray-300 rounded-lg py-2.5 px-3 focus:outline-none focus:ring-1 focus:ring-teal"
-                  placeholder="Search for communities by name or description"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
+<div className="relative flex w-full max-w-md">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+  >
+    <circle cx="11" cy="11" r="8" />
+    <path d="m21 21-4.3-4.3" />
+  </svg>
+  <input
+    className="w-full rounded-md border border-gray-300 bg-white py-2.5 pl-10 pr-3 text-base placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-teal-500"
+    placeholder="Search for communities by name or description"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  />
+</div>
               <div className="flex flex-wrap gap-2">
                 {categories.map((category) => (
                   <Button

@@ -88,23 +88,29 @@ const RecentActivities = ({
     setAcceptedActivities((prev) => prev.filter((activityId) => activityId !== id));
   };
 
-  const getIcon = (iconType: Activity["iconType"]) => {
-    const colorClass = getIconColor(iconType);
-    
-    // Using explicit string comparison instead of switch statement
-    if (iconType === "user") {
-      return <User className={`h-4 w-4 ${colorClass}`} />;
-    } else if (iconType === "calendar") {
-      return <Calendar className={`h-4 w-4 ${colorClass}`} />;
-    } else if (iconType === "message") {
-      return <MessageCircle className={`h-4 w-4 ${colorClass}`} />;
-    } else if (iconType === "heart") {
-      return <Heart className={`h-4 w-4 ${colorClass}`} />;
-    } else {
-      console.warn(`Invalid iconType: ${iconType}, defaulting to User icon`);
-      return <User className={`h-4 w-4 text-gray-500`} />;
-    }
+const getIcon = (iconType: Activity["iconType"]) => {
+  const colorClass = getIconColor(iconType);
+  
+  // Log the iconType for debugging
+  console.log(`getIcon called with iconType: ${iconType}`);
+
+  // Map iconType to corresponding Lucide icon
+  const iconMap: Record<Activity["iconType"], JSX.Element> = {
+    user: <User className={`h-4 w-4 ${colorClass}`} />,
+    calendar: <Calendar className={`h-4 w-4 ${colorClass}`} />,
+    message: <MessageCircle className={`h-4 w-4 ${colorClass}`} />,
+    heart: <Heart className={`h-4 w-4 ${colorClass}`} />,
   };
+
+  // Return the matching icon or default to User icon with a warning
+  const icon = iconMap[iconType];
+  if (!icon) {
+    console.warn(`Invalid iconType: ${iconType}, defaulting to User icon`);
+    return <User className={`h-4 w-4 text-gray-500`} />;
+  }
+
+  return icon;
+};
 
   const getIconBgColor = (iconType: Activity["iconType"]) => {
     if (iconType === "user") {

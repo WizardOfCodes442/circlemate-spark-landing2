@@ -93,7 +93,7 @@ const CommunityProfile = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="container mx-auto px-4 py-8">
-        <Button variant="outline" onClick={() => navigate("/discover")} className="mb-6">
+        <Button variant="outline" onClick={() => navigate("/community")} className="mb-6">
           ← Back to Discover
         </Button>
 
