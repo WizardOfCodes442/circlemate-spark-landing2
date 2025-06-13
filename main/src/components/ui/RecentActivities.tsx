@@ -1,13 +1,4 @@
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import {
   User,
   Calendar,
@@ -31,20 +22,22 @@ interface Activity {
 }
 
 interface RecentActivitiesProps {
-  activities: Activity[];
-  onViewAll: () => void;
+  activities?: Activity[];
+  onViewAll?: () => void;
   showAll?: boolean;
   className?: string;
 }
 
 const RecentActivities = ({
-  activities,
-  onViewAll,
+  activities = [],
+  onViewAll = () => {},
   showAll = false,
-  className,
+  className = "",
 }: RecentActivitiesProps) => {
   const [acceptedActivities, setAcceptedActivities] = useState<number[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
+  const [showDialog, setShowDialog] = useState(false);
+  const [showAllDialog, setShowAllDialog] = useState(false);
 
   const handleAccept = (id: number) => {
     setAcceptedActivities((prev) => [...prev, id]);
@@ -77,7 +70,7 @@ const RecentActivities = ({
       case "calendar":
         return "bg-teal-100";
       case "message":
-        return "bg-navy-100";
+        return "bg-blue-100";
       case "heart":
         return "bg-orange-100";
       default:
@@ -92,7 +85,7 @@ const RecentActivities = ({
       case "calendar":
         return "text-teal-500";
       case "message":
-        return "text-navy-500";
+        return "text-blue-600";
       case "heart":
         return "text-orange-500";
       default:
@@ -127,7 +120,7 @@ const RecentActivities = ({
       <div className="flex-1">
         <div className="flex justify-between items-center">
           <div>
-            <span className="font-medium text-xs text-navy-800">
+            <span className="font-medium text-xs text-slate-800">
               {activity.user}
             </span>
             <span className="ml-1 text-xs text-gray-500">{activity.action}</span>
@@ -153,18 +146,17 @@ const RecentActivities = ({
           {activity.status === "pending" &&
             !acceptedActivities.includes(activity.id) && (
               <>
-                <Button
-                  className="bg-teal-500 hover:bg-teal-600 text-white text-xs h-8 rounded-md px-3"
+                <button
+                  className="bg-teal-500 hover:bg-teal-600 text-white text-xs h-8 rounded-md px-3 transition-colors"
                   onClick={() => handleAccept(activity.id)}
                 >
                   Accept
-                </Button>
-                <Button
-                  variant="outline"
-                  className="border border-gray-300 bg-white hover:bg-gray-50 text-gray-600 text-xs h-8 rounded-md px-3"
+                </button>
+                <button
+                  className="border border-gray-300 bg-white hover:bg-gray-50 text-gray-600 text-xs h-8 rounded-md px-3 transition-colors"
                 >
                   Decline
-                </Button>
+                </button>
               </>
             )}
           {acceptedActivities.includes(activity.id) && (
@@ -172,100 +164,162 @@ const RecentActivities = ({
               <span className="text-xs text-green-600 font-medium">
                 Accepted
               </span>
-              <Button
-                variant="link"
-                className="text-teal-500 text-xs h-8 px-1"
+              <button
+                className="text-teal-500 text-xs h-8 px-1 hover:underline"
                 onClick={() => handleRevert(activity.id)}
               >
                 Revert
-              </Button>
+              </button>
             </div>
           )}
           {(activity.date ||
             activity.feedback ||
             activity.status === "confirmed") && (
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="border border-gray-300 bg-white hover:bg-gray-50 text-gray-600 text-xs h-8 rounded-md px-3"
-                  onClick={() => setSelectedActivity(activity)}
-                >
-                  View Details
-                </Button>
-              </DialogTrigger>
-              {selectedActivity?.id === activity.id && (
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle className="text-sm">Activity Details</DialogTitle>
-                  </DialogHeader>
-                  <div className="mt-2 text-xs">
-                    <p>
-                      <strong>{activity.user}</strong> {activity.action}
-                    </p>
-                    <p className="text-gray-400">{activity.time}</p>
-                    {activity.details && <p className="mt-1">{activity.details}</p>}
-                    {activity.date && (
-                      <p className="mt-1 flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        {activity.date}
-                      </p>
-                    )}
-                    {activity.feedback && (
-                      <p className="mt-1">{activity.feedback}</p>
-                    )}
-                    {activity.rating && (
-                      <div className="flex mt-1">{renderStars(activity.rating)}</div>
-                    )}
-                  </div>
-                </DialogContent>
-              )}
-            </Dialog>
+            <button
+              className="border border-gray-300 bg-white hover:bg-gray-50 text-gray-600 text-xs h-8 rounded-md px-3 transition-colors"
+              onClick={() => {
+                setSelectedActivity(activity);
+                setShowDialog(true);
+              }}
+            >
+              View Details
+            </button>
           )}
         </div>
       </div>
     </div>
   );
 
+  // Sample data for demonstration
+  const sampleActivities = [
+    {
+      id: 1,
+      user: "Sarah Johnson",
+      action: "requested a session",
+      time: "2 hours ago",
+      iconType: "user" as const,
+      details: "Yoga session for beginners",
+      date: "June 15, 2025 at 3:00 PM",
+      status: "pending" as const
+    },
+    {
+      id: 2,
+      user: "Mike Chen",
+      action: "scheduled a meeting",
+      time: "4 hours ago",
+      iconType: "calendar" as const,
+      date: "June 16, 2025 at 10:00 AM",
+      status: "confirmed" as const
+    },
+    {
+      id: 3,
+      user: "Emma Wilson",
+      action: "sent you a message",
+      time: "6 hours ago",
+      iconType: "message" as const,
+      details: "Thanks for the great session yesterday!"
+    },
+    {
+      id: 4,
+      user: "David Brown",
+      action: "left a review",
+      time: "1 day ago",
+      iconType: "heart" as const,
+      feedback: "Excellent trainer, very professional and knowledgeable!",
+      rating: 5
+    }
+  ];
+
+  const activitiesToShow = activities.length > 0 ? activities : sampleActivities;
+
   return (
-    <Card className={`bg-white rounded-xl shadow-md p-4 ${className}`}>
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-bold text-navy-800">
-          {showAll ? "All Activities" : "Recent Activity"}
-        </h2>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              variant="link"
-              className="text-teal-500 text-xs"
-              onClick={onViewAll}
-            >
-              {showAll ? (
-                <>
-                  <ArrowLeft className="h-3 w-3 mr-1" /> Back
-                </>
-              ) : (
-                <>
-                  View All <ArrowRight className="h-3 w-3 ml-1" />
-                </>
-              )}
-            </Button>
-          </DialogTrigger>
-          {!showAll && (
-            <DialogContent className="sm:max-w-[425px] max-h-[80vh]">
-              <DialogHeader>
-                <DialogTitle className="text-sm">All Activities</DialogTitle>
-              </DialogHeader>
-              <div className="mt-2 space-y-4 overflow-y-auto max-h-[60vh] pr-2">
-                {activities.map((activity) => renderActivity(activity))}
-              </div>
-            </DialogContent>
-          )}
-        </Dialog>
+    <div className="relative">
+      <div className={`bg-white rounded-xl shadow-md p-4 ${className}`}>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-bold text-slate-800">
+            {showAll ? "All Activities" : "Recent Activity"}
+          </h2>
+          <button
+            className="text-teal-500 text-xs hover:underline flex items-center"
+            onClick={() => {
+              if (showAll) {
+                onViewAll();
+              } else {
+                setShowAllDialog(true);
+              }
+            }}
+          >
+            {showAll ? (
+              <>
+                <ArrowLeft className="h-3 w-3 mr-1" /> Back
+              </>
+            ) : (
+              <>
+                View All <ArrowRight className="h-3 w-3 ml-1" />
+              </>
+            )}
+          </button>
+        </div>
+        <div className="space-y-4">{activitiesToShow.map((activity) => renderActivity(activity))}</div>
       </div>
-      <div className="space-y-4">{activities.map((activity) => renderActivity(activity))}</div>
-    </Card>
+
+      {/* Activity Details Dialog */}
+      {showDialog && selectedActivity && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-sm font-semibold">Activity Details</h3>
+              <button 
+                onClick={() => setShowDialog(false)}
+                className="text-gray-500 hover:text-gray-700 text-xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="text-xs">
+              <p>
+                <strong>{selectedActivity.user}</strong> {selectedActivity.action}
+              </p>
+              <p className="text-gray-400">{selectedActivity.time}</p>
+              {selectedActivity.details && <p className="mt-1">{selectedActivity.details}</p>}
+              {selectedActivity.date && (
+                <p className="mt-1 flex items-center gap-1">
+                  <Calendar className="h-3 w-3" />
+                  {selectedActivity.date}
+                </p>
+              )}
+              {selectedActivity.feedback && (
+                <p className="mt-1">{selectedActivity.feedback}</p>
+              )}
+              {selectedActivity.rating && (
+                <div className="flex mt-1">{renderStars(selectedActivity.rating)}</div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* View All Dialog */}
+      {showAllDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 max-h-[80vh]">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-sm font-semibold">All Activities</h3>
+              <button 
+                onClick={() => setShowAllDialog(false)}
+                className="text-gray-500 hover:text-gray-700 text-xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="space-y-4 overflow-y-auto max-h-[60vh] pr-2">
+              {activitiesToShow.map((activity) => renderActivity(activity))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default RecentActivities;
+export default RecentActivities
