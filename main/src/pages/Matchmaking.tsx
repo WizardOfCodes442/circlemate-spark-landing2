@@ -273,126 +273,132 @@ const Matchmaking = () => {
           </CardContent>
         </Card>
 
-        <div className="flex items-center justify-end text-white space-x-4 mb-8">
-          <Button
-            onClick={recalculateMatches}
-            disabled={isCalculating}
-            className="bg-teal-500 text-white rounded-full"
-          >
-            {isCalculating ? (
-              <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-            ) : (
-              <Zap className="h-4 w-4 mr-2" />
-            )}
-            {isCalculating ? "Calculating..." : "Find New Matches"}
-          </Button>
-        </div>
+<div className="flex items-center justify-end text-white space-x-4 mb-8">
+        <Button
+          onClick={recalculateMatches}
+          disabled={isCalculating}
+          className="bg-teal-500 text-white rounded-full"
+        >
+          {isCalculating ? (
+            <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+          ) : (
+            <Zap className="h-4 w-4 mr-2" />
+          )}
+          {isCalculating ? "Calculating..." : "Find New Matches"}
+        </Button>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 w-full">
-          <div className="lg:col-span-4">
-            <Card className="bg-white rounded-lg shadow-sm p-6 mb-8 w-full">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold">Recent Matches</h2>
-                <Button variant="link" className="text-teal-500">
-                  View All <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-                {matches.map((match) => (
-                  <Card key={match.id} className="overflow-hidden w-full">
-                    <CardHeader className="bg-gradient-to-r from-teal-100 to-teal-50">
-                      <div className="flex items-center space-x-4">
-                        <Avatar className="h-16 w-16 border-2 border-white">
-                          <AvatarImage src={match.image} alt={match.name} />
-                          <AvatarFallback>{match.name.substring(0, 2)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-lg">{match.name}</h3>
-                          <div className="flex items-center text-sm text-gray-600">
-                            <MapPin className="h-4 w-4 mr-1" />
-                            {match.essentials.location}
-                          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 w-full">
+        <div className="lg:col-span-4">
+          <Card className="bg-white rounded-lg shadow-sm p-6 mb-8 w-full">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Recent Matches</h2>
+              <Button variant="link" className="text-teal-500">
+                View All <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+              {matches.map((match) => (
+                <Card key={match.id} className="overflow-hidden w-full">
+                  <CardHeader className="bg-gradient-to-r from-teal-100 to-teal-50">
+                    <div className="flex items-center space-x-4">
+                      <Avatar className="h-16 w-16 border-2 border-white">
+                        <AvatarImage src={match.image} alt={match.name} />
+                        <AvatarFallback>{match.name.substring(0, 2)}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-lg">{match.name}</h3>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <MapPin className="h-4 w-4 mr-1" />
+                          {match.essentials.location}
                         </div>
                       </div>
-                    </CardHeader>
-                    <CardContent className="pt- Deterministic4 space-y-4">
-                      <div className="text-center">
-                        <div
-                          className={`text-3xl font-bold ${getCompatibilityColor(
-                            match.compatibility
-                          )}`}
-                        >
-                          {match.compatibility}%
-                        </div>
-                        <Badge
-                          className="text-white"
-                          variant={
-                            match.compatibility >= 80
-                              ? "default"
-                              : match.compatibility >= 60
-                              ? "secondary"
-                              : "outline"
-                          }
-                        >
-                          {getCompatibilityBadge(match.compatibility)}
-                        </Badge>
-                        <Progress value={match.compatibility} className="mt-2" />
-                      </div>
-
-                      <div>
-                        <h4 className="font-medium text-sm mb-2">Shared Interests</h4>
-                        <div className="flex flex-wrap gap-1">
-                          {match.sharedInterests.map((interest, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
-                              {interest}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="font-medium text-sm mb-2">Shared Communities</h4>
-                        <div className="flex flex-wrap gap-1">
-                          {match.sharedCommunities.map((community, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">
-                              <Users className="h-3 w-3 mr-1" />
-                              {community}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-
-                      <Button
-                        className="w-full bg-teal-500 text-white rounded-full"
-                        onClick={() => connectWithUser(match.id, match.name)}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-4 space-y-4">
+                    <div className="text-center">
+                      <div
+                        className={`text-3xl font-bold ${getCompatibilityColor(
+                          match.compatibility
+                        )}`}
                       >
-                        <Heart className="h-4 w-4 mr-2" />
-                        Connect
-                      </Button>
-                      <Button
-                        className="w-full bg-gray-200 text-gray-600 rounded-full"
-                        onClick={() => viewProfile(match.id)}
+                        {match.compatibility}%
+                      </div>
+                      <Badge
+                        className={
+                          match.compatibility >= 80
+                            ? "bg-green-600 text-white"
+                            : match.compatibility >= 50
+                            ? "bg-yellow-400 text-gray-800"
+                            : "bg-red-500 text-white"
+                        }
+                        variant={
+                          match.compatibility >= 80
+                            ? "default"
+                            : match.compatibility >= 50
+                            ? "secondary"
+                            : "outline"
+                        }
                       >
-                        <User className="h-4 w-4 mr-2" />
-                        View Profile
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+                        {getCompatibilityBadge(match.compatibility)}
+                      </Badge>
+                      <Progress value={match.compatibility} className="mt-2" />
+                    </div>
+
+                    <div>
+                      <h4 className="font-medium text-sm mb-2">Shared Interests</h4>
+                      <div className="flex flex-wrap gap-1">
+                        {match.sharedInterests.map((interest, index) => (
+                          <Badge key={index} variant="secondary" className="text-xs">
+                            {interest}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-medium text-sm mb-2">Shared Communities</h4>
+                      <div className="flex flex-wrap gap-1">
+                        {match.sharedCommunities.map((community, index) => (
+                          <Badge key={index} variant="outline" className="text-xs">
+                            <Users className="h-3 w-3 mr-1" />
+                            {community}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Button
+                      className="w-full bg-teal-500 text-white rounded-full"
+                      onClick={() => connectWithUser(match.id, match.name)}
+                    >
+                      <Heart className="h-4 w-4 mr-2" />
+                      Connect
+                    </Button>
+                    <Button
+                      className="w-full bg-gray-200 text-gray-600 rounded-full"
+                      onClick={() => viewProfile(match.id)}
+                    >
+                      <User className="h-4 w-4 mr-2" />
+                      View Profile
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </Card>
+
+          {matches.length === 0 && (
+            <Card className="w-full">
+              <CardContent className="pt-8 text-center">
+                <Heart className="h-12 w-12 text-gray-600 mx-auto mb-4" />
+                <p className="text-gray-600">
+                  No matches found. Try updating your profile or interests.
+                </p>
+              </CardContent>
             </Card>
-
-            {matches.length === 0 && (
-              <Card className="w-full">
-                <CardContent className="pt-8 text-center">
-                  <Heart className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                  <p className="text-gray-600">
-                    No matches found. Try updating your profile or interests.
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-          </div>
+          )}
+        </div>
 
           <div className="lg:col-span-1">
             <RecentActivities
